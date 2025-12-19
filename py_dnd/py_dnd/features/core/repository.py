@@ -2,15 +2,16 @@
 
 from __future__ import annotations
 
+import uuid
 from enum import Enum
-from typing import Any, AsyncIterator, Generic, Sequence, TypeVar
+from typing import Any, Generic, Sequence, TypeVar
 
 import loguru
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy import Result, Select, func, or_, select
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm.attributes import InstrumentedAttribute
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from py_dnd.database.base_class import DndSchemaBase
 from py_dnd.database.exceptions import handle_sqlalchemy_errors_decorator
@@ -21,37 +22,43 @@ UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
 
 class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
-    """Base repositiroy.
+    """Base repository with CRUD operations.
+
+    Provides standard Create, Read, Update, Delete operations for SQLAlchemy models.
+    
+    Default ID type is UUID. Models using different ID types (int, str, etc.) should 
+    override the read_by_id and related methods in their specific repository classes.
 
     Args:
-        Generic (_type_): typings for repository.
+        Generic: Type parameters for Model, CreateSchema, and UpdateSchema
     """
 
     def __init__(self, session: AsyncSession, model: type[ModelType], logger: loguru.Logger | None = None):
-        """RepositoryBase.
+        """Initialize repository.
 
-        CRUD object with default methods to Create, Read, Update, Delete (CRUD).
-        **Parameters**
-        * `model`: A SQLAlchemy model class
-        * `schema`: A Pydantic model (schema) class
+        Args:
+            session: SQLAlchemy async session
+            model: SQLAlchemy model class
+            logger: Optional logger instance
         """
         self.session = session
         self.model = model
         self.logger = logger if logger else loguru.logger
 
-    @handle_sqlalchemy_errors_decorator
     async def read_by_id(
         self,
-        entity_id: int,
+        entity_id: uuid.UUID | str,
     ) -> ModelType | None:
-        """Get an entity by id.
+        """Get an entity by UUID.
 
         Args:
-            entity_id (int): _description_
+            entity_id: UUID or string representation of UUID
 
         Returns:
-            ModelType | None: _description_
+            ModelType | None: Entity or None if not found
         """
+        if isinstance(entity_id, str):
+            entity_id = uuid.UUID(entity_id)
         stmt = select(self.model).where(self.model.id == entity_id)
         return await self.session.scalar(stmt.order_by(self.model.id))
 
@@ -60,36 +67,30 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     #     result = await db.execute(stmt)
     #     return result.scalars().first()
 
-    @handle_sqlalchemy_errors_decorator
     async def read_multi_by_ids(
         self,
-        entity_ids: list[int],
-    ) -> AsyncIterator[ModelType]:
-        """Get multiple entities by ids.
+        entity_ids: list[uuid.UUID | str],
+    ) -> Sequence[ModelType]:
+        """Get multiple entities by UUIDs.
 
         Args:
-            entity_ids (list[int]): _description_
+            entity_ids: List of UUIDs or string representations
 
         Returns:
-            AsyncIterator[ModelType]: _description_
-
-        Yields:
-            Iterator[AsyncIterator[ModelType]]: _description_
+            Sequence[ModelType]: List of entities
         """
-        stmt = select(self.model).where(self.model.id.in_(entity_ids))
-        # stream = await self.session.stream_scalars(stmt.order_by(self.model.id))
-        # async for row in stream:
-        #     yield row
-        scalars = await self.session.scalars(stmt.order_by(self.model.id))
-        return scalars
+        # Convert string UUIDs to UUID objects
+        converted_ids = [uuid.UUID(eid) if isinstance(eid, str) else eid for eid in entity_ids]
+        stmt = select(self.model).where(self.model.id.in_(converted_ids))
+        result = await self.session.scalars(stmt.order_by(self.model.id))
+        return result.all()
 
-    @handle_sqlalchemy_errors_decorator
     async def read_multi(
         self,
         *,
         offset: int = 0,
         limit: int = 100,
-    ) -> AsyncIterator[ModelType]:
+    ) -> Sequence[ModelType]:
         """Get multiple entities (pagination optional).
 
         Args:
@@ -97,18 +98,12 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             limit (int, optional): _description_. Defaults to 100.
 
         Returns:
-            AsyncIterator[ModelType]: _description_
-
-        Yields:
-            Iterator[AsyncIterator[ModelType]]: _description_
+            Sequence[ModelType]: _description_
         """
         self.logger.debug("RepositoryBase::read_multi() called with offset={}, limit={}", offset, limit)
         stmt = select(self.model).offset(offset).limit(limit)
-        # stream = await self.session.stream_scalars(stmt.order_by(self.model.id))
-        # async for row in stream:
-        #     yield row
-        res = await self.session.scalars(stmt.order_by(self.model.id))
-        return res
+        result = await self.session.scalars(stmt.order_by(self.model.id))
+        return result.all()
 
     # async def get_multi(self, db: AsyncSession, *, offset: int = 0, limit: int = 100) -> list[ModelType]:
     #     stmt = select(self.model).offset(offset).limit(limit)
@@ -182,8 +177,6 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             if field in update_data:
                 setattr(db_obj, field, update_data[field])
         self.session.add(db_obj)
-        # await db.commit()
-        # await db.refresh(db_obj)
         return db_obj
 
     @handle_sqlalchemy_errors_decorator
@@ -200,7 +193,6 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             int: _description_
         """
         await self.session.delete(entity)
-        # await self.session.flush()
         return entity.id
 
     # async def delete(self, db: AsyncSession, *, id: int) -> ModelType:
@@ -212,7 +204,7 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     @handle_sqlalchemy_errors_decorator
     async def query(
         self,
-        params: dict[str, list[Any] | str | None],
+        params: dict[str, list[Any] | str | None] | None = None,
         *,
         order_by: Any | None = None,
         limit: int | None = 100,
@@ -222,48 +214,56 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """Query a list of Type[ModelType] with filters.
 
         Args:
-            db (Session): A SQLAlchemy Session.
-            params (dict[str, list[Any] | str | None]): A dict of fields from Type[ModelType] to query.
-            order_by (Any, None, optional): SQL 'ORDER BY' input. Defaults to None.
-            limit (int | None, optional): SQL 'LIMIT'. Defaults to 100.
-            offset (int | None, optional): SQL 'OFFSET'. Defaults to 0.
+            params: A dict of fields from Type[ModelType] to query.
+            order_by: SQL 'ORDER BY' input. Defaults to None.
+            limit: SQL 'LIMIT'. Defaults to 100.
+            offset: SQL 'OFFSET'. Defaults to 0.
+            exact: Whether to use exact matching for string filters.
 
         Returns:
             tuple[Sequence[ModelType], int]: A tuple of the entities and the total_count.
         """
-        total_count: int | None = None
         query: Select = select(self.model)
         if params:
             query = self.apply_param_filters_to_query(query=query, params=params, exact=exact)
-        # get count before limit/offset are applied
+        
+        # Get count before limit/offset are applied (optimization: skip if no pagination)
+        total_count: int | None = None
         if limit != 0 or offset != 0:
-            query_count: Select = select(func.count()).select_from(query)
-            query_count_result: Result = await self.session.execute(query_count)
-            total_count = int(query_count_result.scalar_one())
-        # apply limit/offset/order_by
+            count_query: Select = select(func.count()).select_from(query.subquery())
+            count_result: Result = await self.session.execute(count_query)
+            total_count = int(count_result.scalar_one())
+        
+        # Apply limit/offset/order_by
         if order_by is not None:
             query = query.order_by(order_by)
+        else:
+            query = query.order_by(self.model.id)
+            
         if offset:
             query = query.offset(offset)
         if limit:
             query = query.limit(limit)
+            
         result: Result = await self.session.execute(query)
-        # if no limit/offset assume count is lenght of result
         entities = result.scalars().all()
+        
+        # If no pagination was used, total_count equals result length
         if total_count is None:
             self.logger.debug("No limit/offset set, assuming total_count = len(result)")
             total_count = len(entities)
+        
         return entities, total_count
 
     def apply_param_filters_to_query(
         self, query: Select, params: dict[str, Any | list[Any]] | None = None, exact: bool = False
-    ) -> ModelType:
+    ) -> Select:
         """Takes a param dict and turns it into SQLAlchemy filters.
 
         Args:
-            query (Select): The query to apply filters to.
-            params (dict[str, Any | list[Any]] | None, optional):
-                A dict of filters based on the Select's fields. Defaults to None.
+            query: The query to apply filters to.
+            params: A dict of filters based on the Select's fields.
+            exact: Whether to use exact matching for string filters.
 
         Returns:
             Select: The query with the new filters applied.
@@ -282,9 +282,10 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """Gets filters based on the param's value type.
 
         Args:
-            key (str): The param dict key.
-            value (list[Any] | Any | None, optional): The param dict value.
-            model (Any | None, optional): The model that will be filtered. Defaults to None.
+            key: The param dict key.
+            value: The param dict value.
+            model: The model that will be filtered. Defaults to None.
+            exact: Whether to use exact matching for string filters.
 
         Returns:
             list[Any]: A list of filters.
@@ -293,6 +294,10 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             model = self.model
         key = str(key).split(".")[-1]
         filters = []
+        
+        if not hasattr(model, key):
+            return filters
+            
         model_field: InstrumentedAttribute = getattr(model, key)
         if value:
             if isinstance(value, str) and "," in value:
@@ -301,7 +306,6 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
                 conditions = [model_field.ilike(f"%{v}%") for v in value]
                 list_query = or_(*conditions)
                 filters.append(list_query)
-                # filters.append(model_field.in_(value))
             elif isinstance(value, (int, Enum)):
                 filters.append(model_field == value)
             else:
@@ -310,3 +314,5 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
                 else:
                     filters.append(model_field.ilike(f"%{value}%"))
         return filters
+
+

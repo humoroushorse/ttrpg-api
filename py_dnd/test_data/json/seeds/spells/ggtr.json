@@ -1,0 +1,46 @@
+[
+  {
+    "spell_id": "5e-ggtr-encode-thoughts",
+    "name": "Encode Thoughts",
+    "source_id": "ggtr",
+    "source_version": "5e",
+    "source_page": null,
+    "level": 0,
+    "school": "enchantment",
+    "is_ritual": false,
+    "casting_time": "1 action",
+    "range": "Self",
+    "has_verbal_component": false,
+    "has_somatic_component": true,
+    "has_material_component": false,
+    "materials": null,
+    "has_spell_cost": false,
+    "are_materials_consumed": false,
+    "duration": "8 Hours",
+    "is_concentration": false,
+    "description_json": [
+      "You pull a memory, an idea, or a message from your mind and transform it into a tangible string of glowing energy called a thought strand, which persists for the duration or until you cast this spell again. The thought strand appears in an unoccupied space within 5 feet of you as a Tiny, weightless, semisolid object that can be held and carried like a ribbon. It is otherwise stationary.",
+      "If you cast this spell while concentrating on a spell or an ability that allows you to read or manipulate the thoughts of others (such as detect thoughts or modify memory), you can transform the thoughts or memories you read, rather than your own, into a thought strand.",
+      "Casting this spell while holding a thought strand allows you to instantly receive whatever memory, idea, or message the thought strand contains. (Casting detect thoughts on the strand has the same effect.)"
+    ],
+    "description_markdown": "You pull a memory, an idea, or a message from your mind and transform it into a tangible string of glowing energy called a thought strand, which persists for the duration or until you cast this spell again. The thought strand appears in an unoccupied space within 5 feet of you as a Tiny, weightless, semisolid object that can be held and carried like a ribbon. It is otherwise stationary.\n\nIf you cast this spell while concentrating on a spell or an ability that allows you to read or manipulate the thoughts of others (such as detect thoughts or modify memory), you can transform the thoughts or memories you read, rather than your own, into a thought strand.\n\nCasting this spell while holding a thought strand allows you to instantly receive whatever memory, idea, or message the thought strand contains. (Casting detect thoughts on the strand has the same effect.)",
+    "description_html": "<p>You pull a memory, an idea, or a message from your mind and transform it into a tangible string of glowing energy called a thought strand, which persists for the duration or until you cast this spell again. The thought strand appears in an unoccupied space within 5 feet of you as a Tiny, weightless, semisolid object that can be held and carried like a ribbon. It is otherwise stationary.</p><p>If you cast this spell while concentrating on a spell or an ability that allows you to read or manipulate the thoughts of others (such as detect thoughts or modify memory), you can transform the thoughts or memories you read, rather than your own, into a thought strand.</p><p>Casting this spell while holding a thought strand allows you to instantly receive whatever memory, idea, or message the thought strand contains. (Casting detect thoughts on the strand has the same effect.)</p>",
+    "description_ignore_keywords": [],
+    "has_content_reference": true,
+    "has_saving_throw": false,
+    "difficulty_class_saving_throw_override": null,
+    "damage_type": null,
+    "at_higher_levels": null,
+    "damage_at_slot_level": null,
+    "additional_damage_at_slot_level": null,
+    "heal_at_slot_level": null,
+    "difficulty_class_saving_throw": null,
+    "difficulty_class_type": null,
+    "classes": [
+      "Wizard"
+    ],
+    "area_of_effect_type": null,
+    "area_of_effect_size": null,
+    "stat_blocks": null
+  }
+]

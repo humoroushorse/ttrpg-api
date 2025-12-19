@@ -1,0 +1,207 @@
+[
+  {
+    "spell_id": "5e-bomt-spray-of-cards",
+    "name": "Spray of Cards",
+    "source_id": "bomt",
+    "source_version": "5e",
+    "source_page": null,
+    "level": 2,
+    "school": "conjuration",
+    "is_ritual": false,
+    "casting_time": "1 action",
+    "range": "Self (15-foot cone)",
+    "has_verbal_component": true,
+    "has_somatic_component": true,
+    "has_material_component": true,
+    "materials": "a deck of cards",
+    "has_spell_cost": false,
+    "are_materials_consumed": false,
+    "duration": "Instantaneous",
+    "is_concentration": false,
+    "description_json": [
+      "You spray a 15-foot cone of spectral cards. Each creature in that area must make a Dexterity saving throw. On a failed save, a creature takes 2d10 force damage and has the blinded condition until the end of its next turn. On a successful save, a creature takes half as much damage only."
+    ],
+    "description_markdown": "You spray a 15-foot cone of spectral cards. Each creature in that area must make a Dexterity saving throw. On a failed save, a creature takes 2d10 force damage and has the blinded condition until the end of its next turn. On a successful save, a creature takes half as much damage only.",
+    "description_html": "<p>You spray a 15-foot cone of spectral cards. Each creature in that area must make a Dexterity saving throw. On a failed save, a creature takes 2d10 force damage and has the blinded condition until the end of its next turn. On a successful save, a creature takes half as much damage only.</p>",
+    "description_ignore_keywords": [],
+    "has_content_reference": false,
+    "has_saving_throw": true,
+    "difficulty_class_saving_throw_override": null,
+    "damage_type": "force",
+    "at_higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d10 for each slot level above 2nd.",
+    "damage_at_slot_level": {
+      "2": "2d10",
+      "3": "3d10",
+      "4": "4d10",
+      "5": "5d10",
+      "6": "6d10",
+      "7": "7d10",
+      "8": "8d10",
+      "9": "9d10"
+    },
+    "additional_damage_at_slot_level": null,
+    "heal_at_slot_level": null,
+    "difficulty_class_saving_throw": "dex",
+    "difficulty_class_type": null,
+    "classes": [
+      "Bard",
+      "Sorcerer",
+      "Warlock",
+      "Wizard"
+    ],
+    "area_of_effect_type": "cone",
+    "area_of_effect_size": "15-foot",
+    "stat_blocks": null
+  },
+  {
+    "spell_id": "5e-bomt-antagonize",
+    "name": "Antagonize",
+    "source_id": "bomt",
+    "source_version": "5e",
+    "source_page": null,
+    "level": 3,
+    "school": "enchantment",
+    "is_ritual": false,
+    "casting_time": "1 action",
+    "range": "30 feet",
+    "has_verbal_component": true,
+    "has_somatic_component": true,
+    "has_material_component": true,
+    "materials": "a playing card depticting a rogue",
+    "has_spell_cost": false,
+    "are_materials_consumed": false,
+    "duration": "Instantaneous",
+    "is_concentration": false,
+    "description_json": [
+      "You whisper magical words that antagonize one creature of your choice within range. The target must make a Wisdom saving throw. On a failed save, the target takes 4d4 psychic damage and must immediately use its reaction to make a melee attack against another creature of your choice that you can see. If the target can't make this attack (for example, because there is no one within its reach or because its reaction is unavailable), the target instead has disadvantage on the next attack roll it makes before the start of your next turn. On a successful save, the target takes half as much damage only."
+    ],
+    "description_markdown": "You whisper magical words that antagonize one creature of your choice within range. The target must make a Wisdom saving throw. On a failed save, the target takes 4d4 psychic damage and must immediately use its reaction to make a melee attack against another creature of your choice that you can see. If the target can't make this attack (for example, because there is no one within its reach or because its reaction is unavailable), the target instead has disadvantage on the next attack roll it makes before the start of your next turn. On a successful save, the target takes half as much damage only.",
+    "description_html": "<p>You whisper magical words that antagonize one creature of your choice within range. The target must make a Wisdom saving throw. On a failed save, the target takes 4d4 psychic damage and must immediately use its reaction to make a melee attack against another creature of your choice that you can see. If the target can't make this attack (for example, because there is no one within its reach or because its reaction is unavailable), the target instead has disadvantage on the next attack roll it makes before the start of your next turn. On a successful save, the target takes half as much damage only.</p>",
+    "description_ignore_keywords": [],
+    "has_content_reference": false,
+    "has_saving_throw": true,
+    "difficulty_class_saving_throw_override": null,
+    "damage_type": "psychic",
+    "at_higher_levels": "When you cast this spell using a spell slot of 4th level or higher, the damage increases by 1d4 for each slot level above 3rd.",
+    "damage_at_slot_level": {
+      "3": "4d4",
+      "4": "5d4",
+      "5": "6d4",
+      "6": "7d4",
+      "7": "8d4",
+      "8": "9d4",
+      "9": "10d4"
+    },
+    "additional_damage_at_slot_level": null,
+    "heal_at_slot_level": null,
+    "difficulty_class_saving_throw": "caster's spell save",
+    "difficulty_class_type": "wis",
+    "classes": [
+      "Bard",
+      "Sorcerer",
+      "Warlock",
+      "Wizard"
+    ],
+    "area_of_effect_type": null,
+    "area_of_effect_size": null,
+    "stat_blocks": null
+  },
+  {
+    "spell_id": "5e-bomt-spirit-of-death",
+    "name": "Spirit of Death",
+    "source_id": "bomt",
+    "source_version": "5e",
+    "source_page": null,
+    "level": 4,
+    "school": "necromancy",
+    "is_ritual": false,
+    "casting_time": "1 action",
+    "range": "60 feet",
+    "has_verbal_component": true,
+    "has_somatic_component": true,
+    "has_material_component": true,
+    "materials": "a gilded playing card worth at least 400 gp and depicting an avatar of death",
+    "has_spell_cost": false,
+    "are_materials_consumed": false,
+    "duration": "Concentration, up to 1 hour",
+    "is_concentration": true,
+    "description_json": [
+      "You call forth a spirit that embodies death. The spirit manifests in an unoccupied space you can see within range and uses the reaper spirit stat block. The spirit disappears when it is reduced to 0 hit points or when the spell ends.",
+      "The spirit is an ally to you and your companions. In combat, the spirit shares your initiative count and takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue the spirit any commands, it takes the Dodge action and uses its movement to avoid danger."
+    ],
+    "description_markdown": "You call forth a spirit that embodies death. The spirit manifests in an unoccupied space you can see within range and uses the reaper spirit stat block. The spirit disappears when it is reduced to 0 hit points or when the spell ends.\n\nThe spirit is an ally to you and your companions. In combat, the spirit shares your initiative count and takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue the spirit any commands, it takes the Dodge action and uses its movement to avoid danger.",
+    "description_html": "<p>You call forth a spirit that embodies death. The spirit manifests in an unoccupied space you can see within range and uses the reaper spirit stat block. The spirit disappears when it is reduced to 0 hit points or when the spell ends.</p><p>The spirit is an ally to you and your companions. In combat, the spirit shares your initiative count and takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue the spirit any commands, it takes the Dodge action and uses its movement to avoid danger.</p>",
+    "description_ignore_keywords": [],
+    "has_content_reference": false,
+    "has_saving_throw": false,
+    "difficulty_class_saving_throw_override": null,
+    "damage_type": null,
+    "at_higher_levels": "When you cast this spell using a spell slot of 5th level or higher, use the higher level wherever the spell's level appears in the reaper spirit stat block.",
+    "damage_at_slot_level": null,
+    "additional_damage_at_slot_level": null,
+    "heal_at_slot_level": null,
+    "difficulty_class_saving_throw": null,
+    "difficulty_class_type": null,
+    "classes": [
+      "Sorcerer",
+      "Warlock",
+      "Wizard"
+    ],
+    "area_of_effect_type": null,
+    "area_of_effect_size": null,
+    "stat_blocks": [
+      {
+        "data": [
+          {
+            "name": "Reaper Spirit",
+            "??": "TODO"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "spell_id": "5e-bomt-staggering-smite",
+    "name": "Staggering Smite",
+    "source_id": "bomt",
+    "source_version": "5e",
+    "source_page": null,
+    "level": 4,
+    "school": "evocation",
+    "is_ritual": false,
+    "casting_time": "1 bonus action",
+    "range": "Self",
+    "has_verbal_component": true,
+    "has_somatic_component": false,
+    "has_material_component": false,
+    "materials": null,
+    "has_spell_cost": false,
+    "are_materials_consumed": false,
+    "duration": "Concentration, up to 1 minute",
+    "is_concentration": true,
+    "description_json": [
+      "The next time you hit a creature with a melee weapon attack during this spell's duration, your weapon pierces both body and mind, and the attack deals an extra 4d6 psychic damage to the target. The target must make a Wisdom saving throw. On a failed save, it has disadvantage on attack rolls and ability checks, and can't take reactions, until the end of its next turn."
+    ],
+    "description_markdown": "The next time you hit a creature with a melee weapon attack during this spell's duration, your weapon pierces both body and mind, and the attack deals an extra 4d6 psychic damage to the target. The target must make a Wisdom saving throw. On a failed save, it has disadvantage on attack rolls and ability checks, and can't take reactions, until the end of its next turn.",
+    "description_html": "<p>The next time you hit a creature with a melee weapon attack during this spell's duration, your weapon pierces both body and mind, and the attack deals an extra 4d6 psychic damage to the target. The target must make a Wisdom saving throw. On a failed save, it has disadvantage on attack rolls and ability checks, and can't take reactions, until the end of its next turn.</p>",
+    "description_ignore_keywords": [],
+    "has_content_reference": false,
+    "has_saving_throw": true,
+    "difficulty_class_saving_throw_override": null,
+    "damage_type": "psychic",
+    "at_higher_levels": null,
+    "damage_at_slot_level": {
+      "4": "4d6"
+    },
+    "additional_damage_at_slot_level": null,
+    "heal_at_slot_level": null,
+    "difficulty_class_saving_throw": "caster's spell save",
+    "difficulty_class_type": "wis",
+    "classes": [
+      "Paladin"
+    ],
+    "area_of_effect_type": null,
+    "area_of_effect_size": null,
+    "stat_blocks": null
+  }
+]

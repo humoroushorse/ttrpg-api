@@ -1,20 +1,58 @@
 """Shared schemas."""
 
 import datetime
+import uuid
+import uuid6
 from typing import Any, Generic, TypeVar
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, model_validator, field_validator, AliasChoices
 
 T = TypeVar("T", bound=BaseModel)
 
+class MixinUuid7Id(BaseModel):
+    id: uuid.UUID = Field(
+        default_factory=uuid6.uuid7,
+        title="ID",
+        description="[Generated] Unique database ID in UUID7 Form.",
+        validation_alias=AliasChoices("id", "ID", "_id"),
+    )
 
-class MixinBookeeping:
-    """Bookeeping Mixin."""
+class MixinBookeepingCreate(BaseModel):
+    """Bookeeping Mixin for creation."""
 
-    created_at: datetime.datetime | None = Field(default=None)
-    created_by: str
-    updated_at: datetime.datetime | None = Field(default=None)
-    updated_by: str
+    created_at: datetime.datetime | None = Field(default=None, title="Created At", description="When this entity was created.")
+    created_by: str = Field(title="Created By", description="Who created this entity.")
+
+    @field_validator("created_at", mode="before")
+    @classmethod
+    def created_to_utc_and_strip_tz(cls, v):
+        if isinstance(v, datetime.datetime):
+            if v.tzinfo is not None:
+                v = v.astimezone(datetime.timezone.utc).replace(tzinfo=None)
+        return v
+    
+class MixinBookeepingUpdate(BaseModel):
+    """Bookeeping Mixin for updates."""
+
+    updated_at: datetime.datetime | None = Field(default=None, title="Updated At", description="When this entity was last updated.")
+    updated_by: str | None = Field(default=None, title="Updated By", description="Who updated this entity last.")
+
+    @field_validator("updated_at", mode="before")
+    @classmethod
+    def updated_to_utc_and_strip_tz(cls, v):
+        if isinstance(v, datetime.datetime):
+            if v.tzinfo is not None:
+                v = v.astimezone(datetime.timezone.utc).replace(tzinfo=None)
+        return v
+
+class MixinBookeeping(MixinBookeepingCreate, MixinBookeepingUpdate):
+    """Bookeeping Mixin for both creation and updates.
+
+    This mixin combines the creation and update fields into a single model.
+    It is used to ensure that both created_at/created_by and updated_at/updated_by
+    fields are present in the model.
+    """
+    pass
 
 
 class QueryBase(BaseModel):

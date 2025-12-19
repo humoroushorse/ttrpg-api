@@ -1,0 +1,48 @@
+[
+  {
+    "spell_id": "5e-aisaag-air-bubble",
+    "name": "Air Bubble",
+    "source_id": "aisaag",
+    "source_version": "5e",
+    "source_page": null,
+    "level": 2,
+    "school": "conjuration",
+    "is_ritual": false,
+    "casting_time": "1 action",
+    "range": "60 feet",
+    "has_verbal_component": false,
+    "has_somatic_component": true,
+    "has_material_component": false,
+    "materials": null,
+    "has_spell_cost": false,
+    "are_materials_consumed": false,
+    "duration": "24 hours",
+    "is_concentration": false,
+    "description_json": [
+      "You create a spectral globe around the head of a willing creature you can see within range. The globe is filled with fresh air that lasts until the spell ends. If the creature has more than one head, the globe of air appears around only one of its heads (which is all the creature needs to avoid suffocation, assuming that all its heads share the same respiratory system)."
+    ],
+    "description_markdown": "You create a spectral globe around the head of a willing creature you can see within range. The globe is filled with fresh air that lasts until the spell ends. If the creature has more than one head, the globe of air appears around only one of its heads (which is all the creature needs to avoid suffocation, assuming that all its heads share the same respiratory system).",
+    "description_html": "<p>You create a spectral globe around the head of a willing creature you can see within range. The globe is filled with fresh air that lasts until the spell ends. If the creature has more than one head, the globe of air appears around only one of its heads (which is all the creature needs to avoid suffocation, assuming that all its heads share the same respiratory system).</p>",
+    "description_ignore_keywords": [],
+    "has_content_reference": false,
+    "has_saving_throw": false,
+    "difficulty_class_saving_throw_override": null,
+    "damage_type": null,
+    "at_higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, you can create two additional globes of fresh air for each slot level above 2nd.",
+    "damage_at_slot_level": null,
+    "additional_damage_at_slot_level": null,
+    "heal_at_slot_level": null,
+    "difficulty_class_saving_throw": null,
+    "difficulty_class_type": null,
+    "classes": [
+      "Artificer",
+      "Druid",
+      "Ranger",
+      "Sorcerer",
+      "Wizard"
+    ],
+    "area_of_effect_type": null,
+    "area_of_effect_size": null,
+    "stat_blocks": null
+  }
+]

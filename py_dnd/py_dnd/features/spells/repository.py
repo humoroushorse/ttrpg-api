@@ -7,10 +7,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from py_dnd.features.core.repository import RepositoryBase
 from py_dnd.features.spells.models import Spell
-from py_dnd.features.spells.schemas import SpellCreate, SpellUpdate
+from py_dnd.features.spells.schemas import SpellCreateDerrived, SpellUpdateDerrived
 
 
-class SpellRepository(RepositoryBase[Spell, SpellCreate, SpellUpdate]):
+class SpellRepository(RepositoryBase[Spell, SpellCreateDerrived, SpellUpdateDerrived]):
     """Spell Repository.
 
     Args:

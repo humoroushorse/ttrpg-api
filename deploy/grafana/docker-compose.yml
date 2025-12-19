@@ -1,7 +1,5 @@
 # grafana.docker-compose.yml
 
-version: '3.9'
-
 services:
   grafana:
     # container_name: grafana

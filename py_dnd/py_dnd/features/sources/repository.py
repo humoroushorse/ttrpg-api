@@ -7,10 +7,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from py_dnd.features.core.repository import RepositoryBase
 from py_dnd.features.sources.models import Source
-from py_dnd.features.sources.schemas import SourceCreate, SourceUpdate
+from py_dnd.features.sources.schemas import SourceCreateDerrived, SourceUpdateDerrived
 
 
-class SourceRepository(RepositoryBase[Source, SourceCreate, SourceUpdate]):
+class SourceRepository(RepositoryBase[Source, SourceCreateDerrived, SourceUpdateDerrived]):
     """Source Repository.
 
     Args:

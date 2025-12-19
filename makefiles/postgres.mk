@@ -4,7 +4,7 @@
 #    do not import other files
 COMMON_REPOSITORY_ROOT=~/projects/ttrpg/ttrpg-api
 CONTAINER_RUNNER := $(if $(CONTAINER_RUNNER),$(CONTAINER_RUNNER),"docker")
-CONTAINER_POSTGRES_IMAGE=bitnami/postgresql:16.4.0
+CONTAINER_POSTGRES_IMAGE=postgres:17.6
 
 ################################################################################
 # App
@@ -22,10 +22,10 @@ postgres-clean: # removes local volume mount data
 postgres-up:
 	# start container if not already running
 	${CONTAINER_RUNNER} start ${POSTGRES_CONTAINER_NAME} || ${CONTAINER_RUNNER} run --name ${POSTGRES_CONTAINER_NAME} -d\
-		-e POSTGRESQL_USERNAME=postgres\
-		-e POSTGRESQL_PASSWORD=admin\
+		-e POSTGRES_USER=postgres\
+		-e POSTGRES_PASSWORD=admin\
 		-e POSTGRES_DB=${POSTGRES_DATABASE_NAME}\
-		-e POSTGRESQL_PORT_NUMBER=${CONTAINER_POSTGRES_PORT}\
+		-e POSTGRES_HOST_AUTH_METHOD=md5\
 		-p ${CONTAINER_POSTGRES_PORT}:${CONTAINER_POSTGRES_PORT} ${CONTAINER_POSTGRES_IMAGE}
 
 .PHONY: postgres-compose-up
@@ -62,10 +62,10 @@ CONTAINER_POSTGRES_TEST_CONN=postgresql://postgres:admin@localhost:${CONTAINER_P
 postgres-up-testing:
 	# start container if not already running
 	${CONTAINER_RUNNER} start ${POSTGRES_CONTAINER_NAME_TESTING} || ${CONTAINER_RUNNER} run --name ${POSTGRES_CONTAINER_NAME_TESTING} -d\
-		-e POSTGRESQL_USERNAME=postgres\
-		-e POSTGRESQL_PASSWORD=admin\
+		-e POSTGRES_USER=postgres\
+		-e POSTGRES_PASSWORD=admin\
 		-e POSTGRES_DB=${POSTGRES_DATABASE_NAME}\
-		-e POSTGRESQL_PORT_NUMBER=${CONTAINER_POSTGRES_TEST_PORT}\
+		-e POSTGRES_HOST_AUTH_METHOD=md5\
 		-p ${CONTAINER_POSTGRES_TEST_PORT}:${CONTAINER_POSTGRES_TEST_PORT} ${CONTAINER_POSTGRES_IMAGE}
 
 .PHONY: postgres-down-testing

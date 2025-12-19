@@ -1,0 +1,52 @@
+[
+  {
+    "spell_id": "5e-scag-green-flame-blade",
+    "name": "Green-Flame Blade",
+    "source_id": "scag",
+    "source_version": "5e",
+    "source_page": null,
+    "level": 0,
+    "school": "evocation",
+    "is_ritual": false,
+    "casting_time": "1 action",
+    "range": "Self (5-foot radius)",
+    "has_verbal_component": false,
+    "has_somatic_component": true,
+    "has_material_component": true,
+    "materials": "a melee weapon worth at least 1 sp",
+    "has_spell_cost": false,
+    "are_materials_consumed": false,
+    "duration": "Instantaneous",
+    "is_concentration": false,
+    "description_json": [
+      "You brandish the weapon used in the spell's casting and make a melee attack with it against one creature within 5 feet of you. On a hit, the target suffers the weapon attack's normal effects, and you can cause green fire to leap from the target to a different creature of your choice that you can see within 5 feet of it. The second creature takes fire damage equal to your spellcasting ability modifier."
+    ],
+    "description_markdown": "You brandish the weapon used in the spell's casting and make a melee attack with it against one creature within 5 feet of you. On a hit, the target suffers the weapon attack's normal effects, and you can cause green fire to leap from the target to a different creature of your choice that you can see within 5 feet of it. The second creature takes fire damage equal to your spellcasting ability modifier.",
+    "description_html": "<p>You brandish the weapon used in the spell's casting and make a melee attack with it against one creature within 5 feet of you. On a hit, the target suffers the weapon attack's normal effects, and you can cause green fire to leap from the target to a different creature of your choice that you can see within 5 feet of it. The second creature takes fire damage equal to your spellcasting ability modifier.</p>",
+    "description_ignore_keywords": [],
+    "has_content_reference": false,
+    "has_saving_throw": false,
+    "difficulty_class_saving_throw_override": null,
+    "damage_type": "fire",
+    "at_higher_levels": "At 5th level, the melee attack deals an extra 1d8 fire damage to the target on a hit, and the fire damage to the second creature increases to 1d8 + your spellcasting ability modifier. Both damage rolls increase by 1d8 at 11th level (2d8 and 2d8) and 17th level (3d8 and 3d8).",
+    "damage_at_slot_level": {
+      "0": "(target creature): weapon damage, (other creature): spellcasting ability modifier",
+      "5": "(target creature): weapon damage + 1d8 fire damage, (other creature): 1d8 + spellcasting ability modifier",
+      "11": "(target creature): weapon damage + 2d8 fire damage, (other creature): 2d8 + spellcasting ability modifier",
+      "17": "(target creature): weapon damage + 3d8 fire damage, (other creature): 3d8 + spellcasting ability modifier"
+    },
+    "additional_damage_at_slot_level": null,
+    "heal_at_slot_level": null,
+    "difficulty_class_saving_throw": null,
+    "difficulty_class_type": null,
+    "classes": [
+      "Artificer",
+      "Sorcerer",
+      "Warlock",
+      "Wizard"
+    ],
+    "area_of_effect_type": null,
+    "area_of_effect_size": null,
+    "stat_blocks": null
+  }
+]

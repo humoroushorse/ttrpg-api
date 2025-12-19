@@ -1,0 +1,45 @@
+[
+  {
+    "spell_id": "5e-saisaag-create-spelljamming-helm",
+    "name": "Create Spelljamming Helm",
+    "source_id": "saisaag",
+    "source_version": "5e",
+    "source_page": null,
+    "level": 5,
+    "school": "transmutation",
+    "is_ritual": false,
+    "casting_time": "1 action",
+    "range": "Tough",
+    "has_verbal_component": true,
+    "has_somatic_component": true,
+    "has_material_component": true,
+    "materials": "a crystal rod worth at least 5000 gp, which the spell consumes",
+    "has_spell_cost": false,
+    "are_materials_consumed": true,
+    "duration": "Instantaneous",
+    "is_concentration": false,
+    "description_json": [
+      "Holding the rod used in the casting of the spell, you touch a Large or smaller chair that is unoccupied. The rod disappears, and the chair is transformed into a Spelljamming Helm."
+    ],
+    "description_markdown": "Holding the rod used in the casting of the spell, you touch a Large or smaller chair that is unoccupied. The rod disappears, and the chair is transformed into a Spelljamming Helm.",
+    "description_html": "<p>Holding the rod used in the casting of the spell, you touch a Large or smaller chair that is unoccupied. The rod disappears, and the chair is transformed into a Spelljamming Helm.</p>",
+    "description_ignore_keywords": [],
+    "has_content_reference": true,
+    "has_saving_throw": false,
+    "difficulty_class_saving_throw_override": null,
+    "damage_type": null,
+    "at_higher_levels": null,
+    "damage_at_slot_level": null,
+    "additional_damage_at_slot_level": null,
+    "heal_at_slot_level": null,
+    "difficulty_class_saving_throw": null,
+    "difficulty_class_type": null,
+    "classes": [
+      "Artificer",
+      "Wizard"
+    ],
+    "area_of_effect_type": null,
+    "area_of_effect_size": null,
+    "stat_blocks": null
+  }
+]

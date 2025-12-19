@@ -1,4 +1,3 @@
-version: '3.9'
 
 services:
   ttrpg-api-event-planning:

@@ -132,6 +132,7 @@ dmypy.json
 .vscode/*
 .DS_Store
 .python-version
+.kiro
 
 # app specific
 logs

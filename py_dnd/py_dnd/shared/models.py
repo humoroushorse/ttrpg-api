@@ -11,10 +11,9 @@ class MixinBookeeping:
 
     created_at: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
     created_by: Mapped[str] = mapped_column(nullable=False)
-    updated_at: Mapped[datetime.datetime] = mapped_column(
+    updated_at: Mapped[datetime.datetime | None] = mapped_column(
         index=True,
-        default=func.now(),
         onupdate=func.now(),
-        nullable=False,
+        nullable=True,
     )
-    updated_by: Mapped[str] = mapped_column(nullable=False)
+    updated_by: Mapped[str | None] = mapped_column(nullable=True)

@@ -13,6 +13,7 @@ from sqlalchemy.ext.asyncio import (
 )
 
 from py_dnd.database.base_class import DndSchemaBase
+from py_dnd.core.config import Settings
 
 # ik-todo remove doc link https://dev.to/akarshan/asynchronous-database-sessions-in-fastapi-with-sqlalchemy-1o7e
 
@@ -25,20 +26,25 @@ class DatabaseSessionManager:
         self.session_maker = None
         # self.session = None
 
-    def init(self, host: str) -> None:
+    def init(self, host: str, settings: Settings) -> None:
         """Class startup connections.
 
         Args:
             host (str): database connection string.
+            settings (Settings): application settings with pool configuration.
         """
-        # Database connection parameters...
-
-        # Creating an asynchronous engine
-        self.engine = create_async_engine(host, pool_size=100, max_overflow=0, pool_pre_ping=False)
-        # TODO: look at pool_pre_ping=True (I think this is a sqllite thing)
+        # Creating an asynchronous engine with configurable pool settings
+        self.engine = create_async_engine(
+            host, 
+            pool_size=settings.DB_POOL_SIZE,
+            max_overflow=settings.DB_MAX_OVERFLOW,
+            pool_pre_ping=settings.DB_POOL_PRE_PING,
+            pool_recycle=settings.DB_POOL_RECYCLE,
+            pool_timeout=settings.DB_POOL_TIMEOUT,
+        )
 
         # Creating an asynchronous session class
-        self.session_maker = async_sessionmaker(autocommit=False, autoflush=False, future=True, bind=self.engine)
+        self.session_maker = async_sessionmaker(autocommit=False, autoflush=False, expire_on_commit=False, future=True, bind=self.engine)
 
         # Creating a scoped session
         # self.session = async_scoped_session(self.session_maker, scopefunc=current_task)
@@ -126,4 +132,5 @@ class DatabaseSessionManager:
 
 
 # Initialize the DatabaseSessionManager
-sessionmanager = DatabaseSessionManager()
+master_sessionmanager = DatabaseSessionManager()
+replica_sessionmanager = DatabaseSessionManager()

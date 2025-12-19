@@ -1,6 +1,7 @@
 """Sources route definitions."""
 
 import asyncio
+import datetime
 import math
 from collections.abc import Hashable
 from io import BytesIO
@@ -10,9 +11,11 @@ from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from loguru import logger
 from pandas.core.series import Series
 
-from py_dnd.database.db import AsyncSessionDependency
+from py_dnd.features.auth.schemas import AuthUserToken
+from py_dnd.features.auth.service import UserAuth, UserAuthOptional
+from py_dnd.database.db import AsyncReplicaSessionDependency, AsyncMasterSessionDependency
 from py_dnd.features.core.unit_of_work import SqlAlchemyUnitOfWork, sqlalchemy_uow
-from py_dnd.features.sources.schemas import SourceCreate, SourceQuery, SourceSchema
+from py_dnd.features.sources.schemas import SourceCreate, SourceCreateDerrived, SourceQuery, SourceSchema
 from py_dnd.shared.schemas import BulkLoadResponse, GenericListResponse
 
 router = APIRouter()
@@ -20,7 +23,7 @@ router = APIRouter()
 
 @router.get("/query")
 async def query_sources(
-    db: AsyncSessionDependency,
+    db: AsyncReplicaSessionDependency,
     params: SourceQuery = Depends(),
 ) -> GenericListResponse[SourceSchema]:
     """Retrieve sources."""
@@ -47,8 +50,12 @@ async def query_sources(
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, "Internal Error") from e
 
 
-async def upsert_and_mutate_report(
-    uow: SqlAlchemyUnitOfWork, response: BulkLoadResponse, df_entity: tuple[Hashable, Series]
+async def __upsert_and_mutate_report(
+    uow: SqlAlchemyUnitOfWork,
+    response: BulkLoadResponse,
+    df_entity: tuple[Hashable, Series],
+    # name_index: int,
+    current_user: AuthUserToken,
 ) -> None:
     """Adds a source and updates a bulk loading report.
 
@@ -60,24 +67,34 @@ async def upsert_and_mutate_report(
     index, entity = df_entity
     source = None
     try:
+        entity["source_id"] = None
         if math.isnan(entity.get("publish_year")):
             entity["publish_year"] = None
         logger.info("ik -- index={}, entity=\n{}", index, entity)
-        source = SourceCreate(**entity)
-        _, total_count = await uow.source_repo.query(params={"name": source.name}, limit=1)
+        time_now = datetime.datetime.now(tz=datetime.UTC)
+        source = SourceCreate(
+            **entity,
+        )
+        source_derrived = SourceCreateDerrived(
+            **source.model_dump(),
+            created_at=time_now,
+            created_by=current_user.sub,
+        )
+        _, total_count = await uow.source_repo.query(params={"name": source_derrived.name}, limit=1)
         if total_count > 0:
-            response.warnings.append(f"Source with name '{source.name}' already exists, skipping.")
+            response.warnings.append(f"Source with name '{source_derrived.name}' already exists, skipping.")
         else:
-            await uow.source_repo.create(model_in=source, return_model=False)
-            response.created.append(source.name)
+            await uow.source_repo.create(model_in=source_derrived, return_model=False)
+            response.created.append(source_derrived.name)
     except Exception as e:
-        response.errors.append(f"row {index} [{source.name if source else entity[2]}]: {str(e)}")
+        response.errors.append(f"row {index} [{source_derrived.name if source_derrived else entity[2]}]: {str(e)}")
 
 
 @router.post("/bulk")
 async def bulk_create(
+    current_user: UserAuth,
     *,
-    db: AsyncSessionDependency,
+    db: AsyncMasterSessionDependency,
     file: UploadFile = File(description='Files of type: ["text/csv", "application/json"]'),
 ) -> BulkLoadResponse:
     """Bulk load in a list of source objects from a file.
@@ -102,7 +119,7 @@ async def bulk_create(
         response = BulkLoadResponse(filename=file.filename)
 
         async with sqlalchemy_uow(db, None) as uow:
-            tasks = [upsert_and_mutate_report(uow, response, entity) for entity in df.iterrows()]
+            tasks = [__upsert_and_mutate_report(uow, response, entity, current_user=current_user) for entity in df.iterrows()]
             await asyncio.gather(*tasks)
 
             if not response.errors:

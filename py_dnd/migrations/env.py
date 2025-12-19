@@ -13,8 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine
 from py_dnd import shared
 from py_dnd.core.config import Settings, get_settings
 from py_dnd.database.base_class import DndSchemaBase
-from py_dnd.features.sources.models import Source  # noqa: W0611
-from py_dnd.features.spells.models import Spell  # noqa: W0611
+from py_dnd.database import all_models
 from py_dnd.shared.enums import DbSchemaEnum
 
 sys.path.append(str(pathlib.Path(__file__).resolve().parents[1]))
@@ -35,6 +34,9 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 target_metadata = DndSchemaBase.metadata
+print("🔍 Alembic sees the following tables:")
+for table in target_metadata.tables:
+    print(f" - {table}")
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -55,7 +57,7 @@ def run_migrations_offline() -> None:
 
     """
     context.configure(
-        url=settings.POSTGRES_DATABASE_URI,
+        url=settings.POSTGRES_MASTER_URI,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
@@ -91,7 +93,7 @@ async def run_migrations_online() -> None:
     # )
     connectable = AsyncEngine(
         create_engine(
-            settings.POSTGRES_DATABASE_URI,
+            settings.POSTGRES_MASTER_URI,
             # echo=True,  # DEBUGGING
             future=True,
         )
@@ -101,7 +103,7 @@ async def run_migrations_online() -> None:
         await connection.execute(text(f"CREATE SCHEMA IF NOT EXISTS {shared.enums.DbSchemaEnum.DND.value}"))
         await connection.commit()
         context.configure(
-            url=settings.POSTGRES_DATABASE_URI,
+            url=settings.POSTGRES_MASTER_URI,
             target_metadata=target_metadata,
             # literal_binds=True,
             dialect_opts={"paramstyle": "named"},

@@ -1,13 +1,14 @@
 include ../makefiles/common.mk
 include ../makefiles/container.mk
 include ../makefiles/postgres.mk
+include ../makefiles/keycloak.mk
 
 
 CONTAINER_RUNNER=docker # e.g. podman or docker
 
 ENV_FILE = .env
 
-CONTAINER_IMAGE = ttrpg-api/py_event_planning
+CONTAINER_IMAGE = ttrpg-api/py_dnd
 CONTAINER_IMAGE_NAME = dnd-api
 define CONTAINER_RUN_ARGS
 --env-file $(ENV_FILE) -dit -p 8001:8001
@@ -29,8 +30,8 @@ db-up:
 	make load-seed-data
 
 run:
-	# poetry env use python3 && poetry run uvicorn py_event_planning.main:app
-	poetry run uvicorn --reload --host=127.0.0.1 --port=8001 py_event_planning.main:app
+	# poetry env use python3 && poetry run uvicorn py_dnd.main:app
+	poetry run uvicorn --reload --host=127.0.0.1 --port=8001 py_dnd.main:app
 
 compose-up:
 	${CONTAINER_RUNNER} compose \
@@ -55,7 +56,7 @@ mkdocs-run:
 .PHONY: alembic-upgrade-testing test-unit test-unit-html test-integration test-integration-html
 
 TEST_PATH=app/dnd/tests
-COVERAGE_PATH=htmlcov/py_event_planning
+COVERAGE_PATH=htmlcov/py_dnd
 INTEGRATION_TEST_PATH=${TEST_PATH}/integration
 INTEGRATION_COVERAGE_PATH=${COVERAGE_PATH}/integration
 UNIT_TEST_PATH=${TEST_PATH}/unit

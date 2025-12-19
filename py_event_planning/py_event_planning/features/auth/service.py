@@ -97,7 +97,7 @@ async def get_auth(
         # if 'aud' not in decoded_token or decoded_token['aud'] != 'expected-audience':
         #     raise HTTPException(status_code=401, detail="Invalid audience")
         decoded_id_token = keycloak_openid.decode_token(id_token)
-
+        print('ik-fuckeroni', decoded_id_token)
         return AuthUserToken(**decoded_id_token)
 
     except Exception as e:

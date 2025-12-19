@@ -1,29 +1,54 @@
 """SQLAlchemy Table: spell definition."""
 
-from typing import Any
+from __future__ import annotations
 
-from sqlalchemy import ForeignKey, UniqueConstraint
+from typing import TYPE_CHECKING, Any
+
+import uuid
+import uuid6
+
+from sqlalchemy import ForeignKey, UniqueConstraint, Enum
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from py_dnd import shared
 from py_dnd.database.base_class import DndSchemaBase
-from py_dnd.features.sources.models import Source
 from py_dnd.shared.models import MixinBookeeping
+
+if TYPE_CHECKING:
+    from py_dnd.features.sources.models import Source
 
 
 class Spell(MixinBookeeping, DndSchemaBase):
     """SQLAlchemy spell model."""
 
+    __tablename__ = "spell"
+    __table_args__ = (
+        UniqueConstraint("source_id", "name", name="ux_spell_source_name"),
+        {"schema": shared.enums.DbSchemaEnum.DND.value},
+    )
+
     # keys
-    id: Mapped[str] = mapped_column(primary_key=True, index=True)
-    source_id: Mapped[str] = mapped_column(ForeignKey(Source.id))
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True, 
+        index=True,
+        default=uuid6.uuid7
+    )
+    source_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("dnd.source.id"))
     # fields
     name: Mapped[str] = mapped_column(nullable=False)
-    dnd_version: Mapped[str] = mapped_column(nullable=False)
-    dnd_version_year: Mapped[int] = mapped_column(nullable=False)
+    # dnd_version: Mapped[str] = mapped_column(nullable=False)
+    # dnd_version_year: Mapped[int] = mapped_column(nullable=False)
     source_page: Mapped[int | None] = mapped_column(default=None, nullable=True)
-    level: Mapped[shared.enums.SpellLevelEnum] = mapped_column(nullable=False)
-    school: Mapped[shared.enums.SpellSchoolEnum] = mapped_column(nullable=False)
+    level: Mapped[shared.enums.SpellLevelEnum] = mapped_column(
+        Enum(shared.enums.SpellLevelEnum, name="spelllevelenum", schema="dnd"),
+        nullable=False
+    )
+    school: Mapped[shared.enums.SpellSchoolEnum] = mapped_column(
+        Enum(shared.enums.SpellSchoolEnum, name="spellschoolenum", schema="dnd"),
+        nullable=False
+    )
     is_ritual: Mapped[bool] = mapped_column(nullable=False)
     casting_time: Mapped[str] = mapped_column(nullable=False)
     range: Mapped[str] = mapped_column(nullable=False)
@@ -45,6 +70,6 @@ class Spell(MixinBookeeping, DndSchemaBase):
     stat_blocks: Mapped[dict[str, Any] | None] = mapped_column(default=None)
     is_homebrew: Mapped[bool] = mapped_column(default=True, nullable=False)
     # relationships
-    source = relationship(Source)
+    source = relationship("Source")
     # constraints
     UniqueConstraint("source_id", "name", name="ux_spell")

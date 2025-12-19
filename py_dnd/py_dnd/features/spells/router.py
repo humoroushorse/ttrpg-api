@@ -1,6 +1,7 @@
 """Spell route definitions."""
 
 import asyncio
+import datetime
 import math
 from collections.abc import Hashable
 from io import BytesIO
@@ -10,24 +11,34 @@ from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from loguru import logger
 from pandas.core.series import Series
 
-from py_dnd.database.db import AsyncSessionDependency
+from py_dnd.database.db import (
+    AsyncMasterSessionDependency,
+    AsyncReplicaSessionDependency,
+)
 from py_dnd.features.core.unit_of_work import SqlAlchemyUnitOfWork, sqlalchemy_uow
-from py_dnd.features.spells.schemas import SpellCreate, SpellQuery, SpellSchema
+from py_dnd.features.spells.schemas import SpellCreate, SpellCreateDerrived, SpellQuery, SpellSchema
 from py_dnd.shared.schemas import BulkLoadResponse, GenericListResponse
+from py_dnd.features.auth.schemas import AuthUserToken
+from py_dnd.features.auth.service import UserAuth, UserAuthOptional
 
 router = APIRouter()
 
 
+
 @router.get("/")
 async def read_spells(
-    db: AsyncSessionDependency,
+    current_user: UserAuthOptional,
+    db: AsyncReplicaSessionDependency,
     offset: int = 0,
     limit: int = 100,
 ) -> list[SpellSchema]:
     """Retrieve spells."""
     try:
-        with logger.contextualize(user_id=123, user_username="Some User", log_threads=True):
-            # user_logger = logger.bind(user_id=random.randint(0,99), user_username=random_name)
+        user = {}
+        if current_user:
+            user = {"sub": current_user.sub, "preferred_username": current_user.preferred_username}
+        with logger.contextualize(user=user, limit=limit, offset=offset, log_threads=True):
+            logger.debug("Fetching spells")
             async with sqlalchemy_uow(db, None) as uow:
                 entities = await uow.spell_repo.read_multi(offset=offset, limit=limit)
             return entities
@@ -35,19 +46,24 @@ async def read_spells(
         # assume that the error was already logged
         raise
     except Exception as e:
+        import traceback
+        logger.critical(traceback.format_exc())
         logger.error("Uncaught error: {}", str(e))
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, "Internal Error") from e
 
 
 @router.get("/query")
 async def query_spells(
-    db: AsyncSessionDependency,
+    current_user: UserAuthOptional,
+    db: AsyncReplicaSessionDependency,
     params: SpellQuery = Depends(),
 ) -> GenericListResponse[SpellSchema]:
     """Retrieve spells."""
     try:
-        with logger.contextualize(user_id=123, user_username="Some User", log_threads=True):
-            # user_logger = logger.bind(user_id=random.randint(0,99), user_username=random_name)
+        user = {}
+        if current_user:
+            user = {"sub": current_user.sub, "preferred_username": current_user.preferred_username}
+        with logger.contextualize(user=user, log_threads=True):
             filters = params.model_dump(exclude_none=True, exclude={"limit", "offset"})
             async with sqlalchemy_uow(db, None) as uow:
                 entities, total_entities_count = await uow.spell_repo.query(
@@ -68,8 +84,12 @@ async def query_spells(
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, "Internal Error") from e
 
 
-async def upsert_and_mutate_report(
-    uow: SqlAlchemyUnitOfWork, response: BulkLoadResponse, df_entity: tuple[Hashable, Series], name_index: int
+async def __upsert_and_mutate_report(
+    uow: SqlAlchemyUnitOfWork,
+    response: BulkLoadResponse,
+    df_entity: tuple[Hashable, Series],
+    name_index: int,
+    current_user: AuthUserToken,
 ) -> None:
     """Adds a spell and updates a bulk loading report.
 
@@ -78,9 +98,17 @@ async def upsert_and_mutate_report(
         response (BulkLoadResponse): _description_
         df_entity (tuple[Hashable, Series]): _description_
     """
+    
     index, json_entity = df_entity
     entity: SpellSchema | None = None
     try:
+        source_name = json_entity.get("id")
+        existing_source, _ = await uow.source_repo.query(limit=1, params={"name": source_name}, exact=True)
+        if not existing_source:
+            raise ValueError(f"Source with id '{source_name}' does not exist")
+        json_entity["source_id"] = existing_source[0].id
+        if json_entity.get("id"):
+            json_entity["id"] = None
         if not json_entity.get("source_page") or math.isnan(json_entity.get("source_page")):
             json_entity["source_page"] = None
         if not json_entity.get("difficulty_class_saving_throw_override") or math.isnan(
@@ -95,7 +123,12 @@ async def upsert_and_mutate_report(
             json_entity["difficulty_class_saving_throw"] = str(json_entity["difficulty_class_saving_throw"])
         # TODO: stat_blocks should be handled as a json object (list of stat blocks)
         json_entity["stat_blocks"] = None
-        entity = SpellCreate(**json_entity)
+        time_now = datetime.datetime.now(tz=datetime.UTC)
+        entity = SpellCreateDerrived(
+            **json_entity,
+            created_at=time_now,
+            created_by=current_user.sub,
+        )
         _, total_count = await uow.spell_repo.query(params={"name": entity.name}, limit=1, exact=True)
         if total_count > 0:
             response.warnings.append(f"Spell with name '{entity.name}' already exists, skipping.")
@@ -103,19 +136,24 @@ async def upsert_and_mutate_report(
             await uow.spell_repo.create(model_in=entity, return_model=False)
             response.created.append(entity.name)
     except Exception as e:
+        logger.error("Uncaught error: {}", str(e))
         response.errors.append(f"row {index} [{entity.name if entity else json_entity.iloc[name_index]}]: {str(e)}")
 
 
 @router.post("/")
 async def create_spell(
-    db: AsyncSessionDependency,
+    current_user: UserAuth,
+    db: AsyncMasterSessionDependency,
     model_in: SpellCreate = Depends(),
 ) -> SpellSchema:
     """Create spell."""
     try:
-        with logger.contextualize(user_id=123, user_username="Some User", log_threads=True):
+        with logger.contextualize(
+            user_id=current_user.sub, user_username=current_user.preferred_username, log_threads=True
+        ):  
+            model_in_derrived = SpellCreateDerrived.model_validate(**model_in, created_by=current_user.sub)
             async with sqlalchemy_uow(db, None) as uow:
-                entity = await uow.spell_repo.create(model_in=model_in)
+                entity = await uow.spell_repo.create(model_in=model_in_derrived)
             return entity
     except HTTPException:
         # assume that the error was already logged
@@ -128,7 +166,8 @@ async def create_spell(
 @router.post("/bulk")
 async def bulk_create(
     *,
-    db: AsyncSessionDependency,
+    current_user: UserAuth,
+    db: AsyncMasterSessionDependency,
     file: UploadFile = File(description='Files of type: ["text/csv", "application/json"]'),
 ) -> BulkLoadResponse:
     """Bulk load in a list of spell objects from a file.
@@ -154,7 +193,7 @@ async def bulk_create(
 
         async with sqlalchemy_uow(db, None) as uow:
             tasks = [
-                upsert_and_mutate_report(uow, response, entity, [*df.keys()].index("name")) for entity in df.iterrows()
+                __upsert_and_mutate_report(uow, response, entity, [*df.keys()].index("name"), current_user) for entity in df.iterrows()
             ]
             await asyncio.gather(*tasks)
 

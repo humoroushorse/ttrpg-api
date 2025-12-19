@@ -40,12 +40,12 @@ class DndSchemaBase(DeclarativeBase):
 
     metadata = MetaData(naming_convention=naming_convention)
 
-    # Generate __tablename__ automatically
-    @declared_attr
-    def __tablename__(self) -> str:
-        # return self.__name__.lower()
-        # e.g. SomeModelName -> some_model_name
-        return re.sub(r"(?<!^)(?=[A-Z])", "_", self.__name__).lower()
+    # # Generate __tablename__ automatically
+    # @declared_attr
+    # def __tablename__(self) -> str:
+    #     # return self.__name__.lower()
+    #     # e.g. SomeModelName -> some_model_name
+    #     return re.sub(r"(?<!^)(?=[A-Z])", "_", self.__name__).lower()
 
     def __repr__(self) -> str:
         columns = ", ".join([f"{k}={repr(v)}" for k, v in self.__dict__.items() if not k.startswith("_")])
