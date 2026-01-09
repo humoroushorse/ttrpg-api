@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  postgres-test:
+    container_name: postgres-test
+    image: postgres:15.6-alpine
+    restart: unless-stopped
+    ports:
+      - "5433:5432"  # Different port from dev (5432)
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=testpass
+      - POSTGRES_DB=sprint_management_test
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+      - ./init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sprint_management_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - test-network
+
+networks:
+  test-network:
+    driver: bridge
+
+volumes:
+  postgres_test_data:
+    driver: local

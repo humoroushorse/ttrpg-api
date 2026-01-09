@@ -1,0 +1,114 @@
+openapi: 3.0.3
+info:
+  title: Sprint Management API
+  description: |
+    Comprehensive sprint management system providing work item tracking, sprint planning, 
+    and team collaboration features similar to Jira or Trello.
+    
+    ## Features
+    - Work item management (epics, stories, defects)
+    - Sprint planning and tracking
+    - Dependency management
+    - Real-time notifications via WebSocket
+    - Advanced search and filtering
+    - Sprint metrics and burndown charts
+    - Velocity tracking and forecasting
+    
+    ## Authentication
+    All endpoints require JWT authentication via Keycloak. Include the JWT token in the 
+    Authorization header: `Authorization: Bearer <token>`
+    
+    ## Pagination
+    List endpoints use cursor-based pagination for efficient data retrieval. Use the 
+    `cursor` parameter with the value from `pagination.next_cursor` to fetch the next page.
+    
+    ## Error Handling
+    All errors follow a consistent format with error codes, messages, and trace IDs for debugging.
+  version: 1.0.0
+  contact:
+    name: Sprint Management Team
+    email: support@example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8082
+    description: Local development server
+  - url: https://api.sprint.example.com
+    description: Production server
+
+tags:
+  - name: Work Items
+    description: Work item management operations
+  - name: Dependencies
+    description: Work item dependency management
+  - name: Relationships
+    description: Work item relationship management
+  - name: Search
+    description: Advanced search and filtering
+  - name: Sprints
+    description: Sprint management operations
+  - name: Planning
+    description: Sprint planning and capacity management
+  - name: Metrics
+    description: Sprint metrics and analytics
+
+paths:
+  # Work Items endpoints
+  /api/v1/workitems:
+    $ref: './workitems.yaml#/paths/~1api~1v1~1workitems'
+  
+  /api/v1/workitems/{id}:
+    $ref: './workitems.yaml#/paths/~1api~1v1~1workitems~1{id}'
+  
+  /api/v1/workitems/{id}/dependencies:
+    $ref: './workitems.yaml#/paths/~1api~1v1~1workitems~1{id}~1dependencies'
+  
+  /api/v1/workitems/{id}/dependencies/{dependency_id}:
+    $ref: './workitems.yaml#/paths/~1api~1v1~1workitems~1{id}~1dependencies~1{dependency_id}'
+  
+  /api/v1/workitems/{id}/children:
+    $ref: './workitems.yaml#/paths/~1api~1v1~1workitems~1{id}~1children'
+  
+  /api/v1/workitems/search:
+    $ref: './workitems.yaml#/paths/~1api~1v1~1workitems~1search'
+  
+  # Sprints endpoints
+  /api/v1/sprints:
+    $ref: './sprints.yaml#/paths/~1api~1v1~1sprints'
+  
+  /api/v1/sprints/{id}:
+    $ref: './sprints.yaml#/paths/~1api~1v1~1sprints~1{id}'
+  
+  /api/v1/sprints/{id}/close:
+    $ref: './sprints.yaml#/paths/~1api~1v1~1sprints~1{id}~1close'
+  
+  /api/v1/sprints/{id}/workitems:
+    $ref: './sprints.yaml#/paths/~1api~1v1~1sprints~1{id}~1workitems'
+  
+  /api/v1/sprints/{id}/metrics:
+    $ref: './sprints.yaml#/paths/~1api~1v1~1sprints~1{id}~1metrics'
+  
+  /api/v1/sprints/{id}/burndown:
+    $ref: './sprints.yaml#/paths/~1api~1v1~1sprints~1{id}~1burndown'
+  
+  /api/v1/sprints/{id}/velocity:
+    $ref: './sprints.yaml#/paths/~1api~1v1~1sprints~1{id}~1velocity'
+  
+  /api/v1/sprints/planning/capacity:
+    $ref: './sprints.yaml#/paths/~1api~1v1~1sprints~1planning~1capacity'
+  
+  /api/v1/sprints/planning/forecast:
+    $ref: './sprints.yaml#/paths/~1api~1v1~1sprints~1planning~1forecast'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token from Keycloak
+
+security:
+  - BearerAuth: []

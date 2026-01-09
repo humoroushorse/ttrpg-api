@@ -1,0 +1,9 @@
+# oapi-codegen configuration for generating Go server code from OpenAPI specs
+package: api
+generate:
+  models: true
+  chi-server: true
+  strict-server: false
+  embedded-spec: true
+
+output: generated/api.gen.go

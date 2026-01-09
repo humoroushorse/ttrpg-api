@@ -1,0 +1,1874 @@
+openapi: 3.0.3
+info:
+  title: Sprint Management API with Authentication
+  version: 1.0.0
+  description: Complete API for sprint management including authentication
+servers:
+- url: http://localhost:8082
+  description: Local development server
+paths:
+  /api/v1/workitems:
+    get:
+      summary: List work items
+      description: Retrieve a paginated list of work items with optional filtering
+      operationId: listWorkItems
+      tags:
+      - Work Items
+      parameters:
+      - name: type
+        in: query
+        description: Filter by work item type
+        schema:
+          $ref: '#/components/schemas/WorkItemType'
+      - name: status
+        in: query
+        description: Filter by work item status
+        schema:
+          $ref: '#/components/schemas/WorkItemStatus'
+      - name: assignee_id
+        in: query
+        description: Filter by assignee user ID
+        schema:
+          type: string
+          format: uuid
+      - name: sprint_id
+        in: query
+        description: Filter by sprint ID
+        schema:
+          type: string
+          format: uuid
+      - name: priority
+        in: query
+        description: Filter by priority level
+        schema:
+          $ref: '#/components/schemas/PriorityLevel'
+      - name: search
+        in: query
+        description: Full-text search across title and description
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: Cursor for pagination
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of items per page (max 100)
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItemListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      summary: Create work item
+      description: Create a new work item (epic, story, or defect)
+      operationId: createWorkItem
+      tags:
+      - Work Items
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorkItemRequest'
+      responses:
+        '201':
+          description: Work item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/workitems/{id}:
+    get:
+      summary: Get work item
+      description: Retrieve a specific work item by ID
+      operationId: getWorkItem
+      tags:
+      - Work Items
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Work item ID
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItemDetail'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    put:
+      summary: Update work item
+      description: Update an existing work item
+      operationId: updateWorkItem
+      tags:
+      - Work Items
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Work item ID
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWorkItemRequest'
+      responses:
+        '200':
+          description: Work item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    delete:
+      summary: Delete work item
+      description: Soft delete a work item
+      operationId: deleteWorkItem
+      tags:
+      - Work Items
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Work item ID
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Work item deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/workitems/{id}/dependencies:
+    get:
+      summary: Get work item dependencies
+      description: Retrieve all dependencies for a work item
+      operationId: getWorkItemDependencies
+      tags:
+      - Work Items
+      - Dependencies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Work item ID
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DependencyListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      summary: Create work item dependency
+      description: Create a dependency relationship between work items
+      operationId: createWorkItemDependency
+      tags:
+      - Work Items
+      - Dependencies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Source work item ID
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDependencyRequest'
+      responses:
+        '201':
+          description: Dependency created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dependency'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/workitems/{id}/dependencies/{dependency_id}:
+    delete:
+      summary: Delete work item dependency
+      description: Remove a dependency relationship
+      operationId: deleteWorkItemDependency
+      tags:
+      - Work Items
+      - Dependencies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Source work item ID
+        schema:
+          type: string
+          format: uuid
+      - name: dependency_id
+        in: path
+        required: true
+        description: Dependency ID
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Dependency deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/workitems/{id}/children:
+    get:
+      summary: Get child work items
+      description: Retrieve all child work items (sub-tasks)
+      operationId: getChildWorkItems
+      tags:
+      - Work Items
+      - Relationships
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Parent work item ID
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItemListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/workitems/search:
+    post:
+      summary: Advanced work item search
+      description: Perform advanced search with multiple criteria and boolean operators
+      operationId: searchWorkItems
+      tags:
+      - Work Items
+      - Search
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItemListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/sprints:
+    get:
+      summary: List sprints
+      description: Retrieve a paginated list of sprints with optional filtering
+      operationId: listSprints
+      tags:
+      - Sprints
+      parameters:
+      - name: status
+        in: query
+        description: Filter by sprint status
+        schema:
+          $ref: '#/components/schemas/SprintStatus'
+      - name: start_date_after
+        in: query
+        description: Filter sprints starting after this date
+        schema:
+          type: string
+          format: date
+      - name: start_date_before
+        in: query
+        description: Filter sprints starting before this date
+        schema:
+          type: string
+          format: date
+      - name: cursor
+        in: query
+        description: Cursor for pagination
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of items per page (max 100)
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SprintListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      summary: Create sprint
+      description: Create a new sprint with date range and capacity
+      operationId: createSprint
+      tags:
+      - Sprints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSprintRequest'
+      responses:
+        '201':
+          description: Sprint created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sprint'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/sprints/{id}:
+    get:
+      summary: Get sprint
+      description: Retrieve a specific sprint by ID with all details
+      operationId: getSprint
+      tags:
+      - Sprints
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Sprint ID
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SprintDetail'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    put:
+      summary: Update sprint
+      description: Update an existing sprint
+      operationId: updateSprint
+      tags:
+      - Sprints
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Sprint ID
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSprintRequest'
+      responses:
+        '200':
+          description: Sprint updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sprint'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    delete:
+      summary: Delete sprint
+      description: Soft delete a sprint
+      operationId: deleteSprint
+      tags:
+      - Sprints
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Sprint ID
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Sprint deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/sprints/{id}/close:
+    post:
+      summary: Close sprint
+      description: Close a sprint and move incomplete work items to backlog
+      operationId: closeSprint
+      tags:
+      - Sprints
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Sprint ID
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Sprint closed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SprintCloseResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/sprints/{id}/workitems:
+    get:
+      summary: Get sprint work items
+      description: Retrieve all work items assigned to a sprint
+      operationId: getSprintWorkItems
+      tags:
+      - Sprints
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Sprint ID
+        schema:
+          type: string
+          format: uuid
+      - name: status
+        in: query
+        description: Filter by work item status
+        schema:
+          type: string
+          enum:
+          - todo
+          - in_progress
+          - in_review
+          - done
+          - blocked
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItemListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/sprints/{id}/metrics:
+    get:
+      summary: Get sprint metrics
+      description: Retrieve comprehensive metrics for a sprint
+      operationId: getSprintMetrics
+      tags:
+      - Sprints
+      - Metrics
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Sprint ID
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SprintMetrics'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/sprints/{id}/burndown:
+    get:
+      summary: Get sprint burndown chart data
+      description: Retrieve burndown chart data for a sprint
+      operationId: getSprintBurndown
+      tags:
+      - Sprints
+      - Metrics
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Sprint ID
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BurndownData'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/sprints/{id}/velocity:
+    get:
+      summary: Get sprint velocity
+      description: Calculate velocity for a completed sprint
+      operationId: getSprintVelocity
+      tags:
+      - Sprints
+      - Metrics
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Sprint ID
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VelocityData'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/sprints/planning/capacity:
+    post:
+      summary: Calculate sprint capacity
+      description: Calculate recommended sprint capacity based on team velocity
+      operationId: calculateSprintCapacity
+      tags:
+      - Sprints
+      - Planning
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CapacityCalculationRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CapacityRecommendation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/sprints/planning/forecast:
+    post:
+      summary: Forecast sprint completion
+      description: Forecast sprint completion based on historical velocity
+      operationId: forecastSprintCompletion
+      tags:
+      - Sprints
+      - Planning
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForecastRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/auth/login:
+    post:
+      tags:
+      - Authentication
+      summary: Login user
+      description: 'Authenticate user with username and password.
+
+        Returns access token, refresh token, and user information.
+
+        '
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - username
+              - password
+              properties:
+                username:
+                  type: string
+                  example: user@example.com
+                password:
+                  type: string
+                  format: password
+                  example: password123
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/auth/refresh:
+    post:
+      tags:
+      - Authentication
+      summary: Refresh access token
+      description: 'Use a refresh token to obtain a new access token.
+
+        The refresh token can be provided in the request body or as a cookie.
+
+        '
+      operationId: refreshToken
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh_token:
+                  type: string
+                  description: Refresh token (if not provided as cookie)
+      parameters:
+      - name: refresh_token
+        in: cookie
+        schema:
+          type: string
+        description: Refresh token from httpOnly cookie
+      responses:
+        '200':
+          description: Token refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          description: Invalid or expired refresh token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No refresh token provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/auth/logout:
+    post:
+      tags:
+      - Authentication
+      summary: Logout user
+      description: 'Invalidate the user''s refresh token and clear authentication
+        cookies.
+
+        '
+      operationId: logout
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: refresh_token
+        in: cookie
+        schema:
+          type: string
+        description: Refresh token from httpOnly cookie
+      responses:
+        '200':
+          description: Logout successful
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/auth/user:
+    get:
+      tags:
+      - User Management
+      summary: Get current user information
+      description: Retrieve information about the currently authenticated user
+      operationId: getCurrentUser
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: User information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/auth/register:
+    post:
+      tags:
+      - User Management
+      summary: Register new user
+      description: 'Create a new user account in Keycloak and the application database.
+
+        '
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        '400':
+          description: Invalid request or user already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    WorkItemType:
+      type: string
+      enum:
+      - epic
+      - story
+      - defect
+      description: Type of work item
+    WorkItemStatus:
+      type: string
+      enum:
+      - todo
+      - in_progress
+      - in_review
+      - done
+      - blocked
+      description: Current status of work item
+    PriorityLevel:
+      type: string
+      enum:
+      - low
+      - medium
+      - high
+      - critical
+      description: Priority level of work item
+    DependencyType:
+      type: string
+      enum:
+      - blocks
+      - is_blocked_by
+      - relates_to
+      - duplicates
+      description: Type of dependency relationship
+    WorkItem:
+      type: object
+      required:
+      - id
+      - type
+      - title
+      - status
+      - priority
+      - reporter_id
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier
+        type:
+          $ref: '#/components/schemas/WorkItemType'
+        title:
+          type: string
+          maxLength: 255
+          description: Work item title
+        description:
+          type: string
+          description: Detailed description
+        status:
+          $ref: '#/components/schemas/WorkItemStatus'
+        priority:
+          $ref: '#/components/schemas/PriorityLevel'
+        story_points:
+          type: integer
+          minimum: 0
+          nullable: true
+          description: Story point estimation
+        assignee_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Assigned user ID
+        reporter_id:
+          type: string
+          format: uuid
+          description: Reporter user ID
+        parent_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Parent work item ID (for sub-tasks)
+        sprint_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Associated sprint ID
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp (UTC)
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp (UTC)
+    WorkItemDetail:
+      allOf:
+      - $ref: '#/components/schemas/WorkItem'
+      - type: object
+        properties:
+          dependencies:
+            type: array
+            items:
+              $ref: '#/components/schemas/Dependency'
+            description: All dependencies for this work item
+          children:
+            type: array
+            items:
+              $ref: '#/components/schemas/WorkItem'
+            description: Child work items (sub-tasks)
+          comments_count:
+            type: integer
+            description: Number of comments
+          activity_count:
+            type: integer
+            description: Number of activity log entries
+    CreateWorkItemRequest:
+      type: object
+      required:
+      - type
+      - title
+      - description
+      - priority
+      properties:
+        type:
+          $ref: '#/components/schemas/WorkItemType'
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Work item title
+        description:
+          type: string
+          minLength: 1
+          description: Detailed description
+        priority:
+          $ref: '#/components/schemas/PriorityLevel'
+        story_points:
+          type: integer
+          minimum: 0
+          nullable: true
+          description: Story point estimation
+        assignee_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Assigned user ID
+        parent_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Parent work item ID (for stories linking to epics)
+        sprint_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Sprint to assign work item to
+    UpdateWorkItemRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Work item title
+        description:
+          type: string
+          minLength: 1
+          description: Detailed description
+        status:
+          $ref: '#/components/schemas/WorkItemStatus'
+        priority:
+          $ref: '#/components/schemas/PriorityLevel'
+        story_points:
+          type: integer
+          minimum: 0
+          nullable: true
+          description: Story point estimation
+        assignee_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Assigned user ID
+        sprint_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Sprint to assign work item to
+    Dependency:
+      type: object
+      required:
+      - id
+      - source_id
+      - target_id
+      - dependency_type
+      - created_at
+      - created_by
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier
+        source_id:
+          type: string
+          format: uuid
+          description: Source work item ID
+        target_id:
+          type: string
+          format: uuid
+          description: Target work item ID
+        dependency_type:
+          $ref: '#/components/schemas/DependencyType'
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp (UTC)
+        created_by:
+          type: string
+          format: uuid
+          description: User who created the dependency
+    CreateDependencyRequest:
+      type: object
+      required:
+      - target_id
+      - dependency_type
+      properties:
+        target_id:
+          type: string
+          format: uuid
+          description: Target work item ID
+        dependency_type:
+          $ref: '#/components/schemas/DependencyType'
+    DependencyListResponse:
+      type: object
+      required:
+      - dependencies
+      properties:
+        dependencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dependency'
+    WorkItemListResponse:
+      type: object
+      required:
+      - items
+      - pagination
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkItemSummary'
+        pagination:
+          $ref: '#/components/schemas/PaginationInfo'
+    PaginationInfo:
+      type: object
+      required:
+      - has_more
+      properties:
+        next_cursor:
+          type: string
+          nullable: true
+          description: Cursor for next page
+        has_more:
+          type: boolean
+          description: Whether more items are available
+        total_count:
+          type: integer
+          nullable: true
+          description: Total count (may be null for performance)
+    SearchRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Search query with boolean operators
+        filters:
+          type: object
+          properties:
+            types:
+              type: array
+              items:
+                $ref: '#/components/schemas/WorkItemType'
+            statuses:
+              type: array
+              items:
+                $ref: '#/components/schemas/WorkItemStatus'
+            priorities:
+              type: array
+              items:
+                $ref: '#/components/schemas/PriorityLevel'
+            assignee_ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+            sprint_ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+            created_after:
+              type: string
+              format: date-time
+            created_before:
+              type: string
+              format: date-time
+        sort:
+          type: object
+          properties:
+            field:
+              type: string
+              enum:
+              - created_at
+              - updated_at
+              - priority
+              - title
+            order:
+              type: string
+              enum:
+              - asc
+              - desc
+        cursor:
+          type: string
+          description: Cursor for pagination
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+    ErrorResponse:
+      type: object
+      required:
+      - error
+      - trace_id
+      - timestamp
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorDetail'
+        trace_id:
+          type: string
+          format: uuid
+          description: Trace ID for debugging
+        timestamp:
+          type: string
+          format: date-time
+          description: Error timestamp
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: object
+          additionalProperties: true
+          description: Additional error details
+        validation_errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    ValidationError:
+      type: object
+      required:
+      - field
+      - code
+      - message
+      properties:
+        field:
+          type: string
+          description: Field name
+        code:
+          type: string
+          description: Validation error code
+        message:
+          type: string
+          description: Validation error message
+    SprintStatus:
+      type: string
+      enum:
+      - planned
+      - active
+      - completed
+      - cancelled
+      description: Current status of sprint
+    Sprint:
+      type: object
+      required:
+      - id
+      - name
+      - status
+      - start_date
+      - end_date
+      - created_by
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier
+        name:
+          type: string
+          maxLength: 255
+          description: Sprint name
+        description:
+          type: string
+          description: Sprint description
+        status:
+          $ref: '#/components/schemas/SprintStatus'
+        start_date:
+          type: string
+          format: date
+          description: Sprint start date
+        end_date:
+          type: string
+          format: date
+          description: Sprint end date
+        capacity_points:
+          type: integer
+          minimum: 0
+          nullable: true
+          description: Sprint capacity in story points
+        committed_points:
+          type: integer
+          minimum: 0
+          default: 0
+          description: Committed story points
+        completed_points:
+          type: integer
+          minimum: 0
+          default: 0
+          description: Completed story points
+        created_by:
+          type: string
+          format: uuid
+          description: User who created the sprint
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp (UTC)
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp (UTC)
+    SprintDetail:
+      allOf:
+      - $ref: '#/components/schemas/Sprint'
+      - type: object
+        properties:
+          work_items:
+            type: array
+            items:
+              $ref: '#/components/schemas/WorkItemSummary'
+            description: Work items in this sprint
+          metrics:
+            $ref: '#/components/schemas/SprintMetrics'
+            description: Sprint metrics
+    CreateSprintRequest:
+      type: object
+      required:
+      - name
+      - start_date
+      - end_date
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Sprint name
+        description:
+          type: string
+          description: Sprint description
+        start_date:
+          type: string
+          format: date
+          description: Sprint start date
+        end_date:
+          type: string
+          format: date
+          description: Sprint end date (must be after start_date)
+        capacity_points:
+          type: integer
+          minimum: 0
+          nullable: true
+          description: Sprint capacity in story points
+    UpdateSprintRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Sprint name
+        description:
+          type: string
+          description: Sprint description
+        start_date:
+          type: string
+          format: date
+          description: Sprint start date
+        end_date:
+          type: string
+          format: date
+          description: Sprint end date (must be after start_date)
+        capacity_points:
+          type: integer
+          minimum: 0
+          nullable: true
+          description: Sprint capacity in story points
+        status:
+          $ref: '#/components/schemas/SprintStatus'
+    SprintCloseResult:
+      type: object
+      required:
+      - sprint_id
+      - completed_items
+      - moved_to_backlog
+      - final_metrics
+      properties:
+        sprint_id:
+          type: string
+          format: uuid
+          description: Closed sprint ID
+        completed_items:
+          type: integer
+          description: Number of completed work items
+        moved_to_backlog:
+          type: integer
+          description: Number of items moved to backlog
+        final_metrics:
+          $ref: '#/components/schemas/SprintMetrics'
+          description: Final sprint metrics
+    SprintMetrics:
+      type: object
+      required:
+      - total_items
+      - completed_items
+      - in_progress_items
+      - todo_items
+      - committed_points
+      - completed_points
+      - completion_percentage
+      properties:
+        total_items:
+          type: integer
+          description: Total number of work items
+        completed_items:
+          type: integer
+          description: Number of completed items
+        in_progress_items:
+          type: integer
+          description: Number of in-progress items
+        todo_items:
+          type: integer
+          description: Number of todo items
+        blocked_items:
+          type: integer
+          description: Number of blocked items
+        committed_points:
+          type: integer
+          description: Total committed story points
+        completed_points:
+          type: integer
+          description: Completed story points
+        remaining_points:
+          type: integer
+          description: Remaining story points
+        completion_percentage:
+          type: number
+          format: float
+          description: Completion percentage (0-100)
+        velocity:
+          type: number
+          format: float
+          nullable: true
+          description: Sprint velocity (for completed sprints)
+        days_remaining:
+          type: integer
+          nullable: true
+          description: Days remaining in sprint
+    BurndownData:
+      type: object
+      required:
+      - sprint_id
+      - data_points
+      properties:
+        sprint_id:
+          type: string
+          format: uuid
+          description: Sprint ID
+        data_points:
+          type: array
+          items:
+            $ref: '#/components/schemas/BurndownPoint'
+          description: Burndown chart data points
+        ideal_line:
+          type: array
+          items:
+            $ref: '#/components/schemas/BurndownPoint'
+          description: Ideal burndown line
+    BurndownPoint:
+      type: object
+      required:
+      - date
+      - remaining_points
+      properties:
+        date:
+          type: string
+          format: date
+          description: Date
+        remaining_points:
+          type: integer
+          description: Remaining story points
+        completed_points:
+          type: integer
+          description: Completed story points on this day
+    VelocityData:
+      type: object
+      required:
+      - sprint_id
+      - velocity
+      - completed_points
+      - committed_points
+      properties:
+        sprint_id:
+          type: string
+          format: uuid
+          description: Sprint ID
+        velocity:
+          type: number
+          format: float
+          description: Sprint velocity (completed points)
+        completed_points:
+          type: integer
+          description: Total completed story points
+        committed_points:
+          type: integer
+          description: Total committed story points
+        completion_rate:
+          type: number
+          format: float
+          description: Completion rate percentage (0-100)
+    CapacityCalculationRequest:
+      type: object
+      properties:
+        team_id:
+          type: string
+          format: uuid
+          description: Team ID for historical velocity
+        lookback_sprints:
+          type: integer
+          minimum: 1
+          maximum: 10
+          default: 3
+          description: Number of past sprints to consider
+        adjustment_factor:
+          type: number
+          format: float
+          minimum: 0.5
+          maximum: 1.5
+          default: 1.0
+          description: Adjustment factor for capacity
+    CapacityRecommendation:
+      type: object
+      required:
+      - recommended_capacity
+      - average_velocity
+      - confidence_level
+      properties:
+        recommended_capacity:
+          type: integer
+          description: Recommended sprint capacity in story points
+        average_velocity:
+          type: number
+          format: float
+          description: Average velocity from historical data
+        min_capacity:
+          type: integer
+          description: Minimum recommended capacity
+        max_capacity:
+          type: integer
+          description: Maximum recommended capacity
+        confidence_level:
+          type: string
+          enum:
+          - low
+          - medium
+          - high
+          description: Confidence level based on data quality
+        historical_sprints:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoricalSprintData'
+          description: Historical sprint data used for calculation
+    HistoricalSprintData:
+      type: object
+      required:
+      - sprint_id
+      - sprint_name
+      - velocity
+      - completion_rate
+      properties:
+        sprint_id:
+          type: string
+          format: uuid
+        sprint_name:
+          type: string
+        velocity:
+          type: number
+          format: float
+        completion_rate:
+          type: number
+          format: float
+    ForecastRequest:
+      type: object
+      required:
+      - remaining_points
+      properties:
+        remaining_points:
+          type: integer
+          minimum: 0
+          description: Remaining story points to complete
+        team_id:
+          type: string
+          format: uuid
+          description: Team ID for historical velocity
+        lookback_sprints:
+          type: integer
+          minimum: 1
+          maximum: 10
+          default: 3
+          description: Number of past sprints to consider
+    ForecastResult:
+      type: object
+      required:
+      - estimated_sprints
+      - average_velocity
+      - confidence_level
+      properties:
+        estimated_sprints:
+          type: number
+          format: float
+          description: Estimated number of sprints to complete
+        average_velocity:
+          type: number
+          format: float
+          description: Average velocity used for forecast
+        min_sprints:
+          type: integer
+          description: Minimum estimated sprints (optimistic)
+        max_sprints:
+          type: integer
+          description: Maximum estimated sprints (pessimistic)
+        confidence_level:
+          type: string
+          enum:
+          - low
+          - medium
+          - high
+          description: Confidence level based on data quality
+        completion_date_estimate:
+          type: string
+          format: date
+          nullable: true
+          description: Estimated completion date
+    WorkItemSummary:
+      type: object
+      required:
+      - id
+      - type
+      - title
+      - status
+      - priority
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+          - epic
+          - story
+          - defect
+        title:
+          type: string
+        status:
+          type: string
+          enum:
+          - todo
+          - in_progress
+          - in_review
+          - done
+          - blocked
+        priority:
+          type: string
+          enum:
+          - low
+          - medium
+          - high
+          - critical
+        story_points:
+          type: integer
+          nullable: true
+    SprintListResponse:
+      type: object
+      required:
+      - items
+      - pagination
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sprint'
+        pagination:
+          $ref: '#/components/schemas/PaginationInfo'
+    TokenResponse:
+      type: object
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      properties:
+        access_token:
+          type: string
+          description: JWT access token
+        refresh_token:
+          type: string
+          description: Refresh token for obtaining new access tokens
+        id_token:
+          type: string
+          description: OpenID Connect ID token
+        token_type:
+          type: string
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Access token expiration time in seconds
+          example: 3600
+        refresh_expires_in:
+          type: integer
+          description: Refresh token expiration time in seconds
+          example: 86400
+        scope:
+          type: string
+          description: Token scope
+          example: openid profile email
+    UserInfo:
+      type: object
+      required:
+      - sub
+      - preferred_username
+      properties:
+        sub:
+          type: string
+          format: uuid
+          description: User ID (subject)
+        preferred_username:
+          type: string
+          description: Username
+        email:
+          type: string
+          format: email
+          description: User email address
+        email_verified:
+          type: boolean
+          description: Whether email is verified
+        name:
+          type: string
+          description: Full name
+        given_name:
+          type: string
+          description: First name
+        family_name:
+          type: string
+          description: Last name
+    RegisterRequest:
+      type: object
+      required:
+      - username
+      - email
+      - password
+      properties:
+        username:
+          type: string
+          minLength: 3
+          maxLength: 50
+          example: johndoe
+        email:
+          type: string
+          format: email
+          example: john.doe@example.com
+        password:
+          type: string
+          format: password
+          minLength: 8
+          example: SecurePass123!
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: Doe
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+          description: Error code
+          example: invalid_credentials
+        message:
+          type: string
+          description: Human-readable error message
+          example: Invalid username or password
+        details:
+          type: object
+          description: Additional error details
+          additionalProperties: true
+  responses:
+    BadRequest:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflict - business rule violation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token from Keycloak
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+- BearerAuth: []
