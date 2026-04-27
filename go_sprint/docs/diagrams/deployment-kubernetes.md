@@ -314,7 +314,7 @@ spec:
     spec:
       containers:
       - name: nats
-        image: nats:2.10
+        image: nats:2.12
         ports:
         - containerPort: 4222
           name: client
@@ -366,7 +366,7 @@ spec:
     spec:
       containers:
       - name: postgres
-        image: postgres:15
+        image: postgres:18
         ports:
         - containerPort: 5432
           name: postgres

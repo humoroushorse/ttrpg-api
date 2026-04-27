@@ -12,6 +12,7 @@ import (
 	"github.com/humoroushorse/go_sprint/internal/repository/workitems"
 	"github.com/humoroushorse/go_sprint/pkg/models"
 	"github.com/humoroushorse/go_sprint/pkg/pagination"
+	"github.com/humoroushorse/go_sprint/pkg/websocket"
 )
 
 var (
@@ -32,27 +33,37 @@ var (
 // WorkItemRepository defines the interface for work item data access
 type WorkItemRepository interface {
 	CreateWorkItem(ctx context.Context, params workitems.CreateWorkItemParams) (workitems.SprintManagementWorkItem, error)
-	GetWorkItemByID(ctx context.Context, id pgtype.UUID) (workitems.SprintManagementWorkItem, error)
+	GetWorkItemByID(ctx context.Context, id pgtype.UUID) (workitems.GetWorkItemByIDRow, error)
 	UpdateWorkItem(ctx context.Context, params workitems.UpdateWorkItemParams) (workitems.SprintManagementWorkItem, error)
-	ListWorkItems(ctx context.Context, params workitems.ListWorkItemsParams) ([]workitems.SprintManagementWorkItem, error)
+	ListWorkItems(ctx context.Context, params workitems.ListWorkItemsParams) ([]workitems.ListWorkItemsRow, error)
 	ListWorkItemsByType(ctx context.Context, params workitems.ListWorkItemsByTypeParams) ([]workitems.SprintManagementWorkItem, error)
 	ListWorkItemsByStatus(ctx context.Context, params workitems.ListWorkItemsByStatusParams) ([]workitems.SprintManagementWorkItem, error)
+	ListWorkItemsBySprint(ctx context.Context, sprintID pgtype.UUID) ([]workitems.ListWorkItemsBySprintRow, error)
 	HasDependencies(ctx context.Context, id pgtype.UUID) (bool, error)
 	HasChildren(ctx context.Context, id pgtype.UUID) (bool, error)
 	SoftDeleteWorkItem(ctx context.Context, params workitems.SoftDeleteWorkItemParams) error
 }
 
+// ProjectRepository defines the interface for project data access
+type ProjectRepository interface {
+	GetNextTicketNumber(ctx context.Context, projectID uuid.UUID) (int, error)
+}
+
 // Service provides business logic for work item operations
 type Service struct {
-	repo   WorkItemRepository
-	logger *slog.Logger
+	repo        WorkItemRepository
+	projectRepo ProjectRepository
+	wsHub       *websocket.Hub
+	logger      *slog.Logger
 }
 
 // NewService creates a new work item service
-func NewService(repo WorkItemRepository, logger *slog.Logger) *Service {
+func NewService(repo WorkItemRepository, projectRepo ProjectRepository, wsHub *websocket.Hub, logger *slog.Logger) *Service {
 	return &Service{
-		repo:   repo,
-		logger: logger,
+		repo:        repo,
+		projectRepo: projectRepo,
+		wsHub:       wsHub,
+		logger:      logger,
 	}
 }
 
@@ -67,6 +78,7 @@ type CreateWorkItemRequest struct {
 	ReporterID  uuid.UUID            `json:"reporter_id"`
 	ParentID    *uuid.UUID           `json:"parent_id,omitempty"`
 	SprintID    *uuid.UUID           `json:"sprint_id,omitempty"`
+	ProjectID   *uuid.UUID           `json:"project_id"`
 }
 
 // UpdateWorkItemRequest represents a request to update a work item
@@ -98,13 +110,26 @@ func (s *Service) CreateWorkItem(ctx context.Context, req CreateWorkItemRequest)
 		}
 	}
 
+	// Generate ticket number for the project
+	var ticketNumber *int32
+	if req.ProjectID != nil {
+		nextNumber, err := s.projectRepo.GetNextTicketNumber(ctx, *req.ProjectID)
+		if err != nil {
+			logger.Error("failed to generate ticket number", slog.String("error", err.Error()))
+			return nil, fmt.Errorf("failed to generate ticket number: %w", err)
+		}
+		num := int32(nextNumber)
+		ticketNumber = &num
+	}
+
 	// Convert to repository params
 	params := workitems.CreateWorkItemParams{
-		Type:       workitems.SprintManagementWorkItemType(req.Type),
-		Title:      req.Title,
-		Priority:   workitems.SprintManagementPriorityLevel(req.Priority),
-		Status:     workitems.SprintManagementWorkItemStatusTodo, // Default status
-		ReporterID: uuidToPgtype(req.ReporterID),
+		Type:         workitems.SprintManagementWorkItemType(req.Type),
+		Title:        req.Title,
+		Priority:     workitems.SprintManagementPriorityLevel(req.Priority),
+		Status:       workitems.SprintManagementWorkItemStatusTodo, // Default status
+		ReporterID:   uuidToPgtype(req.ReporterID),
+		TicketNumber: ticketNumber,
 	}
 
 	if req.Description != "" {
@@ -123,6 +148,9 @@ func (s *Service) CreateWorkItem(ctx context.Context, req CreateWorkItemRequest)
 	if req.SprintID != nil {
 		params.SprintID = uuidToPgtype(*req.SprintID)
 	}
+	if req.ProjectID != nil {
+		params.ProjectID = uuidToPgtype(*req.ProjectID)
+	}
 
 	// Create work item
 	workItem, err := s.repo.CreateWorkItem(ctx, params)
@@ -133,6 +161,24 @@ func (s *Service) CreateWorkItem(ctx context.Context, req CreateWorkItemRequest)
 
 	result := s.toModel(workItem)
 	logger.Info("work item created", slog.Any("work_item", result))
+
+	// Broadcast WebSocket event
+	if s.wsHub != nil && result.SprintID != nil {
+		room := "sprint:" + result.SprintID.String()
+		logger.Info("broadcasting work item creation",
+			slog.String("room", room),
+			slog.String("work_item_id", result.ID.String()),
+		)
+		s.wsHub.BroadcastToRoomMessage(room, websocket.Message{
+			Type: "work_item.created",
+			Data: result,
+		})
+	} else {
+		logger.Warn("skipping websocket broadcast",
+			slog.Bool("hub_nil", s.wsHub == nil),
+			slog.Bool("sprint_id_nil", result.SprintID == nil),
+		)
+	}
 
 	return result, nil
 }
@@ -147,7 +193,7 @@ func (s *Service) GetWorkItem(ctx context.Context, id uuid.UUID) (*models.WorkIt
 		return nil, ErrWorkItemNotFound
 	}
 
-	result := s.toModel(workItem)
+	result := s.getByIDRowToModel(workItem)
 	logger.Info("work item retrieved", slog.Any("work_item", result))
 
 	return result, nil
@@ -258,6 +304,24 @@ func (s *Service) UpdateWorkItem(ctx context.Context, id uuid.UUID, req UpdateWo
 	result := s.toModel(updated)
 	logger.Info("work item updated", slog.Any("work_item", result))
 
+	// Broadcast WebSocket event
+	if s.wsHub != nil && result.SprintID != nil {
+		room := "sprint:" + result.SprintID.String()
+		logger.Info("broadcasting work item update",
+			slog.String("room", room),
+			slog.String("work_item_id", result.ID.String()),
+		)
+		s.wsHub.BroadcastToRoomMessage(room, websocket.Message{
+			Type: "work_item.updated",
+			Data: result,
+		})
+	} else {
+		logger.Warn("skipping websocket broadcast",
+			slog.Bool("hub_nil", s.wsHub == nil),
+			slog.Bool("sprint_id_nil", result.SprintID == nil),
+		)
+	}
+
 	return result, nil
 }
 
@@ -310,8 +374,25 @@ func (s *Service) DeleteWorkItem(ctx context.Context, id uuid.UUID, deletedBy uu
 }
 
 // ListWorkItems retrieves a list of work items with optional filters and cursor-based pagination
-func (s *Service) ListWorkItems(ctx context.Context, typeFilter *models.WorkItemType, statusFilter *models.WorkItemStatus, cursor *pagination.Cursor, limit int32) ([]*models.WorkItem, error) {
+func (s *Service) ListWorkItems(ctx context.Context, typeFilter *models.WorkItemType, statusFilter *models.WorkItemStatus, sprintIDFilter *uuid.UUID, cursor *pagination.Cursor, limit int32) ([]*models.WorkItem, error) {
 	logger := s.getLogger(ctx)
+
+	// If sprint_id filter is provided, use ListWorkItemsBySprint
+	if sprintIDFilter != nil {
+		items, err := s.repo.ListWorkItemsBySprint(ctx, uuidToPgtype(*sprintIDFilter))
+		if err != nil {
+			logger.Error("failed to list work items by sprint", slog.String("error", err.Error()))
+			return nil, fmt.Errorf("failed to list work items: %w", err)
+		}
+
+		result := make([]*models.WorkItem, len(items))
+		for i, item := range items {
+			result[i] = s.listBySprintRowToModel(item)
+		}
+
+		logger.Info("work items listed by sprint", slog.Int("count", len(result)), slog.String("sprint_id", sprintIDFilter.String()))
+		return result, nil
+	}
 
 	// If filters are provided and cursor is not, use the filtered queries
 	// Note: The filtered queries don't support cursor pagination, so we only use them without cursor
@@ -427,7 +508,7 @@ func (s *Service) ListWorkItems(ctx context.Context, typeFilter *models.WorkItem
 
 	result := make([]*models.WorkItem, len(items))
 	for i, item := range items {
-		result[i] = s.toModel(item)
+		result[i] = s.listRowToModel(item)
 	}
 
 	logger.Info("work items listed", slog.Int("count", len(result)))
@@ -469,19 +550,19 @@ func (s *Service) validateParentChildRelationship(ctx context.Context, childType
 	parentType := models.WorkItemType(parent.Type)
 
 	// Validate relationship rules:
-	// - Stories can have Epic parents
-	// - Defects can have Epic or Story parents
-	// - Epics cannot have parents
+	// - Epic: cannot have parents
+	// - Story: parent must be Epic
+	// - Defect: parent must be Epic
 	switch childType {
 	case models.WorkItemTypeEpic:
 		return fmt.Errorf("%w: epics cannot have parents", ErrInvalidParentType)
 	case models.WorkItemTypeStory:
 		if parentType != models.WorkItemTypeEpic {
-			return fmt.Errorf("%w: stories can only have epic parents", ErrInvalidParentType)
+			return fmt.Errorf("%w: stories must have an epic parent", ErrInvalidParentType)
 		}
 	case models.WorkItemTypeDefect:
-		if parentType != models.WorkItemTypeEpic && parentType != models.WorkItemTypeStory {
-			return fmt.Errorf("%w: defects can only have epic or story parents", ErrInvalidParentType)
+		if parentType != models.WorkItemTypeEpic {
+			return fmt.Errorf("%w: defects must have an epic parent", ErrInvalidParentType)
 		}
 	}
 
@@ -489,8 +570,13 @@ func (s *Service) validateParentChildRelationship(ctx context.Context, childType
 }
 
 // validateStatusTransition validates status transitions
-func (s *Service) validateStatusTransition(ctx context.Context, workItem workitems.SprintManagementWorkItem, newStatus models.WorkItemStatus) error {
+func (s *Service) validateStatusTransition(ctx context.Context, workItem workitems.GetWorkItemByIDRow, newStatus models.WorkItemStatus) error {
 	currentStatus := models.WorkItemStatus(workItem.Status)
+
+	// Allow staying in the same status (no transition)
+	if currentStatus == newStatus {
+		return nil
+	}
 
 	// Define valid transitions
 	validTransitions := map[models.WorkItemStatus][]models.WorkItemStatus{
@@ -610,4 +696,157 @@ func pgtypeToUUID(pg pgtype.UUID) uuid.UUID {
 		return uuid.Nil
 	}
 	return pg.Bytes
+}
+
+// listBySprintRowToModel converts ListWorkItemsBySprintRow to domain model
+func (s *Service) listBySprintRowToModel(row workitems.ListWorkItemsBySprintRow) *models.WorkItem {
+	result := &models.WorkItem{
+		ID:         pgtypeToUUID(row.ID),
+		Type:       models.WorkItemType(row.Type),
+		Title:      row.Title,
+		Status:     models.WorkItemStatus(row.Status),
+		Priority:   models.PriorityLevel(row.Priority),
+		ReporterID: pgtypeToUUID(row.ReporterID),
+		CreatedAt:  row.CreatedAt.Time,
+		UpdatedAt:  row.UpdatedAt.Time,
+	}
+
+	if row.Description != nil {
+		result.Description = *row.Description
+	}
+	if row.StoryPoints != nil {
+		sp := int(*row.StoryPoints)
+		result.StoryPoints = &sp
+	}
+	if row.AssigneeID.Valid {
+		assigneeID := pgtypeToUUID(row.AssigneeID)
+		result.AssigneeID = &assigneeID
+	}
+	if row.ParentID.Valid {
+		parentID := pgtypeToUUID(row.ParentID)
+		result.ParentID = &parentID
+	}
+	if row.SprintID.Valid {
+		sprintID := pgtypeToUUID(row.SprintID)
+		result.SprintID = &sprintID
+	}
+	if row.TicketNumber != nil {
+		tn := int(*row.TicketNumber)
+		result.TicketNumber = &tn
+	}
+	if row.ProjectKey != nil {
+		result.ProjectKey = row.ProjectKey
+	}
+	if row.DeletedAt.Valid {
+		deletedAt := row.DeletedAt.Time
+		result.DeletedAt = &deletedAt
+	}
+	if row.DeletedBy.Valid {
+		deletedBy := pgtypeToUUID(row.DeletedBy)
+		result.DeletedBy = &deletedBy
+	}
+
+	return result
+}
+
+// getByIDRowToModel converts GetWorkItemByIDRow to domain model
+func (s *Service) getByIDRowToModel(row workitems.GetWorkItemByIDRow) *models.WorkItem {
+	result := &models.WorkItem{
+		ID:         pgtypeToUUID(row.ID),
+		Type:       models.WorkItemType(row.Type),
+		Title:      row.Title,
+		Status:     models.WorkItemStatus(row.Status),
+		Priority:   models.PriorityLevel(row.Priority),
+		ReporterID: pgtypeToUUID(row.ReporterID),
+		CreatedAt:  row.CreatedAt.Time,
+		UpdatedAt:  row.UpdatedAt.Time,
+	}
+
+	if row.Description != nil {
+		result.Description = *row.Description
+	}
+	if row.StoryPoints != nil {
+		sp := int(*row.StoryPoints)
+		result.StoryPoints = &sp
+	}
+	if row.AssigneeID.Valid {
+		assigneeID := pgtypeToUUID(row.AssigneeID)
+		result.AssigneeID = &assigneeID
+	}
+	if row.ParentID.Valid {
+		parentID := pgtypeToUUID(row.ParentID)
+		result.ParentID = &parentID
+	}
+	if row.SprintID.Valid {
+		sprintID := pgtypeToUUID(row.SprintID)
+		result.SprintID = &sprintID
+	}
+	if row.TicketNumber != nil {
+		tn := int(*row.TicketNumber)
+		result.TicketNumber = &tn
+	}
+	if row.ProjectKey != nil {
+		result.ProjectKey = row.ProjectKey
+	}
+	if row.DeletedAt.Valid {
+		deletedAt := row.DeletedAt.Time
+		result.DeletedAt = &deletedAt
+	}
+	if row.DeletedBy.Valid {
+		deletedBy := pgtypeToUUID(row.DeletedBy)
+		result.DeletedBy = &deletedBy
+	}
+
+	return result
+}
+
+// listRowToModel converts ListWorkItemsRow to domain model
+func (s *Service) listRowToModel(row workitems.ListWorkItemsRow) *models.WorkItem {
+	result := &models.WorkItem{
+		ID:         pgtypeToUUID(row.ID),
+		Type:       models.WorkItemType(row.Type),
+		Title:      row.Title,
+		Status:     models.WorkItemStatus(row.Status),
+		Priority:   models.PriorityLevel(row.Priority),
+		ReporterID: pgtypeToUUID(row.ReporterID),
+		CreatedAt:  row.CreatedAt.Time,
+		UpdatedAt:  row.UpdatedAt.Time,
+	}
+
+	if row.Description != nil {
+		result.Description = *row.Description
+	}
+	if row.StoryPoints != nil {
+		sp := int(*row.StoryPoints)
+		result.StoryPoints = &sp
+	}
+	if row.AssigneeID.Valid {
+		assigneeID := pgtypeToUUID(row.AssigneeID)
+		result.AssigneeID = &assigneeID
+	}
+	if row.ParentID.Valid {
+		parentID := pgtypeToUUID(row.ParentID)
+		result.ParentID = &parentID
+	}
+	if row.SprintID.Valid {
+		sprintID := pgtypeToUUID(row.SprintID)
+		result.SprintID = &sprintID
+	}
+	if row.TicketNumber != nil {
+		tn := int(*row.TicketNumber)
+		result.TicketNumber = &tn
+	}
+	if row.ProjectKey != nil {
+		result.ProjectKey = row.ProjectKey
+	}
+	if row.DeletedAt.Valid {
+		deletedAt := row.DeletedAt.Time
+		result.DeletedAt = &deletedAt
+	}
+	if row.DeletedBy.Valid {
+		deletedBy := pgtypeToUUID(row.DeletedBy)
+		result.DeletedBy = &deletedBy
+	}
+
+	return result
 }

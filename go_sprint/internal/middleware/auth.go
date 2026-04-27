@@ -18,6 +18,8 @@ const (
 	UserContextKey contextKey = "user"
 	// TraceIDContextKey is the key for storing trace ID in context
 	TraceIDContextKey contextKey = "trace_id"
+	// LoggerContextKey is the key for storing logger in context
+	LoggerContextKey contextKey = "logger"
 )
 
 // AuthMiddleware wraps the shared auth library's JWT middleware

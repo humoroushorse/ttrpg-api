@@ -51,7 +51,7 @@ func (r *Repository) PermanentlyDeleteWorkItem(ctx context.Context, id pgtype.UU
 
 // Read operations (use replica database)
 
-func (r *Repository) GetWorkItemByID(ctx context.Context, id pgtype.UUID) (SprintManagementWorkItem, error) {
+func (r *Repository) GetWorkItemByID(ctx context.Context, id pgtype.UUID) (GetWorkItemByIDRow, error) {
 	queries := New(r.replica)
 	return queries.GetWorkItemByID(ctx, id)
 }
@@ -61,7 +61,7 @@ func (r *Repository) GetWorkItemByIDIncludingDeleted(ctx context.Context, id pgt
 	return queries.GetWorkItemByIDIncludingDeleted(ctx, id)
 }
 
-func (r *Repository) ListWorkItems(ctx context.Context, params ListWorkItemsParams) ([]SprintManagementWorkItem, error) {
+func (r *Repository) ListWorkItems(ctx context.Context, params ListWorkItemsParams) ([]ListWorkItemsRow, error) {
 	queries := New(r.replica)
 	return queries.ListWorkItems(ctx, params)
 }
@@ -76,7 +76,7 @@ func (r *Repository) ListWorkItemsByStatus(ctx context.Context, params ListWorkI
 	return queries.ListWorkItemsByStatus(ctx, params)
 }
 
-func (r *Repository) ListWorkItemsBySprint(ctx context.Context, sprintID pgtype.UUID) ([]SprintManagementWorkItem, error) {
+func (r *Repository) ListWorkItemsBySprint(ctx context.Context, sprintID pgtype.UUID) ([]ListWorkItemsBySprintRow, error) {
 	queries := New(r.replica)
 	return queries.ListWorkItemsBySprint(ctx, sprintID)
 }

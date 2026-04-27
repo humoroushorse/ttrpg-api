@@ -251,7 +251,7 @@ curl -X POST \
     "description": "Implement authentication",
     "priority": "high"
   }' \
-  http://localhost:8082/api/v1/workitems
+  http://localhost:8003/api/v1/workitems
 ```
 
 ## Benefits Achieved

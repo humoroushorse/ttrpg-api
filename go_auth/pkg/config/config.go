@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -25,17 +26,19 @@ type ServerConfig struct {
 
 // KeycloakConfig holds Keycloak connection configuration
 type KeycloakConfig struct {
-	URL          string `yaml:"url"`
-	Realm        string `yaml:"realm"`
-	ClientID     string `yaml:"client_id"`
-	ClientSecret string `yaml:"client_secret"`
-	AdminUser    string `yaml:"admin_user"`
-	AdminPass    string `yaml:"admin_pass"`
+	URL          string            `yaml:"url"`
+	DefaultRealm string            `yaml:"default_realm"`
+	ClientID     string            `yaml:"client_id"`
+	ClientSecret string            `yaml:"client_secret"`
+	AdminUser    string            `yaml:"admin_user"`
+	AdminPass    string            `yaml:"admin_pass"`
+	RealmClients map[string]string `yaml:"realm_clients"` // realm -> clientId mapping
 }
 
 // DatabaseConfig holds database connection configuration
 type DatabaseConfig struct {
-	URL             string        `yaml:"url"`
+	MasterURL       string        `yaml:"master_url"`
+	ReplicaURL      string        `yaml:"replica_url"`
 	MaxOpenConns    int           `yaml:"max_open_conns"`
 	MaxIdleConns    int           `yaml:"max_idle_conns"`
 	ConnMaxLifetime time.Duration `yaml:"conn_max_lifetime"`
@@ -59,14 +62,16 @@ func LoadFromEnv() (*Config, error) {
 		},
 		Keycloak: KeycloakConfig{
 			URL:          getEnv("KEYCLOAK_URL", "http://localhost:8080"),
-			Realm:        getEnv("KEYCLOAK_REALM", "ttrpg"),
-			ClientID:     getEnv("KEYCLOAK_CLIENT_ID", "auth-service"),
+			DefaultRealm: getEnv("KEYCLOAK_DEFAULT_REALM", "sprint-management"),
+			ClientID:     getEnv("KEYCLOAK_CLIENT_ID", "sprint-management-ui"),
 			ClientSecret: getEnv("KEYCLOAK_CLIENT_SECRET", ""),
 			AdminUser:    getEnv("KEYCLOAK_ADMIN_USER", "admin"),
 			AdminPass:    getEnv("KEYCLOAK_ADMIN_PASS", "admin"),
+			RealmClients: parseRealmClients(getEnv("KEYCLOAK_REALM_CLIENTS", "ttrpg:auth-service,sprint-management:sprint-management-ui")),
 		},
 		Database: DatabaseConfig{
-			URL:             getEnv("DATABASE_URL", "postgres://postgres:admin@localhost:5432/ttrpg-pg?sslmode=disable"),
+			MasterURL:       getEnv("DATABASE_MASTER_URL", "postgres://postgres:admin@localhost:5432/ttrpg-pg?sslmode=disable"),
+			ReplicaURL:      getEnv("DATABASE_REPLICA_URL", "postgres://postgres:admin@localhost:5432/ttrpg-pg?sslmode=disable"),
 			MaxOpenConns:    getEnvAsInt("DATABASE_MAX_OPEN_CONNS", 25),
 			MaxIdleConns:    getEnvAsInt("DATABASE_MAX_IDLE_CONNS", 5),
 			ConnMaxLifetime: getEnvAsDuration("DATABASE_CONN_MAX_LIFETIME", 5*time.Minute),
@@ -103,16 +108,19 @@ func (c *Config) Validate() error {
 	if c.Keycloak.URL == "" {
 		return fmt.Errorf("Keycloak URL is required")
 	}
-	if c.Keycloak.Realm == "" {
-		return fmt.Errorf("Keycloak realm is required")
+	if c.Keycloak.DefaultRealm == "" {
+		return fmt.Errorf("Keycloak default realm is required")
 	}
 	if c.Keycloak.ClientID == "" {
 		return fmt.Errorf("Keycloak client ID is required")
 	}
 
 	// Database validation
-	if c.Database.URL == "" {
-		return fmt.Errorf("database URL is required")
+	if c.Database.MasterURL == "" {
+		return fmt.Errorf("database master URL is required")
+	}
+	if c.Database.ReplicaURL == "" {
+		return fmt.Errorf("database replica URL is required")
 	}
 
 	// Logging validation
@@ -125,6 +133,29 @@ func (c *Config) Validate() error {
 }
 
 // Helper functions to read environment variables
+
+// parseRealmClients parses "realm1:client1,realm2:client2" into a map
+func parseRealmClients(s string) map[string]string {
+	m := make(map[string]string)
+	if s == "" {
+		return m
+	}
+	for _, pair := range strings.Split(s, ",") {
+		parts := strings.SplitN(strings.TrimSpace(pair), ":", 2)
+		if len(parts) == 2 {
+			m[strings.TrimSpace(parts[0])] = strings.TrimSpace(parts[1])
+		}
+	}
+	return m
+}
+
+// GetClientIDForRealm returns the client ID for a given realm, falling back to the default ClientID
+func (kc *KeycloakConfig) GetClientIDForRealm(realm string) string {
+	if clientID, ok := kc.RealmClients[realm]; ok {
+		return clientID
+	}
+	return kc.ClientID
+}
 
 func getEnv(key, defaultValue string) string {
 	if value := os.Getenv(key); value != "" {

@@ -19,8 +19,10 @@ import (
 	"github.com/google/uuid"
 	authmiddleware "github.com/humoroushorse/go_auth/pkg/auth/middleware"
 	api "github.com/humoroushorse/go_sprint/api/generated"
+	"github.com/humoroushorse/go_sprint/internal/adapters"
 	"github.com/humoroushorse/go_sprint/internal/handlers"
 	"github.com/humoroushorse/go_sprint/internal/middleware"
+	"github.com/humoroushorse/go_sprint/internal/repository"
 	dependenciesRepo "github.com/humoroushorse/go_sprint/internal/repository/dependencies"
 	sprintRepo "github.com/humoroushorse/go_sprint/internal/repository/sprints"
 	workitemRepo "github.com/humoroushorse/go_sprint/internal/repository/workitems"
@@ -32,6 +34,7 @@ import (
 	"github.com/humoroushorse/go_sprint/pkg/cache"
 	"github.com/humoroushorse/go_sprint/pkg/config"
 	"github.com/humoroushorse/go_sprint/pkg/logging"
+	"github.com/humoroushorse/go_sprint/pkg/websocket"
 	"github.com/jackc/pgx/v5/pgxpool"
 	openapi_types "github.com/oapi-codegen/runtime/types"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -50,7 +53,16 @@ func main() {
 
 	// Initialize logger
 	logger := logging.NewLogger(cfg.Logging)
-	logger.Info("Starting Sprint Management Service", slog.String("version", "1.0.0"))
+	logger.Info("Starting Sprint Management Service",
+		slog.String("version", "1.0.0"),
+		slog.String("log_format", cfg.Logging.Format),
+		slog.Bool("colors_enabled", cfg.Logging.EnableColors))
+
+	// Test log levels to verify configuration
+	logger.Debug("This is a DEBUG log - you should only see this if log level is DEBUG")
+	logger.Info("This is an INFO log - you should see this if log level is INFO or DEBUG")
+	logger.Warn("This is a WARN log - you should see this if log level is WARN, INFO, or DEBUG")
+	logger.Error("This is an ERROR log - you should always see this unless log level is OFF")
 
 	// Initialize database connection pools
 	logger.Info("Connecting to database...")
@@ -84,10 +96,16 @@ func main() {
 	sprintRepository := sprintRepo.New(masterPool)
 	workitemRepository := workitemRepo.New(masterPool)
 	dependenciesRepository := dependenciesRepo.NewRepository(masterPool, replicaPool)
+	projectRepository := repository.NewProjectRepository(masterPool, replicaPool)
+
+	// Initialize WebSocket hub
+	wsHub := websocket.NewHub(context.Background(), logger)
+	go wsHub.Run()
+	logger.Info("WebSocket hub started")
 
 	// Initialize services
 	sprintSvc := sprintService.NewService(sprintRepository, workitemRepository, logger)
-	workitemSvc := workitemService.NewService(workitemRepository, logger)
+	workitemSvc := workitemService.NewService(workitemRepository, projectRepository, wsHub, logger)
 	burndownSvc := burndownService.NewService(sprintRepository, workitemRepository, logger)
 	estimationSvc := estimationService.NewService(sprintRepository, workitemRepository, estimationService.Config{
 		StoryPointScale: []int{1, 2, 3, 5, 8, 13, 21},
@@ -101,12 +119,20 @@ func main() {
 	sprintHandler := handlers.NewSprintHandler(sprintSvc, burndownSvc, estimationSvc, logger)
 	workitemHandler := handlers.NewWorkItemHandler(workitemSvc, dependenciesSvc, logger, cacheInstance)
 
+	// Initialize project repository and handler
+	projectRepo := repository.NewProjectRepository(masterPool, replicaPool)
+	projectHandler := handlers.NewProjectHandler(projectRepo, logger)
+
 	// Initialize JWT validator for authentication
 	jwtValidator := authmiddleware.NewJWTValidator(authmiddleware.JWTConfig{
 		KeycloakURL: cfg.Auth.KeycloakURL,
 		Realm:       cfg.Auth.Realm,
 		ClientID:    cfg.Auth.ClientID,
 	})
+
+	// Initialize WebSocket handler with JWT adapter
+	jwtAdapter := adapters.NewJWTValidatorAdapter(jwtValidator)
+	wsHandler := websocket.NewHandler(wsHub, jwtAdapter, logger)
 
 	// Setup reverse proxy to auth service
 	authServiceURL, err := url.Parse(cfg.Auth.ServiceURL)
@@ -152,6 +178,9 @@ func main() {
 
 	// Metrics endpoint
 	mux.Handle("/metrics", promhttp.Handler())
+
+	// WebSocket endpoint (auth handled by WebSocket handler via token query param)
+	mux.Handle("/api/v1/ws", middleware.LoggingMiddleware(logger)(http.HandlerFunc(wsHandler.ServeHTTP)))
 
 	// Serve OpenAPI spec
 	mux.HandleFunc("/api/openapi.yaml", func(w http.ResponseWriter, r *http.Request) {
@@ -275,6 +304,8 @@ func main() {
 		switch r.Method {
 		case http.MethodGet:
 			workitemHandler.GetWorkItem(w, r, openapi_types.UUID(id))
+		case http.MethodPut:
+			workitemHandler.UpdateWorkItem(w, r, openapi_types.UUID(id))
 		default:
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		}
@@ -395,6 +426,51 @@ func main() {
 		switch r.Method {
 		case http.MethodGet:
 			sprintHandler.GetSprint(w, r, openapi_types.UUID(id))
+		case http.MethodPut:
+			sprintHandler.UpdateSprint(w, r, openapi_types.UUID(id))
+		case http.MethodDelete:
+			sprintHandler.DeleteSprint(w, r, openapi_types.UUID(id))
+		default:
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		}
+	}))))
+
+	// Projects endpoints
+	mux.Handle("/api/v1/projects", loggingMiddlewareFunc(authMiddlewareFunc(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case http.MethodGet:
+			projectHandler.ListProjects(w, r)
+		case http.MethodPost:
+			projectHandler.CreateProject(w, r)
+		default:
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		}
+	}))))
+
+	// Project by ID or key endpoint
+	mux.Handle("/api/v1/projects/", loggingMiddlewareFunc(authMiddlewareFunc(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		path := strings.TrimPrefix(r.URL.Path, "/api/v1/projects/")
+		segments := strings.Split(path, "/")
+
+		if len(segments) == 0 || segments[0] == "" {
+			http.Error(w, "Invalid project path", http.StatusBadRequest)
+			return
+		}
+
+		// Check if it's /projects/key/:key
+		if segments[0] == "key" && len(segments) >= 2 {
+			projectHandler.GetProjectByKey(w, r)
+			return
+		}
+
+		// Otherwise it's /projects/:id
+		switch r.Method {
+		case http.MethodGet:
+			projectHandler.GetProject(w, r)
+		case http.MethodPut:
+			projectHandler.UpdateProject(w, r)
+		case http.MethodDelete:
+			projectHandler.DeleteProject(w, r)
 		default:
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		}

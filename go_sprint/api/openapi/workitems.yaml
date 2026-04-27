@@ -482,6 +482,7 @@ components:
         - title
         - description
         - priority
+        - project_id
       properties:
         type:
           $ref: '#/components/schemas/WorkItemType'
@@ -510,12 +511,18 @@ components:
           type: string
           format: uuid
           nullable: true
-          description: Parent work item ID (for stories linking to epics)
+          description: |
+            Parent work item ID. Required for Story and Defect types (must be an Epic).
+            Must be null for Epic type.
         sprint_id:
           type: string
           format: uuid
           nullable: true
           description: Sprint to assign work item to
+        project_id:
+          type: string
+          format: uuid
+          description: Project ID (required)
 
     UpdateWorkItemRequest:
       type: object

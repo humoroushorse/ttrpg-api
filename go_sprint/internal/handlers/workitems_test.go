@@ -12,7 +12,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/humoroushorse/go_auth/pkg/auth/models"
-	"github.com/humoroushorse/go_sprint/api/generated"
+	api "github.com/humoroushorse/go_sprint/api/generated"
 	"github.com/humoroushorse/go_sprint/internal/middleware"
 	"github.com/humoroushorse/go_sprint/internal/service/workitems"
 	pkgmodels "github.com/humoroushorse/go_sprint/pkg/models"
@@ -68,7 +68,7 @@ func createTestContext() context.Context {
 
 	// Add logger to context
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
-	ctx = context.WithValue(ctx, "logger", logger)
+	ctx = context.WithValue(ctx, middleware.LoggerContextKey, logger)
 
 	return ctx
 }

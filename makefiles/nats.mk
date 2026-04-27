@@ -4,7 +4,7 @@
 # This file is imported - do not import other files
 COMMON_REPOSITORY_ROOT=~/projects/ttrpg/ttrpg-api
 CONTAINER_RUNNER := $(if $(CONTAINER_RUNNER),$(CONTAINER_RUNNER),"docker")
-CONTAINER_NATS_IMAGE=nats:2.10-alpine
+CONTAINER_NATS_IMAGE=nats:2.12-alpine
 
 ################################################################################
 # NATS Configuration
@@ -12,7 +12,7 @@ CONTAINER_NATS_IMAGE=nats:2.10-alpine
 CONTAINER_NATS_CLIENT_PORT=4222
 CONTAINER_NATS_HTTP_PORT=8222
 CONTAINER_NATS_CLUSTER_PORT=6222
-NATS_CONTAINER_NAME=sprint-nats
+NATS_CONTAINER_NAME=ttrpg-nats
 
 .PHONY: nats-clean
 nats-clean: # removes local volume mount data

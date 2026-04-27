@@ -160,7 +160,7 @@ deploy() {
     print_info "To access the services:"
     echo "  Sprint Service: kubectl port-forward -n $NAMESPACE service/sprint-service 8080:8080"
     echo "  Auth Service: kubectl port-forward -n $NAMESPACE service/auth-service 8081:8080"
-    echo "  Keycloak: kubectl port-forward -n $NAMESPACE service/keycloak-service 8082:8080"
+    echo "  Keycloak: kubectl port-forward -n $NAMESPACE service/keycloak-service 8003:8080"
     echo ""
     print_info "To view logs:"
     echo "  Sprint Service: kubectl logs -f -n $NAMESPACE deployment/sprint-service"

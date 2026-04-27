@@ -1,4 +1,4 @@
-FROM quay.io/keycloak/keycloak:latest as builder
+FROM keycloak/keycloak:26.5 as builder
 
 # Enable health and metrics support
 ENV KC_HEALTH_ENABLED=true
@@ -9,7 +9,7 @@ ENV KC_DB=postgres
 
 RUN /opt/keycloak/bin/kc.sh build
 
-FROM quay.io/keycloak/keycloak:latest
+FROM keycloak/keycloak:26.5
 
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 

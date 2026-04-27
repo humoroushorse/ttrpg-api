@@ -257,10 +257,10 @@ go test ./pkg/pagination -v -run TestProperty
 ### Run with Infrastructure:
 ```bash
 # Start PostgreSQL
-docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres:15
+docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres:18
 
 # Start NATS
-docker run -d -p 4222:4222 nats:2.10
+docker run -d -p 4222:4222 nats:2.12
 
 # Run tests
 TEST_DATABASE_URL=postgres://postgres:postgres@localhost:5432/test go test ./...

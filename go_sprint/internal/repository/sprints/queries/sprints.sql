@@ -72,6 +72,15 @@ WHERE deleted_at IS NULL
     sqlc.narg('cursor_timestamp')::timestamptz IS NULL
     OR (created_at, id) > (sqlc.narg('cursor_timestamp')::timestamptz, sqlc.narg('cursor_id')::uuid)
   )
+  AND (
+    sqlc.narg('search_query')::text IS NULL
+    OR name ILIKE '%' || sqlc.narg('search_query')::text || '%'
+    OR description ILIKE '%' || sqlc.narg('search_query')::text || '%'
+  )
+  AND (
+    sqlc.narg('status_filter')::text[] IS NULL
+    OR status::text = ANY(sqlc.narg('status_filter')::text[])
+  )
 ORDER BY created_at ASC, id ASC
 LIMIT $1;
 

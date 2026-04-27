@@ -33,7 +33,7 @@ info:
     url: https://opensource.org/licenses/MIT
 
 servers:
-  - url: http://localhost:8082
+  - url: http://localhost:8003
     description: Local development server
   - url: https://api.sprint.example.com
     description: Production server

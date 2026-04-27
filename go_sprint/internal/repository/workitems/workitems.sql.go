@@ -46,23 +46,27 @@ INSERT INTO sprint_management.work_items (
     assignee_id,
     reporter_id,
     parent_id,
-    sprint_id
+    sprint_id,
+    project_id,
+    ticket_number
 ) VALUES (
-    $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
-) RETURNING id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by
+    $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12
+) RETURNING id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by, project_id, ticket_number
 `
 
 type CreateWorkItemParams struct {
-	Type        SprintManagementWorkItemType   `json:"type"`
-	Title       string                         `json:"title"`
-	Description *string                        `json:"description"`
-	Status      SprintManagementWorkItemStatus `json:"status"`
-	Priority    SprintManagementPriorityLevel  `json:"priority"`
-	StoryPoints *int32                         `json:"story_points"`
-	AssigneeID  pgtype.UUID                    `json:"assignee_id"`
-	ReporterID  pgtype.UUID                    `json:"reporter_id"`
-	ParentID    pgtype.UUID                    `json:"parent_id"`
-	SprintID    pgtype.UUID                    `json:"sprint_id"`
+	Type         SprintManagementWorkItemType   `json:"type"`
+	Title        string                         `json:"title"`
+	Description  *string                        `json:"description"`
+	Status       SprintManagementWorkItemStatus `json:"status"`
+	Priority     SprintManagementPriorityLevel  `json:"priority"`
+	StoryPoints  *int32                         `json:"story_points"`
+	AssigneeID   pgtype.UUID                    `json:"assignee_id"`
+	ReporterID   pgtype.UUID                    `json:"reporter_id"`
+	ParentID     pgtype.UUID                    `json:"parent_id"`
+	SprintID     pgtype.UUID                    `json:"sprint_id"`
+	ProjectID    pgtype.UUID                    `json:"project_id"`
+	TicketNumber *int32                         `json:"ticket_number"`
 }
 
 func (q *Queries) CreateWorkItem(ctx context.Context, arg CreateWorkItemParams) (SprintManagementWorkItem, error) {
@@ -77,6 +81,8 @@ func (q *Queries) CreateWorkItem(ctx context.Context, arg CreateWorkItemParams) 
 		arg.ReporterID,
 		arg.ParentID,
 		arg.SprintID,
+		arg.ProjectID,
+		arg.TicketNumber,
 	)
 	var i SprintManagementWorkItem
 	err := row.Scan(
@@ -95,18 +101,45 @@ func (q *Queries) CreateWorkItem(ctx context.Context, arg CreateWorkItemParams) 
 		&i.UpdatedAt,
 		&i.DeletedAt,
 		&i.DeletedBy,
+		&i.ProjectID,
+		&i.TicketNumber,
 	)
 	return i, err
 }
 
 const getWorkItemByID = `-- name: GetWorkItemByID :one
-SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by FROM sprint_management.work_items
-WHERE id = $1 AND deleted_at IS NULL
+SELECT 
+    wi.id, wi.type, wi.title, wi.description, wi.status, wi.priority, wi.story_points, wi.assignee_id, wi.reporter_id, wi.parent_id, wi.sprint_id, wi.created_at, wi.updated_at, wi.deleted_at, wi.deleted_by, wi.project_id, wi.ticket_number,
+    p.key as project_key
+FROM sprint_management.work_items wi
+LEFT JOIN sprint_management.projects p ON wi.project_id = p.id
+WHERE wi.id = $1 AND wi.deleted_at IS NULL
 `
 
-func (q *Queries) GetWorkItemByID(ctx context.Context, id pgtype.UUID) (SprintManagementWorkItem, error) {
+type GetWorkItemByIDRow struct {
+	ID           pgtype.UUID                    `json:"id"`
+	Type         SprintManagementWorkItemType   `json:"type"`
+	Title        string                         `json:"title"`
+	Description  *string                        `json:"description"`
+	Status       SprintManagementWorkItemStatus `json:"status"`
+	Priority     SprintManagementPriorityLevel  `json:"priority"`
+	StoryPoints  *int32                         `json:"story_points"`
+	AssigneeID   pgtype.UUID                    `json:"assignee_id"`
+	ReporterID   pgtype.UUID                    `json:"reporter_id"`
+	ParentID     pgtype.UUID                    `json:"parent_id"`
+	SprintID     pgtype.UUID                    `json:"sprint_id"`
+	CreatedAt    pgtype.Timestamptz             `json:"created_at"`
+	UpdatedAt    pgtype.Timestamptz             `json:"updated_at"`
+	DeletedAt    pgtype.Timestamptz             `json:"deleted_at"`
+	DeletedBy    pgtype.UUID                    `json:"deleted_by"`
+	ProjectID    pgtype.UUID                    `json:"project_id"`
+	TicketNumber *int32                         `json:"ticket_number"`
+	ProjectKey   *string                        `json:"project_key"`
+}
+
+func (q *Queries) GetWorkItemByID(ctx context.Context, id pgtype.UUID) (GetWorkItemByIDRow, error) {
 	row := q.db.QueryRow(ctx, getWorkItemByID, id)
-	var i SprintManagementWorkItem
+	var i GetWorkItemByIDRow
 	err := row.Scan(
 		&i.ID,
 		&i.Type,
@@ -123,12 +156,15 @@ func (q *Queries) GetWorkItemByID(ctx context.Context, id pgtype.UUID) (SprintMa
 		&i.UpdatedAt,
 		&i.DeletedAt,
 		&i.DeletedBy,
+		&i.ProjectID,
+		&i.TicketNumber,
+		&i.ProjectKey,
 	)
 	return i, err
 }
 
 const getWorkItemByIDIncludingDeleted = `-- name: GetWorkItemByIDIncludingDeleted :one
-SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by FROM sprint_management.work_items
+SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by, project_id, ticket_number FROM sprint_management.work_items
 WHERE id = $1
 `
 
@@ -151,6 +187,8 @@ func (q *Queries) GetWorkItemByIDIncludingDeleted(ctx context.Context, id pgtype
 		&i.UpdatedAt,
 		&i.DeletedAt,
 		&i.DeletedBy,
+		&i.ProjectID,
+		&i.TicketNumber,
 	)
 	return i, err
 }
@@ -184,7 +222,7 @@ func (q *Queries) HasDependencies(ctx context.Context, sourceID pgtype.UUID) (bo
 }
 
 const listSoftDeletedWorkItems = `-- name: ListSoftDeletedWorkItems :many
-SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by FROM sprint_management.work_items
+SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by, project_id, ticket_number FROM sprint_management.work_items
 WHERE deleted_at IS NOT NULL
 ORDER BY deleted_at DESC, id
 LIMIT $1 OFFSET $2
@@ -220,6 +258,8 @@ func (q *Queries) ListSoftDeletedWorkItems(ctx context.Context, arg ListSoftDele
 			&i.UpdatedAt,
 			&i.DeletedAt,
 			&i.DeletedBy,
+			&i.ProjectID,
+			&i.TicketNumber,
 		); err != nil {
 			return nil, err
 		}
@@ -232,13 +272,17 @@ func (q *Queries) ListSoftDeletedWorkItems(ctx context.Context, arg ListSoftDele
 }
 
 const listWorkItems = `-- name: ListWorkItems :many
-SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by FROM sprint_management.work_items
-WHERE deleted_at IS NULL
+SELECT 
+    wi.id, wi.type, wi.title, wi.description, wi.status, wi.priority, wi.story_points, wi.assignee_id, wi.reporter_id, wi.parent_id, wi.sprint_id, wi.created_at, wi.updated_at, wi.deleted_at, wi.deleted_by, wi.project_id, wi.ticket_number,
+    p.key as project_key
+FROM sprint_management.work_items wi
+LEFT JOIN sprint_management.projects p ON wi.project_id = p.id
+WHERE wi.deleted_at IS NULL
   AND (
     $2::timestamptz IS NULL
-    OR (created_at, id) > ($2::timestamptz, $3::uuid)
+    OR (wi.created_at, wi.id) > ($2::timestamptz, $3::uuid)
   )
-ORDER BY created_at ASC, id ASC
+ORDER BY wi.created_at ASC, wi.id ASC
 LIMIT $1
 `
 
@@ -248,15 +292,36 @@ type ListWorkItemsParams struct {
 	CursorID        pgtype.UUID        `json:"cursor_id"`
 }
 
-func (q *Queries) ListWorkItems(ctx context.Context, arg ListWorkItemsParams) ([]SprintManagementWorkItem, error) {
+type ListWorkItemsRow struct {
+	ID           pgtype.UUID                    `json:"id"`
+	Type         SprintManagementWorkItemType   `json:"type"`
+	Title        string                         `json:"title"`
+	Description  *string                        `json:"description"`
+	Status       SprintManagementWorkItemStatus `json:"status"`
+	Priority     SprintManagementPriorityLevel  `json:"priority"`
+	StoryPoints  *int32                         `json:"story_points"`
+	AssigneeID   pgtype.UUID                    `json:"assignee_id"`
+	ReporterID   pgtype.UUID                    `json:"reporter_id"`
+	ParentID     pgtype.UUID                    `json:"parent_id"`
+	SprintID     pgtype.UUID                    `json:"sprint_id"`
+	CreatedAt    pgtype.Timestamptz             `json:"created_at"`
+	UpdatedAt    pgtype.Timestamptz             `json:"updated_at"`
+	DeletedAt    pgtype.Timestamptz             `json:"deleted_at"`
+	DeletedBy    pgtype.UUID                    `json:"deleted_by"`
+	ProjectID    pgtype.UUID                    `json:"project_id"`
+	TicketNumber *int32                         `json:"ticket_number"`
+	ProjectKey   *string                        `json:"project_key"`
+}
+
+func (q *Queries) ListWorkItems(ctx context.Context, arg ListWorkItemsParams) ([]ListWorkItemsRow, error) {
 	rows, err := q.db.Query(ctx, listWorkItems, arg.Limit, arg.CursorTimestamp, arg.CursorID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	items := []SprintManagementWorkItem{}
+	items := []ListWorkItemsRow{}
 	for rows.Next() {
-		var i SprintManagementWorkItem
+		var i ListWorkItemsRow
 		if err := rows.Scan(
 			&i.ID,
 			&i.Type,
@@ -273,6 +338,9 @@ func (q *Queries) ListWorkItems(ctx context.Context, arg ListWorkItemsParams) ([
 			&i.UpdatedAt,
 			&i.DeletedAt,
 			&i.DeletedBy,
+			&i.ProjectID,
+			&i.TicketNumber,
+			&i.ProjectKey,
 		); err != nil {
 			return nil, err
 		}
@@ -285,7 +353,7 @@ func (q *Queries) ListWorkItems(ctx context.Context, arg ListWorkItemsParams) ([
 }
 
 const listWorkItemsByAssignee = `-- name: ListWorkItemsByAssignee :many
-SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by FROM sprint_management.work_items
+SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by, project_id, ticket_number FROM sprint_management.work_items
 WHERE assignee_id = $1 AND deleted_at IS NULL
 ORDER BY created_at DESC, id
 LIMIT $2 OFFSET $3
@@ -322,6 +390,8 @@ func (q *Queries) ListWorkItemsByAssignee(ctx context.Context, arg ListWorkItems
 			&i.UpdatedAt,
 			&i.DeletedAt,
 			&i.DeletedBy,
+			&i.ProjectID,
+			&i.TicketNumber,
 		); err != nil {
 			return nil, err
 		}
@@ -334,7 +404,7 @@ func (q *Queries) ListWorkItemsByAssignee(ctx context.Context, arg ListWorkItems
 }
 
 const listWorkItemsByParent = `-- name: ListWorkItemsByParent :many
-SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by FROM sprint_management.work_items
+SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by, project_id, ticket_number FROM sprint_management.work_items
 WHERE parent_id = $1 AND deleted_at IS NULL
 ORDER BY created_at DESC, id
 `
@@ -364,6 +434,8 @@ func (q *Queries) ListWorkItemsByParent(ctx context.Context, parentID pgtype.UUI
 			&i.UpdatedAt,
 			&i.DeletedAt,
 			&i.DeletedBy,
+			&i.ProjectID,
+			&i.TicketNumber,
 		); err != nil {
 			return nil, err
 		}
@@ -376,20 +448,45 @@ func (q *Queries) ListWorkItemsByParent(ctx context.Context, parentID pgtype.UUI
 }
 
 const listWorkItemsBySprint = `-- name: ListWorkItemsBySprint :many
-SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by FROM sprint_management.work_items
-WHERE sprint_id = $1 AND deleted_at IS NULL
-ORDER BY created_at DESC, id
+SELECT 
+    wi.id, wi.type, wi.title, wi.description, wi.status, wi.priority, wi.story_points, wi.assignee_id, wi.reporter_id, wi.parent_id, wi.sprint_id, wi.created_at, wi.updated_at, wi.deleted_at, wi.deleted_by, wi.project_id, wi.ticket_number,
+    p.key as project_key
+FROM sprint_management.work_items wi
+LEFT JOIN sprint_management.projects p ON wi.project_id = p.id
+WHERE wi.sprint_id = $1 AND wi.deleted_at IS NULL
+ORDER BY wi.created_at DESC, wi.id
 `
 
-func (q *Queries) ListWorkItemsBySprint(ctx context.Context, sprintID pgtype.UUID) ([]SprintManagementWorkItem, error) {
+type ListWorkItemsBySprintRow struct {
+	ID           pgtype.UUID                    `json:"id"`
+	Type         SprintManagementWorkItemType   `json:"type"`
+	Title        string                         `json:"title"`
+	Description  *string                        `json:"description"`
+	Status       SprintManagementWorkItemStatus `json:"status"`
+	Priority     SprintManagementPriorityLevel  `json:"priority"`
+	StoryPoints  *int32                         `json:"story_points"`
+	AssigneeID   pgtype.UUID                    `json:"assignee_id"`
+	ReporterID   pgtype.UUID                    `json:"reporter_id"`
+	ParentID     pgtype.UUID                    `json:"parent_id"`
+	SprintID     pgtype.UUID                    `json:"sprint_id"`
+	CreatedAt    pgtype.Timestamptz             `json:"created_at"`
+	UpdatedAt    pgtype.Timestamptz             `json:"updated_at"`
+	DeletedAt    pgtype.Timestamptz             `json:"deleted_at"`
+	DeletedBy    pgtype.UUID                    `json:"deleted_by"`
+	ProjectID    pgtype.UUID                    `json:"project_id"`
+	TicketNumber *int32                         `json:"ticket_number"`
+	ProjectKey   *string                        `json:"project_key"`
+}
+
+func (q *Queries) ListWorkItemsBySprint(ctx context.Context, sprintID pgtype.UUID) ([]ListWorkItemsBySprintRow, error) {
 	rows, err := q.db.Query(ctx, listWorkItemsBySprint, sprintID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	items := []SprintManagementWorkItem{}
+	items := []ListWorkItemsBySprintRow{}
 	for rows.Next() {
-		var i SprintManagementWorkItem
+		var i ListWorkItemsBySprintRow
 		if err := rows.Scan(
 			&i.ID,
 			&i.Type,
@@ -406,6 +503,9 @@ func (q *Queries) ListWorkItemsBySprint(ctx context.Context, sprintID pgtype.UUI
 			&i.UpdatedAt,
 			&i.DeletedAt,
 			&i.DeletedBy,
+			&i.ProjectID,
+			&i.TicketNumber,
+			&i.ProjectKey,
 		); err != nil {
 			return nil, err
 		}
@@ -418,7 +518,7 @@ func (q *Queries) ListWorkItemsBySprint(ctx context.Context, sprintID pgtype.UUI
 }
 
 const listWorkItemsByStatus = `-- name: ListWorkItemsByStatus :many
-SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by FROM sprint_management.work_items
+SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by, project_id, ticket_number FROM sprint_management.work_items
 WHERE status = $1 AND deleted_at IS NULL
 ORDER BY created_at DESC, id
 LIMIT $2 OFFSET $3
@@ -455,6 +555,8 @@ func (q *Queries) ListWorkItemsByStatus(ctx context.Context, arg ListWorkItemsBy
 			&i.UpdatedAt,
 			&i.DeletedAt,
 			&i.DeletedBy,
+			&i.ProjectID,
+			&i.TicketNumber,
 		); err != nil {
 			return nil, err
 		}
@@ -467,7 +569,7 @@ func (q *Queries) ListWorkItemsByStatus(ctx context.Context, arg ListWorkItemsBy
 }
 
 const listWorkItemsByType = `-- name: ListWorkItemsByType :many
-SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by FROM sprint_management.work_items
+SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by, project_id, ticket_number FROM sprint_management.work_items
 WHERE type = $1 AND deleted_at IS NULL
 ORDER BY created_at DESC, id
 LIMIT $2 OFFSET $3
@@ -504,6 +606,8 @@ func (q *Queries) ListWorkItemsByType(ctx context.Context, arg ListWorkItemsByTy
 			&i.UpdatedAt,
 			&i.DeletedAt,
 			&i.DeletedBy,
+			&i.ProjectID,
+			&i.TicketNumber,
 		); err != nil {
 			return nil, err
 		}
@@ -595,7 +699,7 @@ SET
     parent_id = COALESCE($9, parent_id),
     sprint_id = COALESCE($10, sprint_id)
 WHERE id = $1 AND deleted_at IS NULL
-RETURNING id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by
+RETURNING id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by, project_id, ticket_number
 `
 
 type UpdateWorkItemParams struct {
@@ -641,6 +745,8 @@ func (q *Queries) UpdateWorkItem(ctx context.Context, arg UpdateWorkItemParams) 
 		&i.UpdatedAt,
 		&i.DeletedAt,
 		&i.DeletedBy,
+		&i.ProjectID,
+		&i.TicketNumber,
 	)
 	return i, err
 }

@@ -267,6 +267,23 @@ type SprintManagementComment struct {
 	DeletedBy  pgtype.UUID        `json:"deleted_by"`
 }
 
+// Projects for organizing work items
+type SprintManagementProject struct {
+	ID pgtype.UUID `json:"id"`
+	// Unique uppercase project key (e.g., DND, SPRINT)
+	Key         string  `json:"key"`
+	Name        string  `json:"name"`
+	Description *string `json:"description"`
+	// Current ticket counter for sequential numbering
+	CurrentCounter int32 `json:"current_counter"`
+	// Starting number for ticket sequence
+	StartingNumber int32              `json:"starting_number"`
+	CreatedBy      string             `json:"created_by"`
+	CreatedAt      pgtype.Timestamptz `json:"created_at"`
+	UpdatedBy      string             `json:"updated_by"`
+	UpdatedAt      pgtype.Timestamptz `json:"updated_at"`
+}
+
 type SprintManagementSprint struct {
 	ID              pgtype.UUID                  `json:"id"`
 	Name            string                       `json:"name"`
@@ -300,6 +317,10 @@ type SprintManagementWorkItem struct {
 	UpdatedAt   pgtype.Timestamptz             `json:"updated_at"`
 	DeletedAt   pgtype.Timestamptz             `json:"deleted_at"`
 	DeletedBy   pgtype.UUID                    `json:"deleted_by"`
+	// Reference to parent project
+	ProjectID pgtype.UUID `json:"project_id"`
+	// Sequential ticket number within project
+	TicketNumber *int32 `json:"ticket_number"`
 }
 
 type SprintManagementWorkItemDependency struct {

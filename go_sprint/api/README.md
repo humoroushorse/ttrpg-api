@@ -253,7 +253,7 @@ TOKEN="your-jwt-token"
 
 # List work items
 curl -H "Authorization: Bearer $TOKEN" \
-     http://localhost:8082/api/v1/workitems
+     http://localhost:8003/api/v1/workitems
 
 # Create a work item
 curl -X POST \
@@ -265,11 +265,11 @@ curl -X POST \
        "description": "Implement user authentication",
        "priority": "high"
      }' \
-     http://localhost:8082/api/v1/workitems
+     http://localhost:8003/api/v1/workitems
 
 # Get sprint metrics
 curl -H "Authorization: Bearer $TOKEN" \
-     http://localhost:8082/api/v1/sprints/{sprint-id}/metrics
+     http://localhost:8003/api/v1/sprints/{sprint-id}/metrics
 ```
 
 ### Using Postman

@@ -227,8 +227,8 @@ func main() {
     generated.HandlerFromMux(apiHandler, r)
     
     // Start server
-    log.Println("Starting server on :8082")
-    if err := http.ListenAndServe(":8082", r); err != nil {
+    log.Println("Starting server on :8003")
+    if err := http.ListenAndServe(":8003", r); err != nil {
         log.Fatal(err)
     }
 }

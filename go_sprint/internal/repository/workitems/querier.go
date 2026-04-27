@@ -20,15 +20,15 @@ type Querier interface {
 	CreateWorkItem(ctx context.Context, arg CreateWorkItemParams) (SprintManagementWorkItem, error)
 	// Advanced filtering without search text
 	FilterWorkItems(ctx context.Context, arg FilterWorkItemsParams) ([]SprintManagementWorkItem, error)
-	GetWorkItemByID(ctx context.Context, id pgtype.UUID) (SprintManagementWorkItem, error)
+	GetWorkItemByID(ctx context.Context, id pgtype.UUID) (GetWorkItemByIDRow, error)
 	GetWorkItemByIDIncludingDeleted(ctx context.Context, id pgtype.UUID) (SprintManagementWorkItem, error)
 	HasChildren(ctx context.Context, parentID pgtype.UUID) (bool, error)
 	HasDependencies(ctx context.Context, sourceID pgtype.UUID) (bool, error)
 	ListSoftDeletedWorkItems(ctx context.Context, arg ListSoftDeletedWorkItemsParams) ([]SprintManagementWorkItem, error)
-	ListWorkItems(ctx context.Context, arg ListWorkItemsParams) ([]SprintManagementWorkItem, error)
+	ListWorkItems(ctx context.Context, arg ListWorkItemsParams) ([]ListWorkItemsRow, error)
 	ListWorkItemsByAssignee(ctx context.Context, arg ListWorkItemsByAssigneeParams) ([]SprintManagementWorkItem, error)
 	ListWorkItemsByParent(ctx context.Context, parentID pgtype.UUID) ([]SprintManagementWorkItem, error)
-	ListWorkItemsBySprint(ctx context.Context, sprintID pgtype.UUID) ([]SprintManagementWorkItem, error)
+	ListWorkItemsBySprint(ctx context.Context, sprintID pgtype.UUID) ([]ListWorkItemsBySprintRow, error)
 	ListWorkItemsByStatus(ctx context.Context, arg ListWorkItemsByStatusParams) ([]SprintManagementWorkItem, error)
 	ListWorkItemsByType(ctx context.Context, arg ListWorkItemsByTypeParams) ([]SprintManagementWorkItem, error)
 	PermanentlyDeleteWorkItem(ctx context.Context, id pgtype.UUID) error

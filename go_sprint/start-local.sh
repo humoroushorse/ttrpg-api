@@ -5,7 +5,13 @@
 
 set -e
 
+# Logging configuration (can be overridden with environment variables)
+LOG_FORMAT=${LOG_FORMAT:-json}
+LOG_ENABLE_COLORS=${LOG_ENABLE_COLORS:-false}
+
 echo "🚀 Starting Sprint Management Service..."
+echo "   Log Format: $LOG_FORMAT"
+echo "   Colors Enabled: $LOG_ENABLE_COLORS"
 echo ""
 
 # Check if ttrpg-pg container is running
@@ -40,15 +46,15 @@ fi
 
 echo "✅ NATS is running"
 echo ""
-echo "🎯 Starting Sprint Management API on port 8082..."
+echo "🎯 Starting Sprint Management API on port 8003..."
 echo ""
-echo "   API:        http://localhost:8082/"
-echo "   Swagger UI: http://localhost:8082/swagger/"
-echo "   Health:     http://localhost:8082/health/ready"
-echo "   Metrics:    http://localhost:8082/metrics"
+echo "   API:        http://localhost:8003/"
+echo "   Swagger UI: http://localhost:8003/swagger/"
+echo "   Health:     http://localhost:8003/health/ready"
+echo "   Metrics:    http://localhost:8003/metrics"
 echo ""
 echo "Press Ctrl+C to stop the server"
 echo ""
 
 # Start the server
-SERVER_PORT=8082 go run cmd/server/main.go
+LOG_FORMAT=$LOG_FORMAT LOG_ENABLE_COLORS=$LOG_ENABLE_COLORS SERVER_PORT=8003 go run cmd/server/main.go

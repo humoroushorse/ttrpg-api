@@ -201,9 +201,9 @@ See [docs/nats.md](docs/nats.md) for detailed documentation.
 ### System Requirements
 
 - **Go**: 1.21 or higher
-- **PostgreSQL**: 15 or higher
-- **NATS**: 2.10 or higher
-- **Keycloak**: 22 or higher (via Auth Service)
+- **PostgreSQL**: 18 or higher
+- **NATS**: 2.12 or higher
+- **Keycloak**: 26 or higher (via Auth Service)
 - **Docker**: 20.10+ (for containerized deployment)
 - **Kubernetes**: 1.25+ (for production deployment)
 
@@ -230,7 +230,7 @@ cd go_sprint
 docker-compose up -d
 
 # Check service health
-curl http://localhost:8082/health/ready
+curl http://localhost:8003/health/ready
 
 # View logs
 docker-compose logs -f sprint-service
@@ -240,9 +240,9 @@ docker-compose down
 ```
 
 The service will be available at:
-- **API**: http://localhost:8082/api/v1
-- **Metrics**: http://localhost:8082/metrics
-- **WebSocket**: ws://localhost:8082/ws
+- **API**: http://localhost:8003/api/v1
+- **Metrics**: http://localhost:8003/metrics
+- **WebSocket**: ws://localhost:8003/ws
 
 ### Local Development Setup
 
@@ -271,7 +271,7 @@ vim .env
 export DATABASE_MASTER_URL="postgres://postgres:postgres@localhost:5432/sprint_management?sslmode=disable"
 export DATABASE_REPLICA_URL="postgres://postgres:postgres@localhost:5432/sprint_management?sslmode=disable"
 export NATS_URL="nats://localhost:4222"
-export AUTH_SERVICE_URL="http://localhost:8081"
+export AUTH_SERVICE_URL="http://localhost:8003"
 export KEYCLOAK_URL="http://localhost:8080"
 export KEYCLOAK_REALM="sprint-management"
 ```
@@ -387,7 +387,7 @@ SERVER_WRITE_TIMEOUT=30s
 
 # Metrics
 METRICS_ENABLED=true
-METRICS_PORT=8081
+METRICS_PORT=8003
 
 # WebSocket
 WEBSOCKET_PING_INTERVAL=30s
@@ -433,7 +433,7 @@ logging:
 
 metrics:
   enabled: true
-  port: 8081
+  port: 8003
   path: /metrics
 
 websocket:
@@ -860,7 +860,7 @@ Prometheus metrics are exposed at `/metrics`:
 
 ```bash
 # View all metrics
-curl http://localhost:8081/metrics
+curl http://localhost:8003/metrics
 
 # Key metrics:
 # - http_requests_total: Total HTTP requests
@@ -1021,7 +1021,7 @@ curl http://nats-server:8222/varz
 
 ```bash
 # Check metrics
-curl http://localhost:8081/metrics | grep duration
+curl http://localhost:8003/metrics | grep duration
 
 # Check database slow queries
 psql $DATABASE_MASTER_URL -c "
@@ -1032,7 +1032,7 @@ psql $DATABASE_MASTER_URL -c "
 "
 
 # Check connection pool
-curl http://localhost:8081/metrics | grep database_connections
+curl http://localhost:8003/metrics | grep database_connections
 ```
 
 See [Troubleshooting Guide](docs/troubleshooting-guide.md) for comprehensive troubleshooting procedures.

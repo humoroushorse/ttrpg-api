@@ -91,7 +91,7 @@ docker-compose -f docker-compose.prod.yml up -d
 │         │                    │                         │
 │  ┌──────┴──────┐    ┌───────┴──────┐                 │
 │  │ Auth Service│◄───┤ Sprint Service│                 │
-│  │   :8081     │    │     :8082     │                 │
+│  │   :8081     │    │     :8003     │                 │
 │  └─────────────┘    └───────────────┘                 │
 │         ▲                    ▲                         │
 │         │                    │                         │
@@ -109,7 +109,7 @@ docker-compose -f docker-compose.prod.yml up -d
 
 | Service | Port | Endpoint | Description |
 |---------|------|----------|-------------|
-| Sprint Service | 8082 | http://localhost:8082 | Main API |
+| Sprint Service | 8003 | http://localhost:8003 | Main API |
 | Auth Service | 8081 | http://localhost:8081 | Authentication API |
 | Keycloak | 8080 | http://localhost:8080 | Identity Provider |
 | PostgreSQL | 5432 | localhost:5432 | Database |
@@ -122,8 +122,8 @@ All services include health check endpoints:
 
 ```bash
 # Sprint Service
-curl http://localhost:8082/health/live
-curl http://localhost:8082/health/ready
+curl http://localhost:8003/health/live
+curl http://localhost:8003/health/ready
 
 # Auth Service
 curl http://localhost:8081/health/live
@@ -168,7 +168,7 @@ docker-compose logs --tail=100 sprint-service
 ### Metrics
 
 Prometheus metrics are available at:
-- Sprint Service: http://localhost:8082/metrics
+- Sprint Service: http://localhost:8003/metrics
 - Auth Service: http://localhost:8081/metrics
 
 ### NATS Monitoring

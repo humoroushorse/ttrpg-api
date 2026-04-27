@@ -157,13 +157,37 @@ func (c *Client) handleMessage(message []byte) {
 	// Handle different message types
 	switch msg.Type {
 	case "join_room":
-		if room, ok := msg.Data.(string); ok {
+		// Support both data field (string) and room field (string)
+		room := ""
+		if msg.Room != "" {
+			room = msg.Room
+		} else if roomStr, ok := msg.Data.(string); ok {
+			room = roomStr
+		}
+
+		if room != "" {
 			c.hub.JoinRoom(c, room)
 			c.rooms = append(c.rooms, room)
+			c.logger.Info("client joined room",
+				slog.String("user_id", c.userID),
+				slog.String("room", room),
+			)
+		} else {
+			c.logger.Warn("join_room message missing room",
+				slog.String("user_id", c.userID),
+			)
 		}
 
 	case "leave_room":
-		if room, ok := msg.Data.(string); ok {
+		// Support both data field (string) and room field (string)
+		room := ""
+		if msg.Room != "" {
+			room = msg.Room
+		} else if roomStr, ok := msg.Data.(string); ok {
+			room = roomStr
+		}
+
+		if room != "" {
 			c.hub.LeaveRoom(c, room)
 			// Remove room from client's rooms list
 			for i, r := range c.rooms {
@@ -172,6 +196,10 @@ func (c *Client) handleMessage(message []byte) {
 					break
 				}
 			}
+			c.logger.Info("client left room",
+				slog.String("user_id", c.userID),
+				slog.String("room", room),
+			)
 		}
 
 	case "ping":

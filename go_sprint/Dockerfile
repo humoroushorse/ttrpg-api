@@ -1,28 +1,40 @@
 # Multi-stage Dockerfile for go_sprint service
 
 # Build stage
-FROM golang:1.21-alpine AS builder
+FROM golang:1.24-alpine AS builder
 
 # Install build dependencies
 RUN apk add --no-cache git make
 
 # Set working directory
-WORKDIR /build
+WORKDIR /workspace
 
-# Copy go mod files
-COPY go.mod go.sum ./
+# Copy workspace files
+COPY go.work go.work.sum* ./
+
+# Copy go_auth module (dependency)
+COPY go_auth go_auth
+
+# Copy go_sprint
+COPY go_sprint go_sprint
+
+# Set working directory to go_sprint
+WORKDIR /workspace/go_sprint
 
 # Download dependencies
 RUN go mod download
 
-# Copy source code
-COPY . .
-
-# Build the binary
+# Build the server binary
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
     -ldflags='-w -s -extldflags "-static"' \
     -o /build/bin/sprint-server \
     cmd/server/main.go
+
+# Build the migrate binary
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
+    -ldflags='-w -s -extldflags "-static"' \
+    -o /build/bin/migrate \
+    cmd/migrate/main.go
 
 # Runtime stage
 FROM alpine:3.18
@@ -40,11 +52,12 @@ RUN addgroup -g 1000 appuser && \
 # Set working directory
 WORKDIR /app
 
-# Copy binary from builder
+# Copy binaries from builder
 COPY --from=builder /build/bin/sprint-server /app/sprint-server
+COPY --from=builder /build/bin/migrate /app/migrate
 
 # Copy migrations
-COPY --from=builder /build/migrations /app/migrations
+COPY --from=builder /workspace/go_sprint/migrations /app/migrations
 
 # Change ownership
 RUN chown -R appuser:appuser /app

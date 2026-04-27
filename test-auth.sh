@@ -8,7 +8,7 @@ set -e
 echo "🧪 Testing Authentication Flow"
 echo ""
 
-BASE_URL="http://localhost:8082/api/v1/auth"
+BASE_URL="http://localhost:8003/api/v1/auth"
 
 # Test 1: Register a new user
 echo "1️⃣  Registering new user..."
@@ -77,6 +77,6 @@ echo ""
 echo "🎉 All tests completed!"
 echo ""
 echo "📝 Next steps:"
-echo "  • Open Swagger UI: http://localhost:8082/swagger/"
+echo "  • Open Swagger UI: http://localhost:8003/swagger/"
 echo "  • Try the endpoints interactively"
 echo "  • Use the access token for protected endpoints"

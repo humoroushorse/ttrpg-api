@@ -9,14 +9,20 @@ INSERT INTO sprint_management.work_items (
     assignee_id,
     reporter_id,
     parent_id,
-    sprint_id
+    sprint_id,
+    project_id,
+    ticket_number
 ) VALUES (
-    $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
+    $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12
 ) RETURNING *;
 
 -- name: GetWorkItemByID :one
-SELECT * FROM sprint_management.work_items
-WHERE id = $1 AND deleted_at IS NULL;
+SELECT 
+    wi.*,
+    p.key as project_key
+FROM sprint_management.work_items wi
+LEFT JOIN sprint_management.projects p ON wi.project_id = p.id
+WHERE wi.id = $1 AND wi.deleted_at IS NULL;
 
 -- name: GetWorkItemByIDIncludingDeleted :one
 SELECT * FROM sprint_management.work_items
@@ -56,13 +62,17 @@ DELETE FROM sprint_management.work_items
 WHERE id = $1;
 
 -- name: ListWorkItems :many
-SELECT * FROM sprint_management.work_items
-WHERE deleted_at IS NULL
+SELECT 
+    wi.*,
+    p.key as project_key
+FROM sprint_management.work_items wi
+LEFT JOIN sprint_management.projects p ON wi.project_id = p.id
+WHERE wi.deleted_at IS NULL
   AND (
     sqlc.narg('cursor_timestamp')::timestamptz IS NULL
-    OR (created_at, id) > (sqlc.narg('cursor_timestamp')::timestamptz, sqlc.narg('cursor_id')::uuid)
+    OR (wi.created_at, wi.id) > (sqlc.narg('cursor_timestamp')::timestamptz, sqlc.narg('cursor_id')::uuid)
   )
-ORDER BY created_at ASC, id ASC
+ORDER BY wi.created_at ASC, wi.id ASC
 LIMIT $1;
 
 -- name: ListWorkItemsByType :many
@@ -78,9 +88,13 @@ ORDER BY created_at DESC, id
 LIMIT $2 OFFSET $3;
 
 -- name: ListWorkItemsBySprint :many
-SELECT * FROM sprint_management.work_items
-WHERE sprint_id = $1 AND deleted_at IS NULL
-ORDER BY created_at DESC, id;
+SELECT 
+    wi.*,
+    p.key as project_key
+FROM sprint_management.work_items wi
+LEFT JOIN sprint_management.projects p ON wi.project_id = p.id
+WHERE wi.sprint_id = $1 AND wi.deleted_at IS NULL
+ORDER BY wi.created_at DESC, wi.id;
 
 -- name: ListWorkItemsByParent :many
 SELECT * FROM sprint_management.work_items

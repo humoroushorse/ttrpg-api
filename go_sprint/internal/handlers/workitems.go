@@ -23,7 +23,8 @@ import (
 type WorkItemService interface {
 	CreateWorkItem(ctx context.Context, req workitems.CreateWorkItemRequest) (*models.WorkItem, error)
 	GetWorkItem(ctx context.Context, id uuid.UUID) (*models.WorkItem, error)
-	ListWorkItems(ctx context.Context, typeFilter *models.WorkItemType, statusFilter *models.WorkItemStatus, cursor *pagination.Cursor, limit int32) ([]*models.WorkItem, error)
+	UpdateWorkItem(ctx context.Context, id uuid.UUID, req workitems.UpdateWorkItemRequest) (*models.WorkItem, error)
+	ListWorkItems(ctx context.Context, typeFilter *models.WorkItemType, statusFilter *models.WorkItemStatus, sprintIDFilter *uuid.UUID, cursor *pagination.Cursor, limit int32) ([]*models.WorkItem, error)
 }
 
 // WorkItemHandler implements the ServerInterface for work item endpoints
@@ -86,6 +87,7 @@ func (h *WorkItemHandler) CreateWorkItem(w http.ResponseWriter, r *http.Request)
 		ReporterID:  user.ID,
 		ParentID:    convertUUIDPtr(req.ParentId),
 		SprintID:    convertUUIDPtr(req.SprintId),
+		ProjectID:   &req.ProjectId,
 	}
 
 	// Create work item
@@ -163,6 +165,10 @@ func (h *WorkItemHandler) ListWorkItems(w http.ResponseWriter, r *http.Request, 
 	logger := middleware.LoggerFromContext(ctx)
 	timer := metrics.NewTimer()
 
+	// WORKAROUND: oapi-codegen doesn't bind query params in chi, so parse manually
+	queryParams := r.URL.Query()
+	filtersParam := queryParams.Get("filters")
+
 	// Get pagination config
 	paginationConfig := pagination.DefaultConfig()
 
@@ -207,8 +213,25 @@ func (h *WorkItemHandler) ListWorkItems(w http.ResponseWriter, r *http.Request, 
 		statusFilter = &s
 	}
 
+	// Parse sprint_id filter from filters JSON parameter
+	var sprintIDFilter *uuid.UUID
+	if filtersParam != "" {
+		var filters []map[string]interface{}
+		if err := json.Unmarshal([]byte(filtersParam), &filters); err == nil {
+			for _, filter := range filters {
+				if field, ok := filter["field"].(string); ok && field == "sprint_id" {
+					if value, ok := filter["value"].(string); ok && value != "" {
+						if sprintID, err := uuid.Parse(value); err == nil {
+							sprintIDFilter = &sprintID
+						}
+					}
+				}
+			}
+		}
+	}
+
 	// List work items
-	items, err := h.service.ListWorkItems(ctx, typeFilter, statusFilter, cursor, limit)
+	items, err := h.service.ListWorkItems(ctx, typeFilter, statusFilter, sprintIDFilter, cursor, limit)
 	if err != nil {
 		logger.Error("failed to list work items",
 			slog.Any("error", err),
@@ -266,9 +289,89 @@ func (h *WorkItemHandler) ListWorkItems(w http.ResponseWriter, r *http.Request, 
 	RespondWithSuccess(w, r, http.StatusOK, response)
 }
 
+// UpdateWorkItem handles PUT /api/v1/workitems/{id}
+func (h *WorkItemHandler) UpdateWorkItem(w http.ResponseWriter, r *http.Request, id openapi_types.UUID) {
+	ctx := r.Context()
+	logger := middleware.LoggerFromContext(ctx)
+
+	workItemID := uuid.UUID(id)
+
+	// Parse request body
+	var req api.UpdateWorkItemRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		logger.Warn("failed to decode request body", slog.Any("error", err))
+		RespondBadRequest(w, r, "Invalid request body")
+		return
+	}
+
+	// Sanitize inputs
+	if req.Title != nil {
+		sanitized := middleware.SanitizeInput(*req.Title)
+		req.Title = &sanitized
+	}
+	if req.Description != nil {
+		sanitized := middleware.SanitizeInput(*req.Description)
+		req.Description = &sanitized
+	}
+
+	// Convert API request to service request
+	serviceReq := workitems.UpdateWorkItemRequest{
+		Title:       req.Title,
+		Description: req.Description,
+		StoryPoints: req.StoryPoints,
+		AssigneeID:  convertUUIDPtr(req.AssigneeId),
+		SprintID:    convertUUIDPtr(req.SprintId),
+	}
+
+	if req.Status != nil {
+		s := models.WorkItemStatus(*req.Status)
+		serviceReq.Status = &s
+	}
+
+	if req.Priority != nil {
+		p := models.PriorityLevel(*req.Priority)
+		serviceReq.Priority = &p
+	}
+
+	// Update work item
+	workItem, err := h.service.UpdateWorkItem(ctx, workItemID, serviceReq)
+	if err != nil {
+		logger.Error("failed to update work item",
+			slog.String("id", workItemID.String()),
+			slog.Any("error", err),
+		)
+		RespondInternalError(w, r, err)
+		return
+	}
+
+	// Invalidate cache
+	cacheKey := fmt.Sprintf("workitem:%s", workItemID.String())
+	h.cache.Delete(cacheKey)
+
+	// Convert to API response
+	response := convertWorkItemToAPI(workItem)
+
+	logger.Info("work item updated",
+		slog.String("id", workItem.ID.String()),
+	)
+
+	RespondWithSuccess(w, r, http.StatusOK, response)
+}
+
 // validateCreateWorkItemRequest validates the create work item request
 func (h *WorkItemHandler) validateCreateWorkItemRequest(req api.CreateWorkItemRequest) []ValidationError {
 	var errors []ValidationError
+
+	// Validate project_id (required)
+	// ProjectId is not a pointer in the generated code, so it's always present
+	// Just validate it's not a zero UUID
+	if req.ProjectId == uuid.Nil {
+		errors = append(errors, ValidationError{
+			Field:   "project_id",
+			Code:    "REQUIRED",
+			Message: "Project ID is required",
+		})
+	}
 
 	// Validate title
 	if req.Title == "" {
@@ -332,6 +435,27 @@ func (h *WorkItemHandler) validateCreateWorkItemRequest(req api.CreateWorkItemRe
 		})
 	}
 
+	// Validate parent_id based on work item type
+	// Epic: parent_id must be nil
+	// Story/Defect: parent_id must not be nil
+	if req.Type == api.WorkItemTypeEpic {
+		if req.ParentId != nil {
+			errors = append(errors, ValidationError{
+				Field:   "parent_id",
+				Code:    "INVALID",
+				Message: "Epic cannot have a parent work item",
+			})
+		}
+	} else if req.Type == api.WorkItemTypeStory || req.Type == api.WorkItemTypeDefect {
+		if req.ParentId == nil {
+			errors = append(errors, ValidationError{
+				Field:   "parent_id",
+				Code:    "REQUIRED",
+				Message: fmt.Sprintf("%s must have a parent Epic", req.Type),
+			})
+		}
+	}
+
 	return errors
 }
 
@@ -377,16 +501,37 @@ func convertUUIDPtr(openapiUUID *openapi_types.UUID) *uuid.UUID {
 	return &u
 }
 
+// convertUUIDPtrToOpenAPI converts a uuid.UUID pointer to an openapi_types.UUID pointer
+func convertUUIDPtrToOpenAPI(u *uuid.UUID) *openapi_types.UUID {
+	if u == nil {
+		return nil
+	}
+	openapiUUID := openapi_types.UUID(*u)
+	return &openapiUUID
+}
+
 // convertWorkItemToSummary converts a service work item to API work item summary
 func convertWorkItemToSummary(item *models.WorkItem) api.WorkItemSummary {
-	return api.WorkItemSummary{
+	summary := api.WorkItemSummary{
 		Id:          openapi_types.UUID(item.ID),
 		Type:        api.WorkItemSummaryType(item.Type),
 		Title:       item.Title,
 		Status:      api.WorkItemSummaryStatus(item.Status),
 		Priority:    api.WorkItemSummaryPriority(item.Priority),
 		StoryPoints: item.StoryPoints,
+		SprintId:    convertUUIDPtrToOpenAPI(item.SprintID),
 	}
+
+	if item.TicketNumber != nil {
+		tn := *item.TicketNumber
+		summary.TicketNumber = &tn
+	}
+
+	if item.ProjectKey != nil {
+		summary.ProjectKey = item.ProjectKey
+	}
+
+	return summary
 }
 
 // GetWorkItemDependencies handles GET /api/v1/workitems/{id}/dependencies
@@ -556,6 +701,59 @@ func (h *WorkItemHandler) GetChildWorkItems(w http.ResponseWriter, r *http.Reque
 	logger.Debug("child work items retrieved",
 		slog.String("id", workItemID.String()),
 	)
+
+	RespondWithSuccess(w, r, http.StatusOK, response)
+}
+
+// GetWorkItemComments handles GET /api/v1/workitems/{id}/comments
+// TODO: Implement comments functionality
+func (h *WorkItemHandler) GetWorkItemComments(w http.ResponseWriter, r *http.Request, id openapi_types.UUID) {
+	ctx := r.Context()
+	logger := middleware.LoggerFromContext(ctx)
+
+	workItemID, err := uuid.Parse(id.String())
+	if err != nil {
+		logger.Error("invalid work item ID",
+			slog.String("id", id.String()),
+			slog.String("error", err.Error()),
+		)
+		RespondBadRequest(w, r, "Invalid work item ID")
+		return
+	}
+
+	// Verify work item exists
+	_, err = h.service.GetWorkItem(ctx, workItemID)
+	if err != nil {
+		logger.Error("failed to get work item",
+			slog.String("id", workItemID.String()),
+			slog.String("error", err.Error()),
+		)
+		RespondNotFound(w, r, "Work item")
+		return
+	}
+
+	// TODO: Implement comments service
+	// For now, return empty list
+	response := []interface{}{}
+
+	logger.Debug("work item comments retrieved (stub)",
+		slog.String("id", workItemID.String()),
+	)
+
+	RespondWithSuccess(w, r, http.StatusOK, response)
+}
+
+// GetAuditLogs handles GET /api/v1/audit-logs
+// TODO: Implement audit logs functionality
+func (h *WorkItemHandler) GetAuditLogs(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	logger := middleware.LoggerFromContext(ctx)
+
+	// TODO: Implement audit logs service
+	// For now, return empty list
+	response := []interface{}{}
+
+	logger.Debug("audit logs retrieved (stub)")
 
 	RespondWithSuccess(w, r, http.StatusOK, response)
 }

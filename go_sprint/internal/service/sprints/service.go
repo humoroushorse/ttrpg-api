@@ -41,7 +41,7 @@ type SprintRepository interface {
 
 // WorkItemRepository defines the interface for work item data access
 type WorkItemRepository interface {
-	ListWorkItemsBySprint(ctx context.Context, sprintID pgtype.UUID) ([]workitems.SprintManagementWorkItem, error)
+	ListWorkItemsBySprint(ctx context.Context, sprintID pgtype.UUID) ([]workitems.ListWorkItemsBySprintRow, error)
 }
 
 // Service provides business logic for sprint operations
@@ -68,12 +68,14 @@ type CreateSprintRequest struct {
 	EndDate        time.Time `json:"end_date"`
 	CapacityPoints *int      `json:"capacity_points,omitempty"`
 	CreatedBy      uuid.UUID `json:"created_by"`
+	UserTimezone   string    `json:"user_timezone,omitempty"` // IANA timezone (e.g., "America/Denver")
 }
 
 // UpdateSprintRequest represents a request to update a sprint
 type UpdateSprintRequest struct {
 	Name           *string    `json:"name,omitempty"`
 	Description    *string    `json:"description,omitempty"`
+	Status         *string    `json:"status,omitempty"`
 	StartDate      *time.Time `json:"start_date,omitempty"`
 	EndDate        *time.Time `json:"end_date,omitempty"`
 	CapacityPoints *int       `json:"capacity_points,omitempty"`
@@ -106,13 +108,27 @@ func (s *Service) CreateSprint(ctx context.Context, req CreateSprintRequest) (*m
 		return nil, err
 	}
 
-	// Validate start date is not in the past
-	now := time.Now().Truncate(24 * time.Hour) // Compare dates only, ignore time
-	startDate := req.StartDate.Truncate(24 * time.Hour)
-	if startDate.Before(now) {
+	// Validate start date is not in the past (allow today in user's timezone)
+	// Load user's timezone, default to UTC if invalid
+	loc, err := time.LoadLocation(req.UserTimezone)
+	if err != nil {
+		loc = time.UTC
+	}
+
+	// Get current time in user's timezone and truncate to start of day
+	now := time.Now().In(loc)
+	nowDate := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, loc)
+
+	// Parse start date in user's timezone (dates come as YYYY-MM-DD which are parsed as midnight UTC)
+	// We need to interpret them as midnight in the user's timezone instead
+	startYear, startMonth, startDay := req.StartDate.Date()
+	startDate := time.Date(startYear, startMonth, startDay, 0, 0, 0, 0, loc)
+
+	if startDate.Before(nowDate) {
 		logger.Error("start date is in the past",
-			slog.Time("start_date", req.StartDate),
-			slog.Time("now", now))
+			slog.Time("start_date_parsed", startDate),
+			slog.Time("now_date", nowDate),
+			slog.String("user_timezone", req.UserTimezone))
 		return nil, fmt.Errorf("start date cannot be in the past")
 	}
 
@@ -239,10 +255,32 @@ func (s *Service) UpdateSprint(ctx context.Context, id uuid.UUID, req UpdateSpri
 		params.CapacityPoints = existing.CapacityPoints
 	}
 
-	// Status (use existing, cannot be changed via update)
-	params.Status = sprints.NullSprintManagementSprintStatus{
-		SprintManagementSprintStatus: existing.Status,
-		Valid:                        true,
+	// Status - allow status changes
+	if req.Status != nil {
+		// Validate status value
+		var newStatus sprints.SprintManagementSprintStatus
+		switch *req.Status {
+		case "planned":
+			newStatus = sprints.SprintManagementSprintStatusPlanned
+		case "active":
+			newStatus = sprints.SprintManagementSprintStatusActive
+		case "completed":
+			newStatus = sprints.SprintManagementSprintStatusCompleted
+		case "cancelled":
+			newStatus = sprints.SprintManagementSprintStatusCancelled
+		default:
+			logger.Error("invalid status value", slog.String("status", *req.Status))
+			return nil, fmt.Errorf("invalid status value: %s", *req.Status)
+		}
+		params.Status = sprints.NullSprintManagementSprintStatus{
+			SprintManagementSprintStatus: newStatus,
+			Valid:                        true,
+		}
+	} else {
+		params.Status = sprints.NullSprintManagementSprintStatus{
+			SprintManagementSprintStatus: existing.Status,
+			Valid:                        true,
+		}
 	}
 
 	// Update sprint
@@ -414,14 +452,16 @@ func (s *Service) calculateSprintMetrics(ctx context.Context, sprintID uuid.UUID
 	return metrics, nil
 }
 
-// ListSprints retrieves a list of sprints with cursor-based pagination
-func (s *Service) ListSprints(ctx context.Context, cursor *pagination.Cursor, limit int32) ([]*models.Sprint, error) {
+// ListSprints retrieves a list of sprints with cursor-based pagination and filters
+func (s *Service) ListSprints(ctx context.Context, cursor *pagination.Cursor, limit int32, searchQuery *string, statusFilter []string) ([]*models.Sprint, error) {
 	logger := s.getLogger(ctx)
 
 	params := sprints.ListSprintsParams{
 		Limit:           limit,
 		CursorTimestamp: pgtype.Timestamptz{Valid: false},
 		CursorID:        pgtype.UUID{Valid: false},
+		SearchQuery:     searchQuery,
+		StatusFilter:    statusFilter,
 	}
 
 	// If cursor is provided, add cursor filters

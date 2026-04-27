@@ -325,6 +325,15 @@ WHERE deleted_at IS NULL
     $2::timestamptz IS NULL
     OR (created_at, id) > ($2::timestamptz, $3::uuid)
   )
+  AND (
+    $4::text IS NULL
+    OR name ILIKE '%' || $4::text || '%'
+    OR description ILIKE '%' || $4::text || '%'
+  )
+  AND (
+    $5::text[] IS NULL
+    OR status::text = ANY($5::text[])
+  )
 ORDER BY created_at ASC, id ASC
 LIMIT $1
 `
@@ -333,10 +342,18 @@ type ListSprintsParams struct {
 	Limit           int32              `json:"limit"`
 	CursorTimestamp pgtype.Timestamptz `json:"cursor_timestamp"`
 	CursorID        pgtype.UUID        `json:"cursor_id"`
+	SearchQuery     *string            `json:"search_query"`
+	StatusFilter    []string           `json:"status_filter"`
 }
 
 func (q *Queries) ListSprints(ctx context.Context, arg ListSprintsParams) ([]SprintManagementSprint, error) {
-	rows, err := q.db.Query(ctx, listSprints, arg.Limit, arg.CursorTimestamp, arg.CursorID)
+	rows, err := q.db.Query(ctx, listSprints,
+		arg.Limit,
+		arg.CursorTimestamp,
+		arg.CursorID,
+		arg.SearchQuery,
+		arg.StatusFilter,
+	)
 	if err != nil {
 		return nil, err
 	}

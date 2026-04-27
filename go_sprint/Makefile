@@ -3,6 +3,7 @@
 # Import shared makefiles from root
 include ../makefiles/nats.mk
 include ../makefiles/postgres.mk
+include ../makefiles/keycloak.mk
 
 # Go configuration
 GOCMD=go
@@ -13,6 +14,10 @@ GOGET=$(GOCMD) get
 GOMOD=$(GOCMD) mod
 BINARY_NAME=sprint-server
 BINARY_PATH=bin/$(BINARY_NAME)
+
+# Logging configuration
+LOG_FORMAT=console        # Options: console, json
+LOG_ENABLE_COLORS=true    # Options: true, false (only applies when LOG_FORMAT=console)
 
 # Docker configuration
 DOCKER_IMAGE=go-sprint
@@ -47,9 +52,43 @@ clean: ## Remove build artifacts
 	rm -rf bin/
 
 .PHONY: run
-run: ## Run the sprint service locally
-	@echo "Running $(BINARY_NAME)..."
-	$(GOCMD) run cmd/server/main.go
+run: ## Run the sprint service locally (also starts go_auth if needed)
+	@echo "Checking if services are already running..."
+	@if lsof -Pi :8080 -sTCP:LISTEN -t >/dev/null 2>&1 ; then \
+		echo "✅ Keycloak already running on port 8080"; \
+	else \
+		echo "⚠️  Keycloak not running on port 8080 - please start it first"; \
+	fi
+	@if lsof -Pi :8081 -sTCP:LISTEN -t >/dev/null 2>&1 ; then \
+		echo "✅ Auth service already running on port 8081"; \
+	else \
+		echo "🔐 Starting auth service on port 8081..."; \
+		cd ../go_auth && SERVER_PORT=8081 KEYCLOAK_DEFAULT_REALM=sprint-management KEYCLOAK_CLIENT_ID=sprint-management-ui KEYCLOAK_REALM_CLIENTS=ttrpg:auth-service,sprint-management:sprint-management-ui go run cmd/server/main.go & \
+		sleep 2; \
+	fi
+	@if lsof -Pi :8003 -sTCP:LISTEN -t >/dev/null 2>&1 ; then \
+		echo "⚠️  Sprint service already running on port 8003"; \
+	else \
+		echo "📋 Starting $(BINARY_NAME) on port 8003 with LOG_FORMAT=$(LOG_FORMAT) LOG_ENABLE_COLORS=$(LOG_ENABLE_COLORS)..."; \
+		LOG_FORMAT=$(LOG_FORMAT) LOG_ENABLE_COLORS=$(LOG_ENABLE_COLORS) SERVER_PORT=8003 KEYCLOAK_REALM=sprint-management KEYCLOAK_CLIENT_ID=sprint-management-ui $(GOCMD) run cmd/server/main.go; \
+	fi
+
+.PHONY: stop
+stop: ## Stop the sprint service and auth service
+	@echo "Stopping services..."
+	@if lsof -Pi :8003 -sTCP:LISTEN -t >/dev/null 2>&1 ; then \
+		echo "🛑 Stopping sprint service on port 8003..."; \
+		kill $$(lsof -ti:8003) 2>/dev/null || true; \
+	else \
+		echo "✅ Sprint service not running on port 8003"; \
+	fi
+	@if lsof -Pi :8081 -sTCP:LISTEN -t >/dev/null 2>&1 ; then \
+		echo "🛑 Stopping auth service on port 8081..."; \
+		kill $$(lsof -ti:8081) 2>/dev/null || true; \
+	else \
+		echo "✅ Auth service not running on port 8081"; \
+	fi
+	@echo "✅ Services stopped"
 
 ################################################################################
 # Testing Targets
@@ -202,14 +241,15 @@ docker-compose-down: ## Stop all services with docker-compose
 ################################################################################
 
 .PHONY: dev-up
-dev-up: postgres-up nats-up ## Start all development dependencies
+dev-up: keycloak-up nats-up migrate-up ## Start all development dependencies and run migrations
 	@echo "Development environment started"
 	@echo "PostgreSQL: localhost:5432"
+	@echo "Keycloak:   http://localhost:8080"
 	@echo "NATS: localhost:4222"
 	@echo "NATS Monitoring: http://localhost:8222"
 
 .PHONY: dev-down
-dev-down: postgres-down nats-down ## Stop all development dependencies
+dev-down: nats-down keycloak-down ## Stop all development dependencies
 	@echo "Development environment stopped"
 
 .PHONY: dev-logs
@@ -269,3 +309,18 @@ verify-system: ## Verify system health and integrity
 backup-list: ## List available backups
 	@echo "Available backups:"
 	@ls -lh backups/sprint_management_*.sql 2>/dev/null || echo "No backups found"
+
+.PHONY: reset
+reset: ## Wipe database and start fresh (WARNING: Deletes all data!)
+	@echo "⚠️  WARNING: This will delete ALL data!"
+	@read -p "Are you sure? Type 'yes' to continue: " confirm; \
+	if [ "$$confirm" = "yes" ]; then \
+		echo "Dropping and recreating database..."; \
+		docker exec ttrpg-pg psql -U postgres -c "DROP DATABASE IF EXISTS sprint_management;"; \
+		docker exec ttrpg-pg psql -U postgres -c "CREATE DATABASE sprint_management;"; \
+		echo "Running migrations..."; \
+		make migrate-up; \
+		echo "✅ Database reset complete!"; \
+	else \
+		echo "Reset cancelled."; \
+	fi

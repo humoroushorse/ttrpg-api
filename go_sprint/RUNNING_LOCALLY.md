@@ -22,7 +22,7 @@ From the repository root, use the startup script:
 
 This will start:
 - Authentication Service (port 8081)
-- Sprint Management Service (port 8082)
+- Sprint Management Service (port 8003)
 
 ### Option 2: Run Sprint Service Only
 
@@ -42,14 +42,14 @@ cd go_sprint
 - Provides login, logout, refresh, and registration endpoints
 - Swagger UI: http://localhost:8081/swagger/
 
-### Sprint Management Service (Port 8082)
+### Sprint Management Service (Port 8003)
 - Main API for sprint and work item management
 - Proxies auth requests to the auth service
-- Swagger UI: http://localhost:8082/swagger/ (includes auth endpoints)
+- Swagger UI: http://localhost:8003/swagger/ (includes auth endpoints)
 
 ## Available Endpoints
 
-### Via Sprint Service (Port 8082)
+### Via Sprint Service (Port 8003)
 
 All endpoints are accessible through the sprint service:
 
@@ -80,7 +80,7 @@ All endpoints are accessible through the sprint service:
 ### 1. Register a New User
 
 ```bash
-curl -X POST http://localhost:8082/api/v1/auth/register \
+curl -X POST http://localhost:8003/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "username": "testuser",
@@ -94,7 +94,7 @@ curl -X POST http://localhost:8082/api/v1/auth/register \
 ### 2. Login
 
 ```bash
-curl -X POST http://localhost:8082/api/v1/auth/login \
+curl -X POST http://localhost:8003/api/v1/auth/login \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "username=testuser&password=SecurePass123!"
 ```
@@ -114,7 +114,7 @@ Response:
 Use the access token in the Authorization header for protected endpoints:
 
 ```bash
-curl -X GET http://localhost:8082/api/v1/workitems \
+curl -X GET http://localhost:8003/api/v1/workitems \
   -H "Authorization: Bearer eyJhbGc..."
 ```
 
@@ -123,7 +123,7 @@ curl -X GET http://localhost:8082/api/v1/workitems \
 When the access token expires, use the refresh token:
 
 ```bash
-curl -X POST http://localhost:8082/api/v1/auth/refresh \
+curl -X POST http://localhost:8003/api/v1/auth/refresh \
   -H "Content-Type: application/json" \
   -d '{"refresh_token": "eyJhbGc..."}'
 ```
@@ -132,7 +132,7 @@ curl -X POST http://localhost:8082/api/v1/auth/refresh \
 
 The easiest way to test the API is through Swagger UI:
 
-1. Open http://localhost:8082/swagger/
+1. Open http://localhost:8003/swagger/
 2. Click "Authorize" button
 3. Register a new user using `/api/v1/auth/register`
 4. Login using `/api/v1/auth/login`
@@ -149,7 +149,7 @@ The easiest way to test the API is through Swagger UI:
        │
        ▼
 ┌─────────────────────────────────────┐
-│  go_sprint (Port 8082)              │
+│  go_sprint (Port 8003)              │
 │  ┌───────────────────────────────┐  │
 │  │ /api/v1/auth/* → Proxy to     │  │
 │  │ go_auth service               │  │

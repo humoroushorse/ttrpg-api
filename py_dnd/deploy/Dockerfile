@@ -64,6 +64,10 @@ COPY --from=builder-base /tmp/dist/ /dist/
 RUN pip install --no-cache-dir /dist/*.whl
 # COPY . .
 
+# Copy alembic config and migrations for database migration support
+COPY --from=python-base /tmp/alembic.ini /code/alembic.ini
+COPY --from=python-base /tmp/migrations /code/migrations
+
 # poetry run uvicorn --reload --host=0.0.0.0 --port=8001 --app-dir=py_dnd main:app
 # CMD ["uvicorn", "--reload", "--host=0.0.0.0", "--port=8001", "py_dnd.main:app"]
 WORKDIR /

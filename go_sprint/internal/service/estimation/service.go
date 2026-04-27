@@ -34,7 +34,7 @@ type SprintRepository interface {
 
 // WorkItemRepository defines the interface for work item data access
 type WorkItemRepository interface {
-	ListWorkItemsBySprint(ctx context.Context, sprintID pgtype.UUID) ([]workitems.SprintManagementWorkItem, error)
+	ListWorkItemsBySprint(ctx context.Context, sprintID pgtype.UUID) ([]workitems.ListWorkItemsBySprintRow, error)
 }
 
 // Config holds estimation service configuration

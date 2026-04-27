@@ -66,7 +66,7 @@ func (q *Queries) CountSearchResults(ctx context.Context, plaintoTsquery string)
 }
 
 const filterWorkItems = `-- name: FilterWorkItems :many
-SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by FROM sprint_management.work_items w
+SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by, project_id, ticket_number FROM sprint_management.work_items w
 WHERE 
     deleted_at IS NULL
     AND ($1::sprint_management.work_item_type IS NULL OR w.type = $1)
@@ -128,6 +128,8 @@ func (q *Queries) FilterWorkItems(ctx context.Context, arg FilterWorkItemsParams
 			&i.UpdatedAt,
 			&i.DeletedAt,
 			&i.DeletedBy,
+			&i.ProjectID,
+			&i.TicketNumber,
 		); err != nil {
 			return nil, err
 		}
@@ -142,7 +144,7 @@ func (q *Queries) FilterWorkItems(ctx context.Context, arg FilterWorkItemsParams
 const searchWorkItems = `-- name: SearchWorkItems :many
 
 SELECT 
-    w.id, w.type, w.title, w.description, w.status, w.priority, w.story_points, w.assignee_id, w.reporter_id, w.parent_id, w.sprint_id, w.created_at, w.updated_at, w.deleted_at, w.deleted_by,
+    w.id, w.type, w.title, w.description, w.status, w.priority, w.story_points, w.assignee_id, w.reporter_id, w.parent_id, w.sprint_id, w.created_at, w.updated_at, w.deleted_at, w.deleted_by, w.project_id, w.ticket_number,
     ts_rank(
         to_tsvector('english', w.title || ' ' || COALESCE(w.description, '')),
         plainto_tsquery('english', $1)
@@ -162,22 +164,24 @@ type SearchWorkItemsParams struct {
 }
 
 type SearchWorkItemsRow struct {
-	ID          pgtype.UUID                    `json:"id"`
-	Type        SprintManagementWorkItemType   `json:"type"`
-	Title       string                         `json:"title"`
-	Description *string                        `json:"description"`
-	Status      SprintManagementWorkItemStatus `json:"status"`
-	Priority    SprintManagementPriorityLevel  `json:"priority"`
-	StoryPoints *int32                         `json:"story_points"`
-	AssigneeID  pgtype.UUID                    `json:"assignee_id"`
-	ReporterID  pgtype.UUID                    `json:"reporter_id"`
-	ParentID    pgtype.UUID                    `json:"parent_id"`
-	SprintID    pgtype.UUID                    `json:"sprint_id"`
-	CreatedAt   pgtype.Timestamptz             `json:"created_at"`
-	UpdatedAt   pgtype.Timestamptz             `json:"updated_at"`
-	DeletedAt   pgtype.Timestamptz             `json:"deleted_at"`
-	DeletedBy   pgtype.UUID                    `json:"deleted_by"`
-	Rank        float32                        `json:"rank"`
+	ID           pgtype.UUID                    `json:"id"`
+	Type         SprintManagementWorkItemType   `json:"type"`
+	Title        string                         `json:"title"`
+	Description  *string                        `json:"description"`
+	Status       SprintManagementWorkItemStatus `json:"status"`
+	Priority     SprintManagementPriorityLevel  `json:"priority"`
+	StoryPoints  *int32                         `json:"story_points"`
+	AssigneeID   pgtype.UUID                    `json:"assignee_id"`
+	ReporterID   pgtype.UUID                    `json:"reporter_id"`
+	ParentID     pgtype.UUID                    `json:"parent_id"`
+	SprintID     pgtype.UUID                    `json:"sprint_id"`
+	CreatedAt    pgtype.Timestamptz             `json:"created_at"`
+	UpdatedAt    pgtype.Timestamptz             `json:"updated_at"`
+	DeletedAt    pgtype.Timestamptz             `json:"deleted_at"`
+	DeletedBy    pgtype.UUID                    `json:"deleted_by"`
+	ProjectID    pgtype.UUID                    `json:"project_id"`
+	TicketNumber *int32                         `json:"ticket_number"`
+	Rank         float32                        `json:"rank"`
 }
 
 // Search queries for work items with full-text search support
@@ -206,6 +210,8 @@ func (q *Queries) SearchWorkItems(ctx context.Context, arg SearchWorkItemsParams
 			&i.UpdatedAt,
 			&i.DeletedAt,
 			&i.DeletedBy,
+			&i.ProjectID,
+			&i.TicketNumber,
 			&i.Rank,
 		); err != nil {
 			return nil, err
@@ -220,7 +226,7 @@ func (q *Queries) SearchWorkItems(ctx context.Context, arg SearchWorkItemsParams
 
 const searchWorkItemsBoolean = `-- name: SearchWorkItemsBoolean :many
 SELECT 
-    w.id, w.type, w.title, w.description, w.status, w.priority, w.story_points, w.assignee_id, w.reporter_id, w.parent_id, w.sprint_id, w.created_at, w.updated_at, w.deleted_at, w.deleted_by,
+    w.id, w.type, w.title, w.description, w.status, w.priority, w.story_points, w.assignee_id, w.reporter_id, w.parent_id, w.sprint_id, w.created_at, w.updated_at, w.deleted_at, w.deleted_by, w.project_id, w.ticket_number,
     ts_rank(
         to_tsvector('english', w.title || ' ' || COALESCE(w.description, '')),
         websearch_to_tsquery('english', $1)
@@ -240,22 +246,24 @@ type SearchWorkItemsBooleanParams struct {
 }
 
 type SearchWorkItemsBooleanRow struct {
-	ID          pgtype.UUID                    `json:"id"`
-	Type        SprintManagementWorkItemType   `json:"type"`
-	Title       string                         `json:"title"`
-	Description *string                        `json:"description"`
-	Status      SprintManagementWorkItemStatus `json:"status"`
-	Priority    SprintManagementPriorityLevel  `json:"priority"`
-	StoryPoints *int32                         `json:"story_points"`
-	AssigneeID  pgtype.UUID                    `json:"assignee_id"`
-	ReporterID  pgtype.UUID                    `json:"reporter_id"`
-	ParentID    pgtype.UUID                    `json:"parent_id"`
-	SprintID    pgtype.UUID                    `json:"sprint_id"`
-	CreatedAt   pgtype.Timestamptz             `json:"created_at"`
-	UpdatedAt   pgtype.Timestamptz             `json:"updated_at"`
-	DeletedAt   pgtype.Timestamptz             `json:"deleted_at"`
-	DeletedBy   pgtype.UUID                    `json:"deleted_by"`
-	Rank        float32                        `json:"rank"`
+	ID           pgtype.UUID                    `json:"id"`
+	Type         SprintManagementWorkItemType   `json:"type"`
+	Title        string                         `json:"title"`
+	Description  *string                        `json:"description"`
+	Status       SprintManagementWorkItemStatus `json:"status"`
+	Priority     SprintManagementPriorityLevel  `json:"priority"`
+	StoryPoints  *int32                         `json:"story_points"`
+	AssigneeID   pgtype.UUID                    `json:"assignee_id"`
+	ReporterID   pgtype.UUID                    `json:"reporter_id"`
+	ParentID     pgtype.UUID                    `json:"parent_id"`
+	SprintID     pgtype.UUID                    `json:"sprint_id"`
+	CreatedAt    pgtype.Timestamptz             `json:"created_at"`
+	UpdatedAt    pgtype.Timestamptz             `json:"updated_at"`
+	DeletedAt    pgtype.Timestamptz             `json:"deleted_at"`
+	DeletedBy    pgtype.UUID                    `json:"deleted_by"`
+	ProjectID    pgtype.UUID                    `json:"project_id"`
+	TicketNumber *int32                         `json:"ticket_number"`
+	Rank         float32                        `json:"rank"`
 }
 
 // Boolean search with AND/OR operators using websearch_to_tsquery
@@ -284,6 +292,8 @@ func (q *Queries) SearchWorkItemsBoolean(ctx context.Context, arg SearchWorkItem
 			&i.UpdatedAt,
 			&i.DeletedAt,
 			&i.DeletedBy,
+			&i.ProjectID,
+			&i.TicketNumber,
 			&i.Rank,
 		); err != nil {
 			return nil, err
@@ -298,7 +308,7 @@ func (q *Queries) SearchWorkItemsBoolean(ctx context.Context, arg SearchWorkItem
 
 const searchWorkItemsByField = `-- name: SearchWorkItemsByField :many
 SELECT 
-    w.id, w.type, w.title, w.description, w.status, w.priority, w.story_points, w.assignee_id, w.reporter_id, w.parent_id, w.sprint_id, w.created_at, w.updated_at, w.deleted_at, w.deleted_by,
+    w.id, w.type, w.title, w.description, w.status, w.priority, w.story_points, w.assignee_id, w.reporter_id, w.parent_id, w.sprint_id, w.created_at, w.updated_at, w.deleted_at, w.deleted_by, w.project_id, w.ticket_number,
     CASE 
         WHEN $2 = 'title' THEN ts_rank(to_tsvector('english', w.title), plainto_tsquery('english', $1))
         WHEN $2 = 'description' THEN ts_rank(to_tsvector('english', COALESCE(w.description, '')), plainto_tsquery('english', $1))
@@ -326,22 +336,24 @@ type SearchWorkItemsByFieldParams struct {
 }
 
 type SearchWorkItemsByFieldRow struct {
-	ID          pgtype.UUID                    `json:"id"`
-	Type        SprintManagementWorkItemType   `json:"type"`
-	Title       string                         `json:"title"`
-	Description *string                        `json:"description"`
-	Status      SprintManagementWorkItemStatus `json:"status"`
-	Priority    SprintManagementPriorityLevel  `json:"priority"`
-	StoryPoints *int32                         `json:"story_points"`
-	AssigneeID  pgtype.UUID                    `json:"assignee_id"`
-	ReporterID  pgtype.UUID                    `json:"reporter_id"`
-	ParentID    pgtype.UUID                    `json:"parent_id"`
-	SprintID    pgtype.UUID                    `json:"sprint_id"`
-	CreatedAt   pgtype.Timestamptz             `json:"created_at"`
-	UpdatedAt   pgtype.Timestamptz             `json:"updated_at"`
-	DeletedAt   pgtype.Timestamptz             `json:"deleted_at"`
-	DeletedBy   pgtype.UUID                    `json:"deleted_by"`
-	Rank        interface{}                    `json:"rank"`
+	ID           pgtype.UUID                    `json:"id"`
+	Type         SprintManagementWorkItemType   `json:"type"`
+	Title        string                         `json:"title"`
+	Description  *string                        `json:"description"`
+	Status       SprintManagementWorkItemStatus `json:"status"`
+	Priority     SprintManagementPriorityLevel  `json:"priority"`
+	StoryPoints  *int32                         `json:"story_points"`
+	AssigneeID   pgtype.UUID                    `json:"assignee_id"`
+	ReporterID   pgtype.UUID                    `json:"reporter_id"`
+	ParentID     pgtype.UUID                    `json:"parent_id"`
+	SprintID     pgtype.UUID                    `json:"sprint_id"`
+	CreatedAt    pgtype.Timestamptz             `json:"created_at"`
+	UpdatedAt    pgtype.Timestamptz             `json:"updated_at"`
+	DeletedAt    pgtype.Timestamptz             `json:"deleted_at"`
+	DeletedBy    pgtype.UUID                    `json:"deleted_by"`
+	ProjectID    pgtype.UUID                    `json:"project_id"`
+	TicketNumber *int32                         `json:"ticket_number"`
+	Rank         interface{}                    `json:"rank"`
 }
 
 // Field-specific search supporting title, description, or both
@@ -375,6 +387,8 @@ func (q *Queries) SearchWorkItemsByField(ctx context.Context, arg SearchWorkItem
 			&i.UpdatedAt,
 			&i.DeletedAt,
 			&i.DeletedBy,
+			&i.ProjectID,
+			&i.TicketNumber,
 			&i.Rank,
 		); err != nil {
 			return nil, err
@@ -389,7 +403,7 @@ func (q *Queries) SearchWorkItemsByField(ctx context.Context, arg SearchWorkItem
 
 const searchWorkItemsWithFilters = `-- name: SearchWorkItemsWithFilters :many
 SELECT 
-    w.id, w.type, w.title, w.description, w.status, w.priority, w.story_points, w.assignee_id, w.reporter_id, w.parent_id, w.sprint_id, w.created_at, w.updated_at, w.deleted_at, w.deleted_by,
+    w.id, w.type, w.title, w.description, w.status, w.priority, w.story_points, w.assignee_id, w.reporter_id, w.parent_id, w.sprint_id, w.created_at, w.updated_at, w.deleted_at, w.deleted_by, w.project_id, w.ticket_number,
     ts_rank(
         to_tsvector('english', w.title || ' ' || COALESCE(w.description, '')),
         plainto_tsquery('english', $1)
@@ -419,22 +433,24 @@ type SearchWorkItemsWithFiltersParams struct {
 }
 
 type SearchWorkItemsWithFiltersRow struct {
-	ID          pgtype.UUID                    `json:"id"`
-	Type        SprintManagementWorkItemType   `json:"type"`
-	Title       string                         `json:"title"`
-	Description *string                        `json:"description"`
-	Status      SprintManagementWorkItemStatus `json:"status"`
-	Priority    SprintManagementPriorityLevel  `json:"priority"`
-	StoryPoints *int32                         `json:"story_points"`
-	AssigneeID  pgtype.UUID                    `json:"assignee_id"`
-	ReporterID  pgtype.UUID                    `json:"reporter_id"`
-	ParentID    pgtype.UUID                    `json:"parent_id"`
-	SprintID    pgtype.UUID                    `json:"sprint_id"`
-	CreatedAt   pgtype.Timestamptz             `json:"created_at"`
-	UpdatedAt   pgtype.Timestamptz             `json:"updated_at"`
-	DeletedAt   pgtype.Timestamptz             `json:"deleted_at"`
-	DeletedBy   pgtype.UUID                    `json:"deleted_by"`
-	Rank        float32                        `json:"rank"`
+	ID           pgtype.UUID                    `json:"id"`
+	Type         SprintManagementWorkItemType   `json:"type"`
+	Title        string                         `json:"title"`
+	Description  *string                        `json:"description"`
+	Status       SprintManagementWorkItemStatus `json:"status"`
+	Priority     SprintManagementPriorityLevel  `json:"priority"`
+	StoryPoints  *int32                         `json:"story_points"`
+	AssigneeID   pgtype.UUID                    `json:"assignee_id"`
+	ReporterID   pgtype.UUID                    `json:"reporter_id"`
+	ParentID     pgtype.UUID                    `json:"parent_id"`
+	SprintID     pgtype.UUID                    `json:"sprint_id"`
+	CreatedAt    pgtype.Timestamptz             `json:"created_at"`
+	UpdatedAt    pgtype.Timestamptz             `json:"updated_at"`
+	DeletedAt    pgtype.Timestamptz             `json:"deleted_at"`
+	DeletedBy    pgtype.UUID                    `json:"deleted_by"`
+	ProjectID    pgtype.UUID                    `json:"project_id"`
+	TicketNumber *int32                         `json:"ticket_number"`
+	Rank         float32                        `json:"rank"`
 }
 
 func (q *Queries) SearchWorkItemsWithFilters(ctx context.Context, arg SearchWorkItemsWithFiltersParams) ([]SearchWorkItemsWithFiltersRow, error) {
@@ -471,6 +487,8 @@ func (q *Queries) SearchWorkItemsWithFilters(ctx context.Context, arg SearchWork
 			&i.UpdatedAt,
 			&i.DeletedAt,
 			&i.DeletedBy,
+			&i.ProjectID,
+			&i.TicketNumber,
 			&i.Rank,
 		); err != nil {
 			return nil, err

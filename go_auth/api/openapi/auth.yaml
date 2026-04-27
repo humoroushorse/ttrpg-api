@@ -11,7 +11,7 @@ info:
 servers:
   - url: http://localhost:8081
     description: Local development server
-  - url: http://localhost:8082/api/v1
+  - url: http://localhost:8003/api/v1
     description: Proxied through Sprint Management Service
 
 tags:

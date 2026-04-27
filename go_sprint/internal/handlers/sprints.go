@@ -6,6 +6,7 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
+	"strconv"
 
 	"github.com/google/uuid"
 	api "github.com/humoroushorse/go_sprint/api/generated"
@@ -21,7 +22,8 @@ import (
 type SprintService interface {
 	CreateSprint(ctx context.Context, req sprints.CreateSprintRequest) (*models.Sprint, error)
 	GetSprint(ctx context.Context, id uuid.UUID) (*models.Sprint, error)
-	ListSprints(ctx context.Context, cursor *pagination.Cursor, limit int32) ([]*models.Sprint, error)
+	UpdateSprint(ctx context.Context, id uuid.UUID, req sprints.UpdateSprintRequest) (*models.Sprint, error)
+	ListSprints(ctx context.Context, cursor *pagination.Cursor, limit int32, searchQuery *string, statusFilter []string) ([]*models.Sprint, error)
 	GetSprintMetrics(ctx context.Context, id uuid.UUID) (*sprints.SprintMetrics, error)
 	CloseSprint(ctx context.Context, id uuid.UUID) (*models.Sprint, error)
 }
@@ -78,6 +80,12 @@ func (h *SprintHandler) CreateSprint(w http.ResponseWriter, r *http.Request) {
 		req.Description = &desc
 	}
 
+	// Get user timezone from header (optional, defaults to UTC)
+	userTimezone := r.Header.Get("X-User-Timezone")
+	if userTimezone == "" {
+		userTimezone = "UTC"
+	}
+
 	// Convert API request to service request
 	serviceReq := sprints.CreateSprintRequest{
 		Name:           req.Name,
@@ -86,6 +94,7 @@ func (h *SprintHandler) CreateSprint(w http.ResponseWriter, r *http.Request) {
 		EndDate:        req.EndDate.Time,
 		CapacityPoints: req.CapacityPoints,
 		CreatedBy:      user.ID,
+		UserTimezone:   userTimezone,
 	}
 
 	// Create sprint
@@ -145,10 +154,114 @@ func (h *SprintHandler) GetSprint(w http.ResponseWriter, r *http.Request, id ope
 	RespondWithSuccess(w, r, http.StatusOK, response)
 }
 
+// UpdateSprint handles PUT /api/v1/sprints/{id}
+func (h *SprintHandler) UpdateSprint(w http.ResponseWriter, r *http.Request, id openapi_types.UUID) {
+	ctx := r.Context()
+	logger := middleware.LoggerFromContext(ctx)
+
+	sprintID := uuid.UUID(id)
+
+	// Parse request body
+	var req api.UpdateSprintRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		logger.Warn("failed to decode request body", slog.Any("error", err))
+		RespondBadRequest(w, r, "Invalid request body")
+		return
+	}
+
+	// Sanitize inputs
+	if req.Name != nil {
+		name := middleware.SanitizeInput(*req.Name)
+		req.Name = &name
+	}
+	if req.Description != nil {
+		desc := middleware.SanitizeInput(*req.Description)
+		req.Description = &desc
+	}
+
+	// Convert API request to service request
+	serviceReq := sprints.UpdateSprintRequest{
+		Name:           req.Name,
+		Description:    req.Description,
+		CapacityPoints: req.CapacityPoints,
+	}
+
+	// Handle dates if provided
+	if req.StartDate != nil {
+		serviceReq.StartDate = &req.StartDate.Time
+	}
+	if req.EndDate != nil {
+		serviceReq.EndDate = &req.EndDate.Time
+	}
+
+	// Handle status if provided
+	if req.Status != nil {
+		status := string(*req.Status)
+		serviceReq.Status = &status
+	}
+
+	// Update sprint
+	sprint, err := h.service.UpdateSprint(ctx, sprintID, serviceReq)
+	if err != nil {
+		logger.Error("failed to update sprint",
+			slog.Any("error", err),
+			slog.String("id", sprintID.String()),
+		)
+		// Check if it's a validation error
+		if errors.Is(err, sprints.ErrInvalidDateRange) ||
+			errors.Is(err, sprints.ErrRequiredFieldMissing) ||
+			errors.Is(err, sprints.ErrSprintNotFound) {
+			RespondBadRequest(w, r, err.Error())
+			return
+		}
+		RespondInternalError(w, r, err)
+		return
+	}
+
+	// Convert to API response
+	response := convertSprintToAPI(sprint)
+
+	logger.Info("sprint updated",
+		slog.String("id", sprint.ID.String()),
+		slog.String("name", sprint.Name),
+	)
+
+	RespondWithSuccess(w, r, http.StatusOK, response)
+}
+
+// DeleteSprint handles DELETE /api/v1/sprints/{id}
+func (h *SprintHandler) DeleteSprint(w http.ResponseWriter, r *http.Request, id openapi_types.UUID) {
+	ctx := r.Context()
+	logger := middleware.LoggerFromContext(ctx)
+
+	sprintID := uuid.UUID(id)
+
+	// TODO: Implement DeleteSprint in service
+	logger.Warn("delete sprint not yet implemented",
+		slog.String("id", sprintID.String()),
+	)
+
+	http.Error(w, "Delete sprint not yet implemented", http.StatusNotImplemented)
+}
+
 // ListSprints handles GET /api/v1/sprints
 func (h *SprintHandler) ListSprints(w http.ResponseWriter, r *http.Request, params api.ListSprintsParams) {
 	ctx := r.Context()
 	logger := middleware.LoggerFromContext(ctx)
+
+	// WORKAROUND: oapi-codegen doesn't bind query params in chi, so parse manually
+	queryParams := r.URL.Query()
+	if filtersParam := queryParams.Get("filters"); filtersParam != "" {
+		params.Filters = &filtersParam
+	}
+	if cursorParam := queryParams.Get("cursor"); cursorParam != "" {
+		params.Cursor = &cursorParam
+	}
+	if limitParam := queryParams.Get("limit"); limitParam != "" {
+		if limitInt, err := strconv.Atoi(limitParam); err == nil {
+			params.Limit = &limitInt
+		}
+	}
 
 	// Get pagination config
 	paginationConfig := pagination.DefaultConfig()
@@ -176,8 +289,49 @@ func (h *SprintHandler) ListSprints(w http.ResponseWriter, r *http.Request, para
 		cursor = &decodedCursor
 	}
 
-	// List sprints
-	items, err := h.service.ListSprints(ctx, cursor, limit)
+	// Parse filters from query parameter
+	var searchQuery *string
+	var statusFilter []string
+
+	if params.Filters != nil && *params.Filters != "" {
+		var filters []map[string]interface{}
+		if err := json.Unmarshal([]byte(*params.Filters), &filters); err != nil {
+			logger.Warn("invalid filters format",
+				slog.String("filters", *params.Filters),
+				slog.Any("error", err),
+			)
+			RespondBadRequest(w, r, "Invalid filters format")
+			return
+		}
+
+		// Process each filter
+		for _, filter := range filters {
+			field, ok := filter["field"].(string)
+			if !ok {
+				continue
+			}
+
+			switch field {
+			case "search":
+				if value, ok := filter["value"].(string); ok && value != "" {
+					searchQuery = &value
+				}
+			case "status":
+				if value, ok := filter["value"].([]interface{}); ok {
+					for _, v := range value {
+						if status, ok := v.(string); ok {
+							statusFilter = append(statusFilter, status)
+						}
+					}
+				} else if value, ok := filter["value"].(string); ok && value != "" {
+					statusFilter = append(statusFilter, value)
+				}
+			}
+		}
+	}
+
+	// List sprints with filters
+	items, err := h.service.ListSprints(ctx, cursor, limit, searchQuery, statusFilter)
 	if err != nil {
 		logger.Error("failed to list sprints",
 			slog.Any("error", err),
@@ -223,6 +377,8 @@ func (h *SprintHandler) ListSprints(w http.ResponseWriter, r *http.Request, para
 	logger.Debug("sprints listed",
 		slog.Int("count", len(apiItems)),
 		slog.Bool("has_more", paginationResp.HasMore),
+		slog.Any("search_query", searchQuery),
+		slog.Any("status_filter", statusFilter),
 	)
 
 	RespondWithSuccess(w, r, http.StatusOK, response)

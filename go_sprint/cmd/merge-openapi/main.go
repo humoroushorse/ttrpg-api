@@ -49,7 +49,7 @@ func main() {
 		},
 		"servers": []interface{}{
 			map[string]interface{}{
-				"url":         "http://localhost:8082",
+				"url":         "http://localhost:8003",
 				"description": "Local development server",
 			},
 		},

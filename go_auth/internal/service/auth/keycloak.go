@@ -48,14 +48,13 @@ type UserInfo struct {
 	FamilyName        string `json:"family_name"`
 }
 
-// Login authenticates a user with username and password
-func (s *KeycloakService) Login(ctx context.Context, username, password string) (*TokenResponse, error) {
-	tokenURL := fmt.Sprintf("%s/realms/%s/protocol/openid-connect/token",
-		s.config.URL, s.config.Realm)
+// Login authenticates a user with username and password against a specific realm
+func (s *KeycloakService) Login(ctx context.Context, realm, clientID, username, password string) (*TokenResponse, error) {
+	tokenURL := fmt.Sprintf("%s/realms/%s/protocol/openid-connect/token", s.config.URL, realm)
 
 	data := url.Values{}
 	data.Set("grant_type", "password")
-	data.Set("client_id", s.config.ClientID)
+	data.Set("client_id", clientID)
 	if s.config.ClientSecret != "" {
 		data.Set("client_secret", s.config.ClientSecret)
 	}
@@ -93,13 +92,12 @@ func (s *KeycloakService) Login(ctx context.Context, username, password string) 
 }
 
 // RefreshToken refreshes an access token using a refresh token
-func (s *KeycloakService) RefreshToken(ctx context.Context, refreshToken string) (*TokenResponse, error) {
-	tokenURL := fmt.Sprintf("%s/realms/%s/protocol/openid-connect/token",
-		s.config.URL, s.config.Realm)
+func (s *KeycloakService) RefreshToken(ctx context.Context, realm, clientID, refreshToken string) (*TokenResponse, error) {
+	tokenURL := fmt.Sprintf("%s/realms/%s/protocol/openid-connect/token", s.config.URL, realm)
 
 	data := url.Values{}
 	data.Set("grant_type", "refresh_token")
-	data.Set("client_id", s.config.ClientID)
+	data.Set("client_id", clientID)
 	if s.config.ClientSecret != "" {
 		data.Set("client_secret", s.config.ClientSecret)
 	}
@@ -135,12 +133,11 @@ func (s *KeycloakService) RefreshToken(ctx context.Context, refreshToken string)
 }
 
 // Logout invalidates a refresh token
-func (s *KeycloakService) Logout(ctx context.Context, refreshToken string) error {
-	logoutURL := fmt.Sprintf("%s/realms/%s/protocol/openid-connect/logout",
-		s.config.URL, s.config.Realm)
+func (s *KeycloakService) Logout(ctx context.Context, realm, clientID, refreshToken string) error {
+	logoutURL := fmt.Sprintf("%s/realms/%s/protocol/openid-connect/logout", s.config.URL, realm)
 
 	data := url.Values{}
-	data.Set("client_id", s.config.ClientID)
+	data.Set("client_id", clientID)
 	if s.config.ClientSecret != "" {
 		data.Set("client_secret", s.config.ClientSecret)
 	}
@@ -167,9 +164,8 @@ func (s *KeycloakService) Logout(ctx context.Context, refreshToken string) error
 }
 
 // GetUserInfo retrieves user information from an access token
-func (s *KeycloakService) GetUserInfo(ctx context.Context, accessToken string) (*UserInfo, error) {
-	userInfoURL := fmt.Sprintf("%s/realms/%s/protocol/openid-connect/userinfo",
-		s.config.URL, s.config.Realm)
+func (s *KeycloakService) GetUserInfo(ctx context.Context, realm, accessToken string) (*UserInfo, error) {
+	userInfoURL := fmt.Sprintf("%s/realms/%s/protocol/openid-connect/userinfo", s.config.URL, realm)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", userInfoURL, nil)
 	if err != nil {
@@ -201,24 +197,23 @@ func (s *KeycloakService) GetUserInfo(ctx context.Context, accessToken string) (
 }
 
 // CreateUser creates a new user in Keycloak
-func (s *KeycloakService) CreateUser(ctx context.Context, username, email, password, firstName, lastName string) (string, error) {
-	// Get admin token first
+func (s *KeycloakService) CreateUser(ctx context.Context, realm, username, email, password, firstName, lastName string) (string, error) {
 	adminToken, err := s.getAdminToken(ctx)
 	if err != nil {
 		return "", fmt.Errorf("failed to get admin token: %w", err)
 	}
 
-	// Create user
-	createUserURL := fmt.Sprintf("%s/admin/realms/%s/users", s.config.URL, s.config.Realm)
+	createUserURL := fmt.Sprintf("%s/admin/realms/%s/users", s.config.URL, realm)
 
-	userPayload := map[string]interface{}{
-		"username":      username,
-		"email":         email,
-		"enabled":       true,
-		"emailVerified": true, // Set to true for development - no email verification needed
-		"firstName":     firstName,
-		"lastName":      lastName,
-		"credentials": []map[string]interface{}{
+	userPayload := map[string]any{
+		"username":        username,
+		"email":           email,
+		"enabled":         true,
+		"emailVerified":   true,
+		"firstName":       firstName,
+		"lastName":        lastName,
+		"requiredActions": []string{},
+		"credentials": []map[string]any{
 			{
 				"type":      "password",
 				"value":     password,
@@ -250,13 +245,11 @@ func (s *KeycloakService) CreateUser(ctx context.Context, username, email, passw
 		return "", fmt.Errorf("failed to create user: %s (status: %d)", string(body), resp.StatusCode)
 	}
 
-	// Extract user ID from Location header
 	location := resp.Header.Get("Location")
 	if location == "" {
 		return "", fmt.Errorf("no location header in response")
 	}
 
-	// Location format: .../users/{user-id}
 	parts := strings.Split(location, "/")
 	if len(parts) == 0 {
 		return "", fmt.Errorf("invalid location header format")
@@ -266,7 +259,7 @@ func (s *KeycloakService) CreateUser(ctx context.Context, username, email, passw
 	return userID, nil
 }
 
-// getAdminToken obtains an admin access token
+// getAdminToken obtains an admin access token (always from master realm)
 func (s *KeycloakService) getAdminToken(ctx context.Context) (string, error) {
 	tokenURL := fmt.Sprintf("%s/realms/master/protocol/openid-connect/token", s.config.URL)
 

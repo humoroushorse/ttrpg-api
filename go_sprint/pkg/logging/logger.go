@@ -2,6 +2,7 @@ package logging
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"log/slog"
 	"os"
@@ -100,6 +101,8 @@ func NewColoredConsoleHandler(w io.Writer, opts *slog.HandlerOptions) *ColoredCo
 	if opts == nil {
 		opts = &slog.HandlerOptions{}
 	}
+
+	// Create a custom handler that wraps text handler with color formatting
 	return &ColoredConsoleHandler{
 		handler: slog.NewTextHandler(w, opts),
 		writer:  w,
@@ -112,20 +115,67 @@ func (h *ColoredConsoleHandler) Enabled(ctx context.Context, level slog.Level) b
 	return h.handler.Enabled(ctx, level)
 }
 
-// Handle handles the Record
+// Handle handles the Record with colored output
 func (h *ColoredConsoleHandler) Handle(ctx context.Context, r slog.Record) error {
-	// Add color codes based on level
+	// Format: time=... level=LEVEL msg="message" key=value ...
+	buf := make([]byte, 0, 1024)
+
+	// Time
+	buf = append(buf, "time="...)
+	buf = r.Time.AppendFormat(buf, "2006-01-02T15:04:05.000-07:00")
+	buf = append(buf, ' ')
+
+	// Level with color
 	levelColor := getLevelColor(r.Level)
 	resetColor := "\033[0m"
+	buf = append(buf, "level="...)
+	buf = append(buf, levelColor...)
+	buf = append(buf, r.Level.String()...)
+	buf = append(buf, resetColor...)
+	buf = append(buf, ' ')
 
-	// Create a new record with colored level
-	newRecord := slog.NewRecord(r.Time, r.Level, levelColor+r.Message+resetColor, r.PC)
+	// Message with color
+	buf = append(buf, "msg="...)
+	buf = append(buf, levelColor...)
+	buf = append(buf, '"')
+	buf = append(buf, r.Message...)
+	buf = append(buf, '"')
+	buf = append(buf, resetColor...)
+
+	// Attributes
 	r.Attrs(func(a slog.Attr) bool {
-		newRecord.AddAttrs(a)
+		buf = append(buf, ' ')
+		buf = append(buf, a.Key...)
+		buf = append(buf, '=')
+		buf = appendValue(buf, a.Value)
 		return true
 	})
 
-	return h.handler.Handle(ctx, newRecord)
+	buf = append(buf, '\n')
+	_, err := h.writer.Write(buf)
+	return err
+}
+
+// appendValue appends a slog.Value to the buffer
+func appendValue(buf []byte, v slog.Value) []byte {
+	switch v.Kind() {
+	case slog.KindString:
+		return append(buf, v.String()...)
+	case slog.KindInt64:
+		return append(buf, []byte(fmt.Sprintf("%d", v.Int64()))...)
+	case slog.KindUint64:
+		return append(buf, []byte(fmt.Sprintf("%d", v.Uint64()))...)
+	case slog.KindFloat64:
+		return append(buf, []byte(fmt.Sprintf("%g", v.Float64()))...)
+	case slog.KindBool:
+		return append(buf, []byte(fmt.Sprintf("%t", v.Bool()))...)
+	case slog.KindDuration:
+		return append(buf, []byte(v.Duration().String())...)
+	case slog.KindTime:
+		return v.Time().AppendFormat(buf, "2006-01-02T15:04:05.000-07:00")
+	default:
+		return append(buf, []byte(fmt.Sprintf("%v", v.Any()))...)
+	}
 }
 
 // WithAttrs returns a new Handler whose attributes consist of

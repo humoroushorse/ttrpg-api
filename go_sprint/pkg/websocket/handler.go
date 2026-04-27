@@ -85,9 +85,14 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	go client.readPump()
 }
 
-// extractToken extracts JWT token from request
+// extractToken extracts JWT token from request (cookies, query param, or header)
 func (h *Handler) extractToken(r *http.Request) string {
-	// Try query parameter first (for WebSocket connections)
+	// Try cookies first (most secure for HttpOnly cookies)
+	if cookie, err := r.Cookie("id_token"); err == nil && cookie.Value != "" {
+		return cookie.Value
+	}
+
+	// Fallback to query parameter (for cases where cookies aren't available)
 	token := r.URL.Query().Get("token")
 	if token != "" {
 		return token

@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # PostgreSQL Database - Production Configuration
   postgres:
-    image: postgres:15-alpine
+    image: postgres:18-alpine
     container_name: sprint-postgres-prod
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
@@ -34,7 +34,7 @@ services:
 
   # NATS Message Broker - Production Configuration
   nats:
-    image: nats:2.10-alpine
+    image: nats:2.12-alpine
     container_name: sprint-nats-prod
     ports:
       - "${NATS_CLIENT_PORT:-4222}:4222"
@@ -69,7 +69,7 @@ services:
 
   # Keycloak Authentication - Production Configuration
   keycloak:
-    image: quay.io/keycloak/keycloak:22.0
+    image: keycloak/keycloak:26.5
     container_name: sprint-keycloak-prod
     environment:
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
@@ -170,7 +170,7 @@ services:
       CACHE_ENABLED: "true"
       CACHE_TTL: 300s
     ports:
-      - "${SPRINT_SERVICE_PORT:-8082}:8080"
+      - "${SPRINT_SERVICE_PORT:-8003}:8080"
     depends_on:
       postgres:
         condition: service_healthy

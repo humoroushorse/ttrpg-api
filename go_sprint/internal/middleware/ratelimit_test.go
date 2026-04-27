@@ -228,7 +228,7 @@ func TestRateLimitMiddleware_Integration(t *testing.T) {
 		// Add user context
 		ctx := context.WithValue(req.Context(), UserContextKey, "test-user")
 		ctx = context.WithValue(ctx, TraceIDContextKey, "test-trace")
-		ctx = context.WithValue(ctx, "logger", logger)
+		ctx = context.WithValue(ctx, LoggerContextKey, logger)
 		req = req.WithContext(ctx)
 
 		rr := httptest.NewRecorder()

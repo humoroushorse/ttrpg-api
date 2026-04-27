@@ -30,6 +30,11 @@ paths:
           schema:
             type: string
             format: date
+        - name: filters
+          in: query
+          description: AG Grid style filters (JSON array of filter objects)
+          schema:
+            type: string
         - name: cursor
           in: query
           description: Cursor for pagination
@@ -843,6 +848,23 @@ components:
         story_points:
           type: integer
           nullable: true
+        parent_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Parent work item ID (Epic for Story/Defect)
+        sprint_id:
+          type: string
+          format: uuid
+          nullable: true
+        ticket_number:
+          type: integer
+          nullable: true
+          description: Sequential ticket number within the project
+        project_key:
+          type: string
+          nullable: true
+          description: Project key for display (e.g., "SPRINT", "DND")
 
     WorkItemListResponse:
       type: object

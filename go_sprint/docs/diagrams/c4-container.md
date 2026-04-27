@@ -12,7 +12,7 @@ graph TB
     end
 
     subgraph "Frontend Container"
-        WEB[Angular Web Application<br/>TypeScript, Angular 16+<br/>Port: 4203]
+        WEB[Angular Web Application<br/>TypeScript, Angular 16+<br/>Port: 4204]
     end
 
     subgraph "Sprint Management Container"
@@ -217,7 +217,7 @@ graph TB
 
 #### Keycloak
 
-**Technology**: Keycloak 22+, Java
+**Technology**: Keycloak 26+, Java
 
 **Responsibilities**:
 - User authentication
@@ -236,7 +236,7 @@ graph TB
 
 #### NATS Server
 
-**Technology**: NATS 2.10+
+**Technology**: NATS 2.12+
 
 **Responsibilities**:
 - Message routing
@@ -258,7 +258,7 @@ auth.{trace_id}.{action}.{status}
 
 #### PostgreSQL Master
 
-**Technology**: PostgreSQL 15+
+**Technology**: PostgreSQL 18+
 
 **Responsibilities**:
 - Handle all write operations
@@ -277,7 +277,7 @@ auth.{trace_id}.{action}.{status}
 
 #### PostgreSQL Replica
 
-**Technology**: PostgreSQL 15+
+**Technology**: PostgreSQL 18+
 
 **Responsibilities**:
 - Handle read operations

@@ -1,8 +1,10 @@
 package middleware
 
 import (
+	"bufio"
 	"context"
 	"log/slog"
+	"net"
 	"net/http"
 	"time"
 
@@ -39,7 +41,7 @@ func LoggingMiddleware(logger *slog.Logger) func(http.Handler) http.Handler {
 			)
 
 			// Add logger to context
-			ctx = context.WithValue(ctx, "logger", contextLogger)
+			ctx = context.WithValue(ctx, LoggerContextKey, contextLogger)
 
 			// Log request start
 			contextLogger.Info("request started")
@@ -69,12 +71,22 @@ func (rw *responseWriter) WriteHeader(code int) {
 	rw.ResponseWriter.WriteHeader(code)
 }
 
+// Hijack implements http.Hijacker interface for WebSocket support
+func (rw *responseWriter) Hijack() (net.Conn, *bufio.ReadWriter, error) {
+	hijacker, ok := rw.ResponseWriter.(http.Hijacker)
+	if !ok {
+		return nil, nil, http.ErrNotSupported
+	}
+	return hijacker.Hijack()
+}
+
 // LoggerFromContext extracts the logger from the request context
 func LoggerFromContext(ctx context.Context) *slog.Logger {
-	if logger, ok := ctx.Value("logger").(*slog.Logger); ok {
-		return logger
+	logger, ok := ctx.Value(LoggerContextKey).(*slog.Logger)
+	if !ok {
+		return slog.Default()
 	}
-	return slog.Default()
+	return logger
 }
 
 // TraceIDMiddleware ensures every request has a trace ID

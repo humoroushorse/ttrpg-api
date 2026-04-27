@@ -40,21 +40,23 @@ const (
 // WorkItem represents a work item (epic, story, or defect)
 // Implements slog.LogValuer for safe logging
 type WorkItem struct {
-	ID          uuid.UUID      `json:"id"`
-	Type        WorkItemType   `json:"type"`
-	Title       string         `json:"title"`
-	Description string         `json:"description"`
-	Status      WorkItemStatus `json:"status"`
-	Priority    PriorityLevel  `json:"priority"`
-	StoryPoints *int           `json:"story_points,omitempty"`
-	AssigneeID  *uuid.UUID     `json:"assignee_id,omitempty"`
-	ReporterID  uuid.UUID      `json:"reporter_id"`
-	ParentID    *uuid.UUID     `json:"parent_id,omitempty"`
-	SprintID    *uuid.UUID     `json:"sprint_id,omitempty"`
-	CreatedAt   time.Time      `json:"created_at"`
-	UpdatedAt   time.Time      `json:"updated_at"`
-	DeletedAt   *time.Time     `json:"deleted_at,omitempty"`
-	DeletedBy   *uuid.UUID     `json:"deleted_by,omitempty"`
+	ID           uuid.UUID      `json:"id"`
+	Type         WorkItemType   `json:"type"`
+	Title        string         `json:"title"`
+	Description  string         `json:"description"`
+	Status       WorkItemStatus `json:"status"`
+	Priority     PriorityLevel  `json:"priority"`
+	StoryPoints  *int           `json:"story_points,omitempty"`
+	AssigneeID   *uuid.UUID     `json:"assignee_id,omitempty"`
+	ReporterID   uuid.UUID      `json:"reporter_id"`
+	ParentID     *uuid.UUID     `json:"parent_id,omitempty"`
+	SprintID     *uuid.UUID     `json:"sprint_id,omitempty"`
+	TicketNumber *int           `json:"ticket_number,omitempty"`
+	ProjectKey   *string        `json:"project_key,omitempty"`
+	CreatedAt    time.Time      `json:"created_at"`
+	UpdatedAt    time.Time      `json:"updated_at"`
+	DeletedAt    *time.Time     `json:"deleted_at,omitempty"`
+	DeletedBy    *uuid.UUID     `json:"deleted_by,omitempty"`
 }
 
 // LogValue implements slog.LogValuer to control logging output

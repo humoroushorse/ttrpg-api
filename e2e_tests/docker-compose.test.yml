@@ -3,7 +3,7 @@ version: '3.9'
 services:
   postgres-test:
     container_name: postgres-test
-    image: postgres:15.6-alpine
+    image: postgres:18-alpine
     restart: unless-stopped
     ports:
       - "5433:5432"  # Different port from dev (5432)

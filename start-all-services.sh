@@ -5,7 +5,13 @@
 
 set -e
 
+# Logging configuration (can be overridden with environment variables)
+LOG_FORMAT=${LOG_FORMAT:-json}
+LOG_ENABLE_COLORS=${LOG_ENABLE_COLORS:-false}
+
 echo "🚀 Starting TTRPG Services..."
+echo "   Log Format: $LOG_FORMAT"
+echo "   Colors Enabled: $LOG_ENABLE_COLORS"
 echo ""
 
 # Check if ttrpg-pg database is running
@@ -32,7 +38,7 @@ trap cleanup EXIT INT TERM
 # Start go_auth service
 echo "🔐 Starting Authentication Service (port 8081)..."
 cd go_auth
-go run cmd/server/main.go &
+LOG_FORMAT=$LOG_FORMAT LOG_ENABLE_COLORS=$LOG_ENABLE_COLORS go run cmd/server/main.go &
 AUTH_PID=$!
 cd ..
 
@@ -40,9 +46,9 @@ cd ..
 sleep 2
 
 # Start go_sprint service
-echo "📋 Starting Sprint Management Service (port 8082)..."
+echo "📋 Starting Sprint Management Service (port 8003)..."
 cd go_sprint
-SERVER_PORT=8082 go run cmd/server/main.go &
+LOG_FORMAT=$LOG_FORMAT LOG_ENABLE_COLORS=$LOG_ENABLE_COLORS SERVER_PORT=8003 go run cmd/server/main.go &
 SPRINT_PID=$!
 cd ..
 
@@ -59,14 +65,14 @@ echo "    - Swagger UI: http://localhost:8081/swagger/"
 echo "    - OpenAPI Spec: http://localhost:8081/api/openapi.yaml"
 echo ""
 echo "  • Sprint Management Service (with auth proxy):"
-echo "    - API: http://localhost:8082"
-echo "    - Swagger UI: http://localhost:8082/swagger/"
-echo "    - OpenAPI Spec: http://localhost:8082/api/openapi.yaml"
-echo "    - Auth endpoints: http://localhost:8082/api/v1/auth/*"
+echo "    - API: http://localhost:8003"
+echo "    - Swagger UI: http://localhost:8003/swagger/"
+echo "    - OpenAPI Spec: http://localhost:8003/api/openapi.yaml"
+echo "    - Auth endpoints: http://localhost:8003/api/v1/auth/*"
 echo ""
 echo "🔑 Authentication Flow:"
-echo "  1. Register: POST http://localhost:8082/api/v1/auth/register"
-echo "  2. Login: POST http://localhost:8082/api/v1/auth/login"
+echo "  1. Register: POST http://localhost:8003/api/v1/auth/register"
+echo "  2. Login: POST http://localhost:8003/api/v1/auth/login"
 echo "  3. Use access_token in Authorization header for protected endpoints"
 echo ""
 echo "Press Ctrl+C to stop all services"

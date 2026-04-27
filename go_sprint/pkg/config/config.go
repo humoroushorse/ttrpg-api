@@ -92,8 +92,8 @@ func LoadFromEnv() (*Config, error) {
 			ShutdownTimeout: getEnvAsDuration("SERVER_SHUTDOWN_TIMEOUT", 30*time.Second),
 		},
 		Database: DatabaseConfig{
-			MasterURL:       getEnv("DATABASE_MASTER_URL", "postgres://postgres:admin@localhost:5432/ttrpg-pg?sslmode=disable"),
-			ReplicaURL:      getEnv("DATABASE_REPLICA_URL", "postgres://postgres:admin@localhost:5432/ttrpg-pg?sslmode=disable"),
+			MasterURL:       getEnv("DATABASE_MASTER_URL", "postgres://postgres:admin@localhost:5432/sprint_management?sslmode=disable"),
+			ReplicaURL:      getEnv("DATABASE_REPLICA_URL", "postgres://postgres:admin@localhost:5432/sprint_management?sslmode=disable"),
 			MaxOpenConns:    getEnvAsInt("DATABASE_MAX_OPEN_CONNS", 25),
 			MaxIdleConns:    getEnvAsInt("DATABASE_MAX_IDLE_CONNS", 5),
 			ConnMaxLifetime: getEnvAsDuration("DATABASE_CONN_MAX_LIFETIME", 5*time.Minute),
@@ -111,8 +111,8 @@ func LoadFromEnv() (*Config, error) {
 		},
 		Logging: LoggingConfig{
 			Level:        getEnv("LOG_LEVEL", "info"),
-			Format:       getEnv("LOG_FORMAT", "json"),
-			EnableColors: getEnvAsBool("LOG_ENABLE_COLORS", false),
+			Format:       getEnv("LOG_FORMAT", getDefaultLogFormat()),
+			EnableColors: getEnvAsBool("LOG_ENABLE_COLORS", isLocalDevelopment()),
 		},
 		Metrics: MetricsConfig{
 			Enabled: getEnvAsBool("METRICS_ENABLED", true),
@@ -306,4 +306,29 @@ func getEnvAsIntSlice(key string, defaultValue []int) []int {
 	}
 
 	return result
+}
+
+// isLocalDevelopment detects if the application is running in local development mode
+func isLocalDevelopment() bool {
+	// Check common environment indicators
+	env := os.Getenv("ENVIRONMENT")
+	if env == "development" || env == "dev" || env == "local" {
+		return true
+	}
+
+	// Check if running in production/staging
+	if env == "production" || env == "prod" || env == "staging" {
+		return false
+	}
+
+	// Default: assume production (safer default)
+	return false
+}
+
+// getDefaultLogFormat returns the default log format based on environment
+func getDefaultLogFormat() string {
+	if isLocalDevelopment() {
+		return "console"
+	}
+	return "json"
 }

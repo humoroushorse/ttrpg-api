@@ -214,11 +214,15 @@ type CreateWorkItemRequest struct {
 	// Description Detailed description
 	Description string `json:"description"`
 
-	// ParentId Parent work item ID (for stories linking to epics)
+	// ParentId Parent work item ID. Required for Story and Defect types (must be an Epic).
+	// Must be null for Epic type.
 	ParentId *openapi_types.UUID `json:"parent_id"`
 
 	// Priority Priority level of work item
 	Priority PriorityLevel `json:"priority"`
+
+	// ProjectId Project ID (required)
+	ProjectId openapi_types.UUID `json:"project_id"`
 
 	// SprintId Sprint to assign work item to
 	SprintId *openapi_types.UUID `json:"sprint_id"`
@@ -696,12 +700,22 @@ type WorkItemStatus string
 
 // WorkItemSummary defines model for WorkItemSummary.
 type WorkItemSummary struct {
-	Id          openapi_types.UUID      `json:"id"`
-	Priority    WorkItemSummaryPriority `json:"priority"`
-	Status      WorkItemSummaryStatus   `json:"status"`
-	StoryPoints *int                    `json:"story_points"`
-	Title       string                  `json:"title"`
-	Type        WorkItemSummaryType     `json:"type"`
+	Id openapi_types.UUID `json:"id"`
+
+	// ParentId Parent work item ID (Epic for Story/Defect)
+	ParentId *openapi_types.UUID     `json:"parent_id"`
+	Priority WorkItemSummaryPriority `json:"priority"`
+
+	// ProjectKey Project key for display (e.g., "SPRINT", "DND")
+	ProjectKey  *string               `json:"project_key"`
+	SprintId    *openapi_types.UUID   `json:"sprint_id"`
+	Status      WorkItemSummaryStatus `json:"status"`
+	StoryPoints *int                  `json:"story_points"`
+
+	// TicketNumber Sequential ticket number within the project
+	TicketNumber *int                `json:"ticket_number"`
+	Title        string              `json:"title"`
+	Type         WorkItemSummaryType `json:"type"`
 }
 
 // WorkItemSummaryPriority defines model for WorkItemSummary.Priority.
@@ -741,6 +755,9 @@ type ListSprintsParams struct {
 
 	// StartDateBefore Filter sprints starting before this date
 	StartDateBefore *openapi_types.Date `form:"start_date_before,omitempty" json:"start_date_before,omitempty"`
+
+	// Filters AG Grid style filters (JSON array of filter objects)
+	Filters *string `form:"filters,omitempty" json:"filters,omitempty"`
 
 	// Cursor Cursor for pagination
 	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
@@ -1059,6 +1076,14 @@ func (siw *ServerInterfaceWrapper) ListSprints(w http.ResponseWriter, r *http.Re
 	err = runtime.BindQueryParameter("form", true, false, "start_date_before", r.URL.Query(), &params.StartDateBefore)
 	if err != nil {
 		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "start_date_before", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "filters" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "filters", r.URL.Query(), &params.Filters)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "filters", Err: err})
 		return
 	}
 

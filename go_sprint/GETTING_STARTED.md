@@ -262,7 +262,7 @@ Once the main server is implemented, you can use Docker Compose:
 docker-compose up --build
 
 # The sprint service will be available at:
-# http://localhost:8082/api/v1
+# http://localhost:8003/api/v1
 ```
 
 ## Next Steps

@@ -39,7 +39,7 @@ func main() {
 	keycloakService := auth.NewKeycloakService(&cfg.Keycloak)
 
 	// Initialize handlers
-	authHandler := handlers.NewAuthHandler(keycloakService, logger)
+	authHandler := handlers.NewAuthHandler(keycloakService, &cfg.Keycloak, logger)
 
 	// Create HTTP router
 	mux := http.NewServeMux()
@@ -74,12 +74,51 @@ func main() {
 		mux.Handle("/swagger/", http.StripPrefix("/swagger/", http.FileServer(http.FS(swaggerUIFS))))
 	}
 
-	// Auth endpoints
+	// Auth endpoints — default realm (backwards compatible)
 	mux.HandleFunc("/auth/login", authHandler.Login)
+	mux.HandleFunc("/auth/session/token", authHandler.Login)
 	mux.HandleFunc("/auth/refresh", authHandler.Refresh)
+	mux.HandleFunc("/auth/session/refresh", authHandler.Refresh)
 	mux.HandleFunc("/auth/logout", authHandler.Logout)
-	mux.HandleFunc("/auth/user", authHandler.GetUser)
+	mux.HandleFunc("/auth/session/logout", authHandler.Logout)
+	mux.HandleFunc("/auth/user", func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case http.MethodGet:
+			authHandler.GetUser(w, r)
+		case http.MethodPost:
+			authHandler.Register(w, r)
+		case http.MethodPut:
+			authHandler.UpdateUser(w, r)
+		case http.MethodDelete:
+			authHandler.DeleteUser(w, r)
+		default:
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		}
+	})
 	mux.HandleFunc("/auth/register", authHandler.Register)
+
+	// Auth endpoints — realm-prefixed (/auth/{realm}/...)
+	mux.HandleFunc("/auth/{realm}/login", authHandler.Login)
+	mux.HandleFunc("/auth/{realm}/session/token", authHandler.Login)
+	mux.HandleFunc("/auth/{realm}/refresh", authHandler.Refresh)
+	mux.HandleFunc("/auth/{realm}/session/refresh", authHandler.Refresh)
+	mux.HandleFunc("/auth/{realm}/logout", authHandler.Logout)
+	mux.HandleFunc("/auth/{realm}/session/logout", authHandler.Logout)
+	mux.HandleFunc("/auth/{realm}/user", func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case http.MethodGet:
+			authHandler.GetUser(w, r)
+		case http.MethodPost:
+			authHandler.Register(w, r)
+		case http.MethodPut:
+			authHandler.UpdateUser(w, r)
+		case http.MethodDelete:
+			authHandler.DeleteUser(w, r)
+		default:
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		}
+	})
+	mux.HandleFunc("/auth/{realm}/register", authHandler.Register)
 
 	// Root endpoint
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
