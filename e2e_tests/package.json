@@ -1,0 +1,32 @@
+{
+  "name": "e2e-tests",
+  "version": "1.0.0",
+  "description": "Playwright API testing framework for go_auth and go_sprint services",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:ci": "playwright test --grep-invert @stress",
+    "test:go_auth": "playwright test --project=go_auth",
+    "test:go_sprint": "playwright test --project=go_sprint",
+    "test:health": "playwright test --grep @health",
+    "test:report": "playwright show-report"
+  },
+  "keywords": [
+    "playwright",
+    "api-testing",
+    "e2e"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.10.0",
+    "@types/pg": "^8.16.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "pg": "^8.11.3",
+    "yaml": "^2.8.2"
+  }
+}

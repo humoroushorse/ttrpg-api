@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: "keycloak"
-          image: "quay.io/keycloak/keycloak:8.0.2"
+          image: "keycloak/keycloak:26.5"
           imagePullPolicy: "Always"
           env:
             - name: "KEYCLOAK_USER"

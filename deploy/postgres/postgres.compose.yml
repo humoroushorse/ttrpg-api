@@ -2,13 +2,13 @@ version: '3.9'
 
 services:
   postgresql:
-    container_name: postgresql
-    image: postgres:15.6-alpine
+    container_name: ttrpg-postgresql
+    image: postgres:18-alpine
     restart: always
     ports:
       - 5432:5432
     volumes:
-      - ~/projects/ttrpg/volume-mounts/postgres:/var/lib/postgresql/data
+      - ~/projects/ttrpg/volume-mounts/postgres:/var/lib/postgresql
       # Postgres will run scripts found in this directory
       # - $PWD/postgres:/docker-entrypoint-initdb.d
       - ~/projects/ttrpg/ttrpg-api/deploy/postgres/postgres:/docker-entrypoint-initdb.d

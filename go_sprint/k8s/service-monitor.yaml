@@ -1,0 +1,56 @@
+# ServiceMonitor for Prometheus Operator
+# This requires Prometheus Operator to be installed in the cluster
+
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: sprint-service-monitor
+  namespace: sprint-management
+  labels:
+    app: sprint-service
+    prometheus: kube-prometheus
+spec:
+  selector:
+    matchLabels:
+      app: sprint-service
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+    scrapeTimeout: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: auth-service-monitor
+  namespace: sprint-management
+  labels:
+    app: auth-service
+    prometheus: kube-prometheus
+spec:
+  selector:
+    matchLabels:
+      app: auth-service
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+    scrapeTimeout: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nats-monitor
+  namespace: sprint-management
+  labels:
+    app: nats
+    prometheus: kube-prometheus
+spec:
+  selector:
+    matchLabels:
+      app: nats
+  endpoints:
+  - port: monitoring
+    path: /metrics
+    interval: 30s
+    scrapeTimeout: 10s

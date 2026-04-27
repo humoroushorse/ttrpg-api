@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  nats:
+    image: nats:2.12-alpine
+    container_name: nats
+    ports:
+      - "4222:4222"   # Client connections
+      - "8222:8222"   # HTTP monitoring
+      - "6222:6222"   # Cluster routing
+    command:
+      - "--jetstream"              # Enable JetStream for persistence
+      - "--store_dir=/data"        # JetStream storage directory
+      - "--http_port=8222"         # HTTP monitoring port
+      - "--max_payload=1048576"    # Max message size (1MB)
+      - "--max_connections=1000"   # Max client connections
+    volumes:
+      - nats_data:/data
+      - ./nats.conf:/etc/nats/nats.conf:ro
+    networks:
+      - sprint_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8222/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  nats_data:
+    driver: local
+
+networks:
+  sprint_network:
+    driver: bridge

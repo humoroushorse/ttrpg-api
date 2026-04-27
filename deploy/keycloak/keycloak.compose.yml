@@ -2,23 +2,17 @@ version: '3.9'
 
 services:
   keycloak:
-    container_name: keycloak
-    # redhat hosted keycloak
-    image: quay.io/keycloak/keycloak:latest
-    # build: .
+    container_name: ttrpg-keycloak
+    image: keycloak/keycloak:26.5
     command: start
     environment:
-      KC_HOSTNAME: localhost
-      KC_HOSTNAME_PORT: 8080
-      KC_HOSTNAME_STRICT_BACKCHANNEL: false
+      KC_HOSTNAME_STRICT: false
       KC_HTTP_ENABLED: true
-      KC_HOSTNAME_STRICT_HTTPS: false
       KC_HEALTH_ENABLED: true
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME:-admin}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD:-admin}
 
       KC_DB: postgres
-      # KC_DB_URL: jdbc:postgresql://postgres/${POSTGRES_DB:-ttrpg-pg}
       KC_DB_URL: jdbc:postgresql://postgresql:5432/ttrpg-pg
 
       # @see ~/ttrpg/ttrpg-api/deploy/postgres/postgres/keycloak.init.sql
@@ -29,9 +23,7 @@ services:
 
     ports:
       - 8080:8080
+      - 9000:9000
     restart: always
     depends_on:
       - postgresql
-      # - keycloak_postgres
-    # networks:
-    #   - keycloak_network

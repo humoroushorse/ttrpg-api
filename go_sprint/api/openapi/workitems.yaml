@@ -1,0 +1,806 @@
+openapi: 3.0.3
+info:
+  title: Sprint Management - Work Items API
+  description: Work item management endpoints for creating, updating, and managing epics, stories, and defects
+  version: 1.0.0
+
+paths:
+  /api/v1/workitems:
+    get:
+      summary: List work items
+      description: Retrieve a paginated list of work items with optional filtering
+      operationId: listWorkItems
+      tags:
+        - Work Items
+      parameters:
+        - name: type
+          in: query
+          description: Filter by work item type
+          schema:
+            $ref: '#/components/schemas/WorkItemType'
+        - name: status
+          in: query
+          description: Filter by work item status
+          schema:
+            $ref: '#/components/schemas/WorkItemStatus'
+        - name: assignee_id
+          in: query
+          description: Filter by assignee user ID
+          schema:
+            type: string
+            format: uuid
+        - name: sprint_id
+          in: query
+          description: Filter by sprint ID
+          schema:
+            type: string
+            format: uuid
+        - name: priority
+          in: query
+          description: Filter by priority level
+          schema:
+            $ref: '#/components/schemas/PriorityLevel'
+        - name: search
+          in: query
+          description: Full-text search across title and description
+          schema:
+            type: string
+        - name: cursor
+          in: query
+          description: Cursor for pagination
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Number of items per page (max 100)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItemListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    
+    post:
+      summary: Create work item
+      description: Create a new work item (epic, story, or defect)
+      operationId: createWorkItem
+      tags:
+        - Work Items
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorkItemRequest'
+      responses:
+        '201':
+          description: Work item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /api/v1/workitems/{id}:
+    get:
+      summary: Get work item
+      description: Retrieve a specific work item by ID
+      operationId: getWorkItem
+      tags:
+        - Work Items
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Work item ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItemDetail'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    
+    put:
+      summary: Update work item
+      description: Update an existing work item
+      operationId: updateWorkItem
+      tags:
+        - Work Items
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Work item ID
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWorkItemRequest'
+      responses:
+        '200':
+          description: Work item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    
+    delete:
+      summary: Delete work item
+      description: Soft delete a work item
+      operationId: deleteWorkItem
+      tags:
+        - Work Items
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Work item ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Work item deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /api/v1/workitems/{id}/dependencies:
+    get:
+      summary: Get work item dependencies
+      description: Retrieve all dependencies for a work item
+      operationId: getWorkItemDependencies
+      tags:
+        - Work Items
+        - Dependencies
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Work item ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DependencyListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    
+    post:
+      summary: Create work item dependency
+      description: Create a dependency relationship between work items
+      operationId: createWorkItemDependency
+      tags:
+        - Work Items
+        - Dependencies
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Source work item ID
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDependencyRequest'
+      responses:
+        '201':
+          description: Dependency created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dependency'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /api/v1/workitems/{id}/dependencies/{dependency_id}:
+    delete:
+      summary: Delete work item dependency
+      description: Remove a dependency relationship
+      operationId: deleteWorkItemDependency
+      tags:
+        - Work Items
+        - Dependencies
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Source work item ID
+          schema:
+            type: string
+            format: uuid
+        - name: dependency_id
+          in: path
+          required: true
+          description: Dependency ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Dependency deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /api/v1/workitems/{id}/children:
+    get:
+      summary: Get child work items
+      description: Retrieve all child work items (sub-tasks)
+      operationId: getChildWorkItems
+      tags:
+        - Work Items
+        - Relationships
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Parent work item ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItemListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /api/v1/workitems/search:
+    post:
+      summary: Advanced work item search
+      description: Perform advanced search with multiple criteria and boolean operators
+      operationId: searchWorkItems
+      tags:
+        - Work Items
+        - Search
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItemListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+components:
+  schemas:
+    WorkItemType:
+      type: string
+      enum:
+        - epic
+        - story
+        - defect
+      description: Type of work item
+
+    WorkItemStatus:
+      type: string
+      enum:
+        - todo
+        - in_progress
+        - in_review
+        - done
+        - blocked
+      description: Current status of work item
+
+    PriorityLevel:
+      type: string
+      enum:
+        - low
+        - medium
+        - high
+        - critical
+      description: Priority level of work item
+
+    DependencyType:
+      type: string
+      enum:
+        - blocks
+        - is_blocked_by
+        - relates_to
+        - duplicates
+      description: Type of dependency relationship
+
+    WorkItem:
+      type: object
+      required:
+        - id
+        - type
+        - title
+        - status
+        - priority
+        - reporter_id
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier
+        type:
+          $ref: '#/components/schemas/WorkItemType'
+        title:
+          type: string
+          maxLength: 255
+          description: Work item title
+        description:
+          type: string
+          description: Detailed description
+        status:
+          $ref: '#/components/schemas/WorkItemStatus'
+        priority:
+          $ref: '#/components/schemas/PriorityLevel'
+        story_points:
+          type: integer
+          minimum: 0
+          nullable: true
+          description: Story point estimation
+        assignee_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Assigned user ID
+        reporter_id:
+          type: string
+          format: uuid
+          description: Reporter user ID
+        parent_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Parent work item ID (for sub-tasks)
+        sprint_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Associated sprint ID
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp (UTC)
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp (UTC)
+
+    WorkItemDetail:
+      allOf:
+        - $ref: '#/components/schemas/WorkItem'
+        - type: object
+          properties:
+            dependencies:
+              type: array
+              items:
+                $ref: '#/components/schemas/Dependency'
+              description: All dependencies for this work item
+            children:
+              type: array
+              items:
+                $ref: '#/components/schemas/WorkItem'
+              description: Child work items (sub-tasks)
+            comments_count:
+              type: integer
+              description: Number of comments
+            activity_count:
+              type: integer
+              description: Number of activity log entries
+
+    CreateWorkItemRequest:
+      type: object
+      required:
+        - type
+        - title
+        - description
+        - priority
+        - project_id
+      properties:
+        type:
+          $ref: '#/components/schemas/WorkItemType'
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Work item title
+        description:
+          type: string
+          minLength: 1
+          description: Detailed description
+        priority:
+          $ref: '#/components/schemas/PriorityLevel'
+        story_points:
+          type: integer
+          minimum: 0
+          nullable: true
+          description: Story point estimation
+        assignee_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Assigned user ID
+        parent_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: |
+            Parent work item ID. Required for Story and Defect types (must be an Epic).
+            Must be null for Epic type.
+        sprint_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Sprint to assign work item to
+        project_id:
+          type: string
+          format: uuid
+          description: Project ID (required)
+
+    UpdateWorkItemRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Work item title
+        description:
+          type: string
+          minLength: 1
+          description: Detailed description
+        status:
+          $ref: '#/components/schemas/WorkItemStatus'
+        priority:
+          $ref: '#/components/schemas/PriorityLevel'
+        story_points:
+          type: integer
+          minimum: 0
+          nullable: true
+          description: Story point estimation
+        assignee_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Assigned user ID
+        sprint_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Sprint to assign work item to
+
+    Dependency:
+      type: object
+      required:
+        - id
+        - source_id
+        - target_id
+        - dependency_type
+        - created_at
+        - created_by
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier
+        source_id:
+          type: string
+          format: uuid
+          description: Source work item ID
+        target_id:
+          type: string
+          format: uuid
+          description: Target work item ID
+        dependency_type:
+          $ref: '#/components/schemas/DependencyType'
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp (UTC)
+        created_by:
+          type: string
+          format: uuid
+          description: User who created the dependency
+
+    CreateDependencyRequest:
+      type: object
+      required:
+        - target_id
+        - dependency_type
+      properties:
+        target_id:
+          type: string
+          format: uuid
+          description: Target work item ID
+        dependency_type:
+          $ref: '#/components/schemas/DependencyType'
+
+    DependencyListResponse:
+      type: object
+      required:
+        - dependencies
+      properties:
+        dependencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dependency'
+
+    WorkItemListResponse:
+      type: object
+      required:
+        - items
+        - pagination
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkItem'
+        pagination:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    PaginationInfo:
+      type: object
+      required:
+        - has_more
+      properties:
+        next_cursor:
+          type: string
+          nullable: true
+          description: Cursor for next page
+        has_more:
+          type: boolean
+          description: Whether more items are available
+        total_count:
+          type: integer
+          nullable: true
+          description: Total count (may be null for performance)
+
+    SearchRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Search query with boolean operators
+        filters:
+          type: object
+          properties:
+            types:
+              type: array
+              items:
+                $ref: '#/components/schemas/WorkItemType'
+            statuses:
+              type: array
+              items:
+                $ref: '#/components/schemas/WorkItemStatus'
+            priorities:
+              type: array
+              items:
+                $ref: '#/components/schemas/PriorityLevel'
+            assignee_ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+            sprint_ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+            created_after:
+              type: string
+              format: date-time
+            created_before:
+              type: string
+              format: date-time
+        sort:
+          type: object
+          properties:
+            field:
+              type: string
+              enum:
+                - created_at
+                - updated_at
+                - priority
+                - title
+            order:
+              type: string
+              enum:
+                - asc
+                - desc
+        cursor:
+          type: string
+          description: Cursor for pagination
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - trace_id
+        - timestamp
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorDetail'
+        trace_id:
+          type: string
+          format: uuid
+          description: Trace ID for debugging
+        timestamp:
+          type: string
+          format: date-time
+          description: Error timestamp
+
+    ErrorDetail:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: object
+          additionalProperties: true
+          description: Additional error details
+        validation_errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+
+    ValidationError:
+      type: object
+      required:
+        - field
+        - code
+        - message
+      properties:
+        field:
+          type: string
+          description: Field name
+        code:
+          type: string
+          description: Validation error code
+        message:
+          type: string
+          description: Validation error message
+
+  responses:
+    BadRequest:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    
+    Unauthorized:
+      description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    
+    Conflict:
+      description: Conflict - business rule violation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token from Keycloak
+
+security:
+  - BearerAuth: []
