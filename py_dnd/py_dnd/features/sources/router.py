@@ -71,6 +71,8 @@ async def upsert_and_mutate_report(
         df_entity (tuple[Hashable, Series]): _description_
     """
     index, entity = df_entity
+    # Convert pandas Series to plain dict so we can mutate it freely
+    entity = entity.to_dict()
     source = None
     try:
         if math.isnan(entity.get("publish_year")):
@@ -79,6 +81,10 @@ async def upsert_and_mutate_report(
             del entity["created_by"]
         if entity.get("updated_by"):
             del entity["updated_by"]
+        if "id" in entity:
+            del entity["id"]
+        if "source_id" in entity:
+            del entity["source_id"]
         logger.info("ik -- index={}, entity=\n{}", index, entity)
         time_now = datetime.datetime.now(tz=datetime.UTC)
         source = SourceCreate(
@@ -88,12 +94,15 @@ async def upsert_and_mutate_report(
             updated_at=time_now,
             updated_by=current_user.sub,
         )
-        _, total_count = await uow.source_repo.query(params={"name": source.name}, limit=1)
+        _, total_count = await uow.source_repo.query(
+                params={"name": source.name, "dnd_version": source.dnd_version, "dnd_version_year": source.dnd_version_year},
+                limit=1,
+            )
         if total_count > 0:
             response.warnings.append(f"Source with name '{source.name}' already exists, skipping.")
         else:
             await uow.source_repo.create(model_in=source, return_model=False)
-            response.created.append(source.name)
+            response.created.append(f"{source.name} ({source.dnd_version} {source.dnd_version_year})")
     except Exception as e:
         response.errors.append(f"row {index} [{source.name if source else entity[2]}]: {str(e)}")
 

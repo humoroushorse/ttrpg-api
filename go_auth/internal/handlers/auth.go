@@ -15,14 +15,16 @@ import (
 type AuthHandler struct {
 	keycloakService *auth.KeycloakService
 	keycloakConfig  *config.KeycloakConfig
+	cookieConfig    *config.CookieConfig
 	logger          *slog.Logger
 }
 
 // NewAuthHandler creates a new auth handler
-func NewAuthHandler(keycloakService *auth.KeycloakService, keycloakConfig *config.KeycloakConfig, logger *slog.Logger) *AuthHandler {
+func NewAuthHandler(keycloakService *auth.KeycloakService, keycloakConfig *config.KeycloakConfig, cookieConfig *config.CookieConfig, logger *slog.Logger) *AuthHandler {
 	return &AuthHandler{
 		keycloakService: keycloakService,
 		keycloakConfig:  keycloakConfig,
+		cookieConfig:    cookieConfig,
 		logger:          logger,
 	}
 }
@@ -132,7 +134,7 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	h.logger.Info("user logged in", slog.String("username", username), slog.String("realm", realm))
-	SetAuthCookies(w, tokenResp.AccessToken, tokenResp.RefreshToken, tokenResp.IDToken, tokenResp.ExpiresIn)
+	h.SetAuthCookies(w, tokenResp.AccessToken, tokenResp.RefreshToken, tokenResp.IDToken, tokenResp.ExpiresIn)
 	h.respondJSON(w, http.StatusOK, tokenResp)
 }
 
@@ -164,7 +166,7 @@ func (h *AuthHandler) Refresh(w http.ResponseWriter, r *http.Request) {
 	}
 
 	h.logger.Info("token refreshed", slog.String("realm", realm))
-	SetAuthCookies(w, tokenResp.AccessToken, tokenResp.RefreshToken, tokenResp.IDToken, tokenResp.ExpiresIn)
+	h.SetAuthCookies(w, tokenResp.AccessToken, tokenResp.RefreshToken, tokenResp.IDToken, tokenResp.ExpiresIn)
 	h.respondJSON(w, http.StatusOK, tokenResp)
 }
 
@@ -193,7 +195,7 @@ func (h *AuthHandler) Logout(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error("logout failed", slog.String("realm", realm), slog.String("error", err.Error()))
 	}
 
-	ClearAuthCookies(w)
+	h.ClearAuthCookies(w)
 	h.logger.Info("user logged out", slog.String("realm", realm))
 	w.WriteHeader(http.StatusOK)
 }
@@ -307,48 +309,51 @@ func (h *AuthHandler) respondError(w http.ResponseWriter, status int, errorCode,
 	})
 }
 
-// SetAuthCookies sets authentication cookies
-func SetAuthCookies(w http.ResponseWriter, accessToken, refreshToken, idToken string, expiresIn int) {
+// SetAuthCookies sets authentication cookies using handler's cookie config
+func (h *AuthHandler) SetAuthCookies(w http.ResponseWriter, accessToken, refreshToken, idToken string, expiresIn int) {
+	sameSite := h.cookieConfig.HTTPSameSite()
 	http.SetCookie(w, &http.Cookie{
 		Name:     "access_token",
 		Value:    accessToken,
-		Path:     "/",
-		Domain:   "localhost",
-		HttpOnly: true,
-		Secure:   false,
-		SameSite: http.SameSiteLaxMode,
+		Path:     h.cookieConfig.Path,
+		Domain:   h.cookieConfig.Domain,
+		HttpOnly: false,
+		Secure:   h.cookieConfig.Secure,
+		SameSite: sameSite,
 		MaxAge:   expiresIn,
 	})
 	http.SetCookie(w, &http.Cookie{
 		Name:     "refresh_token",
 		Value:    refreshToken,
-		Path:     "/",
-		Domain:   "localhost",
+		Path:     h.cookieConfig.Path,
+		Domain:   h.cookieConfig.Domain,
 		HttpOnly: true,
-		Secure:   false,
-		SameSite: http.SameSiteLaxMode,
+		Secure:   h.cookieConfig.Secure,
+		SameSite: sameSite,
 		MaxAge:   86400,
 	})
 	http.SetCookie(w, &http.Cookie{
 		Name:     "id_token",
 		Value:    idToken,
-		Path:     "/",
-		Domain:   "localhost",
+		Path:     h.cookieConfig.Path,
+		Domain:   h.cookieConfig.Domain,
 		HttpOnly: true,
-		Secure:   false,
-		SameSite: http.SameSiteLaxMode,
+		Secure:   h.cookieConfig.Secure,
+		SameSite: sameSite,
 		MaxAge:   expiresIn,
 	})
 }
 
-// ClearAuthCookies clears authentication cookies
-func ClearAuthCookies(w http.ResponseWriter) {
+// ClearAuthCookies clears authentication cookies using handler's cookie config
+func (h *AuthHandler) ClearAuthCookies(w http.ResponseWriter) {
 	for _, name := range []string{"access_token", "refresh_token", "id_token"} {
 		http.SetCookie(w, &http.Cookie{
 			Name:     name,
 			Value:    "",
-			Path:     "/",
+			Path:     h.cookieConfig.Path,
+			Domain:   h.cookieConfig.Domain,
 			HttpOnly: true,
+			Secure:   h.cookieConfig.Secure,
 			MaxAge:   -1,
 			Expires:  time.Unix(0, 0),
 		})

@@ -63,6 +63,12 @@ class Settings(BaseSettings):
     KEYCLOAK_ADMIN_PASSWORD: str
     # KEYCLOAK_CLIENT_SECRET_KEY: str
 
+    # Cookie configuration
+    COOKIE_PATH: str = "/"
+    COOKIE_DOMAIN: str = ""
+    COOKIE_SECURE: bool = False
+    COOKIE_SAMESITE: str = "lax"
+
 
 @lru_cache
 def get_settings() -> Settings:

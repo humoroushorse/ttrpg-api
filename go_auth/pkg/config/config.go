@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 	"strconv"
 	"strings"
@@ -11,6 +12,7 @@ import (
 // Config holds all application configuration
 type Config struct {
 	Server   ServerConfig   `yaml:"server"`
+	Cookie   CookieConfig   `yaml:"cookie"`
 	Keycloak KeycloakConfig `yaml:"keycloak"`
 	Database DatabaseConfig `yaml:"database"`
 	Logging  LoggingConfig  `yaml:"logging"`
@@ -22,6 +24,26 @@ type ServerConfig struct {
 	ReadTimeout     time.Duration `yaml:"read_timeout"`
 	WriteTimeout    time.Duration `yaml:"write_timeout"`
 	ShutdownTimeout time.Duration `yaml:"shutdown_timeout"`
+}
+
+// CookieConfig holds cookie configuration for auth responses
+type CookieConfig struct {
+	Path     string `yaml:"path"`
+	Domain   string `yaml:"domain"`
+	Secure   bool   `yaml:"secure"`
+	SameSite string `yaml:"same_site"`
+}
+
+// HTTPSameSite returns the net/http SameSite constant for the configured value
+func (cc *CookieConfig) HTTPSameSite() http.SameSite {
+	switch strings.ToLower(cc.SameSite) {
+	case "strict":
+		return http.SameSiteStrictMode
+	case "none":
+		return http.SameSiteNoneMode
+	default:
+		return http.SameSiteLaxMode
+	}
 }
 
 // KeycloakConfig holds Keycloak connection configuration
@@ -75,6 +97,12 @@ func LoadFromEnv() (*Config, error) {
 			MaxOpenConns:    getEnvAsInt("DATABASE_MAX_OPEN_CONNS", 25),
 			MaxIdleConns:    getEnvAsInt("DATABASE_MAX_IDLE_CONNS", 5),
 			ConnMaxLifetime: getEnvAsDuration("DATABASE_CONN_MAX_LIFETIME", 5*time.Minute),
+		},
+		Cookie: CookieConfig{
+			Path:     getEnv("COOKIE_PATH", "/"),
+			Domain:   getEnv("COOKIE_DOMAIN", ""),
+			Secure:   getEnvAsBool("COOKIE_SECURE", false),
+			SameSite: getEnv("COOKIE_SAMESITE", "lax"),
 		},
 		Logging: LoggingConfig{
 			Level:        getEnv("LOG_LEVEL", "info"),

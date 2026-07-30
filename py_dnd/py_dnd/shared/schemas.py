@@ -1,6 +1,7 @@
 """Shared schemas."""
 
 import datetime
+import uuid
 from typing import Annotated, Any, Generic, TypeVar
 
 from pydantic import BaseModel, Field, model_validator
@@ -12,22 +13,14 @@ class MixinBookeepingCreate:
     """Entity Creation Bookeeping Mixin."""
 
     created_at: Annotated[datetime.datetime, Field()]
-    created_by: Annotated[str, Field()]
-
-    # @field_serializer('created_at')
-    # def serialize_created_at(self, dt: datetime.datetime):
-    #     return dt.isoformat()
+    created_by: Annotated[uuid.UUID, Field()]
 
 
 class MixinBookeepingUpdate:
     """Entity Update Bookeeping Mixin."""
 
     updated_at: Annotated[datetime.datetime, Field()]
-    updated_by: Annotated[str, Field()]
-
-    # @field_serializer('updated_at')
-    # def serialize_created_by(self, dt: datetime.datetime):
-    #     return dt.isoformat()
+    updated_by: Annotated[uuid.UUID, Field()]
 
 
 class MixinImageUrl:

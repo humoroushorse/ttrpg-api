@@ -192,9 +192,15 @@ sqlc-verify: ## Verify SQL queries with sqlc
 ################################################################################
 
 .PHONY: openapi-generate
-openapi-generate: ## Generate server code from OpenAPI specs
+openapi-generate: merge-openapi ## Generate server code from OpenAPI specs
 	@echo "Generating server code from OpenAPI specs..."
 	./scripts/generate-api.sh
+
+.PHONY: merge-openapi
+merge-openapi: ## Merge sprint + auth OpenAPI specs into combined-with-auth.yaml
+	@echo "Merging OpenAPI specs..."
+	poetry install --no-interaction -q
+	poetry run python3 merge-openapi.py
 
 .PHONY: openapi-install-tools
 openapi-install-tools: ## Install OpenAPI code generation tools

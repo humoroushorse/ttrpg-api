@@ -25,13 +25,15 @@ As a source of truth please refer to this [confluence page](https://ian-kirkpatr
 | postgres        | DB          | 5432        |
 | postgres (test) | Test DB     | 5433        |
 | keycloak        | auth        | 8080        |
-| go_auth         | Auth API    | 8081        |
+| go_auth         | Auth API (ttrpg)            | 8081        |
+| go_auth         | Auth API (sprint-management)| 8082        |
 | pydnd           | FastAPI     | 8001        |
 | pydnd: mkdocs   | docs        | 8201        |
 | pydnd: opa      | opa         | 8301        |  TODO - reserved, implement (update, remove in favor of keycloak)
 | pydnd           | FastAPI     | 8002        |
 | pydnd: mkdocs   | docs        | 8202        |
 | go_sprint       | DND API     | 8003        |
+| go_dnd          | DnD API     | 8004        |
 
 
 ## Projects
