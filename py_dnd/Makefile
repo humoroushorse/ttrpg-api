@@ -1,6 +1,7 @@
 include ../makefiles/common.mk
 include ../makefiles/container.mk
 include ../makefiles/postgres.mk
+include ../makefiles/keycloak.mk
 
 
 CONTAINER_RUNNER=docker # e.g. podman or docker

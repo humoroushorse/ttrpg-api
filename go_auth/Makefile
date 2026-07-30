@@ -2,7 +2,7 @@
 include ../makefiles/postgres.mk
 include ../makefiles/keycloak.mk
 
-.PHONY: help run build test clean dev-up dev-down
+.PHONY: help run run-sprint build test clean dev-up dev-down
 
 help:
 	@echo "Available targets:"
@@ -27,13 +27,22 @@ dev-up: keycloak-up ## Start all development dependencies (postgres + keycloak v
 dev-down: keycloak-down ## Stop all development dependencies
 	@echo "Development environment stopped"
 
-run:
+run: ## Run auth service locally (ttrpg realm, port 8081)
 	@echo "Checking if services are already running..."
 	@if lsof -Pi :8081 -sTCP:LISTEN -t >/dev/null 2>&1 ; then \
 		echo "⚠️  Auth service already running on port 8081"; \
 	else \
-		echo "🔐 Starting auth service on port 8081..."; \
-		SERVER_PORT=8081 go run cmd/server/main.go; \
+		echo "🔐 Starting auth service on port 8081 (ttrpg realm)..."; \
+		SERVER_PORT=8081 KEYCLOAK_DEFAULT_REALM=ttrpg go run cmd/server/main.go; \
+	fi
+
+run-sprint: ## Run auth service for sprint-management realm on port 8082
+	@echo "Checking if services are already running..."
+	@if lsof -Pi :8082 -sTCP:LISTEN -t >/dev/null 2>&1 ; then \
+		echo "⚠️  Auth service (sprint-management) already running on port 8082"; \
+	else \
+		echo "🔐 Starting auth service on port 8082 (sprint-management realm)..."; \
+		SERVER_PORT=8082 KEYCLOAK_DEFAULT_REALM=sprint-management KEYCLOAK_CLIENT_ID=sprint-management-ui go run cmd/server/main.go; \
 	fi
 
 stop:

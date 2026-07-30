@@ -3,5 +3,6 @@ go 1.24.0
 use (
 	./go_auth
 	./go_auth/pkg/auth
+	./go_dnd
 	./go_sprint
 )

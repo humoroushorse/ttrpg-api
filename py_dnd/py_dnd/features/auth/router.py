@@ -10,6 +10,7 @@ from pydantic import SecretStr
 
 from py_dnd.database.db import AsyncMasterSessionDependency
 from py_dnd.features.auth import service as AuthService
+from py_dnd.features.auth.cookies import clear_auth_cookies, set_auth_cookies
 from py_dnd.features.auth.schemas import (
     AuthUserToken,
     RefreshToken,
@@ -58,9 +59,7 @@ async def login(
     """Login user and only pass back the non-auth token information."""
     try:
         token = await AuthService.authenticate_user(form_data.username, form_data.password)
-        response.set_cookie(key="access_token", value=token.access_token, httponly=True)
-        response.set_cookie(key="refresh_token", value=token.refresh_token, httponly=True)
-        response.set_cookie(key="id_token", value=token.id_token, httponly=True)
+        set_auth_cookies(response, token.access_token, token.refresh_token, token.id_token)
         return token
     except HTTPException as e:
         raise e
@@ -103,9 +102,7 @@ async def refresh(
                 raise HTTPException(status.HTTP_404_NOT_FOUND, detail=err_msg)
             logger.info("Refreshing token!")
             new_token = await AuthService.refresh_user_token(refresh_token)
-            response.set_cookie(key="access_token", value=new_token.access_token, httponly=True)
-            response.set_cookie(key="refresh_token", value=new_token.refresh_token, httponly=True)
-            response.set_cookie(key="id_token", value=new_token.id_token, httponly=True)
+            set_auth_cookies(response, new_token.access_token, new_token.refresh_token, new_token.id_token)
             return new_token
     except HTTPException as e:
         raise e
@@ -113,9 +110,7 @@ async def refresh(
         logger.error("Failed to refresh token: {} - {}", e.response_code, e.response_body)
         if e.response_code == 400:
             logger.warning("Bad request - the refresh token may be expired or invalid.")
-            response.delete_cookie("access_token")
-            response.delete_cookie("refresh_token")
-            response.delete_cookie("id_token")
+            clear_auth_cookies(response)
         elif e.response_code == 401:
             logger.error("Unauthorized - check client credentials or permissions.")
         else:
@@ -143,18 +138,14 @@ async def logout_user(
         if not token:
             err_msg = "No refresh_token cookie found to delete (in request body or cookie)!"
             logger.info(err_msg)
-            response.delete_cookie("access_token")
-            response.delete_cookie("refresh_token")
-            response.delete_cookie("id_token")
+            clear_auth_cookies(response)
             return response
         user = {}
         if current_user:
             user = {"sub": current_user.sub, "preferred_username": current_user.preferred_username}
         with logger.contextualize(user=user, log_threads=True):
             await AuthService.logout(token)
-            response.delete_cookie("access_token")
-            response.delete_cookie("refresh_token")
-            response.delete_cookie("id_token")
+            clear_auth_cookies(response)
     except HTTPException as e:
         raise e
     except Exception as e:

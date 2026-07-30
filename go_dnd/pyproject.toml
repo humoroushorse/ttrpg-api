@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "go-dnd-tools"
+version = "1.0.0"
+description = "Python tools for go_dnd OpenAPI spec management"
+authors = []
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pyyaml = "^6.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 119
+target-version = ['py38']

@@ -192,7 +192,7 @@ func main() {
 	if err != nil {
 		logger.Error("Failed to load Swagger UI", slog.String("error", err.Error()))
 	} else {
-		mux.Handle("/swagger/", http.StripPrefix("/swagger/", http.FileServer(http.FS(swaggerUIFS))))
+		mux.Handle("/docs/", http.StripPrefix("/docs/", http.FileServer(http.FS(swaggerUIFS))))
 	}
 
 	// Proxy auth endpoints to go_auth service
@@ -506,7 +506,7 @@ func main() {
 				},
 				"documentation": {
 					"openapi": "/api/openapi.yaml",
-					"swagger": "/swagger/"
+					"docs": "/docs/"
 				},
 				"monitoring": {
 					"metrics": "/metrics"
@@ -530,7 +530,7 @@ func main() {
 	go func() {
 		logger.Info("Server starting",
 			slog.String("address", addr),
-			slog.String("swagger_ui", "http://localhost"+addr+"/swagger/"),
+			slog.String("docs", "http://localhost"+addr+"/docs/"),
 			slog.String("openapi_spec", "http://localhost"+addr+"/api/openapi.yaml"),
 		)
 		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {

@@ -41,15 +41,24 @@ keycloak_openid = KeycloakOpenID(
     verify=True,
 )
 
-# Configure the Keycloak admin client
-keycloak_admin = KeycloakAdmin(
-    server_url=f"{settings.KEYCLOAK_SERVER_URL}/auth",
-    realm_name="master",  # default anyways
-    client_id="admin-cli",  # default anyways
-    username=settings.KEYCLOAK_ADMIN_USERNAME,
-    password=settings.KEYCLOAK_ADMIN_PASSWORD,
-    # user_realm_name="ttrpg",  # Target realm where users are added
-)
+# Configure the Keycloak admin client — lazy init so realm must exist at call time
+_keycloak_admin: KeycloakAdmin | None = None
+
+
+def get_keycloak_admin() -> KeycloakAdmin:
+    """Get or create the KeycloakAdmin client."""
+    global _keycloak_admin
+    if _keycloak_admin is None:
+        _keycloak_admin = KeycloakAdmin(
+            server_url=settings.KEYCLOAK_SERVER_URL,
+            realm_name="master",
+            client_id="admin-cli",
+            username=settings.KEYCLOAK_ADMIN_USERNAME,
+            password=settings.KEYCLOAK_ADMIN_PASSWORD,
+            verify=True,
+        )
+        _keycloak_admin.connection.realm_name = settings.KEYCLOAK_REALM_NAME
+    return _keycloak_admin
 
 
 # async def get_idp_public_key():
@@ -283,13 +292,6 @@ async def logout(token: str) -> None:
 
 async def create_keycloak_user(user: RegisterUserInput) -> str:
     """Create a new user in Keycloak."""
-    # token = await get_admin_token()
-    # # url = f"{KEYCLOAK_SERVER_URL}/admin/realms/{KEYCLOAK_REALM}/users"
-    # url = f"{settings.KEYCLOAK_SERVER_URL}/admin/realms/{settings.KEYCLOAK_REALM_NAME}/users"
-    # headers = {
-    #     # "Authorization": f"Bearer {token}",
-    #     "Content-Type": "application/json"
-    # }
     user_data = {
         "username": user.username,
         "email": user.email,
@@ -300,17 +302,32 @@ async def create_keycloak_user(user: RegisterUserInput) -> str:
     }
     logger.debug("Creating user with info: {}", {**user.model_dump(exclude={"paassword"}), "paassword": "REDACTED"})
 
-    # async with aiohttp.ClientSession() as session:
-    #     async with session.get(url, json=user_data, headers=headers) as resp:
-    #         resp.raise_for_status()
-    #         status = resp.status
-    #         if status != 201:
-    #             logger.error("Failed to create user")
-    #             raise HTTPException(status_code=status, detail="Failed to create user")
-    #         return {"message": "User created successfully"}
-    new_user = keycloak_admin.create_user(user_data)
-    logger.debug("Created new user with id {}", new_user)
-    return new_user
+    # Get admin token from master realm
+    token_url = f"{settings.KEYCLOAK_SERVER_URL}/realms/master/protocol/openid-connect/token"
+    create_url = f"{settings.KEYCLOAK_SERVER_URL}/admin/realms/{settings.KEYCLOAK_REALM_NAME}/users"
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(token_url, data={
+            "client_id": "admin-cli",
+            "username": settings.KEYCLOAK_ADMIN_USERNAME,
+            "password": settings.KEYCLOAK_ADMIN_PASSWORD,
+            "grant_type": "password",
+        }) as resp:
+            resp.raise_for_status()
+            token = (await resp.json())["access_token"]
+
+        async with session.post(create_url, json=user_data, headers={
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json",
+        }) as resp:
+            if resp.status == 409:
+                raise HTTPException(status_code=409, detail="User already exists")
+            resp.raise_for_status()
+            # Keycloak returns 201 with Location header containing the new user ID
+            location = resp.headers.get("Location", "")
+            user_id = location.rstrip("/").split("/")[-1]
+            logger.debug("Created new user with id {}", user_id)
+            return user_id
 
 
 async def delete_user(username: str) -> None:
@@ -333,12 +350,12 @@ async def delete_user(username: str) -> None:
     #             raise HTTPException(status_code=status, detail="Failed to delete user")
     #         return {"message": "User deleted successfully"}
 
-    users = keycloak_admin.get_users({"username": username})
+    users = get_keycloak_admin().get_users({"username": username})
     if not users:
         logger.warning("No users found with username: {}", username)
         return None
     logger.debug("Deleting first user from {}", [user["id"] for user in users])
-    keycloak_admin.delete_user(user_id=users[0]["id"])
+    get_keycloak_admin().delete_user(user_id=users[0]["id"])
 
 
 async def get_admin_token() -> str:

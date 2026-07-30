@@ -1,0 +1,44 @@
+version: "2"
+sql:
+  - engine: "postgresql"
+    queries: "internal/repository/sources/queries"
+    schema: "migrations"
+    gen:
+      go:
+        package: "sources"
+        out: "internal/repository/sources"
+        sql_package: "pgx/v5"
+        emit_json_tags: true
+        emit_prepared_queries: false
+        emit_interface: true
+        emit_exact_table_names: false
+        emit_empty_slices: true
+        emit_pointers_for_null_types: true
+  - engine: "postgresql"
+    queries: "internal/repository/spells/queries"
+    schema: "migrations"
+    gen:
+      go:
+        package: "spells"
+        out: "internal/repository/spells"
+        sql_package: "pgx/v5"
+        emit_json_tags: true
+        emit_prepared_queries: false
+        emit_interface: true
+        emit_exact_table_names: false
+        emit_empty_slices: true
+        emit_pointers_for_null_types: true
+  - engine: "postgresql"
+    queries: "internal/repository/users/queries"
+    schema: "migrations"
+    gen:
+      go:
+        package: "users"
+        out: "internal/repository/users"
+        sql_package: "pgx/v5"
+        emit_json_tags: true
+        emit_prepared_queries: false
+        emit_interface: true
+        emit_exact_table_names: false
+        emit_empty_slices: true
+        emit_pointers_for_null_types: true

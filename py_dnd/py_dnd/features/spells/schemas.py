@@ -1,5 +1,6 @@
 """Spell schemas."""
 
+import uuid
 from typing import Any
 
 from pydantic import AliasChoices, BaseModel, ConfigDict, Field, StrictInt
@@ -23,12 +24,13 @@ class SpellSchemaBase(BaseModel, MixinBookeepingCreate, MixinBookeepingUpdate):
     )
 
     # Fields of the model
-    id: str = Field(
+    id: uuid.UUID = Field(
+        default_factory=uuid.uuid4,
         title="Spell ID",
         description="[Generated] Unique database ID For the Spell table.",
         validation_alias=AliasChoices("id", "spell_id", "spellId"),
     )
-    source_id: str = Field(
+    source_id: uuid.UUID = Field(
         title="Source ID",
         description="[Generated] Unique database ID For the Source table.",
     )
@@ -127,7 +129,7 @@ class SpellCreateInput(BaseModel):
 
     model_config = ConfigDict(extra="ignore", validate_assignment=True)
 
-    source_id: str = Field(
+    source_id: uuid.UUID = Field(
         title="Source ID",
         description="[Generated] Unique database ID For the Source table.",
     )
@@ -232,7 +234,7 @@ class SpellUpdateInput(SpellSchema):
         str_strip_whitespace=True,
     )
 
-    source_id: str = Field(
+    source_id: uuid.UUID = Field(
         title="Source ID",
         description="[Generated] Unique database ID For the Source table.",
     )

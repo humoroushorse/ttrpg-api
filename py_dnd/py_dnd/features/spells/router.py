@@ -104,6 +104,7 @@ async def upsert_and_mutate_report(
         df_entity (tuple[Hashable, Series]): _description_
     """
     index, json_entity = df_entity
+    json_entity = json_entity.to_dict()
     entity: SpellSchema | None = None
     try:
         if not json_entity.get("source_page") or math.isnan(json_entity.get("source_page")):
@@ -116,15 +117,38 @@ async def upsert_and_mutate_report(
             json_entity["difficulty_class_saving_throw_override"] = int(
                 json_entity.get("difficulty_class_saving_throw_override")
             )
+        # Sanitize all nullable string fields — pandas reads JSON null as NaN (float)
+        for nullable_str_field in ("materials", "damage_type", "at_higher_levels",
+                                   "difficulty_class_saving_throw", "difficulty_class_type"):
+            val = json_entity.get(nullable_str_field)
+            if val is not None and not isinstance(val, str):
+                try:
+                    if math.isnan(val):
+                        json_entity[nullable_str_field] = None
+                except (TypeError, ValueError):
+                    pass
         if json_entity.get("difficulty_class_saving_throw"):
             json_entity["difficulty_class_saving_throw"] = str(json_entity["difficulty_class_saving_throw"])
-        # TODO: stat_blocks should be handled as a json object (list of stat blocks)
         json_entity["stat_blocks"] = None
         time_now = datetime.datetime.now(tz=datetime.UTC)
-        if json_entity.get("created_by"):
-            del json_entity["created_by"]
-        if json_entity.get("updated_by"):
-            del json_entity["updated_by"]
+        for key in ("created_by", "updated_by", "id", "spell_id", "spellId"):
+            json_entity.pop(key, None)
+        # Resolve source_id slug to UUID and derive dnd_version/dnd_version_year if missing
+        source_short = json_entity.get("source_id")
+        if source_short:
+            sources, _ = await uow.source_repo.query(params={"name_short": source_short}, limit=1)
+            if not sources:
+                sources, _ = await uow.source_repo.query(params={"name_short": source_short.upper()}, limit=1)
+            if sources:
+                src = sources[0]
+                json_entity["source_id"] = src.id
+                json_entity.setdefault("dnd_version", src.dnd_version)
+                json_entity.setdefault("dnd_version_year", src.dnd_version_year)
+            else:
+                response.errors.append(
+                    f"row {index} [{json_entity.get('name', '?')}]: source '{source_short}' not found"
+                )
+                return
         entity = SpellCreate(
             **json_entity,
             created_at=time_now,
@@ -132,14 +156,16 @@ async def upsert_and_mutate_report(
             updated_at=time_now,
             updated_by=current_user.sub,
         )
-        _, total_count = await uow.spell_repo.query(params={"name": entity.name}, limit=1, exact=True)
+        _, total_count = await uow.spell_repo.query(
+            params={"name": entity.name, "source_id": entity.source_id}, limit=1, exact=True
+        )
         if total_count > 0:
             response.warnings.append(f"Spell with name '{entity.name}' already exists, skipping.")
         else:
             await uow.spell_repo.create(model_in=entity, return_model=False)
-            response.created.append(entity.name)
+            response.created.append(f"{entity.name} ({entity.dnd_version} {entity.dnd_version_year})")
     except Exception as e:
-        response.errors.append(f"row {index} [{entity.name if entity else json_entity.iloc[name_index]}]: {str(e)}")
+        response.errors.append(f"row {index} [{entity.name if entity else json_entity.get('name', index)}]: {str(e)}")
 
 
 @router.post("/")

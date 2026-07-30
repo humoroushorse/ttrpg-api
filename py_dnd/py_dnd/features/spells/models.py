@@ -1,5 +1,6 @@
 """SQLAlchemy Table: spell definition."""
 
+import uuid
 from typing import Any
 
 from sqlalchemy import ForeignKey, UniqueConstraint
@@ -16,17 +17,18 @@ class Spell(MixinBookeeping, DndSchemaBase):
 
     __tablename__ = "spell"
 
-    # keys
-    id: Mapped[str] = mapped_column(primary_key=True, index=True)
-    source_id: Mapped[str] = mapped_column(ForeignKey(Source.id))
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, index=True)
+    source_id: Mapped[uuid.UUID] = mapped_column(ForeignKey(Source.id))
     # fields
     name: Mapped[str] = mapped_column(nullable=False)
+    slug: Mapped[str | None] = mapped_column(default=None, nullable=True)
     dnd_version: Mapped[str] = mapped_column(nullable=False)
     dnd_version_year: Mapped[int] = mapped_column(nullable=False)
     source_page: Mapped[int | None] = mapped_column(default=None, nullable=True)
-    level: Mapped[shared.enums.SpellLevelEnum] = mapped_column(nullable=False)
-    school: Mapped[shared.enums.SpellSchoolEnum] = mapped_column(nullable=False)
+    level: Mapped[int] = mapped_column(nullable=False)
+    school: Mapped[str] = mapped_column(nullable=False)
     is_ritual: Mapped[bool] = mapped_column(nullable=False)
+    is_unearthed_arcana: Mapped[bool] = mapped_column(server_default="false", nullable=False)
     casting_time: Mapped[str] = mapped_column(nullable=False)
     range: Mapped[str] = mapped_column(nullable=False)
     has_verbal_component: Mapped[bool] = mapped_column(nullable=False)
@@ -45,8 +47,12 @@ class Spell(MixinBookeeping, DndSchemaBase):
     difficulty_class_saving_throw: Mapped[str | None] = mapped_column(default=None, nullable=True)
     difficulty_class_type: Mapped[str | None] = mapped_column(default=None, nullable=True)
     stat_blocks: Mapped[dict[str, Any] | None] = mapped_column(default=None)
-    is_homebrew: Mapped[bool] = mapped_column(default=True, nullable=False)
+    is_homebrew: Mapped[bool] = mapped_column(server_default="false", nullable=False)
     # relationships
     source = relationship(Source)
-    # constraints
-    UniqueConstraint("source_id", "name", name="ux_spell")
+
+    __table_args__ = (
+        UniqueConstraint("source_id", "name", name="ux_spell"),
+        UniqueConstraint("slug", "source_id", "dnd_version", "dnd_version_year", name="uq_spell_slug_version"),
+        {"schema": "dnd"},
+    )
