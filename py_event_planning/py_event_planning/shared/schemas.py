@@ -1,11 +1,9 @@
 """Shared schemas."""
 
 import datetime
-from typing import Annotated, Any, Generic, TypeVar
+from typing import Annotated, Any, Self
 
 from pydantic import BaseModel, Field, model_validator
-
-T = TypeVar("T", bound=BaseModel)
 
 
 class MixinBookeepingCreate:
@@ -56,7 +54,7 @@ class QueryBase(BaseModel):
     offset: int | None = Field(default=0, title="Offset")
 
 
-class GenericListResponse(BaseModel, Generic[T]):
+class GenericListResponse[T: BaseModel](BaseModel):
     """Wrapper model for returning list objects with other metadata."""
 
     total_entities_count: int | None = Field(
@@ -82,22 +80,19 @@ class GenericListResponse(BaseModel, Generic[T]):
     )
 
     @model_validator(mode="after")
-    @classmethod
-    def validate_model_generic(cls, data: Any) -> Any:
-        """General checks for deterniming GenericListResponse field values.
-
-        Args:
-            data (Any): _description_
+    def validate_model_generic(self) -> Self:
+        """Default the entity counts from `entities` when they are not provided.
 
         Returns:
-            Any: _description_
+            Self: The validated model.
         """
-        if not data.entities_count:
-            data.entities_count = len(data.entities)
+        entities = self.entities or []
+        if not self.entities_count:
+            self.entities_count = len(entities)
         # If not provided, assume we're returning everything
-        if not data.total_entities_count:
-            data.total_entities_count = len(data.entities)
-        return data
+        if not self.total_entities_count:
+            self.total_entities_count = len(entities)
+        return self
 
 
 class BulkLoadResponse(BaseModel):

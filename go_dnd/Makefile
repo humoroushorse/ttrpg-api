@@ -12,17 +12,12 @@ DB_USER=postgres
 DB_PASSWORD=admin
 DB_NAME=ttrpg-pg
 DB_MASTER_URL=postgresql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?sslmode=disable&search_path=dnd
-DB_MIGRATE_URL=postgresql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?sslmode=disable
 
 LOG_FORMAT=console
 LOG_ENABLE_COLORS=true
 
-<<<<<<< Updated upstream
-.PHONY: all build clean run test lint fmt vet generate migrate-up migrate-down migrate-create sqlc-generate openapi-generate merge-openapi help
-=======
 .PHONY: all build clean run test lint fmt vet generate catalog-generate migrate-create schema-check sqlc-generate openapi-generate merge-openapi help \
 	vtt-migrate-up vtt-migrate-down vtt-migrate-version vtt-migrate-create
->>>>>>> Stashed changes
 
 all: test build
 
@@ -48,7 +43,10 @@ fmt: ## Format code
 vet: ## Run go vet
 	$(GOCMD) vet ./...
 
-generate: sqlc-generate openapi-generate ## Run all code generation
+generate: catalog-generate sqlc-generate openapi-generate ## Run all code generation
+
+catalog-generate: ## OpenAPI paths and route methods for internal/entities
+	go run ./cmd/gencatalog
 
 sqlc-generate: ## Generate Go code from SQL queries
 	sqlc generate
@@ -60,18 +58,11 @@ merge-openapi: ## Merge dnd.yaml + auth.yaml into combined-with-auth.yaml
 	poetry install --no-interaction -q
 	poetry run python3 merge-openapi.py
 
-migrate-up: ## Run migrations up
-	migrate -path migrations -database "$(DB_MIGRATE_URL)" up
-
-migrate-down: ## Run migrations down
-	migrate -path migrations -database "$(DB_MIGRATE_URL)" down
-
-migrate-create: ## Create a new migration (usage: make migrate-create NAME=name)
+# migrations/ mirrors py_dnd's Alembic schema and is never applied to the shared database
+# (migrations/README.md). py_dnd's `make alembic-upgrade` builds the tables.
+migrate-create: ## Create a new mirror migration (usage: make migrate-create NAME=name)
 	migrate create -ext sql -dir migrations -seq $(NAME)
 
-<<<<<<< Updated upstream
-dev-up: keycloak-up nats-up migrate-up ## Start dev dependencies and run migrations
-=======
 schema-check: ## Diff the dnd schema built by Alembic against the one built by migrations/
 	../scripts/dnd_schema.sh check
 
@@ -95,7 +86,6 @@ vtt-migrate-create: ## Create a new dnd_vtt migration (usage: make vtt-migrate-c
 	migrate create -ext sql -dir $(VTT_MIGRATIONS) -seq $(NAME)
 
 dev-up: keycloak-up nats-up ## Start dev dependencies (py_dnd's `make alembic-upgrade` builds the tables)
->>>>>>> Stashed changes
 
 dev-down: nats-down keycloak-down ## Stop dev dependencies
 

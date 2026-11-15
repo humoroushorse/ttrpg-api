@@ -1,0 +1,21 @@
+paths:
+  /health/live:
+    get:
+      tags:
+      - Health
+      operationId: healthLive
+      security: []
+      responses:
+        '200':
+          description: Service is alive
+  /health/ready:
+    get:
+      tags:
+      - Health
+      operationId: healthReady
+      security: []
+      responses:
+        '200':
+          description: Service is ready
+        '503':
+          description: Service is not ready

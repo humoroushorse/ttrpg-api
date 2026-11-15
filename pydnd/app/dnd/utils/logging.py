@@ -1,7 +1,7 @@
 """Logging utils."""
 
 import functools
-from typing import Callable
+from collections.abc import Callable
 
 from loguru import logger
 

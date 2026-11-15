@@ -325,8 +325,6 @@ const (
 	Transmutation SpellSchool = "transmutation"
 )
 
-<<<<<<< Updated upstream
-=======
 // Defines values for VttBackgroundSourceType.
 const (
 	Imageavif VttBackgroundSourceType = "image/avif"
@@ -476,49 +474,27 @@ type BackgroundFields struct {
 // BackgroundPatch Only the fields to change (any of BackgroundFields).
 type BackgroundPatch map[string]interface{}
 
->>>>>>> Stashed changes
 // BulkLoadResponse defines model for BulkLoadResponse.
 type BulkLoadResponse struct {
-	Created  *[]string `json:"created,omitempty"`
-	Errors   *[]string `json:"errors,omitempty"`
-	Warnings *[]string `json:"warnings,omitempty"`
+	Created []string `json:"created"`
+
+	// Errors Any error means nothing was saved.
+	Errors   []string `json:"errors"`
+	Filename string   `json:"filename"`
+	Totals   struct {
+		Created   *int `json:"created,omitempty"`
+		Errored   *int `json:"errored,omitempty"`
+		Unchanged *int `json:"unchanged,omitempty"`
+		Updated   *int `json:"updated,omitempty"`
+		Warning   *int `json:"warning,omitempty"`
+	} `json:"totals"`
+	Unchanged []string `json:"unchanged"`
+
+	// Updated Existing rows the upload changed ("slug (source): field, field").
+	Updated  []string `json:"updated"`
+	Warnings []string `json:"warnings"`
 }
 
-<<<<<<< Updated upstream
-// CreateSpellRequest defines model for CreateSpellRequest.
-type CreateSpellRequest struct {
-	AreMaterialsConsumed               *bool                     `json:"are_materials_consumed,omitempty"`
-	AtHigherLevels                     *string                   `json:"at_higher_levels"`
-	CastingTime                        string                    `json:"casting_time"`
-	DamageType                         *string                   `json:"damage_type"`
-	Description                        string                    `json:"description"`
-	DifficultyClassSavingThrow         *string                   `json:"difficulty_class_saving_throw"`
-	DifficultyClassSavingThrowOverride *int                      `json:"difficulty_class_saving_throw_override"`
-	DifficultyClassType                *string                   `json:"difficulty_class_type"`
-	DndVersion                         string                    `json:"dnd_version"`
-	DndVersionYear                     int                       `json:"dnd_version_year"`
-	Duration                           string                    `json:"duration"`
-	HasMaterialComponent               *bool                     `json:"has_material_component,omitempty"`
-	HasSavingThrow                     *bool                     `json:"has_saving_throw,omitempty"`
-	HasSomaticComponent                *bool                     `json:"has_somatic_component,omitempty"`
-	HasSpellCost                       *bool                     `json:"has_spell_cost,omitempty"`
-	HasVerbalComponent                 *bool                     `json:"has_verbal_component,omitempty"`
-	Id                                 *string                   `json:"id,omitempty"`
-	IsConcentration                    *bool                     `json:"is_concentration,omitempty"`
-	IsRitual                           *bool                     `json:"is_ritual,omitempty"`
-	IsUnearthedArcana                  *bool                     `json:"is_unearthed_arcana,omitempty"`
-	Level                              int                       `json:"level"`
-	Materials                          *string                   `json:"materials"`
-	Name                               string                    `json:"name"`
-	Slug                               *string                   `json:"slug,omitempty"`
-	Range                              string                    `json:"range"`
-	School                             SpellSchool               `json:"school"`
-	SourceId                           string                    `json:"source_id"`
-	SourcePage                         *int                      `json:"source_page"`
-	StatBlocks                         *[]map[string]interface{} `json:"stat_blocks,omitempty"`
-}
-
-=======
 // Campaign defines model for Campaign.
 type Campaign struct {
 	CreatedAt   *time.Time          `json:"created_at,omitempty"`
@@ -1366,7 +1342,6 @@ type ConditionFields struct {
 // ConditionPatch Only the fields to change (any of ConditionFields).
 type ConditionPatch map[string]interface{}
 
->>>>>>> Stashed changes
 // DndUser defines model for DndUser.
 type DndUser struct {
 	Id                openapi_types.UUID `json:"id"`
@@ -1376,14 +1351,14 @@ type DndUser struct {
 
 // ErrorResponse defines model for ErrorResponse.
 type ErrorResponse struct {
-	Code    string  `json:"code"`
+	Code string `json:"code"`
+
+	// Detail The message (py_dnd's FastAPI field; what the UI reads).
+	Detail  string  `json:"detail"`
 	Error   string  `json:"error"`
 	TraceId *string `json:"trace_id,omitempty"`
 }
 
-<<<<<<< Updated upstream
-// Source defines model for Source.
-=======
 // Feat As the API returns it. ?fields= leaves the other fields out.
 type Feat struct {
 	Category  *string             `json:"category"`
@@ -1732,62 +1707,220 @@ type SomeUser struct {
 }
 
 // Source A source as the API returns it. ?fields= leaves the other fields out.
->>>>>>> Stashed changes
 type Source struct {
 	CreatedAt      *time.Time          `json:"created_at,omitempty"`
-	CreatedBy      *openapi_types.UUID `json:"created_by,omitempty"`
-	DndVersion     string              `json:"dnd_version"`
-	DndVersionYear int                 `json:"dnd_version_year"`
-	Id             string              `json:"id"`
-	Name           string              `json:"name"`
-	NameShort      string              `json:"name_short"`
+	CreatedBy      *openapi_types.UUID `json:"created_by"`
+	DndVersion     *string             `json:"dnd_version,omitempty"`
+	DndVersionYear *int                `json:"dnd_version_year,omitempty"`
+	Id             *openapi_types.UUID `json:"id,omitempty"`
+	Marks          *[]string           `json:"marks,omitempty"`
+	Name           *string             `json:"name,omitempty"`
+	NameShort      *string             `json:"name_short,omitempty"`
 	PublishYear    *int                `json:"publish_year"`
+	Slug           *string             `json:"slug,omitempty"`
 	UpdatedAt      *time.Time          `json:"updated_at,omitempty"`
-	UpdatedBy      *openapi_types.UUID `json:"updated_by,omitempty"`
+	UpdatedBy      *openapi_types.UUID `json:"updated_by"`
 }
 
-// Spell defines model for Spell.
-type Spell struct {
-	AreMaterialsConsumed               *bool                     `json:"are_materials_consumed,omitempty"`
-	AtHigherLevels                     *string                   `json:"at_higher_levels"`
-	CastingTime                        string                    `json:"casting_time"`
-	CreatedAt                          *time.Time                `json:"created_at,omitempty"`
-	CreatedBy                          *openapi_types.UUID       `json:"created_by,omitempty"`
-	DamageType                         *string                   `json:"damage_type"`
-	Description                        string                    `json:"description"`
-	DifficultyClassSavingThrow         *string                   `json:"difficulty_class_saving_throw"`
-	DifficultyClassSavingThrowOverride *int                      `json:"difficulty_class_saving_throw_override"`
-	DifficultyClassType                *string                   `json:"difficulty_class_type"`
-	DndVersion                         string                    `json:"dnd_version"`
-	DndVersionYear                     int                       `json:"dnd_version_year"`
-	Duration                           string                    `json:"duration"`
-	HasMaterialComponent               *bool                     `json:"has_material_component,omitempty"`
-	HasSavingThrow                     *bool                     `json:"has_saving_throw,omitempty"`
-	HasSomaticComponent                *bool                     `json:"has_somatic_component,omitempty"`
-	HasSpellCost                       *bool                     `json:"has_spell_cost,omitempty"`
-	HasVerbalComponent                 *bool                     `json:"has_verbal_component,omitempty"`
-	Id                                 string                    `json:"id"`
-	IsConcentration                    *bool                     `json:"is_concentration,omitempty"`
-	IsRitual                           *bool                     `json:"is_ritual,omitempty"`
-	IsUnearthedArcana                  *bool                     `json:"is_unearthed_arcana,omitempty"`
-	Level                              int                       `json:"level"`
-	Materials                          *string                   `json:"materials"`
-	Name                               string                    `json:"name"`
-	Slug                               *string                   `json:"slug,omitempty"`
-	Range                              string                    `json:"range"`
-	School                             SpellSchool               `json:"school"`
-	SourceId                           string                    `json:"source_id"`
-	SourcePage                         *int                      `json:"source_page"`
-	StatBlocks                         *[]map[string]interface{} `json:"stat_blocks,omitempty"`
-	UpdatedAt                          *time.Time                `json:"updated_at,omitempty"`
-	UpdatedBy                          *openapi_types.UUID       `json:"updated_by,omitempty"`
+// SourceFields Every field a client writes. Unknown keys are a 422.
+type SourceFields struct {
+	DndVersion     string `json:"dnd_version"`
+	DndVersionYear int    `json:"dnd_version_year"`
+
+	// Marks Flags such as third_party.
+	Marks       *[]string `json:"marks,omitempty"`
+	Name        string    `json:"name"`
+	NameShort   string    `json:"name_short"`
+	PublishYear *int      `json:"publish_year"`
+
+	// Slug Unique key across editions; the ETL's `source_id` (phb_2024).
+	Slug string `json:"slug"`
 }
+
+// SourcePatch Only the fields to change.
+type SourcePatch struct {
+	DndVersion     *string   `json:"dnd_version,omitempty"`
+	DndVersionYear *int      `json:"dnd_version_year,omitempty"`
+	Marks          *[]string `json:"marks,omitempty"`
+	Name           *string   `json:"name,omitempty"`
+	NameShort      *string   `json:"name_short,omitempty"`
+	PublishYear    *int      `json:"publish_year"`
+	Slug           *string   `json:"slug,omitempty"`
+}
+
+// SourceRef A source as other entities return it (read only).
+type SourceRef struct {
+	Id        openapi_types.UUID `json:"id"`
+	Name      string             `json:"name"`
+	NameShort string             `json:"name_short"`
+	Slug      string             `json:"slug"`
+}
+
+// Species As the API returns it. ?fields= leaves the other fields out.
+type Species struct {
+	CreatedAt    *time.Time          `json:"created_at,omitempty"`
+	CreatedBy    *openapi_types.UUID `json:"created_by"`
+	CreatureType *string             `json:"creature_type,omitempty"`
+
+	// Description Also accepted as description_html.
+	Description       *string             `json:"description,omitempty"`
+	DndVersion        *string             `json:"dnd_version,omitempty"`
+	DndVersionYear    *int                `json:"dnd_version_year,omitempty"`
+	Id                *openapi_types.UUID `json:"id,omitempty"`
+	IsHomebrew        *bool               `json:"is_homebrew,omitempty"`
+	IsUnearthedArcana *bool               `json:"is_unearthed_arcana,omitempty"`
+	Marks             *[]string           `json:"marks,omitempty"`
+	Name              *string             `json:"name,omitempty"`
+	Size              *string             `json:"size,omitempty"`
+	Slug              *string             `json:"slug,omitempty"`
+
+	// Source A source as other entities return it (read only).
+	Source    *SourceRef          `json:"source,omitempty"`
+	SourceId  *openapi_types.UUID `json:"source_id,omitempty"`
+	Speed     *string             `json:"speed,omitempty"`
+	Traits    *[]interface{}      `json:"traits,omitempty"`
+	UpdatedAt *time.Time          `json:"updated_at,omitempty"`
+	UpdatedBy *openapi_types.UUID `json:"updated_by"`
+}
+
+// SpeciesFields Every field a client writes. Unknown keys are a 422.
+type SpeciesFields struct {
+	CreatureType string `json:"creature_type"`
+
+	// Description Also accepted as description_html.
+	Description       string             `json:"description"`
+	DndVersion        string             `json:"dnd_version"`
+	DndVersionYear    int                `json:"dnd_version_year"`
+	IsHomebrew        *bool              `json:"is_homebrew,omitempty"`
+	IsUnearthedArcana *bool              `json:"is_unearthed_arcana,omitempty"`
+	Marks             *[]string          `json:"marks,omitempty"`
+	Name              string             `json:"name"`
+	Size              string             `json:"size"`
+	Slug              string             `json:"slug"`
+	SourceId          openapi_types.UUID `json:"source_id"`
+	Speed             string             `json:"speed"`
+	Traits            *[]interface{}     `json:"traits,omitempty"`
+}
+
+// SpeciesPatch Only the fields to change (any of SpeciesFields).
+type SpeciesPatch map[string]interface{}
+
+// Spell A spell as the API returns it. ?fields= leaves the other fields out.
+type Spell struct {
+	ActivationAmount *int `json:"activation_amount"`
+
+	// ActivationCost Generated from vtt.
+	ActivationCost                     *string             `json:"activation_cost"`
+	AreMaterialsConsumed               *bool               `json:"are_materials_consumed,omitempty"`
+	AtHigherLevels                     *string             `json:"at_higher_levels"`
+	CastingTime                        *string             `json:"casting_time,omitempty"`
+	CreatedAt                          *time.Time          `json:"created_at,omitempty"`
+	CreatedBy                          *openapi_types.UUID `json:"created_by"`
+	DamageType                         *string             `json:"damage_type"`
+	Description                        *string             `json:"description,omitempty"`
+	DifficultyClassSavingThrow         *string             `json:"difficulty_class_saving_throw"`
+	DifficultyClassSavingThrowOverride *int                `json:"difficulty_class_saving_throw_override"`
+	DifficultyClassType                *string             `json:"difficulty_class_type"`
+	DndVersion                         *string             `json:"dnd_version,omitempty"`
+	DndVersionYear                     *int                `json:"dnd_version_year,omitempty"`
+	Duration                           *string             `json:"duration,omitempty"`
+	DurationAmount                     *int                `json:"duration_amount"`
+	DurationKind                       *string             `json:"duration_kind"`
+	DurationUnit                       *string             `json:"duration_unit"`
+	HasAttackRoll                      *bool               `json:"has_attack_roll"`
+	HasMaterialComponent               *bool               `json:"has_material_component,omitempty"`
+	HasSave                            *bool               `json:"has_save"`
+	HasSavingThrow                     *bool               `json:"has_saving_throw,omitempty"`
+	HasSomaticComponent                *bool               `json:"has_somatic_component,omitempty"`
+	HasSpellCost                       *bool               `json:"has_spell_cost,omitempty"`
+	HasSummon                          *bool               `json:"has_summon"`
+	HasVerbalComponent                 *bool               `json:"has_verbal_component,omitempty"`
+	Id                                 *openapi_types.UUID `json:"id,omitempty"`
+	IsConcentration                    *bool               `json:"is_concentration,omitempty"`
+	IsHomebrew                         *bool               `json:"is_homebrew,omitempty"`
+	IsRitual                           *bool               `json:"is_ritual,omitempty"`
+	IsUnearthedArcana                  *bool               `json:"is_unearthed_arcana,omitempty"`
+	Level                              *int                `json:"level,omitempty"`
+	Materials                          *string             `json:"materials"`
+	Name                               *string             `json:"name,omitempty"`
+	Range                              *string             `json:"range,omitempty"`
+	RangeFeet                          *int                `json:"range_feet"`
+	RangeKind                          *string             `json:"range_kind"`
+	School                             *string             `json:"school,omitempty"`
+	Slug                               *string             `json:"slug,omitempty"`
+
+	// Source A source as other entities return it (read only).
+	Source     *SourceRef                `json:"source,omitempty"`
+	SourceId   *openapi_types.UUID       `json:"source_id,omitempty"`
+	SourcePage *int                      `json:"source_page"`
+	StatBlocks *[]map[string]interface{} `json:"stat_blocks"`
+
+	// Sustain concentration (D&D)
+	Sustain   *string             `json:"sustain"`
+	UpdatedAt *time.Time          `json:"updated_at,omitempty"`
+	UpdatedBy *openapi_types.UUID `json:"updated_by"`
+
+	// Vtt What the VTT needs to resolve the spell; schema ttrpg-api/schemas/vtt_spell.v1.schema.json. Writes are checked against it and stored with every default filled in.
+	Vtt *Vtt `json:"vtt,omitempty"`
+}
+
+// SpellClassLink defines model for SpellClassLink.
+type SpellClassLink struct {
+	ClassId   openapi_types.UUID  `json:"class_id"`
+	CreatedAt time.Time           `json:"created_at"`
+	CreatedBy *openapi_types.UUID `json:"created_by"`
+
+	// Qualifier "Optional" (Tasha's optional class spells) or a subclass ("Dunamancy"); null for the class list
+	Qualifier *string            `json:"qualifier"`
+	SpellId   openapi_types.UUID `json:"spell_id"`
+}
+
+// SpellFields Every field a client writes. Unknown keys are a 422.
+type SpellFields struct {
+	AreMaterialsConsumed *bool   `json:"are_materials_consumed,omitempty"`
+	AtHigherLevels       *string `json:"at_higher_levels"`
+	CastingTime          string  `json:"casting_time"`
+	DamageType           *string `json:"damage_type"`
+
+	// Description HTML (also accepted as description_html).
+	Description                        string      `json:"description"`
+	DifficultyClassSavingThrow         *string     `json:"difficulty_class_saving_throw"`
+	DifficultyClassSavingThrowOverride *int        `json:"difficulty_class_saving_throw_override"`
+	DifficultyClassType                *string     `json:"difficulty_class_type"`
+	DndVersion                         string      `json:"dnd_version"`
+	DndVersionYear                     int         `json:"dnd_version_year"`
+	Duration                           string      `json:"duration"`
+	HasMaterialComponent               *bool       `json:"has_material_component,omitempty"`
+	HasSavingThrow                     *bool       `json:"has_saving_throw,omitempty"`
+	HasSomaticComponent                *bool       `json:"has_somatic_component,omitempty"`
+	HasSpellCost                       *bool       `json:"has_spell_cost,omitempty"`
+	HasVerbalComponent                 *bool       `json:"has_verbal_component,omitempty"`
+	IsConcentration                    *bool       `json:"is_concentration,omitempty"`
+	IsHomebrew                         *bool       `json:"is_homebrew,omitempty"`
+	IsRitual                           *bool       `json:"is_ritual,omitempty"`
+	IsUnearthedArcana                  *bool       `json:"is_unearthed_arcana,omitempty"`
+	Level                              int         `json:"level"`
+	Materials                          *string     `json:"materials"`
+	Name                               string      `json:"name"`
+	Range                              string      `json:"range"`
+	School                             SpellSchool `json:"school"`
+
+	// Slug Unique within its source.
+	Slug       string                    `json:"slug"`
+	SourceId   openapi_types.UUID        `json:"source_id"`
+	SourcePage *int                      `json:"source_page"`
+	StatBlocks *[]map[string]interface{} `json:"stat_blocks"`
+
+	// Vtt What the VTT needs to resolve the spell; schema ttrpg-api/schemas/vtt_spell.v1.schema.json. Writes are checked against it and stored with every default filled in.
+	Vtt Vtt `json:"vtt"`
+}
+
+// SpellPatch Only the fields to change (any of SpellFields). vtt is replaced whole.
+type SpellPatch map[string]interface{}
 
 // SpellSchool defines model for SpellSchool.
 type SpellSchool string
 
-<<<<<<< Updated upstream
-=======
 // Subclass As the API returns it. ?fields= leaves the other fields out.
 type Subclass struct {
 	CasterProgression *string             `json:"caster_progression"`
@@ -1845,15 +1978,12 @@ type SubclassFields struct {
 // SubclassPatch Only the fields to change (any of SubclassFields).
 type SubclassPatch map[string]interface{}
 
->>>>>>> Stashed changes
 // UpdateUserRequest defines model for UpdateUserRequest.
 type UpdateUserRequest struct {
 	ProfilePictureUrl *string `json:"profile_picture_url"`
 	Username          *string `json:"username"`
 }
 
-<<<<<<< Updated upstream
-=======
 // Vtt What the VTT needs to resolve the spell; schema ttrpg-api/schemas/vtt_spell.v1.schema.json. Writes are checked against it and stored with every default filled in.
 type Vtt map[string]interface{}
 
@@ -2565,39 +2695,109 @@ type ReadItemBySlugsParams struct {
 	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
 }
 
->>>>>>> Stashed changes
 // BulkLoadSourcesMultipartBody defines parameters for BulkLoadSources.
 type BulkLoadSourcesMultipartBody struct {
-	File *openapi_types.File `json:"file,omitempty"`
+	File openapi_types.File `json:"file"`
 }
 
 // QuerySourcesParams defines parameters for QuerySources.
 type QuerySourcesParams struct {
-	DndVersion *string `form:"dnd_version,omitempty" json:"dnd_version,omitempty"`
+	// Name Name(s) to filter on (separated by commas ","), case-insensitive substring.
+	Name *Name `form:"name,omitempty" json:"name,omitempty"`
+
+	// Limit Page size; 0 returns every match.
+	Limit  *Limit  `form:"limit,omitempty" json:"limit,omitempty"`
+	Offset *Offset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadSourceBySlugParams defines parameters for ReadSourceBySlug.
+type ReadSourceBySlugParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadSourceParams defines parameters for ReadSource.
+type ReadSourceParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// BulkLoadSpeciesMultipartBody defines parameters for BulkLoadSpecies.
+type BulkLoadSpeciesMultipartBody struct {
+	File openapi_types.File `json:"file"`
+}
+
+// QuerySpeciesParams defines parameters for QuerySpecies.
+type QuerySpeciesParams struct {
+	// Name Name(s) to filter on (separated by commas ","), case-insensitive substring.
+	Name *Name `form:"name,omitempty" json:"name,omitempty"`
+
+	// Filter AG Grid filter model as JSON, e.g. {"level":{"filterType":"number","type":"lessThanOrEqual","filter":3}}
+	Filter *Filter `form:"filter,omitempty" json:"filter,omitempty"`
+
+	// Sort AG Grid sort model as JSON, e.g. [{"colId":"level","sort":"asc"}]
+	Sort *Sort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Limit Page size; 0 returns every match.
+	Limit  *Limit  `form:"limit,omitempty" json:"limit,omitempty"`
+	Offset *Offset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadSpeciesParams defines parameters for ReadSpecies.
+type ReadSpeciesParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadSpeciesBySlugsParams defines parameters for ReadSpeciesBySlugs.
+type ReadSpeciesBySlugsParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
 }
 
 // ListSpellsParams defines parameters for ListSpells.
 type ListSpellsParams struct {
-	Limit  *int `form:"limit,omitempty" json:"limit,omitempty"`
-	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+	// Limit Page size; 0 returns every match.
+	Limit  *Limit  `form:"limit,omitempty" json:"limit,omitempty"`
+	Offset *Offset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
 }
 
 // BulkLoadSpellsMultipartBody defines parameters for BulkLoadSpells.
 type BulkLoadSpellsMultipartBody struct {
-	File *openapi_types.File `json:"file,omitempty"`
+	File openapi_types.File `json:"file"`
 }
 
 // QuerySpellsParams defines parameters for QuerySpells.
 type QuerySpellsParams struct {
-	Name   *string      `form:"name,omitempty" json:"name,omitempty"`
-	Level  *int         `form:"level,omitempty" json:"level,omitempty"`
-	School *SpellSchool `form:"school,omitempty" json:"school,omitempty"`
-	Limit  *int         `form:"limit,omitempty" json:"limit,omitempty"`
-	Offset *int         `form:"offset,omitempty" json:"offset,omitempty"`
+	// Name Name(s) to filter on (separated by commas ","), case-insensitive substring.
+	Name *Name `form:"name,omitempty" json:"name,omitempty"`
+
+	// VersionsOf A slug; every printing of that spell across sources and editions. Hyphens are ignored, so bigbys-hand (2014) also finds bigby-s-hand (2024).
+	VersionsOf *string `form:"versions_of,omitempty" json:"versions_of,omitempty"`
+
+	// Filter AG Grid filter model as JSON, e.g. {"level":{"filterType":"number","type":"lessThanOrEqual","filter":3}}
+	Filter *Filter `form:"filter,omitempty" json:"filter,omitempty"`
+
+	// Sort AG Grid sort model as JSON, e.g. [{"colId":"level","sort":"asc"}]
+	Sort *Sort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Limit Page size; 0 returns every match.
+	Limit  *Limit  `form:"limit,omitempty" json:"limit,omitempty"`
+	Offset *Offset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
 }
 
-<<<<<<< Updated upstream
-=======
 // ReadSpellParams defines parameters for ReadSpell.
 type ReadSpellParams struct {
 	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
@@ -2802,15 +3002,50 @@ type ReplaceItemJSONRequestBody = ItemFields
 // CreateSourceJSONRequestBody defines body for CreateSource for application/json ContentType.
 type CreateSourceJSONRequestBody = SourceFields
 
->>>>>>> Stashed changes
 // BulkLoadSourcesMultipartRequestBody defines body for BulkLoadSources for multipart/form-data ContentType.
 type BulkLoadSourcesMultipartRequestBody BulkLoadSourcesMultipartBody
+
+// UpdateSourceJSONRequestBody defines body for UpdateSource for application/json ContentType.
+type UpdateSourceJSONRequestBody = SourcePatch
+
+// ReplaceSourceJSONRequestBody defines body for ReplaceSource for application/json ContentType.
+type ReplaceSourceJSONRequestBody = SourceFields
+
+// CreateSpeciesJSONRequestBody defines body for CreateSpecies for application/json ContentType.
+type CreateSpeciesJSONRequestBody = SpeciesFields
+
+// BulkLoadSpeciesMultipartRequestBody defines body for BulkLoadSpecies for multipart/form-data ContentType.
+type BulkLoadSpeciesMultipartRequestBody BulkLoadSpeciesMultipartBody
+
+// UpdateSpeciesJSONRequestBody defines body for UpdateSpecies for application/json ContentType.
+type UpdateSpeciesJSONRequestBody = SpeciesPatch
+
+// ReplaceSpeciesJSONRequestBody defines body for ReplaceSpecies for application/json ContentType.
+type ReplaceSpeciesJSONRequestBody = SpeciesFields
+
+// CreateSpellJSONRequestBody defines body for CreateSpell for application/json ContentType.
+type CreateSpellJSONRequestBody = SpellFields
 
 // BulkLoadSpellsMultipartRequestBody defines body for BulkLoadSpells for multipart/form-data ContentType.
 type BulkLoadSpellsMultipartRequestBody BulkLoadSpellsMultipartBody
 
-// CreateSpellJSONRequestBody defines body for CreateSpell for application/json ContentType.
-type CreateSpellJSONRequestBody = CreateSpellRequest
+// UpdateSpellJSONRequestBody defines body for UpdateSpell for application/json ContentType.
+type UpdateSpellJSONRequestBody = SpellPatch
+
+// ReplaceSpellJSONRequestBody defines body for ReplaceSpell for application/json ContentType.
+type ReplaceSpellJSONRequestBody = SpellFields
+
+// CreateSubclassJSONRequestBody defines body for CreateSubclass for application/json ContentType.
+type CreateSubclassJSONRequestBody = SubclassFields
+
+// BulkLoadSubclassesMultipartRequestBody defines body for BulkLoadSubclasses for multipart/form-data ContentType.
+type BulkLoadSubclassesMultipartRequestBody BulkLoadSubclassesMultipartBody
+
+// UpdateSubclassJSONRequestBody defines body for UpdateSubclass for application/json ContentType.
+type UpdateSubclassJSONRequestBody = SubclassPatch
+
+// ReplaceSubclassJSONRequestBody defines body for ReplaceSubclass for application/json ContentType.
+type ReplaceSubclassJSONRequestBody = SubclassFields
 
 // UpdateUserJSONRequestBody defines body for UpdateUser for application/json ContentType.
 type UpdateUserJSONRequestBody = UpdateUserRequest
@@ -2832,9 +3067,19 @@ type UpdateVttSceneJSONRequestBody = VttSceneFields
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// Create; a (source, slug) that's taken is a 409
+	// (POST /api/v1/backgrounds)
+	CreateBackground(w http.ResponseWriter, r *http.Request)
+	// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+	// (POST /api/v1/backgrounds/bulk)
+	BulkLoadBackgrounds(w http.ResponseWriter, r *http.Request)
+	// By name then newest edition, after sort
+	// (GET /api/v1/backgrounds/query)
+	QueryBackgrounds(w http.ResponseWriter, r *http.Request, params QueryBackgroundsParams)
+	// Soft delete. Returns the id
+	// (DELETE /api/v1/backgrounds/{entity_id})
+	DeleteBackground(w http.ResponseWriter, r *http.Request, entityId EntityId)
 
-<<<<<<< Updated upstream
-=======
 	// (GET /api/v1/backgrounds/{entity_id})
 	ReadBackground(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadBackgroundParams)
 	// Change some fields; null clears an optional field
@@ -3156,24 +3401,101 @@ type ServerInterface interface {
 	// (POST /api/v1/sources)
 	CreateSource(w http.ResponseWriter, r *http.Request)
 	// Create or update sources from a file, keyed on slug (the ETL's source_id)
->>>>>>> Stashed changes
 	// (POST /api/v1/sources/bulk)
 	BulkLoadSources(w http.ResponseWriter, r *http.Request)
-
+	// Sources, by name then newest edition
 	// (GET /api/v1/sources/query)
 	QuerySources(w http.ResponseWriter, r *http.Request, params QuerySourcesParams)
+	// One source by its slug (phb_2024)
+	// (GET /api/v1/sources/slug/{slug})
+	ReadSourceBySlug(w http.ResponseWriter, r *http.Request, slug string, params ReadSourceBySlugParams)
+	// Soft delete (hidden from every read, keeps its slug). 409 while live entries use it
+	// (DELETE /api/v1/sources/{entity_id})
+	DeleteSource(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// One source
+	// (GET /api/v1/sources/{entity_id})
+	ReadSource(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadSourceParams)
+	// Change some fields; null clears an optional field (publish_year)
+	// (PATCH /api/v1/sources/{entity_id})
+	UpdateSource(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Replace a source; fields left out go back to their defaults
+	// (PUT /api/v1/sources/{entity_id})
+	ReplaceSource(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Create; a (source, slug) that's taken is a 409
+	// (POST /api/v1/species)
+	CreateSpecies(w http.ResponseWriter, r *http.Request)
+	// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+	// (POST /api/v1/species/bulk)
+	BulkLoadSpecies(w http.ResponseWriter, r *http.Request)
+	// By name then newest edition, after sort
+	// (GET /api/v1/species/query)
+	QuerySpecies(w http.ResponseWriter, r *http.Request, params QuerySpeciesParams)
+	// Soft delete. Returns the id
+	// (DELETE /api/v1/species/{entity_id})
+	DeleteSpecies(w http.ResponseWriter, r *http.Request, entityId EntityId)
 
+	// (GET /api/v1/species/{entity_id})
+	ReadSpecies(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadSpeciesParams)
+	// Change some fields; null clears an optional field
+	// (PATCH /api/v1/species/{entity_id})
+	UpdateSpecies(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Replace; fields left out go back to their defaults
+	// (PUT /api/v1/species/{entity_id})
+	ReplaceSpecies(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// One entry by its source's slug and its own (phb_2024/blinded)
+	// (GET /api/v1/species/{source_slug}/{slug})
+	ReadSpeciesBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadSpeciesBySlugsParams)
+	// A plain array of spells by id (the list before /query; use /query for filters)
 	// (GET /api/v1/spells)
 	ListSpells(w http.ResponseWriter, r *http.Request, params ListSpellsParams)
-
+	// Create a spell; a (source, slug) that's taken is a 409
+	// (POST /api/v1/spells)
+	CreateSpell(w http.ResponseWriter, r *http.Request)
+	// Create or update spells from a file (an ETL _all.json), keyed on (source, slug)
 	// (POST /api/v1/spells/bulk)
 	BulkLoadSpells(w http.ResponseWriter, r *http.Request)
-
-	// (POST /api/v1/spells/create)
-	CreateSpell(w http.ResponseWriter, r *http.Request)
-
+	// Spells, by name then newest edition after `sort`
 	// (GET /api/v1/spells/query)
 	QuerySpells(w http.ResponseWriter, r *http.Request, params QuerySpellsParams)
+	// Soft delete (hidden from every read). Returns the id
+	// (DELETE /api/v1/spells/{entity_id})
+	DeleteSpell(w http.ResponseWriter, r *http.Request, entityId EntityId)
+
+	// (GET /api/v1/spells/{entity_id})
+	ReadSpell(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadSpellParams)
+	// Change some fields; null clears an optional field; vtt is replaced whole
+	// (PATCH /api/v1/spells/{entity_id})
+	UpdateSpell(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Replace a spell; fields left out go back to their defaults
+	// (PUT /api/v1/spells/{entity_id})
+	ReplaceSpell(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// One spell by its source's slug and its own (phb_2024/acid-splash), the UI's URL key
+	// (GET /api/v1/spells/{source_slug}/{slug})
+	ReadSpellBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadSpellBySlugsParams)
+	// Create; a (source, slug) that's taken is a 409
+	// (POST /api/v1/subclasses)
+	CreateSubclass(w http.ResponseWriter, r *http.Request)
+	// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+	// (POST /api/v1/subclasses/bulk)
+	BulkLoadSubclasses(w http.ResponseWriter, r *http.Request)
+	// By name then newest edition, after sort
+	// (GET /api/v1/subclasses/query)
+	QuerySubclasses(w http.ResponseWriter, r *http.Request, params QuerySubclassesParams)
+	// Soft delete. Returns the id
+	// (DELETE /api/v1/subclasses/{entity_id})
+	DeleteSubclass(w http.ResponseWriter, r *http.Request, entityId EntityId)
+
+	// (GET /api/v1/subclasses/{entity_id})
+	ReadSubclass(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadSubclassParams)
+	// Change some fields; null clears an optional field
+	// (PATCH /api/v1/subclasses/{entity_id})
+	UpdateSubclass(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Replace; fields left out go back to their defaults
+	// (PUT /api/v1/subclasses/{entity_id})
+	ReplaceSubclass(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// One entry by its source's slug and its own (phb_2024/blinded)
+	// (GET /api/v1/subclasses/{source_slug}/{slug})
+	ReadSubclassBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadSubclassBySlugsParams)
 
 	// (GET /api/v1/users/{id})
 	GetUser(w http.ResponseWriter, r *http.Request, id openapi_types.UUID)
@@ -3219,8 +3541,6 @@ type ServerInterface interface {
 
 type Unimplemented struct{}
 
-<<<<<<< Updated upstream
-=======
 // Create; a (source, slug) that's taken is a 409
 // (POST /api/v1/backgrounds)
 func (_ Unimplemented) CreateBackground(w http.ResponseWriter, r *http.Request) {
@@ -3882,34 +4202,191 @@ func (_ Unimplemented) CreateSource(w http.ResponseWriter, r *http.Request) {
 }
 
 // Create or update sources from a file, keyed on slug (the ETL's source_id)
->>>>>>> Stashed changes
 // (POST /api/v1/sources/bulk)
 func (_ Unimplemented) BulkLoadSources(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
+// Sources, by name then newest edition
 // (GET /api/v1/sources/query)
 func (_ Unimplemented) QuerySources(w http.ResponseWriter, r *http.Request, params QuerySourcesParams) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
+// One source by its slug (phb_2024)
+// (GET /api/v1/sources/slug/{slug})
+func (_ Unimplemented) ReadSourceBySlug(w http.ResponseWriter, r *http.Request, slug string, params ReadSourceBySlugParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Soft delete (hidden from every read, keeps its slug). 409 while live entries use it
+// (DELETE /api/v1/sources/{entity_id})
+func (_ Unimplemented) DeleteSource(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// One source
+// (GET /api/v1/sources/{entity_id})
+func (_ Unimplemented) ReadSource(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadSourceParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change some fields; null clears an optional field (publish_year)
+// (PATCH /api/v1/sources/{entity_id})
+func (_ Unimplemented) UpdateSource(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace a source; fields left out go back to their defaults
+// (PUT /api/v1/sources/{entity_id})
+func (_ Unimplemented) ReplaceSource(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create; a (source, slug) that's taken is a 409
+// (POST /api/v1/species)
+func (_ Unimplemented) CreateSpecies(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+// (POST /api/v1/species/bulk)
+func (_ Unimplemented) BulkLoadSpecies(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// By name then newest edition, after sort
+// (GET /api/v1/species/query)
+func (_ Unimplemented) QuerySpecies(w http.ResponseWriter, r *http.Request, params QuerySpeciesParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Soft delete. Returns the id
+// (DELETE /api/v1/species/{entity_id})
+func (_ Unimplemented) DeleteSpecies(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// (GET /api/v1/species/{entity_id})
+func (_ Unimplemented) ReadSpecies(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadSpeciesParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change some fields; null clears an optional field
+// (PATCH /api/v1/species/{entity_id})
+func (_ Unimplemented) UpdateSpecies(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace; fields left out go back to their defaults
+// (PUT /api/v1/species/{entity_id})
+func (_ Unimplemented) ReplaceSpecies(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// One entry by its source's slug and its own (phb_2024/blinded)
+// (GET /api/v1/species/{source_slug}/{slug})
+func (_ Unimplemented) ReadSpeciesBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadSpeciesBySlugsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// A plain array of spells by id (the list before /query; use /query for filters)
 // (GET /api/v1/spells)
 func (_ Unimplemented) ListSpells(w http.ResponseWriter, r *http.Request, params ListSpellsParams) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
+// Create a spell; a (source, slug) that's taken is a 409
+// (POST /api/v1/spells)
+func (_ Unimplemented) CreateSpell(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create or update spells from a file (an ETL _all.json), keyed on (source, slug)
 // (POST /api/v1/spells/bulk)
 func (_ Unimplemented) BulkLoadSpells(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
-// (POST /api/v1/spells/create)
-func (_ Unimplemented) CreateSpell(w http.ResponseWriter, r *http.Request) {
+// Spells, by name then newest edition after `sort`
+// (GET /api/v1/spells/query)
+func (_ Unimplemented) QuerySpells(w http.ResponseWriter, r *http.Request, params QuerySpellsParams) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
-// (GET /api/v1/spells/query)
-func (_ Unimplemented) QuerySpells(w http.ResponseWriter, r *http.Request, params QuerySpellsParams) {
+// Soft delete (hidden from every read). Returns the id
+// (DELETE /api/v1/spells/{entity_id})
+func (_ Unimplemented) DeleteSpell(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// (GET /api/v1/spells/{entity_id})
+func (_ Unimplemented) ReadSpell(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadSpellParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change some fields; null clears an optional field; vtt is replaced whole
+// (PATCH /api/v1/spells/{entity_id})
+func (_ Unimplemented) UpdateSpell(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace a spell; fields left out go back to their defaults
+// (PUT /api/v1/spells/{entity_id})
+func (_ Unimplemented) ReplaceSpell(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// One spell by its source's slug and its own (phb_2024/acid-splash), the UI's URL key
+// (GET /api/v1/spells/{source_slug}/{slug})
+func (_ Unimplemented) ReadSpellBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadSpellBySlugsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create; a (source, slug) that's taken is a 409
+// (POST /api/v1/subclasses)
+func (_ Unimplemented) CreateSubclass(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+// (POST /api/v1/subclasses/bulk)
+func (_ Unimplemented) BulkLoadSubclasses(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// By name then newest edition, after sort
+// (GET /api/v1/subclasses/query)
+func (_ Unimplemented) QuerySubclasses(w http.ResponseWriter, r *http.Request, params QuerySubclassesParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Soft delete. Returns the id
+// (DELETE /api/v1/subclasses/{entity_id})
+func (_ Unimplemented) DeleteSubclass(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// (GET /api/v1/subclasses/{entity_id})
+func (_ Unimplemented) ReadSubclass(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadSubclassParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change some fields; null clears an optional field
+// (PATCH /api/v1/subclasses/{entity_id})
+func (_ Unimplemented) UpdateSubclass(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace; fields left out go back to their defaults
+// (PUT /api/v1/subclasses/{entity_id})
+func (_ Unimplemented) ReplaceSubclass(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// One entry by its source's slug and its own (phb_2024/blinded)
+// (GET /api/v1/subclasses/{source_slug}/{slug})
+func (_ Unimplemented) ReadSubclassBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadSubclassBySlugsParams) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
@@ -3996,8 +4473,6 @@ type ServerInterfaceWrapper struct {
 
 type MiddlewareFunc func(http.Handler) http.Handler
 
-<<<<<<< Updated upstream
-=======
 // CreateBackground operation middleware
 func (siw *ServerInterfaceWrapper) CreateBackground(w http.ResponseWriter, r *http.Request) {
 
@@ -8786,7 +9261,6 @@ func (siw *ServerInterfaceWrapper) CreateSource(w http.ResponseWriter, r *http.R
 	handler.ServeHTTP(w, r)
 }
 
->>>>>>> Stashed changes
 // BulkLoadSources operation middleware
 func (siw *ServerInterfaceWrapper) BulkLoadSources(w http.ResponseWriter, r *http.Request) {
 
@@ -8821,16 +9295,516 @@ func (siw *ServerInterfaceWrapper) QuerySources(w http.ResponseWriter, r *http.R
 	// Parameter object where we will unmarshal all parameters from the context
 	var params QuerySourcesParams
 
-	// ------------- Optional query parameter "dnd_version" -------------
+	// ------------- Optional query parameter "name" -------------
 
-	err = runtime.BindQueryParameter("form", true, false, "dnd_version", r.URL.Query(), &params.DndVersion)
+	err = runtime.BindQueryParameter("form", true, false, "name", r.URL.Query(), &params.Name)
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "dnd_version", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", r.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "offset", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
 		return
 	}
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.QuerySources(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadSourceBySlug operation middleware
+func (siw *ServerInterfaceWrapper) ReadSourceBySlug(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "slug" -------------
+	var slug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "slug", chi.URLParam(r, "slug"), &slug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "slug", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadSourceBySlugParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadSourceBySlug(w, r, slug, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteSource operation middleware
+func (siw *ServerInterfaceWrapper) DeleteSource(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteSource(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadSource operation middleware
+func (siw *ServerInterfaceWrapper) ReadSource(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadSourceParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadSource(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateSource operation middleware
+func (siw *ServerInterfaceWrapper) UpdateSource(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateSource(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceSource operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceSource(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceSource(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateSpecies operation middleware
+func (siw *ServerInterfaceWrapper) CreateSpecies(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateSpecies(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// BulkLoadSpecies operation middleware
+func (siw *ServerInterfaceWrapper) BulkLoadSpecies(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.BulkLoadSpecies(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// QuerySpecies operation middleware
+func (siw *ServerInterfaceWrapper) QuerySpecies(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params QuerySpeciesParams
+
+	// ------------- Optional query parameter "name" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "name", r.URL.Query(), &params.Name)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "filter" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "filter", r.URL.Query(), &params.Filter)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "filter", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "sort" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "sort", r.URL.Query(), &params.Sort)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "sort", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", r.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "offset", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.QuerySpecies(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteSpecies operation middleware
+func (siw *ServerInterfaceWrapper) DeleteSpecies(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteSpecies(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadSpecies operation middleware
+func (siw *ServerInterfaceWrapper) ReadSpecies(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadSpeciesParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadSpecies(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateSpecies operation middleware
+func (siw *ServerInterfaceWrapper) UpdateSpecies(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateSpecies(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceSpecies operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceSpecies(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceSpecies(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadSpeciesBySlugs operation middleware
+func (siw *ServerInterfaceWrapper) ReadSpeciesBySlugs(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "source_slug" -------------
+	var sourceSlug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "source_slug", chi.URLParam(r, "source_slug"), &sourceSlug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "source_slug", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "slug" -------------
+	var slug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "slug", chi.URLParam(r, "slug"), &slug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "slug", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadSpeciesBySlugsParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadSpeciesBySlugs(w, r, sourceSlug, slug, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -8870,28 +9844,16 @@ func (siw *ServerInterfaceWrapper) ListSpells(w http.ResponseWriter, r *http.Req
 		return
 	}
 
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.ListSpells(w, r, params)
-	}))
+	// ------------- Optional query parameter "fields" -------------
 
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
 	}
 
-	handler.ServeHTTP(w, r)
-}
-
-// BulkLoadSpells operation middleware
-func (siw *ServerInterfaceWrapper) BulkLoadSpells(w http.ResponseWriter, r *http.Request) {
-
-	ctx := r.Context()
-
-	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
-
-	r = r.WithContext(ctx)
-
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.BulkLoadSpells(w, r)
+		siw.Handler.ListSpells(w, r, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -8912,6 +9874,26 @@ func (siw *ServerInterfaceWrapper) CreateSpell(w http.ResponseWriter, r *http.Re
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.CreateSpell(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// BulkLoadSpells operation middleware
+func (siw *ServerInterfaceWrapper) BulkLoadSpells(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.BulkLoadSpells(w, r)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -8943,19 +9925,27 @@ func (siw *ServerInterfaceWrapper) QuerySpells(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	// ------------- Optional query parameter "level" -------------
+	// ------------- Optional query parameter "versions_of" -------------
 
-	err = runtime.BindQueryParameter("form", true, false, "level", r.URL.Query(), &params.Level)
+	err = runtime.BindQueryParameter("form", true, false, "versions_of", r.URL.Query(), &params.VersionsOf)
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "level", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "versions_of", Err: err})
 		return
 	}
 
-	// ------------- Optional query parameter "school" -------------
+	// ------------- Optional query parameter "filter" -------------
 
-	err = runtime.BindQueryParameter("form", true, false, "school", r.URL.Query(), &params.School)
+	err = runtime.BindQueryParameter("form", true, false, "filter", r.URL.Query(), &params.Filter)
 	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "school", Err: err})
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "filter", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "sort" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "sort", r.URL.Query(), &params.Sort)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "sort", Err: err})
 		return
 	}
 
@@ -8975,8 +9965,501 @@ func (siw *ServerInterfaceWrapper) QuerySpells(w http.ResponseWriter, r *http.Re
 		return
 	}
 
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.QuerySpells(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteSpell operation middleware
+func (siw *ServerInterfaceWrapper) DeleteSpell(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteSpell(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadSpell operation middleware
+func (siw *ServerInterfaceWrapper) ReadSpell(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadSpellParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadSpell(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateSpell operation middleware
+func (siw *ServerInterfaceWrapper) UpdateSpell(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateSpell(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceSpell operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceSpell(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceSpell(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadSpellBySlugs operation middleware
+func (siw *ServerInterfaceWrapper) ReadSpellBySlugs(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "source_slug" -------------
+	var sourceSlug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "source_slug", chi.URLParam(r, "source_slug"), &sourceSlug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "source_slug", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "slug" -------------
+	var slug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "slug", chi.URLParam(r, "slug"), &slug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "slug", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadSpellBySlugsParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadSpellBySlugs(w, r, sourceSlug, slug, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateSubclass operation middleware
+func (siw *ServerInterfaceWrapper) CreateSubclass(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateSubclass(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// BulkLoadSubclasses operation middleware
+func (siw *ServerInterfaceWrapper) BulkLoadSubclasses(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.BulkLoadSubclasses(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// QuerySubclasses operation middleware
+func (siw *ServerInterfaceWrapper) QuerySubclasses(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params QuerySubclassesParams
+
+	// ------------- Optional query parameter "name" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "name", r.URL.Query(), &params.Name)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "filter" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "filter", r.URL.Query(), &params.Filter)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "filter", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "sort" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "sort", r.URL.Query(), &params.Sort)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "sort", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", r.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "offset", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.QuerySubclasses(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteSubclass operation middleware
+func (siw *ServerInterfaceWrapper) DeleteSubclass(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteSubclass(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadSubclass operation middleware
+func (siw *ServerInterfaceWrapper) ReadSubclass(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadSubclassParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadSubclass(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateSubclass operation middleware
+func (siw *ServerInterfaceWrapper) UpdateSubclass(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateSubclass(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceSubclass operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceSubclass(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceSubclass(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadSubclassBySlugs operation middleware
+func (siw *ServerInterfaceWrapper) ReadSubclassBySlugs(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "source_slug" -------------
+	var sourceSlug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "source_slug", chi.URLParam(r, "source_slug"), &sourceSlug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "source_slug", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "slug" -------------
+	var slug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "slug", chi.URLParam(r, "slug"), &slug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "slug", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadSubclassBySlugsParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadSubclassBySlugs(w, r, sourceSlug, slug, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -9521,8 +11004,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
-<<<<<<< Updated upstream
-=======
 		r.Post(options.BaseURL+"/api/v1/backgrounds", wrapper.CreateBackground)
 	})
 	r.Group(func(r chi.Router) {
@@ -9856,23 +11337,100 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/api/v1/sources", wrapper.CreateSource)
 	})
 	r.Group(func(r chi.Router) {
->>>>>>> Stashed changes
 		r.Post(options.BaseURL+"/api/v1/sources/bulk", wrapper.BulkLoadSources)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/api/v1/sources/query", wrapper.QuerySources)
 	})
 	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/sources/slug/{slug}", wrapper.ReadSourceBySlug)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/sources/{entity_id}", wrapper.DeleteSource)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/sources/{entity_id}", wrapper.ReadSource)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/sources/{entity_id}", wrapper.UpdateSource)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/sources/{entity_id}", wrapper.ReplaceSource)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/species", wrapper.CreateSpecies)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/species/bulk", wrapper.BulkLoadSpecies)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/species/query", wrapper.QuerySpecies)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/species/{entity_id}", wrapper.DeleteSpecies)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/species/{entity_id}", wrapper.ReadSpecies)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/species/{entity_id}", wrapper.UpdateSpecies)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/species/{entity_id}", wrapper.ReplaceSpecies)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/species/{source_slug}/{slug}", wrapper.ReadSpeciesBySlugs)
+	})
+	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/api/v1/spells", wrapper.ListSpells)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/spells", wrapper.CreateSpell)
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/api/v1/spells/bulk", wrapper.BulkLoadSpells)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/api/v1/spells/create", wrapper.CreateSpell)
+		r.Get(options.BaseURL+"/api/v1/spells/query", wrapper.QuerySpells)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/api/v1/spells/query", wrapper.QuerySpells)
+		r.Delete(options.BaseURL+"/api/v1/spells/{entity_id}", wrapper.DeleteSpell)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/spells/{entity_id}", wrapper.ReadSpell)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/spells/{entity_id}", wrapper.UpdateSpell)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/spells/{entity_id}", wrapper.ReplaceSpell)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/spells/{source_slug}/{slug}", wrapper.ReadSpellBySlugs)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/subclasses", wrapper.CreateSubclass)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/subclasses/bulk", wrapper.BulkLoadSubclasses)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/subclasses/query", wrapper.QuerySubclasses)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/subclasses/{entity_id}", wrapper.DeleteSubclass)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/subclasses/{entity_id}", wrapper.ReadSubclass)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/subclasses/{entity_id}", wrapper.UpdateSubclass)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/subclasses/{entity_id}", wrapper.ReplaceSubclass)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/subclasses/{source_slug}/{slug}", wrapper.ReadSubclassBySlugs)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/api/v1/users/{id}", wrapper.GetUser)
@@ -9920,35 +11478,6 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 // Base64 encoded, gzipped, json marshaled Swagger object
 var swaggerSpec = []string{
 
-<<<<<<< Updated upstream
-	"H4sIAAAAAAAC/+xZW28btxL+Kwue86hYcpJz0Ootrps2RQqkcdM+uMZixB1pmXDJDS9KVUP/vSC5V4lr",
-	"rRJXTgG/acnhcDjf3HVLqCxKKVAYTea3RNMcC/A/Lyz/8FpC9hZ1KYVGt1YqWaIyDD0FVQgGM/eTGSz8",
-	"mtmUSOZEG8XEimwn9QIoBRv3jUpJpY878wmUYGJ11Kl2QS7eIzWO4jsv8FWJnL/Fjxa12X8UKEwLMKgY",
-	"cJ1SKbQtwhszXILlhsyXwDU27BdScgTh+INJc7bKUaUc18g9P2E5hwVHMjfKtqdasSlow8QqNazA6Lsy",
-	"KGCFaVgfwTBDTRUrDZMizo8tl4xabjYp5aB1qmHtBciV/DTuhrs4pHKNSrHsLmGZMLhCFeU1/p0iS9eo",
-	"9OA72/10g6A6RN37rYJBVeWgG2NIG08ZZwzu7K5mR56SBRhGP+tCZ9splfqIM2tUi+Ofx7Koxpj3GYrC",
-	"tGodwUynihkLfBy59y5HWsCfrLAFmX87IQUT4fcsZmaNS48yLQEDvqhArOI7muZSeqH+q3BJ5uQ/0za0",
-	"Tqu4OvWx5yqQukPSKorpgC6r3RJWI31JGzDpgkv6oR8qIcuYAwP4m06s63Fpg+ReGFX40TLlYuB1R+BK",
-	"SX03jDhdjVajoZ2IV+u044n9EHYTkfFSZO80qv3oHTS5lKoAQ+bEWi/pnmZLJZeMY1oyaqzC1Co+yi6s",
-	"RlXbxgHiHcWxLPqQ7102vCPDyixubT6LxrOggiGL2hEp8JiES2LCXXmwB/N+Cqan7AwMPqkw3c9y1ZnF",
-	"ZhRA9xPbB/xq0LvdRqpzqUx0u7QLznTeXHjYIW2ZHa2p+swoTe1bWeOXncccdNIo+i5UHVMfnaoeOoX5",
-	"PZZcX1/JNa7EOqKkGlNCjS+ZvqhEOlASPZZAD1gCPVAY/0pKrS5c81uCwtnXNYHF+5YHcIPNB5Wis5Wx",
-	"NRP1BwqagzCF85gJwbWk9Y5RIHRhTf3NOLfVM5no0AmkShYg6KYjbKv0d17prjQc7O9PU/rtqNEZJlKr",
-	"mNlcOTcIolwgKFQvrMnd18J/vawN5afffw1AYuFd3++2lpMbU5KtY8zEUoa2qZODyOUfdjZ7+v/LxIcz",
-	"PUmCOelJAiJL3GOSShP6zHFlxj2HXIrL5MWbV2RCmjBPzs9mZzOnAlmigJKROXl2Njt7RiakBJP7p0yh",
-	"ZNP1+bS6Zbqw/IPXdhVGHQIew1cZmTejpVBgahKsH7W5kNkm1L3CVGG1sNywEpSZOh96koGBdlC1D697",
-	"Uc/hFkyA2pAxIPW80CHrF0Jt7pk/nc12pIOy5CxY5/S9DrG8Fe2uMLg3XvP390F0NAmXkCUKtWuJtxPy",
-	"/B5l6HcfEQHegNKYhEbBawxW2nl/DdyNW9zF/qNF5VFcYQT7X9xuC3wJCgo0qBzfW8LcrYFBnYJ2ol77",
-	"sl1Ab74Qrb4hoTCs6SrrLHJnXgvdUmzkWbFKqbS9WqGTt4w0vVTfbMXttA/Tz2BozsSqdvIRWPmoMAjS",
-	"a6bNVSAZBRFnBTM9cJohzvksUoxsJ3E+crnUOMAoxuahIfct0kMg7gBK5LKK7iePCxc+JIUM27O1IE7E",
-	"1MZmhNroHhPCvyshDAMfWu9h6Dt/ytyJ++e/KvK3zyhsz+9NgipQ7OvTbyT1H2mnRvM34CzznGtInQDn",
-	"pxPgnQBrcqnYX+714+xpTHlxROqqWqvhsmIgVXVarf7Bg0muac6OsJ26Xx6U5jEBP1TJVWXgA8brOi49",
-	"vWXZdtB0f0Dj/9SIm61rtVqc/FSgH7+6mB0aN9z8g3ms/m8m5u6dtjPEmucnjDXuciFNspRW9KON23J4",
-	"+YaW5vvQtHOFk6Fz/2lwfzhy4grnLssI07LeYOKBs5G7/NnpLn8p1YJlGYrkSUJBJFLwTRKGiIn8JFql",
-	"ROzWxZkcgZt8ytkaByPMj57mtSOJw7xTnKBaM4oJ0wl4vt05Fplf37SSBM59URRCtjkgy1tPc6QwgfF2",
-	"Qv4XABokdN5eEY+QvE/SH89d3ziv1KjWtdvv9GOSAk8yVxPIsppv+smiH9TNp1PuCHKpzfyb2ew52bYS",
-	"3NZR46ru5dqVup1vlwLknYVK/u3N9u8AAAD//4sB19rMJQAA",
-=======
 	"H4sIAAAAAAAC/+y963LbOLoA+CoonlNlqQ4tO+nMmRm7pk65k3RPziaTbJyerq12VoZISMKYBNgAaEWT",
 	"zXPsA+2LbeH7AF4kUqJkS7bTyp9YJIjrh+9++RpEMs2kYMLo4OxrkFFFU2aYgl8vp1TRyDD1JrY/uQjO",
 	"goyaaRAGgqYsOAsi32LI4yAMFPs954rFwZlROQsDHU1ZSu23Y6lSaoKzIM+hpZln9nttFBeT4Nu3MHg5",
@@ -10283,7 +11812,6 @@ var swaggerSpec = []string{
 	"svzWOQaXbUpn4eLZjzS6mSh0Diif/sSoqf52FV3LrgsjztKABPaDoNAWNvFut1yZnCbIqRiZkV4sI23p",
 	"c//MCVShYyNCb70prUlYYgCUusg4DMilTJnF9BY6uKipTFHEouTF6YvQCWIklqwsaE+ovrH0xcnacJex",
 	"2JKZUtHASg5KxrC4sN8+f/v/AwAA///YeF6rnXgCAA==",
->>>>>>> Stashed changes
 }
 
 // GetSwagger returns the content of the embedded swagger specification file

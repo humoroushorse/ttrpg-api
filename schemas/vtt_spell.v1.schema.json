@@ -1,0 +1,3182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "vtt_spell.v1.schema.json",
+  "$defs": {
+    "Activation": {
+      "additionalProperties": false,
+      "description": "What it costs to use a mode. ``cost`` is system vocabulary\n(D&D: action, bonus_action, reaction, minute, hour; PF2e: actions, free).",
+      "properties": {
+        "cost": {
+          "title": "Cost",
+          "type": "string"
+        },
+        "amount": {
+          "default": 1,
+          "title": "Amount",
+          "type": "integer"
+        },
+        "trigger": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Trigger"
+        },
+        "window": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Window"
+        }
+      },
+      "required": [
+        "cost"
+      ],
+      "title": "Activation",
+      "type": "object"
+    },
+    "Applies": {
+      "additionalProperties": false,
+      "description": "One (condition, relation) pair.",
+      "properties": {
+        "condition": {
+          "title": "Condition",
+          "type": "string"
+        },
+        "relation": {
+          "enum": [
+            "inflicts",
+            "removes",
+            "prevents",
+            "suppresses",
+            "effect"
+          ],
+          "title": "Relation",
+          "type": "string"
+        },
+        "who": {
+          "default": "targets",
+          "enum": [
+            "targets",
+            "failed_save",
+            "caster",
+            "in_area"
+          ],
+          "title": "Who",
+          "type": "string"
+        },
+        "duration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Duration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "requires": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Requires"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "light": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Light"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "while_active": {
+          "items": {
+            "$ref": "#/$defs/WhileActive"
+          },
+          "title": "While Active",
+          "type": "array",
+          "default": []
+        },
+        "ends": {
+          "items": {
+            "$ref": "#/$defs/ConditionEnd"
+          },
+          "title": "Ends",
+          "type": "array",
+          "default": []
+        }
+      },
+      "required": [
+        "condition",
+        "relation"
+      ],
+      "title": "Applies",
+      "type": "object"
+    },
+    "AreaDims": {
+      "additionalProperties": false,
+      "description": "Whichever dimensions the shape uses.",
+      "properties": {
+        "radius": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Size"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "length": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Size"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "width": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Size"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "height": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Size"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "thickness": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Size"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "diameter": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Size"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "side": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Size"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "panels": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Panels"
+        },
+        "ring": {
+          "default": false,
+          "title": "Ring",
+          "type": "boolean"
+        }
+      },
+      "title": "AreaDims",
+      "type": "object"
+    },
+    "AreaOption": {
+      "additionalProperties": false,
+      "description": "One shape the caster may pick; ``Areas.options`` lists the alternatives.",
+      "properties": {
+        "id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Id"
+        },
+        "shape": {
+          "enum": [
+            "sphere",
+            "emanation",
+            "cube",
+            "cone",
+            "line",
+            "cylinder",
+            "wall",
+            "hemisphere",
+            "square",
+            "circle"
+          ],
+          "title": "Shape",
+          "type": "string"
+        },
+        "size": {
+          "$ref": "#/$defs/AreaDims",
+          "default": {
+            "radius": null,
+            "length": null,
+            "width": null,
+            "height": null,
+            "thickness": null,
+            "diameter": null,
+            "side": null,
+            "panels": null,
+            "ring": false
+          }
+        },
+        "count": {
+          "default": 1,
+          "title": "Count",
+          "type": "integer"
+        },
+        "contiguous": {
+          "default": false,
+          "title": "Contiguous",
+          "type": "boolean"
+        },
+        "origin": {
+          "default": "point",
+          "enum": [
+            "self",
+            "point",
+            "creature",
+            "object"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "anchored_to": {
+          "default": "none",
+          "enum": [
+            "none",
+            "caster",
+            "target",
+            "object"
+          ],
+          "title": "Anchored To",
+          "type": "string"
+        },
+        "movable": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Movable"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "drift": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Drift"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "line_of_effect": {
+          "$ref": "#/$defs/LineOfEffect",
+          "default": {
+            "kind": "requires",
+            "blocked_by": []
+          }
+        },
+        "affects": {
+          "default": "creatures",
+          "enum": [
+            "creatures",
+            "objects",
+            "both"
+          ],
+          "title": "Affects",
+          "type": "string"
+        },
+        "excludes": {
+          "items": {
+            "enum": [
+              "caster",
+              "chosen_creatures"
+            ],
+            "type": "string"
+          },
+          "title": "Excludes",
+          "type": "array",
+          "default": []
+        },
+        "obscures": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Obscures"
+        },
+        "light": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Light"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "difficult_terrain": {
+          "default": false,
+          "title": "Difficult Terrain",
+          "type": "boolean"
+        },
+        "movement_cost": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Movement Cost"
+        },
+        "blocks": {
+          "items": {
+            "enum": [
+              "movement",
+              "sight",
+              "projectiles"
+            ],
+            "type": "string"
+          },
+          "title": "Blocks",
+          "type": "array",
+          "default": []
+        },
+        "grants_cover": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Grants Cover"
+        },
+        "suppresses_magic": {
+          "default": false,
+          "title": "Suppresses Magic",
+          "type": "boolean"
+        },
+        "silence": {
+          "default": false,
+          "title": "Silence",
+          "type": "boolean"
+        },
+        "visible": {
+          "default": true,
+          "title": "Visible",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "shape"
+      ],
+      "title": "AreaOption",
+      "type": "object"
+    },
+    "Areas": {
+      "additionalProperties": false,
+      "properties": {
+        "options": {
+          "items": {
+            "$ref": "#/$defs/AreaOption"
+          },
+          "title": "Options",
+          "type": "array",
+          "default": []
+        }
+      },
+      "title": "Areas",
+      "type": "object"
+    },
+    "CastChoice": {
+      "additionalProperties": false,
+      "description": "A pick the caster makes (damage type, creature variant, shape, ...).",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "damage_type",
+            "creature_variant",
+            "creature_kind",
+            "one_of",
+            "a_or_b",
+            "ability",
+            "skill",
+            "shape",
+            "random_table",
+            "dm"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "options": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Options",
+          "type": "array",
+          "default": []
+        },
+        "count": {
+          "default": 1,
+          "title": "Count",
+          "type": "integer"
+        },
+        "when": {
+          "default": "cast",
+          "enum": [
+            "cast",
+            "each_turn",
+            "each_attack",
+            "each_target"
+          ],
+          "title": "When",
+          "type": "string"
+        },
+        "dice": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dice"
+        }
+      },
+      "required": [
+        "id",
+        "kind"
+      ],
+      "title": "CastChoice",
+      "type": "object"
+    },
+    "Chain": {
+      "additionalProperties": false,
+      "description": "The spell jumps to more targets (Chain Lightning, 2024 Chromatic Orb).",
+      "properties": {
+        "count": {
+          "$ref": "#/$defs/VarAmount",
+          "default": {
+            "base": 0,
+            "var": null,
+            "times": 1
+          }
+        },
+        "leaps_when": {
+          "default": "always",
+          "enum": [
+            "always",
+            "matching_dice"
+          ],
+          "title": "Leaps When",
+          "type": "string"
+        },
+        "range_feet": {
+          "title": "Range Feet",
+          "type": "integer"
+        },
+        "from": {
+          "default": "previous_target",
+          "enum": [
+            "previous_target",
+            "first_target"
+          ],
+          "title": "From",
+          "type": "string"
+        },
+        "distinct": {
+          "default": true,
+          "title": "Distinct",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "range_feet"
+      ],
+      "title": "Chain",
+      "type": "object"
+    },
+    "CheckSpec": {
+      "additionalProperties": false,
+      "description": "An ability check: \"Strength (Athletics)\".",
+      "properties": {
+        "ability": {
+          "title": "Ability",
+          "type": "string"
+        },
+        "skill": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Skill"
+        }
+      },
+      "required": [
+        "ability"
+      ],
+      "title": "CheckSpec",
+      "type": "object"
+    },
+    "ConditionEnd": {
+      "additionalProperties": false,
+      "description": "One way a condition ends; any entry in ``Applies.ends`` ends it.",
+      "properties": {
+        "on": {
+          "enum": [
+            "save",
+            "damage_taken",
+            "action",
+            "escape",
+            "out_of_sight",
+            "distance_gt",
+            "hostile_act",
+            "spell_ends"
+          ],
+          "title": "On",
+          "type": "string"
+        },
+        "timing": {
+          "anyOf": [
+            {
+              "enum": [
+                "start_of_turn",
+                "end_of_turn"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Timing"
+        },
+        "ability": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ability"
+        },
+        "check": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CheckSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "dc": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VarAmount"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "by": {
+          "anyOf": [
+            {
+              "enum": [
+                "self",
+                "any_within_5ft",
+                "anyone",
+                "caster_or_allies"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "By"
+        },
+        "feet": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Feet"
+        }
+      },
+      "required": [
+        "on"
+      ],
+      "title": "ConditionEnd",
+      "type": "object"
+    },
+    "Count": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "default": "exact",
+          "enum": [
+            "exact",
+            "up_to",
+            "any_number",
+            "each_in_area"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 1,
+          "title": "Value"
+        }
+      },
+      "title": "Count",
+      "type": "object"
+    },
+    "DamagePart": {
+      "additionalProperties": false,
+      "description": "One damage roll. ``id`` is stable so scaling patches can target it.",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "dice": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dice"
+        },
+        "flat": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Flat"
+        },
+        "add_var": {
+          "anyOf": [
+            {
+              "enum": [
+                "__CASTER_ALIGNMENT_SIMPLE",
+                "__CASTER_CHARACTER_LEVEL",
+                "__CASTER_CLASS_LEVEL",
+                "__CASTER_SPELLCASTING_MODIFIER",
+                "__CASTER_SPELL_SAVE_DC",
+                "__CASTER_SPELL_ATTACK_BONUS",
+                "__CAST_LEVEL",
+                "__PARTICIPANT_COUNT",
+                "__TARGET_CHALLENGE_RATING",
+                "__TARGET_SPELL_LEVEL"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Add Var"
+        },
+        "type_from": {
+          "default": "fixed",
+          "enum": [
+            "fixed",
+            "choice",
+            "weapon",
+            "var"
+          ],
+          "title": "Type From",
+          "type": "string"
+        },
+        "type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Type"
+        },
+        "choice": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Choice"
+        },
+        "type_var": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VarMap"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "DamagePart",
+      "type": "object"
+    },
+    "Distribution": {
+      "additionalProperties": false,
+      "description": "Units split across targets (Magic Missile darts, Eldritch Blast beams).",
+      "properties": {
+        "units": {
+          "title": "Units",
+          "type": "integer"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "repeats": {
+          "default": true,
+          "title": "Repeats",
+          "type": "boolean"
+        },
+        "attack_per_unit": {
+          "default": false,
+          "title": "Attack Per Unit",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "units",
+        "label"
+      ],
+      "title": "Distribution",
+      "type": "object"
+    },
+    "Drift": {
+      "additionalProperties": false,
+      "description": "The area moves by itself (Cloudkill: 10 feet away from you each turn).",
+      "properties": {
+        "feet": {
+          "title": "Feet",
+          "type": "integer"
+        },
+        "when": {
+          "default": "caster_turn_start",
+          "enum": [
+            "caster_turn_start",
+            "caster_turn_end"
+          ],
+          "title": "When",
+          "type": "string"
+        },
+        "direction": {
+          "default": "away_from_caster",
+          "enum": [
+            "away_from_caster",
+            "chosen",
+            "wind"
+          ],
+          "title": "Direction",
+          "type": "string"
+        }
+      },
+      "required": [
+        "feet"
+      ],
+      "title": "Drift",
+      "type": "object"
+    },
+    "Duration": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "instantaneous",
+            "timed",
+            "next_turn",
+            "until_dispelled",
+            "until_triggered",
+            "special"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Amount"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "enum": [
+                "round",
+                "minute",
+                "hour",
+                "day",
+                "year"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "at": {
+          "anyOf": [
+            {
+              "enum": [
+                "start",
+                "end"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "At"
+        },
+        "turn_of": {
+          "anyOf": [
+            {
+              "enum": [
+                "caster",
+                "target"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Turn Of"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "Duration",
+      "type": "object"
+    },
+    "ExtraComponent": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "cost_gp": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cost Gp"
+        },
+        "consumed": {
+          "default": false,
+          "title": "Consumed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "ExtraComponent",
+      "type": "object"
+    },
+    "FromDamage": {
+      "additionalProperties": false,
+      "description": "Healing equal to damage the mode's rolls before it dealt, after resistances\n(Vampiric Touch: half the Necrotic damage; Life Transference: twice what you take).",
+      "properties": {
+        "multiplier": {
+          "default": 1,
+          "title": "Multiplier",
+          "type": "number"
+        },
+        "damage_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Damage Type"
+        }
+      },
+      "title": "FromDamage",
+      "type": "object"
+    },
+    "Gap": {
+      "additionalProperties": false,
+      "description": "Something the text mentions that the block lacks. The VTT treats the\nspell as partly manual until the gap is filled or ignored in\n``data/manual/spells/vtt.json``.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "area",
+            "damage",
+            "healing",
+            "save",
+            "attack",
+            "condition",
+            "terrain",
+            "trigger",
+            "once_per",
+            "later_mode",
+            "exclusion",
+            "light",
+            "summon"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "text"
+      ],
+      "title": "Gap",
+      "type": "object"
+    },
+    "HealPart": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "dice": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dice"
+        },
+        "flat": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Flat"
+        },
+        "add_var": {
+          "anyOf": [
+            {
+              "enum": [
+                "__CASTER_ALIGNMENT_SIMPLE",
+                "__CASTER_CHARACTER_LEVEL",
+                "__CASTER_CLASS_LEVEL",
+                "__CASTER_SPELLCASTING_MODIFIER",
+                "__CASTER_SPELL_SAVE_DC",
+                "__CASTER_SPELL_ATTACK_BONUS",
+                "__CAST_LEVEL",
+                "__PARTICIPANT_COUNT",
+                "__TARGET_CHALLENGE_RATING",
+                "__TARGET_SPELL_LEVEL"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Add Var"
+        },
+        "temporary": {
+          "default": false,
+          "title": "Temporary",
+          "type": "boolean"
+        },
+        "full": {
+          "default": false,
+          "title": "Full",
+          "type": "boolean"
+        },
+        "from_damage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FromDamage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "HealPart",
+      "type": "object"
+    },
+    "Light": {
+      "additionalProperties": false,
+      "description": "Light (or darkness) an area makes, or that a creature or object sheds (``Applies.light``).\nOn an area the radii are measured from its edge; on a creature or object, from its space.",
+      "properties": {
+        "fills": {
+          "anyOf": [
+            {
+              "enum": [
+                "bright",
+                "dim"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fills"
+        },
+        "bright_feet": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bright Feet"
+        },
+        "dim_feet": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dim Feet"
+        },
+        "darkness": {
+          "default": false,
+          "title": "Darkness",
+          "type": "boolean"
+        },
+        "darkens_feet": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Darkens Feet"
+        },
+        "sunlight": {
+          "default": false,
+          "title": "Sunlight",
+          "type": "boolean"
+        }
+      },
+      "title": "Light",
+      "type": "object"
+    },
+    "LineOfEffect": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "default": "requires",
+          "enum": [
+            "requires",
+            "spreads_around_corners",
+            "penetrates"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "blocked_by": {
+          "items": {
+            "$ref": "#/$defs/Material"
+          },
+          "title": "Blocked By",
+          "type": "array",
+          "default": []
+        }
+      },
+      "title": "LineOfEffect",
+      "type": "object"
+    },
+    "Material": {
+      "additionalProperties": false,
+      "description": "A barrier the effect can't pass (\"1 foot of stone\", \"a thin sheet of lead\").",
+      "properties": {
+        "material": {
+          "title": "Material",
+          "type": "string"
+        },
+        "thickness_inches": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Thickness Inches"
+        }
+      },
+      "required": [
+        "material"
+      ],
+      "title": "Material",
+      "type": "object"
+    },
+    "Mode": {
+      "additionalProperties": false,
+      "description": "One way the spell acts: the cast, or a later action (Flaming Sphere's ram).",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        },
+        "activation": {
+          "$ref": "#/$defs/Activation"
+        },
+        "targeting": {
+          "$ref": "#/$defs/Targeting",
+          "default": {
+            "options": []
+          }
+        },
+        "areas": {
+          "$ref": "#/$defs/Areas",
+          "default": {
+            "options": []
+          }
+        },
+        "rolls": {
+          "items": {
+            "$ref": "#/$defs/Roll"
+          },
+          "title": "Rolls",
+          "type": "array",
+          "default": []
+        },
+        "applies": {
+          "items": {
+            "$ref": "#/$defs/Applies"
+          },
+          "title": "Applies",
+          "type": "array",
+          "default": []
+        },
+        "ongoing": {
+          "items": {
+            "$ref": "#/$defs/Trigger"
+          },
+          "title": "Ongoing",
+          "type": "array",
+          "default": []
+        },
+        "summons": {
+          "items": {
+            "$ref": "#/$defs/Summon"
+          },
+          "title": "Summons",
+          "type": "array",
+          "default": []
+        },
+        "later_turns_only": {
+          "default": false,
+          "title": "Later Turns Only",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "activation"
+      ],
+      "title": "Mode",
+      "type": "object"
+    },
+    "Movable": {
+      "additionalProperties": false,
+      "description": "The caster can move it (Moonbeam, Flaming Sphere); the action is a mode.",
+      "properties": {
+        "feet": {
+          "title": "Feet",
+          "type": "integer"
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mode"
+        }
+      },
+      "required": [
+        "feet"
+      ],
+      "title": "Movable",
+      "type": "object"
+    },
+    "Op": {
+      "additionalProperties": false,
+      "description": "One patch. ``part`` names a stable id (a damage part, a target option).",
+      "properties": {
+        "op": {
+          "enum": [
+            "add_dice",
+            "set_dice",
+            "add_flat",
+            "add_count",
+            "set_duration",
+            "set_sustain",
+            "set_range",
+            "set_activation",
+            "add_size",
+            "set_size",
+            "set_value",
+            "add_summons",
+            "set_summon_options"
+          ],
+          "title": "Op",
+          "type": "string"
+        },
+        "part": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Part"
+        },
+        "dice": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dice"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Amount"
+        },
+        "dimension": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dimension"
+        },
+        "duration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Duration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "sustain": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sustain"
+        },
+        "range": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Range"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "activation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Activation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "summons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Summons",
+          "type": "array",
+          "default": []
+        },
+        "options": {
+          "items": {
+            "$ref": "#/$defs/SummonOption"
+          },
+          "title": "Options",
+          "type": "array",
+          "default": []
+        }
+      },
+      "required": [
+        "op"
+      ],
+      "title": "Op",
+      "type": "object"
+    },
+    "Outcome": {
+      "additionalProperties": false,
+      "properties": {
+        "damage": {
+          "default": "full",
+          "enum": [
+            "full",
+            "half",
+            "none",
+            "double"
+          ],
+          "title": "Damage",
+          "type": "string"
+        },
+        "applies": {
+          "items": {
+            "$ref": "#/$defs/Applies"
+          },
+          "title": "Applies",
+          "type": "array",
+          "default": []
+        },
+        "ends_spell": {
+          "default": false,
+          "title": "Ends Spell",
+          "type": "boolean"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        }
+      },
+      "title": "Outcome",
+      "type": "object"
+    },
+    "ParticipantCost": {
+      "additionalProperties": false,
+      "properties": {
+        "spell_slot_min_level": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Spell Slot Min Level"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        }
+      },
+      "title": "ParticipantCost",
+      "type": "object"
+    },
+    "Participants": {
+      "additionalProperties": false,
+      "description": "Extra casters who join and pay (2024 Circle spells, PF2e rituals).",
+      "properties": {
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "min": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min"
+        },
+        "max": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max"
+        },
+        "cost_each": {
+          "$ref": "#/$defs/ParticipantCost",
+          "default": {
+            "spell_slot_min_level": null,
+            "text": null
+          }
+        },
+        "unpaid": {
+          "default": "spell_fails",
+          "enum": [
+            "spell_fails",
+            "ignored"
+          ],
+          "title": "Unpaid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "role"
+      ],
+      "title": "Participants",
+      "type": "object"
+    },
+    "Pool": {
+      "additionalProperties": false,
+      "description": "An HP pool spent from the lowest current HP up (2014 Sleep, Color Spray).",
+      "properties": {
+        "dice": {
+          "title": "Dice",
+          "type": "string"
+        },
+        "order": {
+          "const": "lowest_current_hp",
+          "default": "lowest_current_hp",
+          "title": "Order",
+          "type": "string"
+        },
+        "excludes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Excludes",
+          "type": "array",
+          "default": []
+        }
+      },
+      "required": [
+        "dice"
+      ],
+      "title": "Pool",
+      "type": "object"
+    },
+    "Range": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "self",
+            "touch",
+            "distance",
+            "sight",
+            "unlimited",
+            "special"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "feet": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Feet"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "Range",
+      "type": "object"
+    },
+    "Requires": {
+      "additionalProperties": false,
+      "properties": {
+        "can_see": {
+          "default": false,
+          "title": "Can See",
+          "type": "boolean"
+        },
+        "within_range": {
+          "default": true,
+          "title": "Within Range",
+          "type": "boolean"
+        },
+        "creature_types": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Creature Types",
+          "type": "array",
+          "default": []
+        },
+        "type_excludes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Type Excludes",
+          "type": "array",
+          "default": []
+        },
+        "size_max": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Size Max"
+        },
+        "hp_max": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Hp Max"
+        },
+        "hp_min": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Hp Min"
+        },
+        "hit_points": {
+          "anyOf": [
+            {
+              "enum": [
+                "full",
+                "below_max"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Hit Points"
+        },
+        "min_int": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Int"
+        },
+        "max_int": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Int"
+        },
+        "can_hear_or_understand": {
+          "default": false,
+          "title": "Can Hear Or Understand",
+          "type": "boolean"
+        },
+        "state": {
+          "default": "alive",
+          "enum": [
+            "alive",
+            "dead",
+            "any"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "dead_within": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Duration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "remains": {
+          "default": false,
+          "title": "Remains",
+          "type": "boolean"
+        }
+      },
+      "title": "Requires",
+      "type": "object"
+    },
+    "Roll": {
+      "additionalProperties": false,
+      "description": "One roll in a mode. ``check`` is the target checking against your DC.",
+      "properties": {
+        "roll": {
+          "enum": [
+            "attack",
+            "weapon_attack",
+            "save",
+            "check",
+            "contested",
+            "automatic"
+          ],
+          "title": "Roll",
+          "type": "string"
+        },
+        "attack": {
+          "anyOf": [
+            {
+              "enum": [
+                "melee",
+                "ranged"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attack"
+        },
+        "uses_spellcasting_ability": {
+          "default": false,
+          "title": "Uses Spellcasting Ability",
+          "type": "boolean"
+        },
+        "ability": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ability"
+        },
+        "skill": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Skill"
+        },
+        "dc": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VarAmount"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "contested_by": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CheckSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "advantage_when": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Advantage When"
+        },
+        "damage": {
+          "items": {
+            "$ref": "#/$defs/DamagePart"
+          },
+          "title": "Damage",
+          "type": "array",
+          "default": []
+        },
+        "healing": {
+          "items": {
+            "$ref": "#/$defs/HealPart"
+          },
+          "title": "Healing",
+          "type": "array",
+          "default": []
+        },
+        "on_hit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Outcome"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "on_miss": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Outcome"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "on_failure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Outcome"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "on_success": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Outcome"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "on_critical_hit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Outcome"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "on_critical_success": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Outcome"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "on_critical_failure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Outcome"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "only_after": {
+          "anyOf": [
+            {
+              "enum": [
+                "hit",
+                "miss",
+                "failure",
+                "success"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Only After"
+        },
+        "who": {
+          "anyOf": [
+            {
+              "enum": [
+                "targets",
+                "in_area",
+                "caster"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Who"
+        },
+        "requires": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Requires"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "roll"
+      ],
+      "title": "Roll",
+      "type": "object"
+    },
+    "ScalingRule": {
+      "additionalProperties": false,
+      "description": "``every`` steps from ``from``, or ``steps`` for uneven tables. ``by`` is the\nvariable it reads: __CAST_LEVEL (upcast, PF2e heighten), __CASTER_CHARACTER_LEVEL\n(cantrips), __CASTER_CLASS_LEVEL, or __PARTICIPANT_COUNT.",
+      "properties": {
+        "by": {
+          "enum": [
+            "__CASTER_ALIGNMENT_SIMPLE",
+            "__CASTER_CHARACTER_LEVEL",
+            "__CASTER_CLASS_LEVEL",
+            "__CASTER_SPELLCASTING_MODIFIER",
+            "__CASTER_SPELL_SAVE_DC",
+            "__CASTER_SPELL_ATTACK_BONUS",
+            "__CAST_LEVEL",
+            "__PARTICIPANT_COUNT",
+            "__TARGET_CHALLENGE_RATING",
+            "__TARGET_SPELL_LEVEL"
+          ],
+          "title": "By",
+          "type": "string"
+        },
+        "class": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Class"
+        },
+        "from": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "From"
+        },
+        "every": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Every"
+        },
+        "ops": {
+          "items": {
+            "$ref": "#/$defs/Op"
+          },
+          "title": "Ops",
+          "type": "array",
+          "default": []
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/ScalingStep"
+          },
+          "title": "Steps",
+          "type": "array",
+          "default": []
+        }
+      },
+      "required": [
+        "by"
+      ],
+      "title": "ScalingRule",
+      "type": "object"
+    },
+    "ScalingStep": {
+      "additionalProperties": false,
+      "description": "One row of an ``at`` table: Fire Bolt at 5 \u2192 2d10.",
+      "properties": {
+        "at": {
+          "title": "At",
+          "type": "integer"
+        },
+        "ops": {
+          "items": {
+            "$ref": "#/$defs/Op"
+          },
+          "title": "Ops",
+          "type": "array"
+        }
+      },
+      "required": [
+        "at",
+        "ops"
+      ],
+      "title": "ScalingStep",
+      "type": "object"
+    },
+    "Size": {
+      "additionalProperties": false,
+      "description": "One dimension: \"20-foot radius\", \"up to 60 feet long\", \"5 to 100 feet\".",
+      "properties": {
+        "feet": {
+          "title": "Feet",
+          "type": "integer"
+        },
+        "up_to": {
+          "default": false,
+          "title": "Up To",
+          "type": "boolean"
+        },
+        "min": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min"
+        }
+      },
+      "required": [
+        "feet"
+      ],
+      "title": "Size",
+      "type": "object"
+    },
+    "Summon": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "effect": {
+          "default": "summon",
+          "enum": [
+            "summon",
+            "transform"
+          ],
+          "title": "Effect",
+          "type": "string"
+        },
+        "options": {
+          "items": {
+            "$ref": "#/$defs/SummonOption"
+          },
+          "minItems": 1,
+          "title": "Options",
+          "type": "array"
+        },
+        "changes": {
+          "items": {
+            "$ref": "#/$defs/SummonChange"
+          },
+          "title": "Changes",
+          "type": "array",
+          "default": []
+        },
+        "control": {
+          "default": "obeys_you",
+          "enum": [
+            "obeys_you",
+            "friendly",
+            "uncontrolled"
+          ],
+          "title": "Control",
+          "type": "string"
+        },
+        "control_ends": {
+          "items": {
+            "$ref": "#/$defs/ConditionEnd"
+          },
+          "title": "Control Ends",
+          "type": "array",
+          "default": []
+        },
+        "initiative": {
+          "default": "own",
+          "enum": [
+            "after_yours",
+            "own"
+          ],
+          "title": "Initiative",
+          "type": "string"
+        },
+        "control_duration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Duration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "duration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Duration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ends_when": {
+          "items": {
+            "enum": [
+              "drops_to_0_hp",
+              "dismissed"
+            ],
+            "type": "string"
+          },
+          "title": "Ends When",
+          "type": "array",
+          "default": []
+        },
+        "companion": {
+          "default": false,
+          "title": "Companion",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "options"
+      ],
+      "title": "Summon",
+      "type": "object"
+    },
+    "SummonChange": {
+      "additionalProperties": false,
+      "description": "A change to the stat block: Find Familiar's type becomes Celestial, Fey, or Fiend.",
+      "properties": {
+        "stat": {
+          "title": "Stat",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Amount"
+        },
+        "add_var": {
+          "anyOf": [
+            {
+              "enum": [
+                "__CASTER_ALIGNMENT_SIMPLE",
+                "__CASTER_CHARACTER_LEVEL",
+                "__CASTER_CLASS_LEVEL",
+                "__CASTER_SPELLCASTING_MODIFIER",
+                "__CASTER_SPELL_SAVE_DC",
+                "__CASTER_SPELL_ATTACK_BONUS",
+                "__CAST_LEVEL",
+                "__PARTICIPANT_COUNT",
+                "__TARGET_CHALLENGE_RATING",
+                "__TARGET_SPELL_LEVEL"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Add Var"
+        },
+        "choice": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Choice"
+        }
+      },
+      "required": [
+        "stat"
+      ],
+      "title": "SummonChange",
+      "type": "object"
+    },
+    "SummonOption": {
+      "additionalProperties": false,
+      "description": "One way to fill the summon; the caster picks one option.",
+      "properties": {
+        "from": {
+          "enum": [
+            "stat_blocks",
+            "query",
+            "target"
+          ],
+          "title": "From",
+          "type": "string"
+        },
+        "stat_blocks": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Stat Blocks",
+          "type": "array",
+          "default": []
+        },
+        "query": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SummonQuery"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "count": {
+          "$ref": "#/$defs/VarAmount",
+          "default": {
+            "base": 1,
+            "var": null,
+            "times": 1
+          }
+        },
+        "up_to": {
+          "default": false,
+          "title": "Up To",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "from"
+      ],
+      "title": "SummonOption",
+      "type": "object"
+    },
+    "SummonQuery": {
+      "additionalProperties": false,
+      "description": "Any monster that matches. An empty list matches anything.",
+      "properties": {
+        "creature_types": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Creature Types",
+          "type": "array",
+          "default": []
+        },
+        "creature_subtypes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Creature Subtypes",
+          "type": "array",
+          "default": []
+        },
+        "cr_max": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VarAmount"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cr_max_fraction": {
+          "anyOf": [
+            {
+              "enum": [
+                "0",
+                "1/8",
+                "1/4",
+                "1/2"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cr Max Fraction"
+        },
+        "size_max": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Size Max"
+        }
+      },
+      "title": "SummonQuery",
+      "type": "object"
+    },
+    "TargetOption": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Id"
+        },
+        "kind": {
+          "enum": [
+            "self",
+            "creature",
+            "object",
+            "creature_or_object",
+            "point",
+            "in_area"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "count": {
+          "$ref": "#/$defs/Count",
+          "default": {
+            "kind": "exact",
+            "value": 1
+          }
+        },
+        "who": {
+          "default": "any",
+          "enum": [
+            "any",
+            "self",
+            "not_self",
+            "willing",
+            "allies_incl_self",
+            "allies_excl_self",
+            "enemies"
+          ],
+          "title": "Who",
+          "type": "string"
+        },
+        "requires": {
+          "$ref": "#/$defs/Requires",
+          "default": {
+            "can_see": false,
+            "within_range": true,
+            "creature_types": [],
+            "type_excludes": [],
+            "size_max": null,
+            "hp_max": null,
+            "hp_min": null,
+            "hit_points": null,
+            "min_int": null,
+            "max_int": null,
+            "can_hear_or_understand": false,
+            "state": "alive",
+            "dead_within": null,
+            "remains": false
+          }
+        },
+        "spacing_feet": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Spacing Feet"
+        },
+        "distribution": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Distribution"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "chain": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Chain"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "pool": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Pool"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "TargetOption",
+      "type": "object"
+    },
+    "Targeting": {
+      "additionalProperties": false,
+      "properties": {
+        "options": {
+          "items": {
+            "$ref": "#/$defs/TargetOption"
+          },
+          "title": "Options",
+          "type": "array",
+          "default": []
+        }
+      },
+      "title": "Targeting",
+      "type": "object"
+    },
+    "Trigger": {
+      "additionalProperties": false,
+      "description": "An ongoing trigger: a zone (4.3) or a ward on a creature (hit_by_melee).\nSeveral events share one roll and one limit (\"enters the Emanation or ends\nits turn there ... only once per turn\").",
+      "properties": {
+        "on": {
+          "items": {
+            "enum": [
+              "cast",
+              "enter",
+              "enter_first_time_on_turn",
+              "start_turn",
+              "end_turn",
+              "area_enters_space",
+              "within_feet",
+              "per_distance_moved",
+              "hit_by_melee",
+              "casts_spell",
+              "attack_hit",
+              "caster_turn_start",
+              "caster_turn_end",
+              "spell_ends"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "On",
+          "type": "array"
+        },
+        "feet": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Feet"
+        },
+        "once_per": {
+          "anyOf": [
+            {
+              "enum": [
+                "turn",
+                "round",
+                "activation"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Once Per"
+        },
+        "optional": {
+          "default": false,
+          "title": "Optional",
+          "type": "boolean"
+        },
+        "turns": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Turns",
+          "type": "array",
+          "default": []
+        },
+        "requires": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Requires"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "attack": {
+          "anyOf": [
+            {
+              "enum": [
+                "melee",
+                "ranged",
+                "weapon",
+                "melee_weapon",
+                "ranged_weapon",
+                "spell"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attack"
+        },
+        "only_targets": {
+          "default": false,
+          "title": "Only Targets",
+          "type": "boolean"
+        },
+        "rolls": {
+          "items": {
+            "$ref": "#/$defs/Roll"
+          },
+          "title": "Rolls",
+          "type": "array",
+          "default": []
+        },
+        "applies": {
+          "items": {
+            "$ref": "#/$defs/Applies"
+          },
+          "title": "Applies",
+          "type": "array",
+          "default": []
+        }
+      },
+      "required": [
+        "on"
+      ],
+      "title": "Trigger",
+      "type": "object"
+    },
+    "UnresolvedText": {
+      "additionalProperties": false,
+      "description": "Rule text the engine doesn't run; the table sees it as a note.",
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "reason": {
+          "default": "not_modeled",
+          "enum": [
+            "not_modeled",
+            "dm_call",
+            "tooltip"
+          ],
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "UnresolvedText",
+      "type": "object"
+    },
+    "VarAmount": {
+      "additionalProperties": false,
+      "description": "``base + var * times``. A fixed number sets only ``base``.\n\nDC 15 \u2192 ``{base: 15}``; your spell save DC \u2192 ``{var: __CASTER_SPELL_SAVE_DC}``;\n2014 Counterspell \u2192 ``{base: 10, var: __TARGET_SPELL_LEVEL}``.",
+      "properties": {
+        "base": {
+          "default": 0,
+          "title": "Base",
+          "type": "integer"
+        },
+        "var": {
+          "anyOf": [
+            {
+              "enum": [
+                "__CASTER_ALIGNMENT_SIMPLE",
+                "__CASTER_CHARACTER_LEVEL",
+                "__CASTER_CLASS_LEVEL",
+                "__CASTER_SPELLCASTING_MODIFIER",
+                "__CASTER_SPELL_SAVE_DC",
+                "__CASTER_SPELL_ATTACK_BONUS",
+                "__CAST_LEVEL",
+                "__PARTICIPANT_COUNT",
+                "__TARGET_CHALLENGE_RATING",
+                "__TARGET_SPELL_LEVEL"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Var"
+        },
+        "times": {
+          "default": 1,
+          "title": "Times",
+          "type": "integer"
+        }
+      },
+      "title": "VarAmount",
+      "type": "object"
+    },
+    "VarMap": {
+      "additionalProperties": false,
+      "description": "A value picked by a variable: ``map[var value]``. Spirit Guardians:\n``{var: __CASTER_ALIGNMENT_SIMPLE, map: {good: radiant, neutral: radiant, evil: necrotic}}``.",
+      "properties": {
+        "var": {
+          "enum": [
+            "__CASTER_ALIGNMENT_SIMPLE",
+            "__CASTER_CHARACTER_LEVEL",
+            "__CASTER_CLASS_LEVEL",
+            "__CASTER_SPELLCASTING_MODIFIER",
+            "__CASTER_SPELL_SAVE_DC",
+            "__CASTER_SPELL_ATTACK_BONUS",
+            "__CAST_LEVEL",
+            "__PARTICIPANT_COUNT",
+            "__TARGET_CHALLENGE_RATING",
+            "__TARGET_SPELL_LEVEL"
+          ],
+          "title": "Var",
+          "type": "string"
+        },
+        "map": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "minProperties": 1,
+          "title": "Map",
+          "type": "object"
+        },
+        "if_unset": {
+          "default": "pick",
+          "enum": [
+            "pick",
+            "default"
+          ],
+          "title": "If Unset",
+          "type": "string"
+        },
+        "default": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Default"
+        }
+      },
+      "required": [
+        "var",
+        "map"
+      ],
+      "title": "VarMap",
+      "type": "object"
+    },
+    "Variant": {
+      "additionalProperties": false,
+      "description": "Another way to cast the same spell. Picking it applies ``patch`` to the base\nand, if ``modes`` is set, replaces the base modes. Use a variant when the pick\nchanges what the spell does (Command's commands, Heal's action counts, Circle\ncasting); use a CastChoice when the pick only fills in a value (a damage type).",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "group": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Group"
+        },
+        "participants": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Participants"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "extra_components": {
+          "items": {
+            "$ref": "#/$defs/ExtraComponent"
+          },
+          "title": "Extra Components",
+          "type": "array",
+          "default": []
+        },
+        "patch": {
+          "items": {
+            "$ref": "#/$defs/Op"
+          },
+          "title": "Patch",
+          "type": "array",
+          "default": []
+        },
+        "modes": {
+          "items": {
+            "$ref": "#/$defs/Mode"
+          },
+          "title": "Modes",
+          "type": "array",
+          "default": []
+        },
+        "scaling": {
+          "items": {
+            "$ref": "#/$defs/ScalingRule"
+          },
+          "title": "Scaling",
+          "type": "array",
+          "default": []
+        },
+        "ends_if": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ends If",
+          "type": "array",
+          "default": []
+        }
+      },
+      "required": [
+        "id",
+        "label"
+      ],
+      "title": "Variant",
+      "type": "object"
+    },
+    "WhileActive": {
+      "additionalProperties": false,
+      "description": "An effect that lasts only while the condition does (\"While Charmed, ...\").",
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "timing": {
+          "anyOf": [
+            {
+              "enum": [
+                "start_of_turn",
+                "end_of_turn",
+                "on_trigger"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Timing"
+        },
+        "rolls": {
+          "items": {
+            "$ref": "#/$defs/Roll"
+          },
+          "title": "Rolls",
+          "type": "array",
+          "default": []
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "WhileActive",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Everything the VTT needs to resolve a spell, beside the catalog fields\n(``is_ritual`` and the rest stay on the spell itself).",
+  "properties": {
+    "schema_version": {
+      "const": "v1",
+      "default": "v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "range": {
+      "$ref": "#/$defs/Range"
+    },
+    "duration": {
+      "$ref": "#/$defs/Duration"
+    },
+    "sustain": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sustain"
+    },
+    "modes": {
+      "items": {
+        "$ref": "#/$defs/Mode"
+      },
+      "minItems": 1,
+      "title": "Modes",
+      "type": "array"
+    },
+    "scaling": {
+      "items": {
+        "$ref": "#/$defs/ScalingRule"
+      },
+      "title": "Scaling",
+      "type": "array",
+      "default": []
+    },
+    "choices": {
+      "items": {
+        "$ref": "#/$defs/CastChoice"
+      },
+      "title": "Choices",
+      "type": "array",
+      "default": []
+    },
+    "variants": {
+      "items": {
+        "$ref": "#/$defs/Variant"
+      },
+      "title": "Variants",
+      "type": "array",
+      "default": []
+    },
+    "provenance": {
+      "additionalProperties": {
+        "enum": [
+          "parser",
+          "review",
+          "manual",
+          "5etools-verified"
+        ],
+        "type": "string"
+      },
+      "title": "Provenance",
+      "type": "object",
+      "default": {}
+    },
+    "unresolved_text": {
+      "items": {
+        "$ref": "#/$defs/UnresolvedText"
+      },
+      "title": "Unresolved Text",
+      "type": "array",
+      "default": []
+    },
+    "gaps": {
+      "items": {
+        "$ref": "#/$defs/Gap"
+      },
+      "title": "Gaps",
+      "type": "array",
+      "default": []
+    }
+  },
+  "required": [
+    "range",
+    "duration",
+    "modes"
+  ],
+  "title": "VttSpellFields",
+  "type": "object"
+}

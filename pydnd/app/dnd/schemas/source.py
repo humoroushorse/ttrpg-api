@@ -1,6 +1,6 @@
 """Schemas for the source table and its CRUD operations."""
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class SourceBase(BaseModel):
@@ -27,7 +27,4 @@ class SourceUpdate(SourceBase):
 class SourceResponse(SourceBase):
     """Schema for transforming ORM Model into a response object."""
 
-    class Config:
-        """Pydantic model configuration."""
-
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

@@ -2,25 +2,23 @@
 
 import datetime
 import uuid
-from typing import Annotated, Any, Generic, TypeVar
+from typing import Annotated, Any, Self
 
 from pydantic import BaseModel, Field, model_validator
 
-T = TypeVar("T", bound=BaseModel)
-
 
 class MixinBookeepingCreate:
-    """Entity Creation Bookeeping Mixin."""
+    """Entity Creation Bookeeping Mixin. The ids are dnd.user ids (None once that user is purged)."""
 
     created_at: Annotated[datetime.datetime, Field()]
-    created_by: Annotated[uuid.UUID, Field()]
+    created_by: Annotated[uuid.UUID | None, Field()]
 
 
 class MixinBookeepingUpdate:
     """Entity Update Bookeeping Mixin."""
 
     updated_at: Annotated[datetime.datetime, Field()]
-    updated_by: Annotated[uuid.UUID, Field()]
+    updated_by: Annotated[uuid.UUID | None, Field()]
 
 
 class MixinImageUrl:
@@ -49,7 +47,7 @@ class QueryBase(BaseModel):
     offset: int | None = Field(default=0, title="Offset")
 
 
-class GenericListResponse(BaseModel, Generic[T]):
+class GenericListResponse[T: BaseModel](BaseModel):
     """Wrapper model for returning list objects with other metadata."""
 
     total_entities_count: int | None = Field(
@@ -75,22 +73,19 @@ class GenericListResponse(BaseModel, Generic[T]):
     )
 
     @model_validator(mode="after")
-    @classmethod
-    def validate_model_generic(cls, data: Any) -> Any:
-        """General checks for deterniming GenericListResponse field values.
-
-        Args:
-            data (Any): _description_
+    def validate_model_generic(self) -> Self:
+        """Default the entity counts from `entities` when they are not provided.
 
         Returns:
-            Any: _description_
+            Self: The validated model.
         """
-        if not data.entities_count:
-            data.entities_count = len(data.entities)
+        entities = self.entities or []
+        if not self.entities_count:
+            self.entities_count = len(entities)
         # If not provided, assume we're returning everything
-        if not data.total_entities_count:
-            data.total_entities_count = len(data.entities)
-        return data
+        if not self.total_entities_count:
+            self.total_entities_count = len(entities)
+        return self
 
 
 class BulkLoadResponse(BaseModel):
@@ -100,17 +95,23 @@ class BulkLoadResponse(BaseModel):
         """Summary report for bulk loading."""
 
         created: int | None = 0
+        updated: int | None = 0
+        unchanged: int | None = 0
         errored: int | None = 0
         warning: int | None = 0
 
     filename: str
     totals: BulkLoadResponseTotals = BulkLoadResponseTotals()
     created: list[str] = Field(default_factory=list)
+    updated: list[str] = Field(default_factory=list, description="Existing rows the upload changed.")
+    unchanged: list[str] = Field(default_factory=list, description="Existing rows that already matched.")
     errors: list[str] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
 
     def update_totals(self) -> None:
         """Updates totals based on current array lengths."""
-        self.totals.created = len(self.created if self.created else [])
-        self.totals.errored = len(self.errors if self.errors else [])
-        self.totals.warning = len(self.warnings if self.warnings else [])
+        self.totals.created = len(self.created)
+        self.totals.updated = len(self.updated)
+        self.totals.unchanged = len(self.unchanged)
+        self.totals.errored = len(self.errors)
+        self.totals.warning = len(self.warnings)

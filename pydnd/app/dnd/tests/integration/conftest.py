@@ -3,16 +3,17 @@
 import json
 import random
 import sys
+from collections.abc import Generator
 from os import path
-from typing import Generator
 
 import pytest
-from dnd.api.deps import get_db
-from dnd.core import uncached_settings
-from dnd.main import app
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
+from dnd.api.deps import get_db
+from dnd.core import uncached_settings
+from dnd.main import app
 
 engine = create_engine(uncached_settings.POSTGRES_TESTING_DATABASE_URI, pool_pre_ping=True)
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

@@ -31,7 +31,7 @@ db-up:
 
 run:
 	# poetry env use python3 && poetry run uvicorn py_dnd.main:app
-	poetry run uvicorn --host=127.0.0.1 --port=8001 py_dnd.main:app
+	poetry run uvicorn --host=127.0.0.1 --port=8001 py_dnd.main:app --reload --reload-dir=py_dnd
 
 compose-up:
 	${CONTAINER_RUNNER} compose \
@@ -50,6 +50,32 @@ compose-down:
 
 mkdocs-run:
 	poetry run mkdocs serve --dev-addr=127.0.0.1:8102
+################################################################################
+# Code generation
+################################################################################
+.PHONY: vtt-models vtt-models-check
+
+# The ETL repo writes the VTT spell schema; py_dnd and go_dnd read the copy in ttrpg-api/schemas/.
+# Generator options live in pyproject.toml [tool.datamodel-codegen.profiles.vtt_spell].
+VTT_SCHEMA_SRC ?= ../../ttrpg-data-dnd/playwright-data/schemas/vtt_spell.v1.schema.json
+VTT_SCHEMA = ../schemas/vtt_spell.v1.schema.json
+
+vtt-models: ## Copy the ETL's VTT spell schema and regenerate the Pydantic models
+	@test -f $(VTT_SCHEMA_SRC) || { echo "$(VTT_SCHEMA_SRC) not found: run make vtt_schema in the ETL repo"; exit 1; }
+	@mkdir -p $(dir $(VTT_SCHEMA))
+	@cp $(VTT_SCHEMA_SRC) $(VTT_SCHEMA)
+	@echo "Copied $(VTT_SCHEMA_SRC) -> $(VTT_SCHEMA)"
+	@poetry run datamodel-codegen --profile vtt_spell
+	@echo "Generated the VTT models"
+
+vtt-models-check: ## Fail if the schema copy or the generated VTT models are out of date
+	@if [ -f $(VTT_SCHEMA_SRC) ]; then \
+		cmp -s $(VTT_SCHEMA_SRC) $(VTT_SCHEMA) || { echo "$(VTT_SCHEMA) differs from the ETL's schema: run make vtt-models"; exit 1; }; \
+	else \
+		echo "ETL repo not found; checking the models against the copy only"; \
+	fi
+	@poetry run datamodel-codegen --profile vtt_spell --check || { echo "The VTT models are out of date: run make vtt-models"; exit 1; }
+	@echo "VTT models are up to date"
 ################################################################################
 # Testing
 ################################################################################
@@ -94,8 +120,21 @@ test-integration-html:
 load-seed-data:
 	poetry run python3 scripts/load_seeds.py
 
-# CREATE REVISION
-# poetry run alembic revision --autogenerate -m "init"
+.PHONY: migration alembic-check schema-check
+# After a revision: mirror it in go_dnd/migrations, then this diffs the two (go_dnd/migrations/README.md)
+schema-check:
+	../scripts/dnd_schema.sh check
+
+# Proper versioning from revision 42fc01dee024 on: every model change gets a revision.
+# make migration name="add character tables"
+migration:
+	poetry run alembic revision --autogenerate -m "$(name)"
+# Fails when the models and the database differ (a model change with no revision, or one not applied)
+alembic-check:
+	poetry run alembic check
+
+# Wipes every dnd table and re-inits. Only while nothing but reloadable catalog data exists
+# (DECISIONS.md, "Fresh Alembic init until characters"); don't use once characters are stored.
 
 # TODO: remove
 # temporary

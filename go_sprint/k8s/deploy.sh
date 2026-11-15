@@ -49,14 +49,14 @@ check_cluster() {
 # Function to check secrets
 check_secrets() {
     print_warn "Checking secrets configuration..."
-    
+
     if grep -q "CHANGE_ME_IN_PRODUCTION" secrets.yaml; then
         print_error "Found placeholder values in secrets.yaml!"
         print_error "Please update secrets.yaml with actual values before deploying."
         print_error "Never commit actual secrets to version control!"
         exit 1
     fi
-    
+
     print_info "Secrets configuration looks good"
 }
 
@@ -64,7 +64,7 @@ check_secrets() {
 wait_for_deployment() {
     local deployment=$1
     print_info "Waiting for $deployment to be ready..."
-    
+
     if kubectl wait --for=condition=available deployment/$deployment -n $NAMESPACE --timeout=$TIMEOUT; then
         print_info "$deployment is ready"
     else
@@ -79,7 +79,7 @@ wait_for_deployment() {
 wait_for_pods() {
     local label=$1
     print_info "Waiting for pods with label $label to be ready..."
-    
+
     if kubectl wait --for=condition=ready pod -l $label -n $NAMESPACE --timeout=$TIMEOUT; then
         print_info "Pods with label $label are ready"
     else
@@ -93,7 +93,7 @@ wait_for_pods() {
 deploy_component() {
     local component=$1
     local file=$2
-    
+
     print_info "Deploying $component..."
     kubectl apply -f $file
 }
@@ -101,56 +101,56 @@ deploy_component() {
 # Main deployment function
 deploy() {
     print_info "Starting Sprint Management System deployment..."
-    
+
     # Check prerequisites
     check_kubectl
     check_cluster
-    
+
     # Check if we should skip secrets check (for CI/CD)
     if [ "$SKIP_SECRETS_CHECK" != "true" ]; then
         check_secrets
     fi
-    
+
     # Create namespace
     print_info "Creating namespace..."
     kubectl apply -f namespace.yaml
-    
+
     # Apply secrets
     print_info "Applying secrets..."
     kubectl apply -f secrets.yaml
-    
+
     # Apply configmaps
     print_info "Applying configmaps..."
     kubectl apply -f configmap.yaml
-    
+
     # Deploy PostgreSQL
     deploy_component "PostgreSQL" "postgres-deployment.yaml"
     wait_for_pods "app=postgres"
-    
+
     # Deploy NATS
     deploy_component "NATS" "nats-deployment.yaml"
     wait_for_pods "app=nats"
-    
+
     # Deploy Keycloak
     deploy_component "Keycloak" "keycloak-deployment.yaml"
     wait_for_pods "app=keycloak"
-    
+
     # Deploy Auth Service
     deploy_component "Auth Service" "auth-service-deployment.yaml"
     wait_for_deployment "auth-service"
-    
+
     # Deploy Sprint Service
     deploy_component "Sprint Service" "sprint-service-deployment.yaml"
     wait_for_deployment "sprint-service"
-    
+
     # Apply network policies
     print_info "Applying network policies..."
     kubectl apply -f network-policy.yaml
-    
+
     # Apply ingress
     print_info "Applying ingress..."
     kubectl apply -f ingress.yaml
-    
+
     # Display status
     print_info "Deployment complete!"
     echo ""
@@ -170,16 +170,16 @@ deploy() {
 # Function to undeploy
 undeploy() {
     print_warn "Undeploying Sprint Management System..."
-    
+
     read -p "Are you sure you want to delete all resources? (yes/no): " confirm
     if [ "$confirm" != "yes" ]; then
         print_info "Undeploy cancelled"
         exit 0
     fi
-    
+
     print_info "Deleting namespace and all resources..."
     kubectl delete namespace $NAMESPACE
-    
+
     print_info "Undeploy complete"
 }
 
@@ -187,23 +187,23 @@ undeploy() {
 status() {
     print_info "Sprint Management System Status"
     echo ""
-    
+
     print_info "Pods:"
     kubectl get pods -n $NAMESPACE
     echo ""
-    
+
     print_info "Services:"
     kubectl get services -n $NAMESPACE
     echo ""
-    
+
     print_info "Deployments:"
     kubectl get deployments -n $NAMESPACE
     echo ""
-    
+
     print_info "HPA:"
     kubectl get hpa -n $NAMESPACE
     echo ""
-    
+
     print_info "Ingress:"
     kubectl get ingress -n $NAMESPACE
 }
@@ -211,12 +211,12 @@ status() {
 # Function to show logs
 logs() {
     local service=$1
-    
+
     if [ -z "$service" ]; then
         print_error "Please specify a service: sprint-service, auth-service, postgres, nats, keycloak"
         exit 1
     fi
-    
+
     print_info "Showing logs for $service..."
     kubectl logs -f -n $NAMESPACE deployment/$service
 }
@@ -224,12 +224,12 @@ logs() {
 # Function to restart service
 restart() {
     local service=$1
-    
+
     if [ -z "$service" ]; then
         print_error "Please specify a service: sprint-service, auth-service, keycloak"
         exit 1
     fi
-    
+
     print_info "Restarting $service..."
     kubectl rollout restart deployment/$service -n $NAMESPACE
     kubectl rollout status deployment/$service -n $NAMESPACE
@@ -239,12 +239,12 @@ restart() {
 scale() {
     local service=$1
     local replicas=$2
-    
+
     if [ -z "$service" ] || [ -z "$replicas" ]; then
         print_error "Usage: $0 scale <service> <replicas>"
         exit 1
     fi
-    
+
     print_info "Scaling $service to $replicas replicas..."
     kubectl scale deployment/$service --replicas=$replicas -n $NAMESPACE
     kubectl rollout status deployment/$service -n $NAMESPACE

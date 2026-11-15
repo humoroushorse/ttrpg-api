@@ -1,15 +1,14 @@
 """Game Session route definitions."""
 
-import asyncio
 import datetime
 import uuid
 from collections.abc import Hashable
 from io import BytesIO
 
-import pandas as pd
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from loguru import logger
-from pandas.core.series import Series
+lazy import pandas as pd
+lazy from pandas import Series
 
 from py_event_planning.database.db import (
     AsyncMasterSessionDependency,
@@ -246,11 +245,10 @@ async def bulk_create(
 
             response = BulkLoadResponse(filename=file.filename)
             async with sqlalchemy_uow(db, None) as uow:
-                tasks = [
-                    upsert_and_mutate_report(uow, response, entity, [*df.keys()].index("name"), current_user)
-                    for entity in df.iterrows()
-                ]
-                await asyncio.gather(*tasks)
+                name_index = [*df.keys()].index("name")
+                # sequential: one AsyncSession can't run concurrent queries
+                for entity in df.iterrows():
+                    await upsert_and_mutate_report(uow, response, entity, name_index, current_user)
 
                 if not response.errors:
                     await uow.db_session.flush()

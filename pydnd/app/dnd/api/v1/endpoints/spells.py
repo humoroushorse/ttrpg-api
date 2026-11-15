@@ -1,11 +1,8 @@
 """API /spells endpoint."""
 
 import json
-from typing import Any, List
+from typing import Any
 
-from dnd import repository, schemas
-from dnd.api.deps import get_db
-from dnd.utils.logging import debug_input
 from fastapi import (
     APIRouter,
     Body,
@@ -17,6 +14,10 @@ from fastapi import (
     status,
 )
 from sqlalchemy.orm import Session
+
+from dnd import repository, schemas
+from dnd.api.deps import get_db
+from dnd.utils.logging import debug_input
 
 router = APIRouter()
 
@@ -62,13 +63,13 @@ def read_spells(
     offset: int = 0,
     limit: int = 100,
     name: str | None = None,
-    level: List[int] | None = Query([], title="Levels", description="list of spell levels"),
-    school: List[schemas.enums.SpellSchoolEnum] | None = Query(
+    level: list[int] | None = Query([], title="Levels", description="list of spell levels"),
+    school: list[schemas.enums.SpellSchoolEnum] | None = Query(
         [], title="Schools", description="list of spell schools"
     ),
-    class_names: List[str] | None = Query([], title="Class Names", description="list of class names"),
+    class_names: list[str] | None = Query([], title="Class Names", description="list of class names"),
     ritual: bool | None = None,
-    source_names: List[str] | None = Query([], title="Source Names", description="list of source names"),
+    source_names: list[str] | None = Query([], title="Source Names", description="list of source names"),
 ) -> Any:
     """Retrieve all spells."""
     params = {
@@ -108,7 +109,7 @@ def create_spell(*, db: Session = Depends(get_db), spell_in: schemas.spell.Spell
 def update_spell(
     *,
     db: Session = Depends(get_db),
-    spell_in: schemas.spell.SpellUpdate = Body(example={**acid_splash, "id": 0}),  # type: ignore[arg-type]
+    spell_in: schemas.spell.SpellUpdate = Body(examples=[{**acid_splash, "id": 0}]),
 ) -> Any:
     """Update existing spells."""
     spell = repository.spell.get(db, model_id=spell_in.id)
@@ -153,7 +154,7 @@ def create_upload_file(
             detail=f"Invalid document type. Expected: {allowed_file_types}, Received: {upload_file.content_type}",
         )
     response = schemas.responses.BulkLoadResponse(filename=upload_file.filename)
-    json_data: List[dict] = json.load(upload_file.file)
+    json_data: list[dict] = json.load(upload_file.file)
     for jd in json_data:
         try:
             spell = schemas.spell.SpellCreate(**jd)

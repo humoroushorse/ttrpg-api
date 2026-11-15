@@ -229,7 +229,7 @@ import (
     "context"
     "encoding/json"
     "time"
-    
+
     "github.com/google/uuid"
     "github.com/nats-io/nats.go"
 )
@@ -250,47 +250,47 @@ type ValidateTokenResponse struct {
 
 func ValidateToken(ctx context.Context, nc *nats.Conn, token string) (*ValidateTokenResponse, error) {
     traceID := uuid.New().String()
-    
+
     // Create request
     req := ValidateTokenRequest{
         TraceID:   traceID,
         Token:     token,
         Timestamp: time.Now().UTC(),
     }
-    
+
     reqData, err := json.Marshal(req)
     if err != nil {
         return nil, err
     }
-    
+
     // Publish request and wait for response
     subject := "auth." + traceID + ".validate.request"
     responseSubject := "auth." + traceID + ".validate.response"
-    
+
     // Subscribe to response
     sub, err := nc.SubscribeSync(responseSubject)
     if err != nil {
         return nil, err
     }
     defer sub.Unsubscribe()
-    
+
     // Publish request
     if err := nc.Publish(subject, reqData); err != nil {
         return nil, err
     }
-    
+
     // Wait for response with timeout
     msg, err := sub.NextMsgWithContext(ctx)
     if err != nil {
         return nil, err
     }
-    
+
     // Parse response
     var resp ValidateTokenResponse
     if err := json.Unmarshal(msg.Data, &resp); err != nil {
         return nil, err
     }
-    
+
     return &resp, nil
 }
 ```

@@ -126,7 +126,7 @@ func TestProperty12_UTCTimestampStorage(t *testing.T) {
 
 				// Insert work item with explicit created_at
 				_, err := db.ExecContext(ctx, `
-					INSERT INTO sprint_management.work_items 
+					INSERT INTO sprint_management.work_items
 					(id, type, title, description, status, priority, reporter_id, created_at, updated_at)
 					VALUES ($1, 'story', 'Test Item', 'Test Description', 'todo', 'medium', $2, $3, $3)
 				`, workItemID, reporterID, createdAt)
@@ -181,7 +181,7 @@ func TestProperty12_UTCTimestampStorage(t *testing.T) {
 
 				// Insert sprint with explicit created_at
 				_, err := db.ExecContext(ctx, `
-					INSERT INTO sprint_management.sprints 
+					INSERT INTO sprint_management.sprints
 					(id, name, status, start_date, end_date, created_by, created_at, updated_at)
 					VALUES ($1, 'Test Sprint', 'planned', $2, $3, $4, $5, $5)
 				`, sprintID, startDate, endDate, creatorID, createdAt)
@@ -232,7 +232,7 @@ func TestProperty12_UTCTimestampStorage(t *testing.T) {
 				workItemID := uuid.New()
 				reporterID := uuid.New()
 				_, err := db.ExecContext(ctx, `
-					INSERT INTO sprint_management.work_items 
+					INSERT INTO sprint_management.work_items
 					(id, type, title, description, status, priority, reporter_id)
 					VALUES ($1, 'story', 'Test Item', 'Test Description', 'todo', 'medium', $2)
 				`, workItemID, reporterID)
@@ -247,7 +247,7 @@ func TestProperty12_UTCTimestampStorage(t *testing.T) {
 				authorID := uuid.New()
 
 				_, err = db.ExecContext(ctx, `
-					INSERT INTO sprint_management.comments 
+					INSERT INTO sprint_management.comments
 					(id, work_item_id, author_id, content, created_at, updated_at)
 					VALUES ($1, $2, $3, 'Test comment', $4, $4)
 				`, commentID, workItemID, authorID, createdAt)
@@ -300,7 +300,7 @@ func TestProperty12_UTCTimestampStorage(t *testing.T) {
 				userID := uuid.New()
 
 				_, err := db.ExecContext(ctx, `
-					INSERT INTO sprint_management.activity_logs 
+					INSERT INTO sprint_management.activity_logs
 					(id, entity_type, entity_id, action, user_id, created_at)
 					VALUES ($1, 'work_item', $2, 'created', $3, $4)
 				`, logID, entityID, userID, createdAt)
@@ -354,7 +354,7 @@ func TestProperty12_UTCTimestampStorage(t *testing.T) {
 				email := fmt.Sprintf("%s@example.com", username)
 
 				_, err := db.ExecContext(ctx, `
-					INSERT INTO auth.users 
+					INSERT INTO auth.users
 					(id, keycloak_id, username, email, created_at, updated_at)
 					VALUES ($1, $2, $3, $4, $5, $5)
 				`, userID, keycloakID, username, email, createdAt)

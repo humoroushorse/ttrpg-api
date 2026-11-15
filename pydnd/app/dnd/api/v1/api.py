@@ -1,7 +1,8 @@
 """FastAPI route definitions."""
 
-from dnd.api.v1.endpoints import dnd_classes, jt_spells_to_classes, sources, spells
 from fastapi import APIRouter
+
+from dnd.api.v1.endpoints import dnd_classes, jt_spells_to_classes, sources, spells
 
 api_router = APIRouter()
 

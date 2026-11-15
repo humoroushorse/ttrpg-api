@@ -1,7 +1,7 @@
 """A sqlalchemy.orm Session."""
 
 import contextlib
-from typing import AsyncIterator
+from collections.abc import AsyncIterator
 
 from loguru import logger
 from sqlalchemy.ext.asyncio import (

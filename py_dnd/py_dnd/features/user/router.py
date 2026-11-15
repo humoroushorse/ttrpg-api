@@ -12,6 +12,7 @@ from py_dnd.database.db import (
 from py_dnd.features.auth.service import UserAuth, UserAuthOptional
 from py_dnd.features.core.unit_of_work import sqlalchemy_uow
 from py_dnd.features.user.schemas import UserSchema, UserUpdate
+from py_dnd.features.user.service import CurrentUserId
 
 router = APIRouter()
 
@@ -46,6 +47,7 @@ async def read_users(
 async def update_user(
     entity_id: uuid.UUID,
     current_user: UserAuth,
+    current_user_id: CurrentUserId,
     db: AsyncMasterSessionDependency,
     obj_in: UserUpdate,
 ) -> UserSchema | None:
@@ -55,12 +57,14 @@ async def update_user(
         with logger.contextualize(user=user, obj_in=obj_in.model_dump(), log_threads=True):
             async with sqlalchemy_uow(db, None) as uow:
                 logger.info("Updating user")
-                if str(current_user.sub) != str(entity_id):
+                if current_user_id != entity_id:
                     error_message = f"You're not allowed to update user with id {entity_id}"
                     logger.error(error_message)
                     raise HTTPException(status.HTTP_403_FORBIDDEN, error_message)
                 db_obj = await uow.user_repo.read_by_id(entity_id=entity_id, as_model=True)
-                entity = await uow.user_repo.update(db_obj=db_obj, obj_in=obj_in)
+                entity = await uow.user_repo.update(
+                    db_obj=db_obj, obj_in={**obj_in.model_dump(exclude_unset=True), "updated_by": current_user_id}
+                )
                 await uow.commit()
             return entity
     except HTTPException:

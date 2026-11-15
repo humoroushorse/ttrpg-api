@@ -13,7 +13,7 @@ import (
 
 const countFilteredWorkItems = `-- name: CountFilteredWorkItems :one
 SELECT COUNT(*) FROM sprint_management.work_items w
-WHERE 
+WHERE
     deleted_at IS NULL
     AND ($1::sprint_management.work_item_type IS NULL OR w.type = $1)
     AND ($2::sprint_management.work_item_status IS NULL OR w.status = $2)
@@ -52,7 +52,7 @@ func (q *Queries) CountFilteredWorkItems(ctx context.Context, arg CountFilteredW
 
 const countSearchResults = `-- name: CountSearchResults :one
 SELECT COUNT(*) FROM sprint_management.work_items w
-WHERE 
+WHERE
     deleted_at IS NULL
     AND to_tsvector('english', w.title || ' ' || COALESCE(w.description, '')) @@ plainto_tsquery('english', $1)
 `
@@ -67,7 +67,7 @@ func (q *Queries) CountSearchResults(ctx context.Context, plaintoTsquery string)
 
 const filterWorkItems = `-- name: FilterWorkItems :many
 SELECT id, type, title, description, status, priority, story_points, assignee_id, reporter_id, parent_id, sprint_id, created_at, updated_at, deleted_at, deleted_by, project_id, ticket_number FROM sprint_management.work_items w
-WHERE 
+WHERE
     deleted_at IS NULL
     AND ($1::sprint_management.work_item_type IS NULL OR w.type = $1)
     AND ($2::sprint_management.work_item_status IS NULL OR w.status = $2)
@@ -143,14 +143,14 @@ func (q *Queries) FilterWorkItems(ctx context.Context, arg FilterWorkItemsParams
 
 const searchWorkItems = `-- name: SearchWorkItems :many
 
-SELECT 
+SELECT
     w.id, w.type, w.title, w.description, w.status, w.priority, w.story_points, w.assignee_id, w.reporter_id, w.parent_id, w.sprint_id, w.created_at, w.updated_at, w.deleted_at, w.deleted_by, w.project_id, w.ticket_number,
     ts_rank(
         to_tsvector('english', w.title || ' ' || COALESCE(w.description, '')),
         plainto_tsquery('english', $1)
     ) as rank
 FROM sprint_management.work_items w
-WHERE 
+WHERE
     deleted_at IS NULL
     AND to_tsvector('english', w.title || ' ' || COALESCE(w.description, '')) @@ plainto_tsquery('english', $1)
 ORDER BY rank DESC, created_at DESC
@@ -225,14 +225,14 @@ func (q *Queries) SearchWorkItems(ctx context.Context, arg SearchWorkItemsParams
 }
 
 const searchWorkItemsBoolean = `-- name: SearchWorkItemsBoolean :many
-SELECT 
+SELECT
     w.id, w.type, w.title, w.description, w.status, w.priority, w.story_points, w.assignee_id, w.reporter_id, w.parent_id, w.sprint_id, w.created_at, w.updated_at, w.deleted_at, w.deleted_by, w.project_id, w.ticket_number,
     ts_rank(
         to_tsvector('english', w.title || ' ' || COALESCE(w.description, '')),
         websearch_to_tsquery('english', $1)
     ) as rank
 FROM sprint_management.work_items w
-WHERE 
+WHERE
     deleted_at IS NULL
     AND to_tsvector('english', w.title || ' ' || COALESCE(w.description, '')) @@ websearch_to_tsquery('english', $1)
 ORDER BY rank DESC, created_at DESC
@@ -307,18 +307,18 @@ func (q *Queries) SearchWorkItemsBoolean(ctx context.Context, arg SearchWorkItem
 }
 
 const searchWorkItemsByField = `-- name: SearchWorkItemsByField :many
-SELECT 
+SELECT
     w.id, w.type, w.title, w.description, w.status, w.priority, w.story_points, w.assignee_id, w.reporter_id, w.parent_id, w.sprint_id, w.created_at, w.updated_at, w.deleted_at, w.deleted_by, w.project_id, w.ticket_number,
-    CASE 
+    CASE
         WHEN $2 = 'title' THEN ts_rank(to_tsvector('english', w.title), plainto_tsquery('english', $1))
         WHEN $2 = 'description' THEN ts_rank(to_tsvector('english', COALESCE(w.description, '')), plainto_tsquery('english', $1))
         ELSE ts_rank(to_tsvector('english', w.title || ' ' || COALESCE(w.description, '')), plainto_tsquery('english', $1))
     END as rank
 FROM sprint_management.work_items w
-WHERE 
+WHERE
     deleted_at IS NULL
     AND (
-        CASE 
+        CASE
             WHEN $2 = 'title' THEN to_tsvector('english', w.title) @@ plainto_tsquery('english', $1)
             WHEN $2 = 'description' THEN to_tsvector('english', COALESCE(w.description, '')) @@ plainto_tsquery('english', $1)
             ELSE to_tsvector('english', w.title || ' ' || COALESCE(w.description, '')) @@ plainto_tsquery('english', $1)
@@ -402,14 +402,14 @@ func (q *Queries) SearchWorkItemsByField(ctx context.Context, arg SearchWorkItem
 }
 
 const searchWorkItemsWithFilters = `-- name: SearchWorkItemsWithFilters :many
-SELECT 
+SELECT
     w.id, w.type, w.title, w.description, w.status, w.priority, w.story_points, w.assignee_id, w.reporter_id, w.parent_id, w.sprint_id, w.created_at, w.updated_at, w.deleted_at, w.deleted_by, w.project_id, w.ticket_number,
     ts_rank(
         to_tsvector('english', w.title || ' ' || COALESCE(w.description, '')),
         plainto_tsquery('english', $1)
     ) as rank
 FROM sprint_management.work_items w
-WHERE 
+WHERE
     deleted_at IS NULL
     AND to_tsvector('english', w.title || ' ' || COALESCE(w.description, '')) @@ plainto_tsquery('english', $1)
     AND ($2::sprint_management.work_item_type IS NULL OR w.type = $2)

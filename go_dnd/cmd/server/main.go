@@ -16,28 +16,20 @@ import (
 
 	authmiddleware "github.com/humoroushorse/go_auth/pkg/auth/middleware"
 	api "github.com/humoroushorse/go_dnd/api/generated"
-<<<<<<< Updated upstream
-=======
 	"github.com/humoroushorse/go_dnd/internal/campaigns"
 	"github.com/humoroushorse/go_dnd/internal/catalog"
 	"github.com/humoroushorse/go_dnd/internal/characters"
 	"github.com/humoroushorse/go_dnd/internal/entities"
->>>>>>> Stashed changes
 	"github.com/humoroushorse/go_dnd/internal/handlers"
+	"github.com/humoroushorse/go_dnd/internal/httpx"
+	"github.com/humoroushorse/go_dnd/internal/identity"
 	"github.com/humoroushorse/go_dnd/internal/middleware"
-	repoSources "github.com/humoroushorse/go_dnd/internal/repository/sources"
-	repoSpells "github.com/humoroushorse/go_dnd/internal/repository/spells"
 	repoUsers "github.com/humoroushorse/go_dnd/internal/repository/users"
-	svcSources "github.com/humoroushorse/go_dnd/internal/service/sources"
-	svcSpells "github.com/humoroushorse/go_dnd/internal/service/spells"
 	svcUsers "github.com/humoroushorse/go_dnd/internal/service/users"
-<<<<<<< Updated upstream
-=======
 	"github.com/humoroushorse/go_dnd/internal/sources"
 	"github.com/humoroushorse/go_dnd/internal/spelllists"
 	"github.com/humoroushorse/go_dnd/internal/spells"
 	"github.com/humoroushorse/go_dnd/internal/tabletop"
->>>>>>> Stashed changes
 	"github.com/humoroushorse/go_dnd/pkg/config"
 	"github.com/humoroushorse/go_dnd/pkg/logging"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -48,14 +40,9 @@ import (
 //go:embed swagger-ui/*
 var swaggerUI embed.FS
 
-// server wires all handlers and implements api.ServerInterface.
+// server wires all handlers and implements api.ServerInterface. Feature handlers are embedded, so
+// their route methods implement the interface directly.
 type server struct {
-<<<<<<< Updated upstream
-	spells  *handlers.SpellHandler
-	sources *handlers.SourceHandler
-	users   *handlers.UserHandler
-	master  *pgxpool.Pool
-=======
 	*sources.SourceRoutes
 	*spells.SpellRoutes
 	*entities.Routes
@@ -65,27 +52,8 @@ type server struct {
 	*tabletop.TableRoutes
 	users  *handlers.UserHandler
 	master *pgxpool.Pool
->>>>>>> Stashed changes
 }
 
-func (s *server) ListSpells(w http.ResponseWriter, r *http.Request, params api.ListSpellsParams) {
-	s.spells.ListSpells(w, r, params)
-}
-func (s *server) QuerySpells(w http.ResponseWriter, r *http.Request, params api.QuerySpellsParams) {
-	s.spells.QuerySpells(w, r, params)
-}
-func (s *server) CreateSpell(w http.ResponseWriter, r *http.Request) {
-	s.spells.CreateSpell(w, r)
-}
-func (s *server) BulkLoadSpells(w http.ResponseWriter, r *http.Request) {
-	s.spells.BulkLoadSpells(w, r)
-}
-func (s *server) QuerySources(w http.ResponseWriter, r *http.Request, params api.QuerySourcesParams) {
-	s.sources.QuerySources(w, r, params)
-}
-func (s *server) BulkLoadSources(w http.ResponseWriter, r *http.Request) {
-	s.sources.BulkLoadSources(w, r)
-}
 func (s *server) GetUser(w http.ResponseWriter, r *http.Request, id openapi_types.UUID) {
 	s.users.GetUser(w, r, id)
 }
@@ -119,14 +87,14 @@ func main() {
 	logger := logging.NewLogger(cfg.Logging)
 	logger.Info("starting dnd service", slog.Int("port", cfg.Server.Port))
 
-	masterPool, err := pgxpool.New(context.Background(), cfg.Database.MasterURL)
+	masterPool, err := newPool(context.Background(), cfg.Database.MasterURL)
 	if err != nil {
 		logger.Error("failed to connect to master db", "error", err)
 		os.Exit(1)
 	}
 	defer masterPool.Close()
 
-	replicaPool, err := pgxpool.New(context.Background(), cfg.Database.ReplicaURL)
+	replicaPool, err := newPool(context.Background(), cfg.Database.ReplicaURL)
 	if err != nil {
 		logger.Error("failed to connect to replica db", "error", err)
 		os.Exit(1)
@@ -142,17 +110,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	spellRepo := repoSpells.NewRepository(masterPool, replicaPool)
-	sourceRepo := repoSources.NewRepository(masterPool, replicaPool)
 	userRepo := repoUsers.NewRepository(masterPool, replicaPool)
 
-<<<<<<< Updated upstream
-	srv := &server{
-		spells:  handlers.NewSpellHandler(svcSpells.NewService(spellRepo, sourceRepo)),
-		sources: handlers.NewSourceHandler(svcSources.NewService(sourceRepo)),
-		users:   handlers.NewUserHandler(svcUsers.NewService(userRepo)),
-		master:  masterPool,
-=======
 	// the tabletop: core NATS carries table events between pods (DECISIONS.md, "Many go_dnd pods from
 	// the start"). The pod starts even with NATS down; tables then catch up through the hub's check.
 	background, stopBackground := context.WithCancel(context.Background())
@@ -180,7 +139,6 @@ func main() {
 		TableRoutes:     tabletop.NewRoutes(masterPool, replicaPool, userIDs, table),
 		users:           handlers.NewUserHandler(svcUsers.NewService(userRepo)),
 		master:          masterPool,
->>>>>>> Stashed changes
 	}
 
 	jwtValidator := authmiddleware.NewJWTValidator(authmiddleware.JWTConfig{
@@ -193,6 +151,10 @@ func main() {
 
 	chiRouter := api.HandlerWithOptions(srv, api.ChiServerOptions{
 		BaseURL: "",
+		// a path or query param that doesn't parse (an id that isn't a uuid) is a 422, as in py_dnd
+		ErrorHandlerFunc: func(w http.ResponseWriter, r *http.Request, err error) {
+			httpx.WriteError(w, r, httpx.Unprocessable("%v", err))
+		},
 		Middlewares: []api.MiddlewareFunc{
 			func(next http.Handler) http.Handler {
 				return middleware.LoggingMiddleware(next)
@@ -295,4 +257,15 @@ func main() {
 		logger.Error("shutdown error", "error", err)
 	}
 	logger.Info("server exited")
+}
+
+// newPool connects with the session settings the queries rely on: UTC, so timestamps in the
+// JSON Postgres builds come out the same everywhere.
+func newPool(ctx context.Context, url string) (*pgxpool.Pool, error) {
+	poolConfig, err := pgxpool.ParseConfig(url)
+	if err != nil {
+		return nil, err
+	}
+	poolConfig.ConnConfig.RuntimeParams["timezone"] = "UTC"
+	return pgxpool.NewWithConfig(ctx, poolConfig)
 }

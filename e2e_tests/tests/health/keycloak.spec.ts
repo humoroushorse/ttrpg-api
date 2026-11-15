@@ -1,7 +1,7 @@
 /**
  * Keycloak connectivity health check tests
  * Validates that Keycloak is accessible and authentication works correctly
- * 
+ *
  * @tags @health
  * Requirements: 6.1, 6.2, 6.3, 6.4
  */
@@ -16,7 +16,7 @@ test.describe('Keycloak Health Checks', () => {
   test('should successfully connect to Keycloak and authenticate test user @health', async () => {
     // Feature: playwright-api-testing, Property 1: Authentication Token Validity
     // Feature: playwright-api-testing, Property 6: Health Check Prerequisite
-    
+
     const config = getConfig();
     const credentials = loadCredentials();
     const apiClient = new APIClient(config);
@@ -39,7 +39,7 @@ test.describe('Keycloak Health Checks', () => {
 
   test('should return valid JWT token with expected claims @health', async () => {
     // Feature: playwright-api-testing, Property 1: Authentication Token Validity
-    
+
     const config = getConfig();
     const credentials = loadCredentials();
     const apiClient = new APIClient(config);
@@ -75,7 +75,7 @@ test.describe('Keycloak Health Checks', () => {
 
   test('should fail authentication with invalid credentials @health', async () => {
     // Feature: playwright-api-testing, Property 9: Authenticated Request Authorization
-    
+
     const config = getConfig();
     const apiClient = new APIClient(config);
 

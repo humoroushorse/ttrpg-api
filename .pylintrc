@@ -84,14 +84,10 @@ persistent=yes
 
 # Minimum Python version to use for version dependent checks. Will default to
 # the version used to run pylint.
-py-version=3.10
+py-version=3.15
 
 # Discover python modules and packages in the file system subtree.
 recursive=no
-
-# When enabled, pylint would attempt to guess common misconfiguration and emit
-# user-friendly hints instead of false-positive error messages.
-suggestion-mode=yes
 
 # Allow loading of arbitrary C extensions. Extensions are imported into the
 # active Python interpreter and may run arbitrary code.
@@ -146,7 +142,8 @@ confidence=HIGH,
 # --enable=similarities". If you want to run only the classes checker, but have
 # no Warning level messages displayed, use "--disable=all --enable=classes
 # --disable=W".
-disable=line-too-long, # black is handling this for us
+disable=line-too-long, # ruff format and ruff E501 handle this
+        duplicate-code, # was passed as a pre-commit hook arg
         raw-checker-failed,
         bad-inline-option,
         locally-disabled,
@@ -167,8 +164,9 @@ disable=line-too-long, # black is handling this for us
         too-many-branches, # already have complexity checker
         too-many-nested-blocks, # already have complexity checker
         too-many-arguments, # already have complexity checker
+        too-many-positional-arguments, # FastAPI endpoints take many query params
         consider-using-with, # TODO: let's keep this but need to figure out better /bulk stuff
-        broad-except, # TODO: remove
+        broad-exception-caught, # TODO: remove
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -351,7 +349,7 @@ indent-after-paren=4
 indent-string='    '
 
 # Maximum number of characters on a single line.
-max-line-length=100
+max-line-length=119
 
 # Maximum number of lines in a module.
 max-module-lines=1000

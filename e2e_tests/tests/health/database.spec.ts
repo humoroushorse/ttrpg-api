@@ -1,7 +1,7 @@
 /**
  * Database connectivity health check tests
  * Validates that the API can connect to its database
- * 
+ *
  * @tags @health
  * Requirements: 7.1, 7.2, 7.3, 7.4
  */
@@ -13,13 +13,13 @@ import { getConfig } from '../../lib/config';
 test.describe('Database Health Checks', () => {
   test('should verify go_sprint database connectivity via health endpoint @health', async () => {
     // Feature: playwright-api-testing, Property 6: Health Check Prerequisite
-    
+
     const config = getConfig();
     const apiClient = new APIClient(config);
 
     // Call the health/ready endpoint which checks database connectivity
     const healthUrl = `${config.services.goSprint.baseUrl}${config.services.goSprint.healthEndpoint}`;
-    
+
     let response;
     try {
       response = await apiClient.get<{ status: string; timestamp?: string; checks?: any }>(healthUrl);
@@ -39,7 +39,7 @@ test.describe('Database Health Checks', () => {
 
     // Call the liveness endpoint
     const livenessUrl = `${config.services.goSprint.baseUrl}/health/live`;
-    
+
     let response;
     try {
       response = await apiClient.get<{ status: string; timestamp?: string }>(livenessUrl);
@@ -59,7 +59,7 @@ test.describe('Database Health Checks', () => {
 
     // Call the health endpoint and measure response time
     const healthUrl = `${config.services.goSprint.baseUrl}${config.services.goSprint.healthEndpoint}`;
-    
+
     const startTime = Date.now();
     const response = await apiClient.get<{ status: string }>(healthUrl);
     const duration = Date.now() - startTime;
@@ -92,7 +92,7 @@ test.describe('Database Health Checks', () => {
 
     // Try to reach the go_auth health endpoint
     const healthUrl = `${config.services.goAuth.baseUrl}${config.services.goAuth.healthEndpoint}`;
-    
+
     let response;
     try {
       response = await apiClient.get<any>(healthUrl);

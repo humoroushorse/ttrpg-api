@@ -1,0 +1,236 @@
+paths:
+  /api/v1/sources/query:
+    get:
+      tags: [Sources]
+      operationId: querySources
+      summary: Sources, by name then newest edition
+      parameters:
+      - $ref: '#/components/parameters/Name'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: A page of sources (fields left out by ?fields= are absent)
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/GenericListResponse'
+                - type: object
+                  properties:
+                    entities:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Source'
+        '422': {$ref: '#/components/responses/Error'}
+  /api/v1/sources:
+    post:
+      tags: [Sources]
+      operationId: createSource
+      summary: Create a source (a slug, or a name or short name in the same edition, that's taken is a 409)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceFields'
+      responses:
+        '200':
+          description: The source as stored
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+        '401': {$ref: '#/components/responses/Error'}
+        '409': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+  /api/v1/sources/slug/{slug}:
+    get:
+      tags: [Sources]
+      operationId: readSourceBySlug
+      summary: One source by its slug (phb_2024)
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema: {type: string}
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: The source
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+        '404': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+  /api/v1/sources/{entity_id}:
+    parameters:
+    - $ref: '#/components/parameters/EntityId'
+    get:
+      tags: [Sources]
+      operationId: readSource
+      summary: One source
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: The source
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+        '404': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+    put:
+      tags: [Sources]
+      operationId: replaceSource
+      summary: Replace a source; fields left out go back to their defaults
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceFields'
+      responses:
+        '200':
+          description: The source as stored
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '409': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+    patch:
+      tags: [Sources]
+      operationId: updateSource
+      summary: Change some fields; null clears an optional field (publish_year)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourcePatch'
+      responses:
+        '200':
+          description: The source as stored
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '409': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+    delete:
+      tags: [Sources]
+      operationId: deleteSource
+      summary: Soft delete (hidden from every read, keeps its slug). 409 while live entries use it
+      responses:
+        '200':
+          description: The deleted source's id
+          content:
+            application/json:
+              schema: {type: string, format: uuid}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '409': {$ref: '#/components/responses/Error'}
+  /api/v1/sources/bulk:
+    post:
+      tags: [Sources]
+      operationId: bulkLoadSources
+      summary: Create or update sources from a file, keyed on slug (the ETL's source_id)
+      description: >-
+        Reports each source as created, updated (with the fields that changed), or unchanged. Saves
+        nothing if any row has an error, including a name or short name another source has in the
+        same edition. File types: application/json, text/csv.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: What happened to each row
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkLoadResponse'
+        '400': {$ref: '#/components/responses/Error'}
+        '401': {$ref: '#/components/responses/Error'}
+components:
+  schemas:
+    SourceFields:
+      type: object
+      description: Every field a client writes. Unknown keys are a 422.
+      required: [slug, name, name_short, dnd_version, dnd_version_year]
+      additionalProperties: false
+      properties:
+        slug:
+          type: string
+          description: Unique key across editions; the ETL's `source_id` (phb_2024).
+        name:
+          type: string
+        name_short:
+          type: string
+        publish_year:
+          type: integer
+          nullable: true
+        dnd_version:
+          type: string
+        dnd_version_year:
+          type: integer
+        marks:
+          type: array
+          items: {type: string}
+          description: Flags such as third_party.
+    SourcePatch:
+      type: object
+      description: Only the fields to change.
+      additionalProperties: false
+      properties:
+        slug: {type: string}
+        name: {type: string}
+        name_short: {type: string}
+        publish_year: {type: integer, nullable: true}
+        dnd_version: {type: string}
+        dnd_version_year: {type: integer}
+        marks:
+          type: array
+          items: {type: string}
+    Source:
+      type: object
+      description: A source as the API returns it. ?fields= leaves the other fields out.
+      properties:
+        id: {type: string, format: uuid}
+        slug: {type: string}
+        name: {type: string}
+        name_short: {type: string}
+        publish_year: {type: integer, nullable: true}
+        dnd_version: {type: string}
+        dnd_version_year: {type: integer}
+        marks:
+          type: array
+          items: {type: string}
+        created_at: {type: string, format: date-time}
+        created_by: {type: string, format: uuid, nullable: true}
+        updated_at: {type: string, format: date-time}
+        updated_by: {type: string, format: uuid, nullable: true}
+    SourceRef:
+      type: object
+      description: A source as other entities return it (read only).
+      required: [id, slug, name, name_short]
+      properties:
+        id: {type: string, format: uuid}
+        slug: {type: string}
+        name: {type: string}
+        name_short: {type: string}

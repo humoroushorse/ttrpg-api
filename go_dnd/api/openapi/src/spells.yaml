@@ -1,0 +1,309 @@
+paths:
+  /api/v1/spells:
+    get:
+      tags: [Spells]
+      operationId: listSpells
+      summary: A plain array of spells by id (the list before /query; use /query for filters)
+      parameters:
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Spells
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Spell'
+        '422': {$ref: '#/components/responses/Error'}
+    post:
+      tags: [Spells]
+      operationId: createSpell
+      summary: Create a spell; a (source, slug) that's taken is a 409
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpellFields'
+      responses:
+        '200':
+          description: The spell as stored
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Spell'
+        '401': {$ref: '#/components/responses/Error'}
+        '409': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+  /api/v1/spells/query:
+    get:
+      tags: [Spells]
+      operationId: querySpells
+      summary: Spells, by name then newest edition after `sort`
+      description: >-
+        `filter` and `sort` take AG Grid's filter and sort models (JSON). Filterable: the spell's
+        text, number, boolean and set columns, `dnd_version_year` (a date filter by year),
+        `source` (source slugs) and `classes` (class slugs whose spell list has the spell).
+      parameters:
+      - $ref: '#/components/parameters/Name'
+      - name: versions_of
+        in: query
+        description: A slug; every printing of that spell across sources and editions. Hyphens are
+          ignored, so bigbys-hand (2014) also finds bigby-s-hand (2024).
+        schema: {type: string}
+      - $ref: '#/components/parameters/Filter'
+      - $ref: '#/components/parameters/Sort'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: A page of spells (fields left out by ?fields= are absent)
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/GenericListResponse'
+                - type: object
+                  properties:
+                    entities:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Spell'
+        '422': {$ref: '#/components/responses/Error'}
+  /api/v1/spells/bulk:
+    post:
+      tags: [Spells]
+      operationId: bulkLoadSpells
+      summary: Create or update spells from a file (an ETL _all.json), keyed on (source, slug)
+      description: >-
+        Reports each spell as created, updated (with the fields that changed), or unchanged. Saves
+        nothing if any row has an error. File types: application/json, text/csv.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: What happened to each row
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkLoadResponse'
+        '400': {$ref: '#/components/responses/Error'}
+        '401': {$ref: '#/components/responses/Error'}
+  /api/v1/spells/{entity_id}:
+    parameters:
+    - $ref: '#/components/parameters/EntityId'
+    get:
+      tags: [Spells]
+      operationId: readSpell
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: The spell
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Spell'
+        '404': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+    put:
+      tags: [Spells]
+      operationId: replaceSpell
+      summary: Replace a spell; fields left out go back to their defaults
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpellFields'
+      responses:
+        '200':
+          description: The spell as stored
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Spell'
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '409': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+    patch:
+      tags: [Spells]
+      operationId: updateSpell
+      summary: Change some fields; null clears an optional field; vtt is replaced whole
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpellPatch'
+      responses:
+        '200':
+          description: The spell as stored
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Spell'
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '409': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+    delete:
+      tags: [Spells]
+      operationId: deleteSpell
+      summary: Soft delete (hidden from every read). Returns the id
+      responses:
+        '200':
+          description: The deleted spell's id
+          content:
+            application/json:
+              schema: {type: string, format: uuid}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+  /api/v1/spells/{source_slug}/{slug}:
+    get:
+      tags: [Spells]
+      operationId: readSpellBySlugs
+      summary: One spell by its source's slug and its own (phb_2024/acid-splash), the UI's URL key
+      parameters:
+      - name: source_slug
+        in: path
+        required: true
+        schema: {type: string}
+      - name: slug
+        in: path
+        required: true
+        schema: {type: string}
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: The spell
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Spell'
+        '404': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+components:
+  schemas:
+    SpellSchool:
+      type: string
+      enum: [abjuration, alteration, conjuration, divination, enchantment, evocation, transmutation, illusion,
+        invocation, necromancy]
+    Vtt:
+      type: object
+      description: >-
+        What the VTT needs to resolve the spell; schema ttrpg-api/schemas/vtt_spell.v1.schema.json.
+        Writes are checked against it and stored with every default filled in.
+      additionalProperties: true
+    SpellFields:
+      type: object
+      description: Every field a client writes. Unknown keys are a 422.
+      required: [source_id, slug, name, dnd_version, dnd_version_year, level, school, casting_time, range, duration,
+        description, vtt]
+      additionalProperties: false
+      properties:
+        source_id: {type: string, format: uuid}
+        slug: {type: string, description: Unique within its source.}
+        name: {type: string}
+        dnd_version: {type: string}
+        dnd_version_year: {type: integer}
+        source_page: {type: integer, nullable: true}
+        level: {type: integer, minimum: 0, maximum: 9}
+        school: {$ref: '#/components/schemas/SpellSchool'}
+        is_ritual: {type: boolean, default: false}
+        is_unearthed_arcana: {type: boolean, default: false}
+        is_homebrew: {type: boolean, default: false}
+        casting_time: {type: string}
+        range: {type: string}
+        has_verbal_component: {type: boolean, default: false}
+        has_somatic_component: {type: boolean, default: false}
+        has_material_component: {type: boolean, default: false}
+        materials: {type: string, nullable: true}
+        has_spell_cost: {type: boolean, default: false}
+        are_materials_consumed: {type: boolean, default: false}
+        duration: {type: string}
+        is_concentration: {type: boolean, default: false}
+        description: {type: string, description: 'HTML (also accepted as description_html).'}
+        has_saving_throw: {type: boolean, default: false}
+        difficulty_class_saving_throw_override: {type: integer, nullable: true}
+        damage_type: {type: string, nullable: true}
+        at_higher_levels: {type: string, nullable: true}
+        difficulty_class_saving_throw: {type: string, nullable: true}
+        difficulty_class_type: {type: string, nullable: true}
+        stat_blocks:
+          type: array
+          nullable: true
+          items: {type: object, additionalProperties: true}
+        vtt: {$ref: '#/components/schemas/Vtt'}
+    SpellPatch:
+      type: object
+      description: Only the fields to change (any of SpellFields). vtt is replaced whole.
+      additionalProperties: true
+    Spell:
+      type: object
+      description: A spell as the API returns it. ?fields= leaves the other fields out.
+      properties:
+        id: {type: string, format: uuid}
+        source_id: {type: string, format: uuid}
+        slug: {type: string}
+        name: {type: string}
+        dnd_version: {type: string}
+        dnd_version_year: {type: integer}
+        source_page: {type: integer, nullable: true}
+        level: {type: integer}
+        school: {type: string}
+        is_ritual: {type: boolean}
+        is_unearthed_arcana: {type: boolean}
+        is_homebrew: {type: boolean}
+        casting_time: {type: string}
+        range: {type: string}
+        has_verbal_component: {type: boolean}
+        has_somatic_component: {type: boolean}
+        has_material_component: {type: boolean}
+        materials: {type: string, nullable: true}
+        has_spell_cost: {type: boolean}
+        are_materials_consumed: {type: boolean}
+        duration: {type: string}
+        is_concentration: {type: boolean}
+        description: {type: string}
+        has_saving_throw: {type: boolean}
+        difficulty_class_saving_throw_override: {type: integer, nullable: true}
+        damage_type: {type: string, nullable: true}
+        at_higher_levels: {type: string, nullable: true}
+        difficulty_class_saving_throw: {type: string, nullable: true}
+        difficulty_class_type: {type: string, nullable: true}
+        stat_blocks:
+          type: array
+          nullable: true
+          items: {type: object, additionalProperties: true}
+        vtt: {$ref: '#/components/schemas/Vtt'}
+        activation_cost: {type: string, nullable: true, description: Generated from vtt.}
+        activation_amount: {type: integer, nullable: true}
+        range_kind: {type: string, nullable: true}
+        range_feet: {type: integer, nullable: true}
+        duration_kind: {type: string, nullable: true}
+        duration_amount: {type: integer, nullable: true}
+        duration_unit: {type: string, nullable: true}
+        sustain: {type: string, nullable: true, description: concentration (D&D)}
+        has_attack_roll: {type: boolean, nullable: true}
+        has_save: {type: boolean, nullable: true}
+        has_summon: {type: boolean, nullable: true}
+        created_at: {type: string, format: date-time}
+        created_by: {type: string, format: uuid, nullable: true}
+        updated_at: {type: string, format: date-time}
+        updated_by: {type: string, format: uuid, nullable: true}
+        source: {$ref: '#/components/schemas/SourceRef'}

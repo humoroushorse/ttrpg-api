@@ -30,7 +30,7 @@ import (
     "log"
     "log/slog"
     "time"
-    
+
     natsclient "github.com/humoroushorse/go_sprint/pkg/nats"
 )
 
@@ -43,28 +43,28 @@ func main() {
         ConnectionName: "sprint-service",
         RequestTimeout: 5 * time.Second,
     }
-    
+
     logger := slog.Default()
-    
+
     // Create client
     client, err := natsclient.NewClient(cfg, logger)
     if err != nil {
         log.Fatalf("Failed to create NATS client: %v", err)
     }
     defer client.Close()
-    
+
     // Publish a message
     ctx := context.Background()
     traceID := "550e8400-e29b-41d4-a716-446655440000"
     ctx = natsclient.WithTraceID(ctx, traceID)
-    
+
     subject := natsclient.NotificationWorkItemCreated(traceID)
     data := map[string]interface{}{
         "work_item_id": "work-123",
         "type":         "story",
         "title":        "New feature",
     }
-    
+
     err = client.Publish(ctx, subject, data)
     if err != nil {
         log.Fatalf("Failed to publish: %v", err)

@@ -1,7 +1,7 @@
 /**
  * Login endpoint tests for go_auth service
  * Tests authentication functionality including valid/invalid credentials
- * 
+ *
  * @tags @go_auth
  * Requirements: 16.1, 16.6
  */
@@ -26,7 +26,7 @@ test.describe('Login Endpoint Tests @go_auth', () => {
   test('should successfully login with valid credentials', async () => {
     // Feature: playwright-api-testing, Property 1: Authentication Token Validity
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     // Use the login method which handles form-urlencoded format
     const tokenResponse = await apiClient.login(
       credentials.testUserUsername,
@@ -62,7 +62,7 @@ test.describe('Login Endpoint Tests @go_auth', () => {
 
   test('should fail login with invalid username', async () => {
     // Feature: playwright-api-testing, Property 9: Authenticated Request Authorization
-    
+
     // Attempt login with invalid username - should throw error
     await expect(async () => {
       await apiClient.login('nonexistent_user_12345', credentials.testUserPassword);
@@ -71,7 +71,7 @@ test.describe('Login Endpoint Tests @go_auth', () => {
 
   test('should fail login with invalid password', async () => {
     // Feature: playwright-api-testing, Property 9: Authenticated Request Authorization
-    
+
     // Attempt login with invalid password - should throw error
     await expect(async () => {
       await apiClient.login(credentials.testUserUsername, 'wrong_password_12345');
@@ -80,10 +80,10 @@ test.describe('Login Endpoint Tests @go_auth', () => {
 
   test('should fail login with missing username field', async () => {
     const loginUrl = `${config.services.goAuth.baseUrl}/auth/login`;
-    
+
     const formData = new URLSearchParams();
     formData.append('password', credentials.testUserPassword);
-    
+
     const response = await apiClient.postForm(loginUrl, formData);
 
     // Verify response status is 400 Bad Request or 401 Unauthorized
@@ -92,10 +92,10 @@ test.describe('Login Endpoint Tests @go_auth', () => {
 
   test('should fail login with missing password field', async () => {
     const loginUrl = `${config.services.goAuth.baseUrl}/auth/login`;
-    
+
     const formData = new URLSearchParams();
     formData.append('username', credentials.testUserUsername);
-    
+
     const response = await apiClient.postForm(loginUrl, formData);
 
     // Verify response status is 400 Bad Request or 401 Unauthorized
@@ -111,7 +111,7 @@ test.describe('Login Endpoint Tests @go_auth', () => {
 
   test('should include refresh token in successful login response', async () => {
     // Feature: playwright-api-testing, Property 1: Authentication Token Validity
-    
+
     const tokenResponse = await apiClient.login(
       credentials.testUserUsername,
       credentials.testUserPassword
@@ -125,7 +125,7 @@ test.describe('Login Endpoint Tests @go_auth', () => {
 
   test('should validate JWT token structure and claims', async () => {
     // Feature: playwright-api-testing, Property 1: Authentication Token Validity
-    
+
     const tokenResponse = await apiClient.login(
       credentials.testUserUsername,
       credentials.testUserPassword
@@ -140,9 +140,9 @@ test.describe('Login Endpoint Tests @go_auth', () => {
     expect(tokenPayload).toHaveProperty('iat'); // Issued at time
 
     // Verify user-specific claims (Keycloak typically includes these)
-    const hasUserIdentifier = 
-      tokenPayload.preferred_username || 
-      tokenPayload.username || 
+    const hasUserIdentifier =
+      tokenPayload.preferred_username ||
+      tokenPayload.username ||
       tokenPayload.email;
     expect(hasUserIdentifier).toBeTruthy();
 

@@ -6,7 +6,7 @@ DROP FUNCTION IF EXISTS get_next_ticket_number(UUID);
 -- Remove columns from work_items
 DROP INDEX IF EXISTS idx_work_items_project_ticket;
 DROP INDEX IF EXISTS idx_work_items_project_id;
-ALTER TABLE work_items 
+ALTER TABLE work_items
 DROP COLUMN IF EXISTS ticket_number,
 DROP COLUMN IF EXISTS project_id;
 

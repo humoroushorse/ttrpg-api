@@ -2,7 +2,7 @@
 
 import time
 import uuid
-from typing import Awaitable, Callable
+from collections.abc import Awaitable, Callable
 
 from loguru import logger
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -29,7 +29,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         """
         request_id = request.headers.get("X-Request-ID")
         if not request_id:
-            request_id = str(uuid.uuid4())
+            request_id = str(uuid.uuid7())
 
         # Add context to all loggers in all views
         with logger.contextualize(request_id=request_id):

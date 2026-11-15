@@ -11,7 +11,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 # all models must be imported before attempting to define relationships
-import py_event_planning.database.all_models  # noqa: W0611
+import py_event_planning.database.all_models  # noqa: F401
 from py_event_planning import shared
 from py_event_planning.core.config import Settings, get_settings
 from py_event_planning.database.base_class import EventPlanningSchemaBase

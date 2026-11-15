@@ -1,12 +1,13 @@
 """Repository: spell."""
 
-from typing import Any, Dict, List, Tuple
+from typing import Any
+
+from sqlalchemy.orm import Session
 
 from dnd import models
 from dnd.models.spell import Spell
 from dnd.repository.base import RepositoryBase
 from dnd.schemas.spell import SpellCreate, SpellUpdate
-from sqlalchemy.orm import Session
 
 
 class RepositorySpell(RepositoryBase[Spell, SpellCreate, SpellUpdate]):
@@ -16,14 +17,14 @@ class RepositorySpell(RepositoryBase[Spell, SpellCreate, SpellUpdate]):
     def query_special(
         self,
         db: Session,
-        params: Dict[str, List[Any] | str | bool | None],
+        params: dict[str, list[Any] | str | bool | None],
         *,
         order_by: Any | None = None,
         limit: int | None = 100,
         offset: int | None = 0,
-        class_names: List[str] | None = None,
-        source_names: List[str] | None = None,
-    ) -> Tuple[List[models.spell.Spell], int]:
+        class_names: list[str] | None = None,
+        source_names: list[str] | None = None,
+    ) -> tuple[list[models.spell.Spell], int]:
         """Query spells with foreign key information.
 
         Args:

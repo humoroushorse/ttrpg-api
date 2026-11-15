@@ -250,7 +250,7 @@ func createTestData(db *sql.DB) error {
 
 	// Insert test data
 	_, err = db.Exec(`
-		INSERT INTO test_table (name) VALUES 
+		INSERT INTO test_table (name) VALUES
 		('Test 1'),
 		('Test 2'),
 		('Test 3')

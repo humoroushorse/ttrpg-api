@@ -11,8 +11,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 # all models must be imported before attempting to define relationships
-import py_dnd.database.all_models  # noqa: W0611
-from py_dnd import shared
+import py_dnd.database.all_models  # noqa: F401
 from py_dnd.core.config import Settings, get_settings
 from py_dnd.database.base_class import DndSchemaBase
 from py_dnd.shared.enums import DbSchemaEnum
@@ -36,10 +35,27 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 target_metadata = DndSchemaBase.metadata
 
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
+# Alembic owns schema `dnd` only. Other schemas in this database belong to other tools: go_dnd's
+# Go-only tables (`dnd_vtt`), Keycloak (`keycloak_schema`), and `public`. Autogenerate must not see
+# them, or it proposes dropping every table it has no model for.
+MANAGED_SCHEMA = DbSchemaEnum.DND.value
+
+
+def include_name(name: str | None, type_: str, parent_names: object) -> bool:  # noqa: ARG001
+    """Reflect only the managed schema (``None`` is the connection's default schema, ``public``)."""
+    if type_ == "schema":
+        return name == MANAGED_SCHEMA
+    return True
+
+
+# the same options online and offline
+CONTEXT_OPTS: dict[str, object] = {
+    "target_metadata": target_metadata,
+    "version_table_schema": MANAGED_SCHEMA,
+    "include_schemas": True,
+    "include_name": include_name,
+    "compare_type": True,
+}
 
 
 def run_migrations_offline() -> None:
@@ -56,10 +72,9 @@ def run_migrations_offline() -> None:
     """
     context.configure(
         url=settings.POSTGRES_MASTER_URI,
-        target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
-        version_table_schema=DbSchemaEnum.DND.value,
+        **CONTEXT_OPTS,  # type: ignore[arg-type]
     )
 
     with context.begin_transaction():
@@ -68,7 +83,7 @@ def run_migrations_offline() -> None:
 
 def do_run_migrations(connection: Connection) -> None:
     """Run migrations with your given database connection."""
-    context.configure(connection=connection, target_metadata=target_metadata)
+    context.configure(connection=connection, **CONTEXT_OPTS)  # type: ignore[arg-type]
 
     with context.begin_transaction():
         context.run_migrations()
@@ -98,15 +113,8 @@ async def run_migrations_online() -> None:
     )
 
     async with connectable.connect() as connection:
-        await connection.execute(text(f"CREATE SCHEMA IF NOT EXISTS {shared.enums.DbSchemaEnum.DND.value}"))
+        await connection.execute(text(f"CREATE SCHEMA IF NOT EXISTS {MANAGED_SCHEMA}"))
         await connection.commit()
-        context.configure(
-            url=settings.POSTGRES_MASTER_URI,
-            target_metadata=target_metadata,
-            # literal_binds=True,
-            dialect_opts={"paramstyle": "named"},
-            version_table_schema=DbSchemaEnum.DND.value,
-        )
         await connection.run_sync(do_run_migrations)
 
     await connectable.dispose()

@@ -1,7 +1,7 @@
 /**
  * Work Items endpoint tests for go_sprint service
  * Tests work item list, filtering, pagination, and CRUD operations
- * 
+ *
  * @tags @go_sprint
  * Requirements: 10.1, 10.2, 10.3, 10.4, 10.5
  */
@@ -49,11 +49,11 @@ test.describe('Work Items List Endpoint Tests @go_sprint', () => {
   test.beforeEach(async () => {
     config = getConfig();
     apiClient = new APIClient(config, false);
-    
+
     // Login and set auth token
     const user = await loginAsUser(apiClient);
     apiClient.setAuthToken(user.token);
-    
+
     testDataHelper = new TestDataHelper(apiClient);
   });
 
@@ -65,10 +65,10 @@ test.describe('Work Items List Endpoint Tests @go_sprint', () => {
   test('should list work items without filters', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
     // Feature: playwright-api-testing, Property 10: Pagination Consistency
-    
+
     // Create some test work items
     await testDataHelper.createWorkItems(3);
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems`;
     const response = await apiClient.get<WorkItemListResponse>(url);
 
@@ -101,12 +101,12 @@ test.describe('Work Items List Endpoint Tests @go_sprint', () => {
 
   test('should filter work items by type', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     // Create work items of different types
     await testDataHelper.createWorkItem({ type: 'epic', title: 'Test Epic' });
     await testDataHelper.createWorkItem({ type: 'story', title: 'Test Story' });
     await testDataHelper.createWorkItem({ type: 'defect', title: 'Test Defect' });
-    
+
     // Filter by type 'story'
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems`;
     const response = await apiClient.get<WorkItemListResponse>(url, { params: { type: 'story' } });
@@ -121,7 +121,7 @@ test.describe('Work Items List Endpoint Tests @go_sprint', () => {
     // Verify all returned items are of type 'story'
     const storyItems = response.data.items.filter((item: WorkItem) => item.type === 'story');
     expect(storyItems.length).toBeGreaterThanOrEqual(1);
-    
+
     // Verify no items of other types are returned
     const nonStoryItems = response.data.items.filter((item: WorkItem) => item.type !== 'story');
     expect(nonStoryItems.length).toBe(0);
@@ -129,13 +129,13 @@ test.describe('Work Items List Endpoint Tests @go_sprint', () => {
 
   test('should filter work items by status', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     // Create work items with different statuses
     const todoItem = await testDataHelper.createWorkItem({ title: 'Todo Item' });
-    
+
     // Note: Status is set to 'todo' by default in the backend
     // We would need to update the item to test other statuses
-    
+
     // Filter by status 'todo'
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems`;
     const response = await apiClient.get<WorkItemListResponse>(url, { params: { status: 'todo' } });
@@ -149,7 +149,7 @@ test.describe('Work Items List Endpoint Tests @go_sprint', () => {
 
     // Verify at least our created item is present
     expect(response.data.items.length).toBeGreaterThanOrEqual(1);
-    
+
     // Verify all returned items have status 'todo'
     const todoItems = response.data.items.filter((item: WorkItem) => item.status === 'todo');
     expect(todoItems.length).toBe(response.data.items.length);
@@ -157,10 +157,10 @@ test.describe('Work Items List Endpoint Tests @go_sprint', () => {
 
   test('should paginate work items with limit parameter', async () => {
     // Feature: playwright-api-testing, Property 10: Pagination Consistency
-    
+
     // Create multiple work items
     await testDataHelper.createWorkItems(5);
-    
+
     // Request with limit of 2
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems`;
     const response = await apiClient.get<WorkItemListResponse>(url, { params: { limit: 2 } });
@@ -177,7 +177,7 @@ test.describe('Work Items List Endpoint Tests @go_sprint', () => {
 
     // Verify pagination metadata
     expect(response.data.pagination).toHaveProperty('has_more');
-    
+
     // If there are more items, has_more should be true
     if (response.data.items.length === 2) {
       // We created 5 items, so there should be more
@@ -187,10 +187,10 @@ test.describe('Work Items List Endpoint Tests @go_sprint', () => {
 
   test('should support cursor-based pagination', async () => {
     // Feature: playwright-api-testing, Property 10: Pagination Consistency
-    
+
     // Create multiple work items
     await testDataHelper.createWorkItems(5);
-    
+
     // Get first page
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems`;
     const firstPageResponse = await apiClient.get<WorkItemListResponse>(url, { params: { limit: 2 } });
@@ -209,11 +209,11 @@ test.describe('Work Items List Endpoint Tests @go_sprint', () => {
 
       expect(secondPageResponse.status).toBe(200);
       expect(secondPageResponse.data).toHaveProperty('items');
-      
+
       // Verify we got different items (no duplicates)
       const firstPageIds = firstPageResponse.data.items.map((item: WorkItemSummary) => item.id);
       const secondPageIds = secondPageResponse.data.items.map((item: WorkItemSummary) => item.id);
-      
+
       const duplicates = firstPageIds.filter((id: string) => secondPageIds.includes(id));
       expect(duplicates.length).toBe(0);
     }
@@ -221,9 +221,9 @@ test.describe('Work Items List Endpoint Tests @go_sprint', () => {
 
   test('should validate response schema for work items list', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     await testDataHelper.createWorkItem();
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems`;
     const response = await apiClient.get<WorkItemListResponse>(url);
 
@@ -269,7 +269,7 @@ test.describe('Work Items List Endpoint Tests @go_sprint', () => {
 
   test('should handle empty results gracefully', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     // Query with a filter that should return no results
     // Note: Using a status filter that won't match any of our test data
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems`;
@@ -296,11 +296,11 @@ test.describe('Work Items CRUD Endpoint Tests @go_sprint', () => {
   test.beforeEach(async () => {
     config = getConfig();
     apiClient = new APIClient(config, false);
-    
+
     // Login and set auth token
     const user = await loginAsUser(apiClient);
     apiClient.setAuthToken(user.token);
-    
+
     testDataHelper = new TestDataHelper(apiClient);
   });
 
@@ -312,7 +312,7 @@ test.describe('Work Items CRUD Endpoint Tests @go_sprint', () => {
   test('should create work item with valid payload', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
     // Feature: playwright-api-testing, Property 7: Test Data Cleanup
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems`;
     const payload = {
       type: 'story',
@@ -347,7 +347,7 @@ test.describe('Work Items CRUD Endpoint Tests @go_sprint', () => {
 
   test('should fail to create work item with invalid payload - missing required fields', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems`;
     const payload = {
       type: 'story',
@@ -367,7 +367,7 @@ test.describe('Work Items CRUD Endpoint Tests @go_sprint', () => {
 
   test('should fail to create work item with invalid type', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems`;
     const payload = {
       type: 'invalid_type',
@@ -387,7 +387,7 @@ test.describe('Work Items CRUD Endpoint Tests @go_sprint', () => {
 
   test('should fail to create work item with empty title', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems`;
     const payload = {
       type: 'story',
@@ -407,7 +407,7 @@ test.describe('Work Items CRUD Endpoint Tests @go_sprint', () => {
 
   test('should get work item by ID for existing item', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     // Create a work item first
     const createdItem = await testDataHelper.createWorkItem({
       title: 'Test Item for Retrieval',
@@ -431,7 +431,7 @@ test.describe('Work Items CRUD Endpoint Tests @go_sprint', () => {
 
   test('should return 404 for non-existing work item ID', async () => {
     // Feature: playwright-api-testing, Property 8: Missing Endpoint Detection
-    
+
     // Use a UUID that doesn't exist
     const nonExistentId = '00000000-0000-0000-0000-000000000000';
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems/${nonExistentId}`;
@@ -448,7 +448,7 @@ test.describe('Work Items CRUD Endpoint Tests @go_sprint', () => {
 
   test('should validate created work item matches request payload', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems`;
     const payload = {
       type: 'defect',
@@ -475,10 +475,10 @@ test.describe('Work Items CRUD Endpoint Tests @go_sprint', () => {
 
   test('should require authentication for work items endpoints', async () => {
     // Feature: playwright-api-testing, Property 9: Authenticated Request Authorization
-    
+
     // Create a new client without authentication
     const unauthClient = new APIClient(config, false);
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems`;
     const response = await unauthClient.get<ErrorResponse>(url);
 
@@ -491,7 +491,7 @@ test.describe('Work Items CRUD Endpoint Tests @go_sprint', () => {
 
   test('should create work item with optional fields', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/workitems`;
     const payload = {
       type: 'epic',

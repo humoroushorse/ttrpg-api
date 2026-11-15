@@ -21,7 +21,7 @@ package handlers
 import (
     "encoding/json"
     "net/http"
-    
+
     "github.com/humoroushorse/go_sprint/api/generated"
     "github.com/humoroushorse/go_sprint/internal/service"
 )
@@ -48,7 +48,7 @@ func NewAPIHandler(
 // ListWorkItems implements the generated ServerInterface
 func (h *APIHandler) ListWorkItems(w http.ResponseWriter, r *http.Request, params generated.ListWorkItemsParams) {
     ctx := r.Context()
-    
+
     // Extract query parameters
     filters := service.WorkItemFilters{
         Type:       params.Type,
@@ -56,14 +56,14 @@ func (h *APIHandler) ListWorkItems(w http.ResponseWriter, r *http.Request, param
         Cursor:     params.Cursor,
         Limit:      params.Limit,
     }
-    
+
     // Call service layer
     result, err := h.workItemService.ListWorkItems(ctx, filters)
     if err != nil {
         writeError(w, http.StatusInternalServerError, "INTERNAL_ERROR", err.Error())
         return
     }
-    
+
     // Convert to API response type
     response := generated.WorkItemListResponse{
         Items: convertWorkItems(result.Items),
@@ -73,51 +73,51 @@ func (h *APIHandler) ListWorkItems(w http.ResponseWriter, r *http.Request, param
             TotalCount:  result.TotalCount,
         },
     }
-    
+
     writeJSON(w, http.StatusOK, response)
 }
 
 // CreateWorkItem implements the generated ServerInterface
 func (h *APIHandler) CreateWorkItem(w http.ResponseWriter, r *http.Request) {
     ctx := r.Context()
-    
+
     // Decode request body
     var req generated.CreateWorkItemRequest
     if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
         writeError(w, http.StatusBadRequest, "INVALID_REQUEST", "Invalid JSON")
         return
     }
-    
+
     // Validate request
     if err := validateCreateWorkItemRequest(req); err != nil {
         writeError(w, http.StatusBadRequest, "VALIDATION_ERROR", err.Error())
         return
     }
-    
+
     // Call service layer
     workItem, err := h.workItemService.CreateWorkItem(ctx, convertCreateRequest(req))
     if err != nil {
         writeError(w, http.StatusInternalServerError, "INTERNAL_ERROR", err.Error())
         return
     }
-    
+
     // Convert to API response type
     response := convertWorkItem(workItem)
-    
+
     writeJSON(w, http.StatusCreated, response)
 }
 
 // GetWorkItem implements the generated ServerInterface
 func (h *APIHandler) GetWorkItem(w http.ResponseWriter, r *http.Request, id string) {
     ctx := r.Context()
-    
+
     // Parse UUID
     workItemID, err := uuid.Parse(id)
     if err != nil {
         writeError(w, http.StatusBadRequest, "INVALID_ID", "Invalid work item ID")
         return
     }
-    
+
     // Call service layer
     workItem, err := h.workItemService.GetWorkItem(ctx, workItemID)
     if err != nil {
@@ -128,10 +128,10 @@ func (h *APIHandler) GetWorkItem(w http.ResponseWriter, r *http.Request, id stri
         writeError(w, http.StatusInternalServerError, "INTERNAL_ERROR", err.Error())
         return
     }
-    
+
     // Convert to API response type
     response := convertWorkItem(workItem)
-    
+
     writeJSON(w, http.StatusOK, response)
 }
 
@@ -198,10 +198,10 @@ package main
 import (
     "log"
     "net/http"
-    
+
     "github.com/go-chi/chi/v5"
     "github.com/go-chi/chi/v5/middleware"
-    
+
     "github.com/humoroushorse/go_sprint/api/generated"
     "github.com/humoroushorse/go_sprint/internal/handlers"
     "github.com/humoroushorse/go_sprint/internal/service"
@@ -211,21 +211,21 @@ func main() {
     // Initialize services
     workItemService := service.NewWorkItemService(/* dependencies */)
     sprintService := service.NewSprintService(/* dependencies */)
-    
+
     // Create API handler
     apiHandler := handlers.NewAPIHandler(workItemService, sprintService)
-    
+
     // Create Chi router
     r := chi.NewRouter()
-    
+
     // Add middleware
     r.Use(middleware.Logger)
     r.Use(middleware.Recoverer)
     r.Use(middleware.RequestID)
-    
+
     // Register generated handlers
     generated.HandlerFromMux(apiHandler, r)
-    
+
     // Start server
     log.Println("Starting server on :8003")
     if err := http.ListenAndServe(":8003", r); err != nil {
@@ -249,7 +249,7 @@ func validateCreateWorkItemRequest(req generated.CreateWorkItemRequest) error {
     if req.Description == "" {
         return errors.New("description is required")
     }
-    
+
     // Validate enum values
     validTypes := map[generated.WorkItemType]bool{
         generated.Epic:   true,
@@ -259,7 +259,7 @@ func validateCreateWorkItemRequest(req generated.CreateWorkItemRequest) error {
     if !validTypes[req.Type] {
         return errors.New("invalid work item type")
     }
-    
+
     return nil
 }
 ```
@@ -314,10 +314,10 @@ import (
     "net/http"
     "net/http/httptest"
     "testing"
-    
+
     "github.com/stretchr/testify/assert"
     "github.com/stretchr/testify/require"
-    
+
     "github.com/humoroushorse/go_sprint/api/generated"
     "github.com/humoroushorse/go_sprint/internal/handlers"
 )
@@ -325,7 +325,7 @@ import (
 func TestCreateWorkItem(t *testing.T) {
     // Setup
     handler := setupTestHandler(t)
-    
+
     // Create request
     req := generated.CreateWorkItemRequest{
         Type:        generated.Story,
@@ -333,24 +333,24 @@ func TestCreateWorkItem(t *testing.T) {
         Description: "Test Description",
         Priority:    generated.High,
     }
-    
+
     body, err := json.Marshal(req)
     require.NoError(t, err)
-    
+
     // Make request
     httpReq := httptest.NewRequest(http.MethodPost, "/api/v1/workitems", bytes.NewReader(body))
     httpReq.Header.Set("Content-Type", "application/json")
     w := httptest.NewRecorder()
-    
+
     handler.CreateWorkItem(w, httpReq)
-    
+
     // Assert response
     assert.Equal(t, http.StatusCreated, w.Code)
-    
+
     var response generated.WorkItem
     err = json.NewDecoder(w.Body).Decode(&response)
     require.NoError(t, err)
-    
+
     assert.Equal(t, req.Title, response.Title)
     assert.Equal(t, req.Type, response.Type)
 }

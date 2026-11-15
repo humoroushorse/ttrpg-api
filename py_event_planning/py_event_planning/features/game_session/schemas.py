@@ -36,7 +36,8 @@ class GameSessionSchemaBase(BaseModel, MixinBookeepingCreate, MixinBookeepingUpd
     description: str = Field(title="Description", min_length=3, max_length=360)
     start_date: datetime.datetime = Field(title="Start Date & Time")
     end_date: datetime.datetime = Field(title="End Date & Time")
-    max_players: int | None = Field(default=6, title="Max Players", min=1)
+    # No lower bound when reading: stored rows shouldn't fail to load
+    max_players: int | None = Field(default=6, title="Max Players")
     is_public: bool | None = Field(default=True, title="Is Public?")
 
 
@@ -65,14 +66,14 @@ class GameSessionCreateInput(BaseModel, MixinImageUrl):
     description: str = Field(title="Description", min_length=3, max_length=360)
     start_date: datetime.datetime = Field(title="Start Date & Time")
     end_date: datetime.datetime = Field(title="End Date & Time")
-    max_players: int | None = Field(default=6, title="Max Players", min=1)
+    max_players: int | None = Field(default=6, title="Max Players", ge=1)
     is_public: bool | None = Field(default=True, title="Is Public?")
 
     @field_validator("start_date", "end_date")
     @classmethod
     def force_utc(cls, v: datetime.datetime) -> datetime.datetime:
         """Force UTC and replace with no TZ info."""
-        dt = v.astimezone(datetime.timezone.utc)
+        dt = v.astimezone(datetime.UTC)
         return dt
 
 
@@ -96,14 +97,14 @@ class GameSessionUpdate(BaseModel, MixinBookeepingUpdate, MixinImageUrl):
     description: str = Field(title="Description", min_length=3, max_length=360)
     start_date: datetime.datetime = Field(title="Start Date & Time")
     end_date: datetime.datetime = Field(title="End Date & Time")
-    max_players: int | None = Field(default=6, title="Max Players", min=1)
+    max_players: int | None = Field(default=6, title="Max Players", ge=1)
     is_public: bool | None = Field(default=True, title="Is Public?")
 
     @field_validator("start_date", "end_date")
     @classmethod
     def force_utc(cls, v: datetime.datetime) -> datetime.datetime:
         """Force UTC and replace with no TZ info."""
-        dt = v.astimezone(datetime.timezone.utc)
+        dt = v.astimezone(datetime.UTC)
         return dt
 
 

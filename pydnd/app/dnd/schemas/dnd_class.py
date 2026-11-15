@@ -1,8 +1,6 @@
 """Schemas for the dnd_class table and its CRUD operations."""
 
-from typing import List
-
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class DndClassBase(BaseModel):
@@ -21,17 +19,17 @@ class DndClassBase(BaseModel):
         title="Saving Throw Proficiencies",
         description="Saving threows the class is proficient in.",
     )
-    armor_proficiencies: List[str] | None = Field(
+    armor_proficiencies: list[str] | None = Field(
         title="Armor Proficiencies",
         description='List of armor tags this class is proficient in. ["armor"] means all armor.',
         default=[],
     )
-    shield_proficiencies: List[str] | None = Field(
+    shield_proficiencies: list[str] | None = Field(
         title="Shield Proficiencies",
         description='List of shield tags this class is proficient in. ["shield"] means all shields.',
         default=[],
     )
-    weapon_proficiencies: List[str] | None = Field(
+    weapon_proficiencies: list[str] | None = Field(
         title="Shield Proficiencies",
         description='List of weapon tags this class is proficient in. ["weapon"] means all weapons.',
         default=[],
@@ -62,7 +60,4 @@ class DndClassUpdate(DndClassBase):
 class DndClassResponse(DndClassBase):
     """Schema for transforming ORM Model into a response object."""
 
-    class Config:
-        """Pydantic model configuration."""
-
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

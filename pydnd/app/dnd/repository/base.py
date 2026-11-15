@@ -1,23 +1,20 @@
 """Base for CRUD repositories."""
 
 from enum import Enum
-from typing import Any, Dict, Generic, List, Tuple, Type, TypeVar
+from typing import Any
 
-from dnd.database.base_class import DbBase
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from sqlalchemy.orm.attributes import InstrumentedAttribute
 
-ModelType = TypeVar("ModelType", bound=DbBase)
-CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
-UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
+from dnd.database.base_class import DbBase
 
 
-class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
+class RepositoryBase[ModelType: DbBase, CreateSchemaType: BaseModel, UpdateSchemaType: BaseModel]:
     """Base class for CRUD repositories."""
 
-    def __init__(self, model: Type[ModelType]):
+    def __init__(self, model: type[ModelType]):
         """Repository (CRUD) object with default methods to Create, Read, Update, Delete (Repository).
 
         Args:
@@ -30,12 +27,12 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def query(
         self,
         db: Session,
-        params: Dict[str, List[Any] | str | None],
+        params: dict[str, list[Any] | str | None],
         *,
         order_by: Any | None = None,
         limit: int | None = 100,
         offset: int | None = 0,
-    ) -> List[ModelType]:
+    ) -> list[ModelType]:
         """Query a list of Type[ModelType] with filters.
 
         Args:
@@ -72,7 +69,7 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         return db.query(self.model).filter(self.model.id == model_id).one_or_none()
 
-    def get_multi(self, db: Session, *, offset: int = 0, limit: int = 100) -> Tuple[List[ModelType], int]:
+    def get_multi(self, db: Session, *, offset: int = 0, limit: int = 100) -> tuple[list[ModelType], int]:
         """Get a list of Type[ModelType] without filters.
 
         Args:
@@ -105,7 +102,7 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db.refresh(db_obj)
         return db_obj
 
-    def update(self, db: Session, *, db_obj: ModelType, obj_in: UpdateSchemaType | Dict[str, Any]) -> ModelType:
+    def update(self, db: Session, *, db_obj: ModelType, obj_in: UpdateSchemaType | dict[str, Any]) -> ModelType:
         """Update an existing Type[CreateSchemaType].
 
         Args:
@@ -147,7 +144,7 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def apply_param_filters_to_model(
         self,
         model: ModelType,
-        params: Dict[str, Any | List[Any]] | None = None,
+        params: dict[str, Any | list[Any]] | None = None,
     ) -> ModelType:
         """Takes a param dict and turns it into SQLAlchemy filters.
 
@@ -167,7 +164,7 @@ class RepositoryBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         model = model.filter(*filters)
         return model
 
-    def _get_filter_list(self, key: str, value: List[Any] | Any | None, model: Any | None = None) -> List[Any]:
+    def _get_filter_list(self, key: str, value: list[Any] | Any | None, model: Any | None = None) -> list[Any]:
         """Gets filters based on the param's value type.
 
         Args:

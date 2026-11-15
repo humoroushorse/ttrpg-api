@@ -1,6 +1,6 @@
 """API dependencies."""
 
-from typing import Generator
+from collections.abc import Generator
 
 from dnd.database.session import SessionLocal
 

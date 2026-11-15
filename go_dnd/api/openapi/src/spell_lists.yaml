@@ -1,0 +1,99 @@
+tags:
+- name: Class Spell List
+paths:
+  /api/v1/classes/{class_id}/spells:
+    get:
+      tags: [Class Spell List]
+      operationId: readClassSpells
+      summary: The spells on a class's list (live spells only), by spell name
+      description: For the spells themselves, use /spells/query?filter={"classes":{"filterType":"set","values":["wizard"]}}.
+      parameters:
+      - {name: class_id, in: path, required: true, schema: {type: string, format: uuid}}
+      responses:
+        '200':
+          description: The class's links
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/GenericListResponse'
+                - type: object
+                  properties:
+                    entities:
+                      type: array
+                      items: {$ref: '#/components/schemas/SpellClassLink'}
+        '404': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+  /api/v1/classes/{class_id}/spells/{spell_id}:
+    parameters:
+    - {name: class_id, in: path, required: true, schema: {type: string, format: uuid}}
+    - {name: spell_id, in: path, required: true, schema: {type: string, format: uuid}}
+    post:
+      tags: [Class Spell List]
+      operationId: addClassSpell
+      summary: Put a spell on a class's list; returns the existing link, unchanged, if it's already there
+      parameters:
+      - name: qualifier
+        in: query
+        description: '"Optional" or a subclass ("Dunamancy"); omit for the class list'
+        schema: {type: string}
+      responses:
+        '200':
+          description: The link
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/SpellClassLink'}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+    delete:
+      tags: [Class Spell List]
+      operationId: removeClassSpell
+      summary: Take a spell off a class's list (deletes the link). Returns the spell id
+      responses:
+        '200':
+          description: The spell id
+          content:
+            application/json:
+              schema: {type: string, format: uuid}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+  /api/v1/classes/spell-lists/bulk:
+    post:
+      tags: [Class Spell List]
+      operationId: bulkLoadSpellLists
+      summary: Add links from a spells _all.json (each row's classes); only adds, never removes
+      description: >-
+        Spells are found by (source, slug) and classes by name in the spell's edition, so load sources,
+        spells and classes first. "Bard (Optional)" links Bard with qualifier "Optional". A class name
+        with no class is a warning; a missing spell is an error, and any error saves nothing.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file: {type: string, format: binary}
+      responses:
+        '200':
+          description: Each spell as created (its first links), updated (links added) or unchanged
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/BulkLoadResponse'}
+        '400': {$ref: '#/components/responses/Error'}
+        '401': {$ref: '#/components/responses/Error'}
+components:
+  schemas:
+    SpellClassLink:
+      type: object
+      required: [spell_id, class_id, created_at]
+      properties:
+        spell_id: {type: string, format: uuid}
+        class_id: {type: string, format: uuid}
+        qualifier:
+          type: string
+          nullable: true
+          description: '"Optional" (Tasha''s optional class spells) or a subclass ("Dunamancy"); null for the class list'
+        created_at: {type: string, format: date-time}
+        created_by: {type: string, format: uuid, nullable: true}

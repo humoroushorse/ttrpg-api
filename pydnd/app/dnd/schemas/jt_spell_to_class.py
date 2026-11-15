@@ -1,6 +1,6 @@
 """Schemas for the jt_spell_to_class table and its CRUD operations."""
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class JtSpellToClassBase(BaseModel):
@@ -32,7 +32,4 @@ class JtSpellToClassUpdate(JtSpellToClassBase):
 class JtSpellToClassResponse(JtSpellToClassBase):
     """Schema for transforming ORM Model into a response object."""
 
-    class Config:
-        """Pydantic model configuration."""
-
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

@@ -22,7 +22,7 @@ graph TB
                 SPRINT1[Sprint Service Pod 1<br/>sprint-management:v1.2.3]
                 SPRINT2[Sprint Service Pod 2<br/>sprint-management:v1.2.3]
                 SPRINT3[Sprint Service Pod 3<br/>sprint-management:v1.2.3]
-                
+
                 AUTH1[Auth Service Pod 1<br/>auth-service:v1.0.5]
                 AUTH2[Auth Service Pod 2<br/>auth-service:v1.0.5]
             end
@@ -511,15 +511,15 @@ data:
       port: 8080
       read_timeout: 30s
       write_timeout: 30s
-    
+
     logging:
       level: info
       format: json
-    
+
     metrics:
       enabled: true
       port: 8081
-    
+
     rate_limiting:
       enabled: true
       requests_per_minute: 100

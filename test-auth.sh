@@ -60,7 +60,7 @@ if [ ! -z "$REFRESH_TOKEN" ]; then
     REFRESH_RESPONSE=$(curl -s -X POST "$BASE_URL/refresh" \
       -H "Content-Type: application/json" \
       -d "{\"refresh_token\":\"$REFRESH_TOKEN\"}")
-    
+
     echo "Response: $REFRESH_RESPONSE"
     echo ""
 fi

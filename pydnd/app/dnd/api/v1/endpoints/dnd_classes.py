@@ -1,12 +1,13 @@
 """API /classes endpoint."""
 
 import json
-from typing import Any, List
+from typing import Any
+
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from sqlalchemy.orm import Session
 
 from dnd import repository, schemas
 from dnd.api.deps import get_db
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
-from sqlalchemy.orm import Session
 
 router = APIRouter()
 
@@ -77,7 +78,7 @@ def create_upload_file(
             detail=f"Invalid document type. Expected: {allowed_file_types}, Received: {upload_file.content_type}",
         )
     response = schemas.responses.BulkLoadResponse(filename=upload_file.filename)
-    json_data: List[dict] = json.load(upload_file.file)
+    json_data: list[dict] = json.load(upload_file.file)
     for jd in json_data:
         try:
             dnd_class = schemas.dnd_class.DndClassCreate(**jd)

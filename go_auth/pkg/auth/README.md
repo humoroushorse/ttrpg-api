@@ -84,12 +84,12 @@ func myHandler(w http.ResponseWriter, r *http.Request) {
         http.Error(w, "Unauthorized", http.StatusUnauthorized)
         return
     }
-    
+
     // Check roles
     if user.HasRole("admin") {
         // Admin-specific logic
     }
-    
+
     // Use user information
     fmt.Fprintf(w, "Hello, %s!", user.Username)
 }

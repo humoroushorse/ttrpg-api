@@ -4,13 +4,13 @@ import time
 from functools import lru_cache
 from typing import Annotated
 
-import aiohttp
 from fastapi import Cookie, Depends, HTTPException, status
 from fastapi.security import OAuth2AuthorizationCodeBearer
 from keycloak import KeycloakAdmin
 from keycloak.exceptions import KeycloakAuthenticationError, KeycloakGetError
 from keycloak.keycloak_openid import KeycloakOpenID
 from loguru import logger
+lazy import aiohttp
 
 from py_event_planning.core.config import Settings, get_settings
 from py_event_planning.features.auth.schemas import (

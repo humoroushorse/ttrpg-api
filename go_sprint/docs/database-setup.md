@@ -157,7 +157,7 @@ User information synced from Keycloak:
 
 ```sql
 -- GIN index for full-text search
-CREATE INDEX idx_work_items_search ON work_items 
+CREATE INDEX idx_work_items_search ON work_items
 USING gin(to_tsvector('english', title || ' ' || COALESCE(description, '')));
 
 -- Trigram indexes for fuzzy search
@@ -185,7 +185,7 @@ All timestamps are stored in UTC:
 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW() AT TIME ZONE 'UTC')
 
 -- Trigger for updated_at
-CREATE TRIGGER update_work_items_updated_at 
+CREATE TRIGGER update_work_items_updated_at
 BEFORE UPDATE ON work_items
 FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 ```
@@ -212,11 +212,11 @@ deleted_at TIMESTAMPTZ,
 deleted_by UUID,
 
 -- Partial index for active records
-CREATE INDEX idx_work_items_deleted ON work_items(deleted_at) 
+CREATE INDEX idx_work_items_deleted ON work_items(deleted_at)
 WHERE deleted_at IS NULL;
 
 -- Partial index for soft-deleted records
-CREATE INDEX idx_work_items_soft_deleted ON work_items(deleted_at, deleted_by) 
+CREATE INDEX idx_work_items_soft_deleted ON work_items(deleted_at, deleted_by)
 WHERE deleted_at IS NOT NULL;
 ```
 

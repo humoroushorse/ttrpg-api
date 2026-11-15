@@ -10,15 +10,15 @@ erDiagram
     USERS ||--o{ SPRINTS : "creates"
     USERS ||--o{ COMMENTS : "authors"
     USERS ||--o{ ACTIVITY_LOGS : "performs"
-    
+
     SPRINTS ||--o{ WORK_ITEMS : "contains"
-    
+
     WORK_ITEMS ||--o{ WORK_ITEMS : "parent-child"
     WORK_ITEMS ||--o{ WORK_ITEM_DEPENDENCIES : "source"
     WORK_ITEMS ||--o{ WORK_ITEM_DEPENDENCIES : "target"
     WORK_ITEMS ||--o{ COMMENTS : "has"
     WORK_ITEMS ||--o{ ACTIVITY_LOGS : "tracks"
-    
+
     SPRINTS ||--o{ ACTIVITY_LOGS : "tracks"
     COMMENTS ||--o{ ACTIVITY_LOGS : "tracks"
 
@@ -211,7 +211,7 @@ CREATE INDEX idx_users_email ON users(email);
 
 ```sql
 -- Work items search
-CREATE INDEX idx_work_items_search ON work_items 
+CREATE INDEX idx_work_items_search ON work_items
 USING gin(to_tsvector('english', title || ' ' || COALESCE(description, '')));
 ```
 

@@ -61,7 +61,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalError'
-    
+
     post:
       summary: Create sprint
       description: Create a new sprint with date range and capacity
@@ -118,7 +118,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalError'
-    
+
     put:
       summary: Update sprint
       description: Update an existing sprint
@@ -156,7 +156,7 @@ paths:
           $ref: '#/components/responses/Conflict'
         '500':
           $ref: '#/components/responses/InternalError'
-    
+
     delete:
       summary: Delete sprint
       description: Soft delete a sprint
@@ -972,28 +972,28 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    
+
     Unauthorized:
       description: Unauthorized - authentication required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    
+
     NotFound:
       description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    
+
     Conflict:
       description: Conflict - business rule violation
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    
+
     InternalError:
       description: Internal server error
       content:

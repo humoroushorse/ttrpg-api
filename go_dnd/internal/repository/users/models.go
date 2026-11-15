@@ -5,54 +5,34 @@
 package users
 
 import (
-	"database/sql/driver"
-	"fmt"
-
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
-type DndSpellSchool string
-
-const (
-	DndSpellSchoolAbjuration    DndSpellSchool = "abjuration"
-	DndSpellSchoolAlteration    DndSpellSchool = "alteration"
-	DndSpellSchoolConjuration   DndSpellSchool = "conjuration"
-	DndSpellSchoolDivination    DndSpellSchool = "divination"
-	DndSpellSchoolEnchantment   DndSpellSchool = "enchantment"
-	DndSpellSchoolEvocation     DndSpellSchool = "evocation"
-	DndSpellSchoolTransmutation DndSpellSchool = "transmutation"
-	DndSpellSchoolIllusion      DndSpellSchool = "illusion"
-	DndSpellSchoolInvocation    DndSpellSchool = "invocation"
-	DndSpellSchoolNecromancy    DndSpellSchool = "necromancy"
-)
-
-func (e *DndSpellSchool) Scan(src interface{}) error {
-	switch s := src.(type) {
-	case []byte:
-		*e = DndSpellSchool(s)
-	case string:
-		*e = DndSpellSchool(s)
-	default:
-		return fmt.Errorf("unsupported scan type for DndSpellSchool: %T", src)
-	}
-	return nil
+type DndBackground struct {
+	AbilityScoreBonuses string             `json:"ability_score_bonuses"`
+	SkillProficiencies  []string           `json:"skill_proficiencies"`
+	ToolProficiencies   []string           `json:"tool_proficiencies"`
+	Feat                string             `json:"feat"`
+	EquipmentText       string             `json:"equipment_text"`
+	EquipmentOptions    []byte             `json:"equipment_options"`
+	ID                  pgtype.UUID        `json:"id"`
+	SourceID            pgtype.UUID        `json:"source_id"`
+	Slug                string             `json:"slug"`
+	Name                string             `json:"name"`
+	DndVersion          string             `json:"dnd_version"`
+	DndVersionYear      int32              `json:"dnd_version_year"`
+	IsUnearthedArcana   bool               `json:"is_unearthed_arcana"`
+	IsHomebrew          bool               `json:"is_homebrew"`
+	Marks               []string           `json:"marks"`
+	Description         string             `json:"description"`
+	CreatedAt           pgtype.Timestamptz `json:"created_at"`
+	CreatedBy           pgtype.UUID        `json:"created_by"`
+	UpdatedAt           pgtype.Timestamptz `json:"updated_at"`
+	UpdatedBy           pgtype.UUID        `json:"updated_by"`
+	DeletedAt           pgtype.Timestamptz `json:"deleted_at"`
+	DeletedBy           pgtype.UUID        `json:"deleted_by"`
 }
 
-<<<<<<< Updated upstream
-type NullDndSpellSchool struct {
-	DndSpellSchool DndSpellSchool `json:"dnd_spell_school"`
-	Valid          bool           `json:"valid"` // Valid is true if DndSpellSchool is not NULL
-}
-
-// Scan implements the Scanner interface.
-func (ns *NullDndSpellSchool) Scan(value interface{}) error {
-	if value == nil {
-		ns.DndSpellSchool, ns.Valid = "", false
-		return nil
-	}
-	ns.Valid = true
-	return ns.DndSpellSchool.Scan(value)
-=======
 type DndCampaign struct {
 	ID          pgtype.UUID        `json:"id"`
 	OwnerID     pgtype.UUID        `json:"owner_id"`
@@ -303,40 +283,134 @@ type DndDndClass struct {
 	LevelTable               []byte             `json:"level_table"`
 	SpellPreparation         []byte             `json:"spell_preparation"`
 	StartingEquipmentOptions []byte             `json:"starting_equipment_options"`
->>>>>>> Stashed changes
 }
 
-// Value implements the driver Valuer interface.
-func (ns NullDndSpellSchool) Value() (driver.Value, error) {
-	if !ns.Valid {
-		return nil, nil
-	}
-	return string(ns.DndSpellSchool), nil
+type DndFeat struct {
+	Category          *string            `json:"category"`
+	Prerequisites     []byte             `json:"prerequisites"`
+	Effects           []byte             `json:"effects"`
+	ID                pgtype.UUID        `json:"id"`
+	SourceID          pgtype.UUID        `json:"source_id"`
+	Slug              string             `json:"slug"`
+	Name              string             `json:"name"`
+	DndVersion        string             `json:"dnd_version"`
+	DndVersionYear    int32              `json:"dnd_version_year"`
+	IsUnearthedArcana bool               `json:"is_unearthed_arcana"`
+	IsHomebrew        bool               `json:"is_homebrew"`
+	Marks             []string           `json:"marks"`
+	Description       string             `json:"description"`
+	CreatedAt         pgtype.Timestamptz `json:"created_at"`
+	CreatedBy         pgtype.UUID        `json:"created_by"`
+	UpdatedAt         pgtype.Timestamptz `json:"updated_at"`
+	UpdatedBy         pgtype.UUID        `json:"updated_by"`
+	DeletedAt         pgtype.Timestamptz `json:"deleted_at"`
+	DeletedBy         pgtype.UUID        `json:"deleted_by"`
+}
+
+type DndGlossaryEntry struct {
+	Category          string             `json:"category"`
+	Levels            []byte             `json:"levels"`
+	Effects           []byte             `json:"effects"`
+	ID                pgtype.UUID        `json:"id"`
+	SourceID          pgtype.UUID        `json:"source_id"`
+	Slug              string             `json:"slug"`
+	Name              string             `json:"name"`
+	DndVersion        string             `json:"dnd_version"`
+	DndVersionYear    int32              `json:"dnd_version_year"`
+	IsUnearthedArcana bool               `json:"is_unearthed_arcana"`
+	IsHomebrew        bool               `json:"is_homebrew"`
+	Marks             []string           `json:"marks"`
+	Description       string             `json:"description"`
+	CreatedAt         pgtype.Timestamptz `json:"created_at"`
+	CreatedBy         pgtype.UUID        `json:"created_by"`
+	UpdatedAt         pgtype.Timestamptz `json:"updated_at"`
+	UpdatedBy         pgtype.UUID        `json:"updated_by"`
+	DeletedAt         pgtype.Timestamptz `json:"deleted_at"`
+	DeletedBy         pgtype.UUID        `json:"deleted_by"`
+}
+
+type DndItem struct {
+	Category              *string            `json:"category"`
+	Subcategory           *string            `json:"subcategory"`
+	Cost                  *string            `json:"cost"`
+	Weight                *string            `json:"weight"`
+	Properties            []byte             `json:"properties"`
+	Effects               []byte             `json:"effects"`
+	IsMagic               bool               `json:"is_magic"`
+	MagicItemType         *string            `json:"magic_item_type"`
+	BaseItem              *string            `json:"base_item"`
+	Rarity                *string            `json:"rarity"`
+	RarityText            *string            `json:"rarity_text"`
+	RequiresAttunement    bool               `json:"requires_attunement"`
+	AttunementRequirement *string            `json:"attunement_requirement"`
+	ID                    pgtype.UUID        `json:"id"`
+	SourceID              pgtype.UUID        `json:"source_id"`
+	Slug                  string             `json:"slug"`
+	Name                  string             `json:"name"`
+	DndVersion            string             `json:"dnd_version"`
+	DndVersionYear        int32              `json:"dnd_version_year"`
+	IsUnearthedArcana     bool               `json:"is_unearthed_arcana"`
+	IsHomebrew            bool               `json:"is_homebrew"`
+	Marks                 []string           `json:"marks"`
+	Description           string             `json:"description"`
+	CreatedAt             pgtype.Timestamptz `json:"created_at"`
+	CreatedBy             pgtype.UUID        `json:"created_by"`
+	UpdatedAt             pgtype.Timestamptz `json:"updated_at"`
+	UpdatedBy             pgtype.UUID        `json:"updated_by"`
+	DeletedAt             pgtype.Timestamptz `json:"deleted_at"`
+	DeletedBy             pgtype.UUID        `json:"deleted_by"`
 }
 
 type DndSource struct {
 	ID             pgtype.UUID        `json:"id"`
+	Slug           string             `json:"slug"`
 	Name           string             `json:"name"`
 	NameShort      string             `json:"name_short"`
-	PublishYear    *int32             `json:"publish_year"`
 	DndVersion     string             `json:"dnd_version"`
 	DndVersionYear int32              `json:"dnd_version_year"`
+	PublishYear    *int32             `json:"publish_year"`
+	Marks          []string           `json:"marks"`
 	CreatedAt      pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt      pgtype.Timestamptz `json:"updated_at"`
 	CreatedBy      pgtype.UUID        `json:"created_by"`
+	UpdatedAt      pgtype.Timestamptz `json:"updated_at"`
 	UpdatedBy      pgtype.UUID        `json:"updated_by"`
+	DeletedAt      pgtype.Timestamptz `json:"deleted_at"`
+	DeletedBy      pgtype.UUID        `json:"deleted_by"`
+}
+
+type DndSpecy struct {
+	Size              string             `json:"size"`
+	Speed             string             `json:"speed"`
+	CreatureType      string             `json:"creature_type"`
+	Traits            []byte             `json:"traits"`
+	ID                pgtype.UUID        `json:"id"`
+	SourceID          pgtype.UUID        `json:"source_id"`
+	Slug              string             `json:"slug"`
+	Name              string             `json:"name"`
+	DndVersion        string             `json:"dnd_version"`
+	DndVersionYear    int32              `json:"dnd_version_year"`
+	IsUnearthedArcana bool               `json:"is_unearthed_arcana"`
+	IsHomebrew        bool               `json:"is_homebrew"`
+	Marks             []string           `json:"marks"`
+	Description       string             `json:"description"`
+	CreatedAt         pgtype.Timestamptz `json:"created_at"`
+	CreatedBy         pgtype.UUID        `json:"created_by"`
+	UpdatedAt         pgtype.Timestamptz `json:"updated_at"`
+	UpdatedBy         pgtype.UUID        `json:"updated_by"`
+	DeletedAt         pgtype.Timestamptz `json:"deleted_at"`
+	DeletedBy         pgtype.UUID        `json:"deleted_by"`
 }
 
 type DndSpell struct {
 	ID                                 pgtype.UUID        `json:"id"`
 	SourceID                           pgtype.UUID        `json:"source_id"`
+	Slug                               string             `json:"slug"`
 	Name                               string             `json:"name"`
-	Slug                               *string            `json:"slug"`
 	DndVersion                         string             `json:"dnd_version"`
 	DndVersionYear                     int32              `json:"dnd_version_year"`
 	SourcePage                         *int32             `json:"source_page"`
 	Level                              int32              `json:"level"`
-	School                             DndSpellSchool     `json:"school"`
+	School                             string             `json:"school"`
 	IsRitual                           bool               `json:"is_ritual"`
 	IsUnearthedArcana                  bool               `json:"is_unearthed_arcana"`
 	CastingTime                        string             `json:"casting_time"`
@@ -357,12 +431,23 @@ type DndSpell struct {
 	DifficultyClassSavingThrow         *string            `json:"difficulty_class_saving_throw"`
 	DifficultyClassType                *string            `json:"difficulty_class_type"`
 	StatBlocks                         []byte             `json:"stat_blocks"`
+	IsHomebrew                         bool               `json:"is_homebrew"`
+	Vtt                                []byte             `json:"vtt"`
+	ActivationCost                     *string            `json:"activation_cost"`
+	ActivationAmount                   *int32             `json:"activation_amount"`
+	RangeKind                          *string            `json:"range_kind"`
+	RangeFeet                          *int32             `json:"range_feet"`
+	DurationKind                       *string            `json:"duration_kind"`
+	DurationAmount                     *int32             `json:"duration_amount"`
+	DurationUnit                       *string            `json:"duration_unit"`
+	Sustain                            *string            `json:"sustain"`
+	HasAttackRoll                      *bool              `json:"has_attack_roll"`
+	HasSave                            *bool              `json:"has_save"`
+	HasSummon                          *bool              `json:"has_summon"`
 	CreatedAt                          pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt                          pgtype.Timestamptz `json:"updated_at"`
 	CreatedBy                          pgtype.UUID        `json:"created_by"`
+	UpdatedAt                          pgtype.Timestamptz `json:"updated_at"`
 	UpdatedBy                          pgtype.UUID        `json:"updated_by"`
-<<<<<<< Updated upstream
-=======
 	DeletedAt                          pgtype.Timestamptz `json:"deleted_at"`
 	DeletedBy                          pgtype.UUID        `json:"deleted_by"`
 }
@@ -402,11 +487,17 @@ type DndSubclass struct {
 	CasterProgression   *string            `json:"caster_progression"`
 	LevelTable          []byte             `json:"level_table"`
 	SpellPreparation    []byte             `json:"spell_preparation"`
->>>>>>> Stashed changes
 }
 
 type DndUser struct {
-	ID                pgtype.UUID `json:"id"`
-	Username          *string     `json:"username"`
-	ProfilePictureUrl *string     `json:"profile_picture_url"`
+	ID                pgtype.UUID        `json:"id"`
+	KeycloakID        pgtype.UUID        `json:"keycloak_id"`
+	Username          *string            `json:"username"`
+	ProfilePictureUrl *string            `json:"profile_picture_url"`
+	CreatedAt         pgtype.Timestamptz `json:"created_at"`
+	CreatedBy         pgtype.UUID        `json:"created_by"`
+	UpdatedAt         pgtype.Timestamptz `json:"updated_at"`
+	UpdatedBy         pgtype.UUID        `json:"updated_by"`
+	DeletedAt         pgtype.Timestamptz `json:"deleted_at"`
+	DeletedBy         pgtype.UUID        `json:"deleted_by"`
 }

@@ -197,8 +197,8 @@ docker-compose down
 
 # Verify integrity
 psql -h localhost -U postgres -d sprint_management -c "
-  SELECT schemaname, tablename, n_live_tup 
-  FROM pg_stat_user_tables 
+  SELECT schemaname, tablename, n_live_tup
+  FROM pg_stat_user_tables
   WHERE schemaname IN ('sprint_management', 'auth');"
 
 # Restart services
@@ -276,7 +276,7 @@ pg_restore -h localhost -U postgres -d sprint_management \
 psql -h localhost -U postgres -d sprint_management << EOF
 BEGIN;
 -- Restore specific records
-INSERT INTO sprint_management.work_items 
+INSERT INTO sprint_management.work_items
 SELECT * FROM backup_work_items WHERE id IN (...);
 COMMIT;
 EOF
@@ -341,9 +341,9 @@ UNION ALL
 SELECT 'comments', COUNT(*) FROM sprint_management.comments;
 
 -- Verify data integrity
-SELECT COUNT(*) as orphaned_work_items 
-FROM sprint_management.work_items 
-WHERE parent_id IS NOT NULL 
+SELECT COUNT(*) as orphaned_work_items
+FROM sprint_management.work_items
+WHERE parent_id IS NOT NULL
   AND parent_id NOT IN (SELECT id FROM sprint_management.work_items);
 EOF
 

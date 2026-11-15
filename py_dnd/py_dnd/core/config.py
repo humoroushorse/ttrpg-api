@@ -33,21 +33,21 @@ class Settings(BaseSettings):
     # default: postgresql+asyncpg://postgres:admin@localhost:5432/ttrpg-pg
     POSTGRES_MASTER_URI: str = os.getenv(
         "POSTGRES_MASTER_URI",
-        f"postgresql+asyncpg://{os.getenv("POSTGRES_MASTER_USER", "postgres")}"
-        + f":{os.getenv("POSTGRES_MASTER_PASSWORD", "admin")}"
-        + f"@{os.getenv("POSTGRES_MASTER_HOST", "localhost")}"
-        + f":{os.getenv("POSTGRES_MASTER_PORT", "5432")}"
-        + f"/{os.getenv("POSTGRES_MASTER_NAME", "ttrpg-pg")}",
+        f"postgresql+asyncpg://{os.getenv('POSTGRES_MASTER_USER', 'postgres')}"
+        + f":{os.getenv('POSTGRES_MASTER_PASSWORD', 'admin')}"
+        + f"@{os.getenv('POSTGRES_MASTER_HOST', 'localhost')}"
+        + f":{os.getenv('POSTGRES_MASTER_PORT', '5432')}"
+        + f"/{os.getenv('POSTGRES_MASTER_NAME', 'ttrpg-pg')}",
     )
 
     # default: postgresql+asyncpg://postgres:admin@localhost:5432/ttrpg-pg
     POSTGRES_REPLICA_URI: str = os.getenv(
         "POSTGRES_REPLICA_URI",
-        f"postgresql+asyncpg://{os.getenv("POSTGRES_REPLICA_USER", "postgres")}"
-        + f":{os.getenv("POSTGRES_REPLICA_PASSWORD", "admin")}"
-        + f"@{os.getenv("POSTGRES_REPLICA_HOST", "localhost")}"
-        + f":{os.getenv("POSTGRES_REPLICA_PORT", "5432")}"
-        + f"/{os.getenv("POSTGRES_REPLICA_NAME", "ttrpg-pg")}",
+        f"postgresql+asyncpg://{os.getenv('POSTGRES_REPLICA_USER', 'postgres')}"
+        + f":{os.getenv('POSTGRES_REPLICA_PASSWORD', 'admin')}"
+        + f"@{os.getenv('POSTGRES_REPLICA_HOST', 'localhost')}"
+        + f":{os.getenv('POSTGRES_REPLICA_PORT', '5432')}"
+        + f"/{os.getenv('POSTGRES_REPLICA_NAME', 'ttrpg-pg')}",
     )
 
     model_config = SettingsConfigDict(

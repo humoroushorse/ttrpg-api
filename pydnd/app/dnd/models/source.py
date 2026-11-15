@@ -1,7 +1,8 @@
 """SQLAlchemy Table: source definition."""
 
-from dnd.database.base_class import DbBase
 from sqlalchemy.orm import Mapped, mapped_column
+
+from dnd.database.base_class import DbBase
 
 
 class Source(DbBase):
