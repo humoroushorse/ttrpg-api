@@ -4,51 +4,35 @@
 # This file is imported - do not import other files
 COMMON_REPOSITORY_ROOT=~/projects/ttrpg/ttrpg-api
 CONTAINER_RUNNER := $(if $(CONTAINER_RUNNER),$(CONTAINER_RUNNER),"docker")
-CONTAINER_NATS_IMAGE=nats:2.12-alpine
+# the image for the testing server below; the dev server's is in deploy/nats/nats.compose.yml
+CONTAINER_NATS_IMAGE=nats:2.15.3-alpine
 
 ################################################################################
 # NATS Configuration
 ################################################################################
-CONTAINER_NATS_CLIENT_PORT=4222
 CONTAINER_NATS_HTTP_PORT=8222
-CONTAINER_NATS_CLUSTER_PORT=6222
 NATS_CONTAINER_NAME=ttrpg-nats
+# one NATS for every service, in the same compose project as postgres and keycloak
+NATS_COMPOSE_FILE=${COMMON_REPOSITORY_ROOT}/deploy/nats/nats.compose.yml
 
 .PHONY: nats-clean
-nats-clean: # removes local volume mount data
+nats-clean: # removes local volume mount data (JetStream's store)
 	@echo "removing NATS local volume mount"
 	rm -rf ~/projects/ttrpg/volume-mounts/nats
 
 .PHONY: nats-up
-nats-up: # start NATS container
-	# start container if not already running
-	${CONTAINER_RUNNER} start ${NATS_CONTAINER_NAME} || ${CONTAINER_RUNNER} run --name ${NATS_CONTAINER_NAME} -d\
-		-p ${CONTAINER_NATS_CLIENT_PORT}:4222\
-		-p ${CONTAINER_NATS_HTTP_PORT}:8222\
-		-p ${CONTAINER_NATS_CLUSTER_PORT}:6222\
-		${CONTAINER_NATS_IMAGE}\
-		--jetstream\
-		--store_dir=/data\
-		--http_port=8222\
-		--max_payload=1048576\
-		--max_connections=1000
-
-.PHONY: nats-compose-up
-nats-compose-up: # start NATS using docker-compose
+nats-up: # start NATS via docker compose (project ttrpg); settings in deploy/nats/nats.conf
 	${CONTAINER_RUNNER} compose \
-		-f ${COMMON_REPOSITORY_ROOT}/deploy/nats/docker-compose.yml \
-		up -d
-
-.PHONY: nats-compose-down
-nats-compose-down: # stop NATS using docker-compose
-	${CONTAINER_RUNNER} compose \
-		-f ${COMMON_REPOSITORY_ROOT}/deploy/nats/docker-compose.yml \
-		down
+		-p ttrpg \
+		-f ${NATS_COMPOSE_FILE} \
+		up -d --wait nats
 
 .PHONY: nats-down
-nats-down: # stop and remove NATS container
-	${CONTAINER_RUNNER} kill ${NATS_CONTAINER_NAME}
-	${CONTAINER_RUNNER} rm ${NATS_CONTAINER_NAME}
+nats-down: # stop NATS (leaves postgres and keycloak running)
+	${CONTAINER_RUNNER} compose \
+		-p ttrpg \
+		-f ${NATS_COMPOSE_FILE} \
+		stop nats
 
 .PHONY: nats-logs
 nats-logs: # view NATS container logs
@@ -125,10 +109,8 @@ nats-down-testing: # stop and remove NATS testing container
 .PHONY: nats-help
 nats-help: # show NATS makefile help
 	@echo "NATS Makefile Targets:"
-	@echo "  nats-up              - Start NATS container"
-	@echo "  nats-down            - Stop NATS container"
-	@echo "  nats-compose-up      - Start NATS using docker-compose"
-	@echo "  nats-compose-down    - Stop NATS using docker-compose"
+	@echo "  nats-up              - Start NATS (compose project ttrpg)"
+	@echo "  nats-down            - Stop NATS"
 	@echo "  nats-logs            - View NATS logs"
 	@echo "  nats-stats           - View NATS statistics"
 	@echo "  nats-connections     - View NATS connections"

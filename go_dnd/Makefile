@@ -17,7 +17,12 @@ DB_MIGRATE_URL=postgresql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB
 LOG_FORMAT=console
 LOG_ENABLE_COLORS=true
 
+<<<<<<< Updated upstream
 .PHONY: all build clean run test lint fmt vet generate migrate-up migrate-down migrate-create sqlc-generate openapi-generate merge-openapi help
+=======
+.PHONY: all build clean run test lint fmt vet generate catalog-generate migrate-create schema-check sqlc-generate openapi-generate merge-openapi help \
+	vtt-migrate-up vtt-migrate-down vtt-migrate-version vtt-migrate-create
+>>>>>>> Stashed changes
 
 all: test build
 
@@ -64,7 +69,33 @@ migrate-down: ## Run migrations down
 migrate-create: ## Create a new migration (usage: make migrate-create NAME=name)
 	migrate create -ext sql -dir migrations -seq $(NAME)
 
+<<<<<<< Updated upstream
 dev-up: keycloak-up nats-up migrate-up ## Start dev dependencies and run migrations
+=======
+schema-check: ## Diff the dnd schema built by Alembic against the one built by migrations/
+	../scripts/dnd_schema.sh check
+
+# migrations_vtt/ is go_dnd's own: schema dnd_vtt, applied to the shared database, versioned in
+# dnd_vtt.schema_migrations (migrations_vtt/README.md)
+VTT_MIGRATIONS=migrations_vtt
+VTT_DB_URL=postgresql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?sslmode=disable
+VTT_MIGRATE=$(GOCMD) run ./cmd/migrate -schema dnd_vtt -path $(VTT_MIGRATIONS) -db "$(VTT_DB_URL)"
+
+vtt-migrate-up: ## Apply the dnd_vtt migrations to DB_NAME (default ttrpg-pg)
+	$(VTT_MIGRATE) -action up
+
+vtt-migrate-down: ## Roll back the last dnd_vtt migration on DB_NAME
+	$(VTT_MIGRATE) -action down
+
+vtt-migrate-version: ## Show the dnd_vtt migration version of DB_NAME
+	$(VTT_MIGRATE) -action version
+
+vtt-migrate-create: ## Create a new dnd_vtt migration (usage: make vtt-migrate-create NAME=name)
+	@if [ -z "$(NAME)" ]; then echo "Error: NAME is required. Usage: make vtt-migrate-create NAME=name"; exit 1; fi
+	migrate create -ext sql -dir $(VTT_MIGRATIONS) -seq $(NAME)
+
+dev-up: keycloak-up nats-up ## Start dev dependencies (py_dnd's `make alembic-upgrade` builds the tables)
+>>>>>>> Stashed changes
 
 dev-down: nats-down keycloak-down ## Stop dev dependencies
 

@@ -1,0 +1,2567 @@
+{
+  "1": {
+    "level": 1,
+    "proficiency_bonus": {
+      "value": 2,
+      "contributions": [
+        {
+          "source": "Level 1",
+          "op": "base",
+          "value": 2
+        }
+      ]
+    },
+    "abilities": {
+      "cha": {
+        "score": {
+          "value": 12,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 12
+            }
+          ]
+        },
+        "modifier": 1
+      },
+      "con": {
+        "score": {
+          "value": 14,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 13
+            },
+            {
+              "source": "Background: Hermit",
+              "op": "add",
+              "value": 1
+            }
+          ]
+        },
+        "modifier": 2
+      },
+      "dex": {
+        "score": {
+          "value": 15,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 15
+            }
+          ]
+        },
+        "modifier": 2
+      },
+      "int": {
+        "score": {
+          "value": 8,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 8
+            }
+          ]
+        },
+        "modifier": -1
+      },
+      "str": {
+        "score": {
+          "value": 10,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 10
+            }
+          ]
+        },
+        "modifier": 0
+      },
+      "wis": {
+        "score": {
+          "value": 16,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 14
+            },
+            {
+              "source": "Background: Hermit",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "modifier": 3
+      }
+    },
+    "saving_throws": {
+      "cha": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "proficient": false
+      },
+      "con": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Con modifier",
+            "op": "base",
+            "value": 2
+          }
+        ],
+        "proficient": false
+      },
+      "dex": {
+        "value": 4,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Proficiency (Monk)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "proficient": true
+      },
+      "int": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "proficient": false
+      },
+      "str": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Str modifier",
+            "op": "base",
+            "value": 0
+          },
+          {
+            "source": "Proficiency (Monk)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "proficient": true
+      },
+      "wis": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "proficient": false
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "value": 4,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Proficiency (Monk)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "dex",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "animal_handling": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "arcana": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "athletics": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Str modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "str",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "deception": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "history": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "insight": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "intimidation": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "investigation": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "medicine": {
+        "value": 5,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Background: Hermit)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "wis",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "nature": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "perception": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "performance": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "persuasion": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "religion": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          },
+          {
+            "source": "Proficiency (Background: Hermit)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "int",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "sleight_of_hand": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          }
+        ],
+        "ability": "dex",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "stealth": {
+        "value": 4,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Proficiency (Monk)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "dex",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "survival": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      }
+    },
+    "passive": {
+      "insight": {
+        "value": 13,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Insight",
+            "op": "add",
+            "value": 3
+          }
+        ]
+      },
+      "investigation": {
+        "value": 9,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Investigation",
+            "op": "add",
+            "value": -1
+          }
+        ]
+      },
+      "perception": {
+        "value": 13,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Perception",
+            "op": "add",
+            "value": 3
+          }
+        ]
+      }
+    },
+    "initiative": {
+      "value": 2,
+      "contributions": [
+        {
+          "source": "Dex modifier",
+          "op": "base",
+          "value": 2
+        }
+      ]
+    },
+    "armor_class": {
+      "value": 15,
+      "contributions": [
+        {
+          "source": "Monk: Unarmored Defense",
+          "op": "base",
+          "value": 10
+        },
+        {
+          "source": "Dex modifier",
+          "op": "add",
+          "value": 2
+        },
+        {
+          "source": "Wis modifier",
+          "op": "add",
+          "value": 3
+        }
+      ],
+      "inactive": [
+        {
+          "source": "Shield",
+          "op": "add",
+          "value": 2,
+          "note": "not equipped"
+        },
+        {
+          "source": "Unarmored",
+          "op": "base",
+          "value": 12,
+          "note": "lower than Monk: Unarmored Defense"
+        }
+      ]
+    },
+    "hit_points": {
+      "max": {
+        "value": 10,
+        "contributions": [
+          {
+            "source": "Level 1 Monk (max d8)",
+            "op": "base",
+            "value": 8
+          },
+          {
+            "source": "Con modifier × 1",
+            "op": "add",
+            "value": 2,
+            "note": "+2 per level"
+          }
+        ]
+      },
+      "hit_dice": "1d8"
+    },
+    "speed": {
+      "walk": {
+        "value": 30,
+        "contributions": [
+          {
+            "source": "Human",
+            "op": "base",
+            "value": 30
+          }
+        ]
+      }
+    },
+    "senses": {},
+    "size": "Medium",
+    "features": [
+      {
+        "name": "Martial Arts",
+        "level": 1,
+        "source": "Monk"
+      },
+      {
+        "name": "Unarmored Defense",
+        "level": 1,
+        "source": "Monk"
+      },
+      {
+        "name": "Resourceful",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Skillful",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Versatile",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Healer",
+        "level": 1,
+        "source": "Feat (Hermit)"
+      }
+    ],
+    "proficiencies": {
+      "armor": [],
+      "languages": [],
+      "tools": [
+        "Herbalism Kit",
+        "Flute"
+      ],
+      "weapons": [
+        "Simple weapons",
+        "Martial weapons with the Light property"
+      ]
+    },
+    "resistances": [],
+    "conditional": [],
+    "attacks": [
+      {
+        "name": "Quarterstaff",
+        "kind": "melee",
+        "ability": "dex",
+        "proficient": true,
+        "bonus": {
+          "value": 4,
+          "contributions": [
+            {
+              "source": "Dex modifier",
+              "op": "base",
+              "value": 2
+            },
+            {
+              "source": "Proficiency bonus",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "damage": "1d6+2 Bludgeoning",
+        "versatile": "1d8+2",
+        "properties": [
+          "Versatile (1d8)"
+        ],
+        "mastery": "Topple"
+      },
+      {
+        "name": "Unarmed Strike",
+        "kind": "melee",
+        "ability": "dex",
+        "proficient": true,
+        "bonus": {
+          "value": 4,
+          "contributions": [
+            {
+              "source": "Dex modifier",
+              "op": "base",
+              "value": 2
+            },
+            {
+              "source": "Proficiency bonus",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "damage": "1d6+2 Bludgeoning",
+        "damage_note": "Monk: Martial Arts die",
+        "properties": []
+      }
+    ],
+    "spellcasting": null,
+    "spells": [],
+    "class_table": {
+      "Focus Points": 0,
+      "Martial Arts": "1d6",
+      "Unarmored Movement": "—"
+    },
+    "choice_points": [
+      {
+        "slot": "origin:species",
+        "kinds": [
+          "species"
+        ],
+        "source": "Origin",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "species"
+        ]
+      },
+      {
+        "slot": "origin:background",
+        "kinds": [
+          "background"
+        ],
+        "source": "Origin",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg"
+        ]
+      },
+      {
+        "slot": "class:monk:skills",
+        "kinds": [
+          "skill"
+        ],
+        "source": "Monk",
+        "level": 1,
+        "count": 2,
+        "chosen": 2,
+        "choice_ids": [
+          "skill-1",
+          "skill-2"
+        ],
+        "from": [
+          "acrobatics",
+          "athletics",
+          "history",
+          "insight",
+          "religion",
+          "stealth"
+        ]
+      },
+      {
+        "slot": "class:monk:tools",
+        "kinds": [
+          "tool"
+        ],
+        "source": "Monk",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "tool"
+        ],
+        "any": true,
+        "text": "any Artisan's Tools or Musical Instrument"
+      },
+      {
+        "slot": "background:hermit:asi",
+        "kinds": [
+          "asi"
+        ],
+        "source": "Background: Hermit",
+        "granted_by_id": "bg",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg-asi"
+        ],
+        "from": [
+          "con",
+          "wis",
+          "cha"
+        ],
+        "amount": 2,
+        "text": "+2 to one and +1 to another, or +1 to all three"
+      },
+      {
+        "slot": "background:hermit:feat",
+        "kinds": [
+          "feat"
+        ],
+        "source": "Background: Hermit",
+        "granted_by_id": "bg",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg-feat"
+        ],
+        "from": [
+          "Healer"
+        ],
+        "text": "Healer"
+      }
+    ],
+    "issues": [],
+    "not_computed": [
+      "class resources and active features (Rage, Bardic Inspiration, Channel Divinity, Weapon Mastery picks)",
+      "magic weapon and armor bonuses (+1 Longsword)",
+      "carrying capacity"
+    ]
+  },
+  "2": {
+    "level": 2,
+    "proficiency_bonus": {
+      "value": 2,
+      "contributions": [
+        {
+          "source": "Level 2",
+          "op": "base",
+          "value": 2
+        }
+      ]
+    },
+    "abilities": {
+      "cha": {
+        "score": {
+          "value": 12,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 12
+            }
+          ]
+        },
+        "modifier": 1
+      },
+      "con": {
+        "score": {
+          "value": 14,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 13
+            },
+            {
+              "source": "Background: Hermit",
+              "op": "add",
+              "value": 1
+            }
+          ]
+        },
+        "modifier": 2
+      },
+      "dex": {
+        "score": {
+          "value": 15,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 15
+            }
+          ]
+        },
+        "modifier": 2
+      },
+      "int": {
+        "score": {
+          "value": 8,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 8
+            }
+          ]
+        },
+        "modifier": -1
+      },
+      "str": {
+        "score": {
+          "value": 10,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 10
+            }
+          ]
+        },
+        "modifier": 0
+      },
+      "wis": {
+        "score": {
+          "value": 16,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 14
+            },
+            {
+              "source": "Background: Hermit",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "modifier": 3
+      }
+    },
+    "saving_throws": {
+      "cha": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "proficient": false
+      },
+      "con": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Con modifier",
+            "op": "base",
+            "value": 2
+          }
+        ],
+        "proficient": false
+      },
+      "dex": {
+        "value": 4,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Proficiency (Monk)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "proficient": true
+      },
+      "int": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "proficient": false
+      },
+      "str": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Str modifier",
+            "op": "base",
+            "value": 0
+          },
+          {
+            "source": "Proficiency (Monk)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "proficient": true
+      },
+      "wis": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "proficient": false
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "value": 4,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Proficiency (Monk)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "dex",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "animal_handling": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "arcana": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "athletics": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Str modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "str",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "deception": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "history": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "insight": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "intimidation": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "investigation": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "medicine": {
+        "value": 5,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Background: Hermit)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "wis",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "nature": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "perception": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "performance": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "persuasion": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "religion": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          },
+          {
+            "source": "Proficiency (Background: Hermit)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "int",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "sleight_of_hand": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          }
+        ],
+        "ability": "dex",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "stealth": {
+        "value": 4,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Proficiency (Monk)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "dex",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "survival": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      }
+    },
+    "passive": {
+      "insight": {
+        "value": 13,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Insight",
+            "op": "add",
+            "value": 3
+          }
+        ]
+      },
+      "investigation": {
+        "value": 9,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Investigation",
+            "op": "add",
+            "value": -1
+          }
+        ]
+      },
+      "perception": {
+        "value": 13,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Perception",
+            "op": "add",
+            "value": 3
+          }
+        ]
+      }
+    },
+    "initiative": {
+      "value": 2,
+      "contributions": [
+        {
+          "source": "Dex modifier",
+          "op": "base",
+          "value": 2
+        }
+      ]
+    },
+    "armor_class": {
+      "value": 15,
+      "contributions": [
+        {
+          "source": "Monk: Unarmored Defense",
+          "op": "base",
+          "value": 10
+        },
+        {
+          "source": "Dex modifier",
+          "op": "add",
+          "value": 2
+        },
+        {
+          "source": "Wis modifier",
+          "op": "add",
+          "value": 3
+        }
+      ],
+      "inactive": [
+        {
+          "source": "Shield",
+          "op": "add",
+          "value": 2,
+          "note": "not equipped"
+        },
+        {
+          "source": "Unarmored",
+          "op": "base",
+          "value": 12,
+          "note": "lower than Monk: Unarmored Defense"
+        }
+      ]
+    },
+    "hit_points": {
+      "max": {
+        "value": 17,
+        "contributions": [
+          {
+            "source": "Level 1 Monk (max d8)",
+            "op": "base",
+            "value": 8
+          },
+          {
+            "source": "Level 2 (average d8)",
+            "op": "add",
+            "value": 5
+          },
+          {
+            "source": "Con modifier × 2",
+            "op": "add",
+            "value": 4,
+            "note": "+2 per level"
+          }
+        ]
+      },
+      "hit_dice": "2d8"
+    },
+    "speed": {
+      "walk": {
+        "value": 40,
+        "contributions": [
+          {
+            "source": "Human",
+            "op": "base",
+            "value": 30
+          },
+          {
+            "source": "Monk: Unarmored Movement",
+            "op": "add",
+            "value": 10,
+            "note": "Unarmored Movement (class table)"
+          }
+        ]
+      }
+    },
+    "senses": {},
+    "size": "Medium",
+    "features": [
+      {
+        "name": "Martial Arts",
+        "level": 1,
+        "source": "Monk"
+      },
+      {
+        "name": "Unarmored Defense",
+        "level": 1,
+        "source": "Monk"
+      },
+      {
+        "name": "Resourceful",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Skillful",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Versatile",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Healer",
+        "level": 1,
+        "source": "Feat (Hermit)"
+      },
+      {
+        "name": "Monk’s Focus",
+        "level": 2,
+        "source": "Monk"
+      },
+      {
+        "name": "Unarmored Movement",
+        "level": 2,
+        "source": "Monk"
+      },
+      {
+        "name": "Uncanny Metabolism",
+        "level": 2,
+        "source": "Monk"
+      }
+    ],
+    "proficiencies": {
+      "armor": [],
+      "languages": [],
+      "tools": [
+        "Herbalism Kit",
+        "Flute"
+      ],
+      "weapons": [
+        "Simple weapons",
+        "Martial weapons with the Light property"
+      ]
+    },
+    "resistances": [],
+    "conditional": [],
+    "attacks": [
+      {
+        "name": "Quarterstaff",
+        "kind": "melee",
+        "ability": "dex",
+        "proficient": true,
+        "bonus": {
+          "value": 4,
+          "contributions": [
+            {
+              "source": "Dex modifier",
+              "op": "base",
+              "value": 2
+            },
+            {
+              "source": "Proficiency bonus",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "damage": "1d6+2 Bludgeoning",
+        "versatile": "1d8+2",
+        "properties": [
+          "Versatile (1d8)"
+        ],
+        "mastery": "Topple"
+      },
+      {
+        "name": "Unarmed Strike",
+        "kind": "melee",
+        "ability": "dex",
+        "proficient": true,
+        "bonus": {
+          "value": 4,
+          "contributions": [
+            {
+              "source": "Dex modifier",
+              "op": "base",
+              "value": 2
+            },
+            {
+              "source": "Proficiency bonus",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "damage": "1d6+2 Bludgeoning",
+        "damage_note": "Monk: Martial Arts die",
+        "properties": []
+      }
+    ],
+    "spellcasting": null,
+    "spells": [],
+    "class_table": {
+      "Focus Points": 2,
+      "Martial Arts": "1d6",
+      "Unarmored Movement": "+10 ft."
+    },
+    "choice_points": [
+      {
+        "slot": "origin:species",
+        "kinds": [
+          "species"
+        ],
+        "source": "Origin",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "species"
+        ]
+      },
+      {
+        "slot": "origin:background",
+        "kinds": [
+          "background"
+        ],
+        "source": "Origin",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg"
+        ]
+      },
+      {
+        "slot": "class:monk:skills",
+        "kinds": [
+          "skill"
+        ],
+        "source": "Monk",
+        "level": 1,
+        "count": 2,
+        "chosen": 2,
+        "choice_ids": [
+          "skill-1",
+          "skill-2"
+        ],
+        "from": [
+          "acrobatics",
+          "athletics",
+          "history",
+          "insight",
+          "religion",
+          "stealth"
+        ]
+      },
+      {
+        "slot": "class:monk:tools",
+        "kinds": [
+          "tool"
+        ],
+        "source": "Monk",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "tool"
+        ],
+        "any": true,
+        "text": "any Artisan's Tools or Musical Instrument"
+      },
+      {
+        "slot": "background:hermit:asi",
+        "kinds": [
+          "asi"
+        ],
+        "source": "Background: Hermit",
+        "granted_by_id": "bg",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg-asi"
+        ],
+        "from": [
+          "con",
+          "wis",
+          "cha"
+        ],
+        "amount": 2,
+        "text": "+2 to one and +1 to another, or +1 to all three"
+      },
+      {
+        "slot": "background:hermit:feat",
+        "kinds": [
+          "feat"
+        ],
+        "source": "Background: Hermit",
+        "granted_by_id": "bg",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg-feat"
+        ],
+        "from": [
+          "Healer"
+        ],
+        "text": "Healer"
+      }
+    ],
+    "issues": [],
+    "not_computed": [
+      "class resources and active features (Rage, Bardic Inspiration, Channel Divinity, Weapon Mastery picks)",
+      "magic weapon and armor bonuses (+1 Longsword)",
+      "carrying capacity"
+    ]
+  },
+  "6": {
+    "level": 6,
+    "proficiency_bonus": {
+      "value": 3,
+      "contributions": [
+        {
+          "source": "Level 6",
+          "op": "base",
+          "value": 3
+        }
+      ]
+    },
+    "abilities": {
+      "cha": {
+        "score": {
+          "value": 12,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 12
+            }
+          ]
+        },
+        "modifier": 1
+      },
+      "con": {
+        "score": {
+          "value": 14,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 13
+            },
+            {
+              "source": "Background: Hermit",
+              "op": "add",
+              "value": 1
+            }
+          ]
+        },
+        "modifier": 2
+      },
+      "dex": {
+        "score": {
+          "value": 17,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 15
+            },
+            {
+              "source": "Ability Score Improvement (level 4)",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "modifier": 3
+      },
+      "int": {
+        "score": {
+          "value": 8,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 8
+            }
+          ]
+        },
+        "modifier": -1
+      },
+      "str": {
+        "score": {
+          "value": 10,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 10
+            }
+          ]
+        },
+        "modifier": 0
+      },
+      "wis": {
+        "score": {
+          "value": 16,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 14
+            },
+            {
+              "source": "Background: Hermit",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "modifier": 3
+      }
+    },
+    "saving_throws": {
+      "cha": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "proficient": false
+      },
+      "con": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Con modifier",
+            "op": "base",
+            "value": 2
+          }
+        ],
+        "proficient": false
+      },
+      "dex": {
+        "value": 6,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Monk)",
+            "op": "add",
+            "value": 3
+          }
+        ],
+        "proficient": true
+      },
+      "int": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "proficient": false
+      },
+      "str": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Str modifier",
+            "op": "base",
+            "value": 0
+          },
+          {
+            "source": "Proficiency (Monk)",
+            "op": "add",
+            "value": 3
+          }
+        ],
+        "proficient": true
+      },
+      "wis": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "proficient": false
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "value": 6,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Monk)",
+            "op": "add",
+            "value": 3
+          }
+        ],
+        "ability": "dex",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "animal_handling": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "arcana": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "athletics": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Str modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "str",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "deception": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "history": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "insight": {
+        "value": 6,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Warrior of Mercy: Implements of Mercy)",
+            "op": "add",
+            "value": 3
+          }
+        ],
+        "ability": "wis",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "intimidation": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "investigation": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "medicine": {
+        "value": 6,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Background: Hermit)",
+            "op": "add",
+            "value": 3
+          }
+        ],
+        "ability": "wis",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "nature": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "perception": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "performance": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "persuasion": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "religion": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          },
+          {
+            "source": "Proficiency (Background: Hermit)",
+            "op": "add",
+            "value": 3
+          }
+        ],
+        "ability": "int",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "sleight_of_hand": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "dex",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "stealth": {
+        "value": 6,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Monk)",
+            "op": "add",
+            "value": 3
+          }
+        ],
+        "ability": "dex",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "survival": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      }
+    },
+    "passive": {
+      "insight": {
+        "value": 16,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Insight",
+            "op": "add",
+            "value": 6
+          }
+        ]
+      },
+      "investigation": {
+        "value": 9,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Investigation",
+            "op": "add",
+            "value": -1
+          }
+        ]
+      },
+      "perception": {
+        "value": 13,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Perception",
+            "op": "add",
+            "value": 3
+          }
+        ]
+      }
+    },
+    "initiative": {
+      "value": 3,
+      "contributions": [
+        {
+          "source": "Dex modifier",
+          "op": "base",
+          "value": 3
+        }
+      ]
+    },
+    "armor_class": {
+      "value": 16,
+      "contributions": [
+        {
+          "source": "Monk: Unarmored Defense",
+          "op": "base",
+          "value": 10
+        },
+        {
+          "source": "Dex modifier",
+          "op": "add",
+          "value": 3
+        },
+        {
+          "source": "Wis modifier",
+          "op": "add",
+          "value": 3
+        }
+      ],
+      "inactive": [
+        {
+          "source": "Shield",
+          "op": "add",
+          "value": 2,
+          "note": "not equipped"
+        },
+        {
+          "source": "Unarmored",
+          "op": "base",
+          "value": 13,
+          "note": "lower than Monk: Unarmored Defense"
+        }
+      ]
+    },
+    "hit_points": {
+      "max": {
+        "value": 45,
+        "contributions": [
+          {
+            "source": "Level 1 Monk (max d8)",
+            "op": "base",
+            "value": 8
+          },
+          {
+            "source": "Level 2 (average d8)",
+            "op": "add",
+            "value": 5
+          },
+          {
+            "source": "Level 3 (average d8)",
+            "op": "add",
+            "value": 5
+          },
+          {
+            "source": "Level 4 (average d8)",
+            "op": "add",
+            "value": 5
+          },
+          {
+            "source": "Level 5 (average d8)",
+            "op": "add",
+            "value": 5
+          },
+          {
+            "source": "Level 6 (average d8)",
+            "op": "add",
+            "value": 5
+          },
+          {
+            "source": "Con modifier × 6",
+            "op": "add",
+            "value": 12,
+            "note": "+2 per level"
+          }
+        ]
+      },
+      "hit_dice": "6d8"
+    },
+    "speed": {
+      "walk": {
+        "value": 45,
+        "contributions": [
+          {
+            "source": "Human",
+            "op": "base",
+            "value": 30
+          },
+          {
+            "source": "Monk: Unarmored Movement",
+            "op": "add",
+            "value": 15,
+            "note": "Unarmored Movement (class table)"
+          }
+        ]
+      }
+    },
+    "senses": {},
+    "size": "Medium",
+    "features": [
+      {
+        "name": "Martial Arts",
+        "level": 1,
+        "source": "Monk"
+      },
+      {
+        "name": "Unarmored Defense",
+        "level": 1,
+        "source": "Monk"
+      },
+      {
+        "name": "Resourceful",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Skillful",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Versatile",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Healer",
+        "level": 1,
+        "source": "Feat (Hermit)"
+      },
+      {
+        "name": "Monk’s Focus",
+        "level": 2,
+        "source": "Monk"
+      },
+      {
+        "name": "Unarmored Movement",
+        "level": 2,
+        "source": "Monk"
+      },
+      {
+        "name": "Uncanny Metabolism",
+        "level": 2,
+        "source": "Monk"
+      },
+      {
+        "name": "Deflect Attacks",
+        "level": 3,
+        "source": "Monk"
+      },
+      {
+        "name": "Monk Subclass",
+        "level": 3,
+        "source": "Monk"
+      },
+      {
+        "name": "Hand of Harm",
+        "level": 3,
+        "source": "Warrior of Mercy"
+      },
+      {
+        "name": "Hand of Healing",
+        "level": 3,
+        "source": "Warrior of Mercy"
+      },
+      {
+        "name": "Implements of Mercy",
+        "level": 3,
+        "source": "Warrior of Mercy"
+      },
+      {
+        "name": "Ability Score Improvement",
+        "level": 4,
+        "source": "Monk"
+      },
+      {
+        "name": "Slow Fall",
+        "level": 4,
+        "source": "Monk"
+      },
+      {
+        "name": "Extra Attack",
+        "level": 5,
+        "source": "Monk"
+      },
+      {
+        "name": "Stunning Strike",
+        "level": 5,
+        "source": "Monk"
+      },
+      {
+        "name": "Empowered Strikes",
+        "level": 6,
+        "source": "Monk"
+      },
+      {
+        "name": "Physician’s Touch",
+        "level": 6,
+        "source": "Warrior of Mercy"
+      }
+    ],
+    "proficiencies": {
+      "armor": [],
+      "languages": [],
+      "tools": [
+        "Herbalism Kit",
+        "Flute"
+      ],
+      "weapons": [
+        "Simple weapons",
+        "Martial weapons with the Light property"
+      ]
+    },
+    "resistances": [],
+    "conditional": [],
+    "attacks": [
+      {
+        "name": "Quarterstaff",
+        "kind": "melee",
+        "ability": "dex",
+        "proficient": true,
+        "bonus": {
+          "value": 6,
+          "contributions": [
+            {
+              "source": "Dex modifier",
+              "op": "base",
+              "value": 3
+            },
+            {
+              "source": "Proficiency bonus",
+              "op": "add",
+              "value": 3
+            }
+          ]
+        },
+        "damage": "1d8+3 Bludgeoning",
+        "damage_note": "Monk: Martial Arts die",
+        "versatile": "1d8+3",
+        "properties": [
+          "Versatile (1d8)"
+        ],
+        "mastery": "Topple"
+      },
+      {
+        "name": "Unarmed Strike",
+        "kind": "melee",
+        "ability": "dex",
+        "proficient": true,
+        "bonus": {
+          "value": 6,
+          "contributions": [
+            {
+              "source": "Dex modifier",
+              "op": "base",
+              "value": 3
+            },
+            {
+              "source": "Proficiency bonus",
+              "op": "add",
+              "value": 3
+            }
+          ]
+        },
+        "damage": "1d8+3 Bludgeoning",
+        "damage_note": "Monk: Martial Arts die",
+        "properties": []
+      }
+    ],
+    "spellcasting": null,
+    "spells": [],
+    "class_table": {
+      "Focus Points": 6,
+      "Martial Arts": "1d8",
+      "Unarmored Movement": "+15 ft."
+    },
+    "choice_points": [
+      {
+        "slot": "origin:species",
+        "kinds": [
+          "species"
+        ],
+        "source": "Origin",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "species"
+        ]
+      },
+      {
+        "slot": "origin:background",
+        "kinds": [
+          "background"
+        ],
+        "source": "Origin",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg"
+        ]
+      },
+      {
+        "slot": "class:monk:skills",
+        "kinds": [
+          "skill"
+        ],
+        "source": "Monk",
+        "level": 1,
+        "count": 2,
+        "chosen": 2,
+        "choice_ids": [
+          "skill-1",
+          "skill-2"
+        ],
+        "from": [
+          "acrobatics",
+          "athletics",
+          "history",
+          "insight",
+          "religion",
+          "stealth"
+        ]
+      },
+      {
+        "slot": "class:monk:tools",
+        "kinds": [
+          "tool"
+        ],
+        "source": "Monk",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "tool"
+        ],
+        "any": true,
+        "text": "any Artisan's Tools or Musical Instrument"
+      },
+      {
+        "slot": "class:monk:subclass",
+        "kinds": [
+          "subclass"
+        ],
+        "source": "Monk",
+        "level": 3,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "sub"
+        ]
+      },
+      {
+        "slot": "class:monk:asi:4",
+        "kinds": [
+          "asi",
+          "feat"
+        ],
+        "source": "Monk",
+        "level": 4,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "asi-4"
+        ],
+        "any": true,
+        "amount": 2,
+        "ability_count": 1,
+        "text": "an Ability Score Improvement (+2 to one score or +1 to two) or a feat"
+      },
+      {
+        "slot": "background:hermit:asi",
+        "kinds": [
+          "asi"
+        ],
+        "source": "Background: Hermit",
+        "granted_by_id": "bg",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg-asi"
+        ],
+        "from": [
+          "con",
+          "wis",
+          "cha"
+        ],
+        "amount": 2,
+        "text": "+2 to one and +1 to another, or +1 to all three"
+      },
+      {
+        "slot": "background:hermit:feat",
+        "kinds": [
+          "feat"
+        ],
+        "source": "Background: Hermit",
+        "granted_by_id": "bg",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg-feat"
+        ],
+        "from": [
+          "Healer"
+        ],
+        "text": "Healer"
+      }
+    ],
+    "issues": [
+      {
+        "severity": "warning",
+        "code": "proficiency.duplicate",
+        "message": "Proficient in Medicine 2 times (Background: Hermit, Warrior of Mercy: Implements of Mercy): the extra adds nothing"
+      },
+      {
+        "severity": "warning",
+        "code": "proficiency.duplicate",
+        "message": "Proficient in Herbalism Kit 2 times (Background: Hermit, Warrior of Mercy: Implements of Mercy): the extra adds nothing"
+      }
+    ],
+    "not_computed": [
+      "class resources and active features (Rage, Bardic Inspiration, Channel Divinity, Weapon Mastery picks)",
+      "magic weapon and armor bonuses (+1 Longsword)",
+      "carrying capacity"
+    ]
+  }
+}

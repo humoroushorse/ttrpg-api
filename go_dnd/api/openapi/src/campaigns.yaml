@@ -1,0 +1,499 @@
+tags:
+- name: Campaigns
+paths:
+  /api/v1/campaigns/query:
+    get:
+      tags: [Campaigns]
+      operationId: queryCampaigns
+      summary: The caller's campaigns, by name
+      parameters:
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A page of the caller's campaigns
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/GenericListResponse'
+                - type: object
+                  properties:
+                    entities:
+                      type: array
+                      items: {$ref: '#/components/schemas/Campaign'}
+        '401': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+  /api/v1/campaigns/rules/defaults:
+    get:
+      tags: [Campaigns]
+      operationId: readDefaultRules
+      summary: The rules a new campaign starts with
+      responses:
+        '200':
+          description: The default rule set
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/CampaignRules'}
+  /api/v1/campaigns:
+    post:
+      tags: [Campaigns]
+      operationId: createCampaign
+      summary: Create a campaign; the caller is its DM. Rules left out get their defaults
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/CampaignFields'}
+      responses:
+        '200':
+          description: The campaign as stored
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Campaign'}
+        '401': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+  /api/v1/campaigns/{entity_id}:
+    parameters:
+    - $ref: '#/components/parameters/EntityId'
+    get:
+      tags: [Campaigns]
+      operationId: readCampaign
+      summary: One of the caller's campaigns (anyone else's is a 404)
+      responses:
+        '200':
+          description: The campaign
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Campaign'}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+    put:
+      tags: [Campaigns]
+      operationId: replaceCampaign
+      summary: Replace a campaign; fields left out (rules included) go back to their defaults
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/CampaignFields'}
+      responses:
+        '200':
+          description: The campaign as stored
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Campaign'}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+    patch:
+      tags: [Campaigns]
+      operationId: updateCampaign
+      summary: Change some fields; rules merge into the current rules
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/CampaignPatch'}
+      responses:
+        '200':
+          description: The campaign as stored
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Campaign'}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+    delete:
+      tags: [Campaigns]
+      operationId: deleteCampaign
+      summary: Soft delete. Returns the id
+      responses:
+        '200':
+          description: The id
+          content:
+            application/json:
+              schema: {type: string, format: uuid}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+  /api/v1/campaigns/{entity_id}/members:
+    parameters:
+    - $ref: '#/components/parameters/EntityId'
+    get:
+      tags: [Campaigns]
+      operationId: listCampaignMembers
+      summary: The campaign's members, DMs first (any member)
+      responses:
+        '200':
+          description: The members
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/CampaignMemberList'}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+  /api/v1/campaigns/{entity_id}/members/{user_id}:
+    parameters:
+    - $ref: '#/components/parameters/EntityId'
+    - $ref: '#/components/parameters/UserId'
+    patch:
+      tags: [Campaigns]
+      operationId: updateCampaignMember
+      summary: Make a member a DM or a player (DMs; never the owner)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/CampaignMemberPatch'}
+      responses:
+        '200':
+          description: The members
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/CampaignMemberList'}
+        '401': {$ref: '#/components/responses/Error'}
+        '403': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+    delete:
+      tags: [Campaigns]
+      operationId: removeCampaignMember
+      summary: Leave (your own user id) or remove a member (DMs; never the owner). Their characters leave too
+      responses:
+        '200':
+          description: The members
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/CampaignMemberList'}
+        '401': {$ref: '#/components/responses/Error'}
+        '403': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+  /api/v1/campaigns/{entity_id}/invites:
+    parameters:
+    - $ref: '#/components/parameters/EntityId'
+    get:
+      tags: [Campaigns]
+      operationId: listCampaignInvites
+      summary: The campaign's open invites (DMs)
+      responses:
+        '200':
+          description: Invites not revoked, expired or used up
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/CampaignInviteList'}
+        '401': {$ref: '#/components/responses/Error'}
+        '403': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+    post:
+      tags: [Campaigns]
+      operationId: createCampaignInvite
+      summary: An invite link, or an invite for one user by username (DMs, or members when settings.access.invite is members)
+      description: A link's token is in the answer once and never stored (only its hash). A user's invite waits for
+        them to accept or decline; it needs a user who has signed in at least once.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/CampaignInviteCreate'}
+      responses:
+        '200':
+          description: The invite, with the link's token
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/CampaignInviteCreated'}
+        '401': {$ref: '#/components/responses/Error'}
+        '403': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '409': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+  /api/v1/campaigns/{entity_id}/invites/{invite_id}:
+    parameters:
+    - $ref: '#/components/parameters/EntityId'
+    - $ref: '#/components/parameters/InviteId'
+    delete:
+      tags: [Campaigns]
+      operationId: revokeCampaignInvite
+      summary: Revoke an invite (DMs)
+      responses:
+        '200':
+          description: The campaign's open invites
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/CampaignInviteList'}
+        '401': {$ref: '#/components/responses/Error'}
+        '403': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+  /api/v1/invite-links/{token}:
+    parameters:
+    - $ref: '#/components/parameters/InviteToken'
+    get:
+      tags: [Campaigns]
+      operationId: readInviteLink
+      summary: What an invite link is for, before joining (any signed-in user with the link)
+      responses:
+        '200':
+          description: The campaign it's for
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/InviteLinkPreview'}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '410': {$ref: '#/components/responses/Error'}
+  /api/v1/invite-links/{token}/accept:
+    parameters:
+    - $ref: '#/components/parameters/InviteToken'
+    post:
+      tags: [Campaigns]
+      operationId: acceptInviteLink
+      summary: Join the campaign as a player. Already a member, nothing changes
+      responses:
+        '200':
+          description: The campaign
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Campaign'}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '410': {$ref: '#/components/responses/Error'}
+  /api/v1/invites:
+    get:
+      tags: [Campaigns]
+      operationId: listMyInvites
+      summary: The caller's open invites to campaigns they aren't in
+      responses:
+        '200':
+          description: The invites
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/MyInviteList'}
+        '401': {$ref: '#/components/responses/Error'}
+  /api/v1/invites/{invite_id}/accept:
+    parameters:
+    - $ref: '#/components/parameters/InviteId'
+    post:
+      tags: [Campaigns]
+      operationId: acceptInvite
+      summary: Accept an invite sent to you, and join as a player
+      responses:
+        '200':
+          description: The campaign
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Campaign'}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '410': {$ref: '#/components/responses/Error'}
+  /api/v1/invites/{invite_id}/decline:
+    parameters:
+    - $ref: '#/components/parameters/InviteId'
+    post:
+      tags: [Campaigns]
+      operationId: declineInvite
+      summary: Decline an invite sent to you
+      responses:
+        '200':
+          description: The caller's open invites
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/MyInviteList'}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+components:
+  parameters:
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    InviteId:
+      name: invite_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    InviteToken:
+      name: token
+      in: path
+      required: true
+      schema: {type: string, minLength: 20, maxLength: 100}
+  schemas:
+    CampaignRules:
+      type: object
+      description: >-
+        The character-building rule set (CHARACTER_PLAN.md section 3). Writes fill in every field left
+        out; unknown fields are a 422. In a PATCH, it merges into the current rules, and
+        `other_edition.by_category.<category>: null` removes that override.
+      additionalProperties: false
+      properties:
+        schema_version: {type: integer, enum: [1]}
+        edition: {type: integer, enum: [2014, 2024], description: The base edition.}
+        other_edition:
+          type: object
+          additionalProperties: false
+          properties:
+            default: {type: string, enum: [never, if_missing, always]}
+            by_category:
+              type: object
+              description: Keys are species, class, subclass, background, feat, spell, item.
+              additionalProperties: {type: string, enum: [never, if_missing, always], nullable: true}
+        allow_unearthed_arcana: {type: boolean}
+        allow_playtest: {type: boolean}
+        sources:
+          type: object
+          additionalProperties: false
+          properties:
+            allow:
+              type: array
+              nullable: true
+              description: Source slugs; null allows every source.
+              items: {type: string}
+            block:
+              type: array
+              items: {type: string}
+        ability_score_methods:
+          type: array
+          items: {type: string, enum: [point_buy, standard_array, rolled, manual]}
+        ability_score_default: {type: string, enum: [point_buy, standard_array, rolled, manual]}
+        point_buy_budget: {type: integer, minimum: 0, maximum: 200}
+        rolled_sets_kept: {type: integer, minimum: 1, maximum: 100}
+        hp_methods:
+          type: array
+          items: {type: string, enum: [average, rolled, manual]}
+        hp_default: {type: string, enum: [average, rolled, manual]}
+        optional_rules:
+          type: object
+          description: Stored and shown; not enforced yet, except spellbook.
+          additionalProperties: false
+          properties:
+            feats: {type: boolean}
+            custom_origin: {type: boolean}
+            optional_class_features: {type: boolean}
+            encumbrance: {type: string, enum: ['off', standard, variant]}
+            multiclass_prerequisites: {type: boolean}
+            spellbook:
+              type: boolean
+              description: >-
+                A class with a spellbook (Wizard) learns its spells into it at each level (choice
+                points) and prepares from it; preparing a spell outside it is a warning, not a block.
+    CampaignAccessSettings:
+      type: object
+      additionalProperties: false
+      description: Who may invite, and how much of the party's characters players see.
+      properties:
+        invite: {type: string, enum: [dms, members], description: 'Default dms.'}
+        party_sheets:
+          type: string
+          enum: [summary, full]
+          description: "summary (default): the party list. full: each character's sheet, read-only."
+    CampaignSettings:
+      type: object
+      additionalProperties: false
+      description: In a PATCH, access merges into the current access settings.
+      properties:
+        access: {$ref: '#/components/schemas/CampaignAccessSettings'}
+    CampaignFields:
+      type: object
+      required: [name]
+      additionalProperties: false
+      properties:
+        name: {type: string}
+        description: {type: string}
+        rules: {$ref: '#/components/schemas/CampaignRules'}
+        settings: {$ref: '#/components/schemas/CampaignSettings'}
+    CampaignPatch:
+      type: object
+      additionalProperties: false
+      properties:
+        name: {type: string}
+        description: {type: string}
+        rules: {$ref: '#/components/schemas/CampaignRules'}
+        settings: {$ref: '#/components/schemas/CampaignSettings'}
+    Campaign:
+      type: object
+      properties:
+        id: {type: string, format: uuid}
+        owner_id: {type: string, format: uuid}
+        name: {type: string}
+        description: {type: string}
+        rules: {$ref: '#/components/schemas/CampaignRules'}
+        settings:
+          type: object
+          additionalProperties: true
+          description: "{access: {invite, party_sheets}} with defaults filled in; the VTT's settings later."
+        role: {type: string, enum: [dm, player], description: "The caller's role in it."}
+        created_at: {type: string, format: date-time}
+        created_by: {type: string, format: uuid, nullable: true}
+        updated_at: {type: string, format: date-time}
+        updated_by: {type: string, format: uuid, nullable: true}
+    CampaignMember:
+      type: object
+      properties:
+        user_id: {type: string, format: uuid}
+        username: {type: string, nullable: true}
+        profile_picture_url: {type: string, nullable: true}
+        role: {type: string, enum: [dm, player]}
+        owner: {type: boolean, description: The permanent DM.}
+        me: {type: boolean, description: The caller.}
+        joined_at: {type: string, format: date-time}
+    CampaignMemberList:
+      type: object
+      properties:
+        entities:
+          type: array
+          items: {$ref: '#/components/schemas/CampaignMember'}
+    CampaignMemberPatch:
+      type: object
+      required: [role]
+      additionalProperties: false
+      properties:
+        role: {type: string, enum: [dm, player]}
+    CampaignInvite:
+      type: object
+      properties:
+        id: {type: string, format: uuid}
+        kind: {type: string, enum: [link, user]}
+        username: {type: string, nullable: true, description: "A user invite's invitee."}
+        invited_by: {type: string, nullable: true}
+        expires_at: {type: string, format: date-time}
+        max_uses: {type: integer, nullable: true}
+        uses: {type: integer}
+        created_at: {type: string, format: date-time}
+    CampaignInviteList:
+      type: object
+      properties:
+        entities:
+          type: array
+          items: {$ref: '#/components/schemas/CampaignInvite'}
+    CampaignInviteCreate:
+      type: object
+      additionalProperties: false
+      properties:
+        expires_in: {type: string, enum: [1h, 1d, 7d], default: 1d}
+        max_uses: {type: integer, minimum: 1, nullable: true, description: "A link's limit; none by default."}
+        username: {type: string, description: Invite this user instead of making a link.}
+    CampaignInviteCreated:
+      type: object
+      properties:
+        invite: {$ref: '#/components/schemas/CampaignInvite'}
+        token: {type: string, nullable: true, description: "A link's token, shown only now: /dnd/campaigns/join/<token>."}
+    InviteLinkPreview:
+      type: object
+      properties:
+        campaign_id: {type: string, format: uuid}
+        campaign_name: {type: string}
+        invited_by: {type: string, nullable: true}
+        expires_at: {type: string, format: date-time}
+        member: {type: boolean, description: The caller is already in it.}
+    MyInvite:
+      type: object
+      properties:
+        id: {type: string, format: uuid}
+        campaign_id: {type: string, format: uuid}
+        campaign_name: {type: string}
+        invited_by: {type: string, nullable: true}
+        expires_at: {type: string, format: date-time}
+        created_at: {type: string, format: date-time}
+    MyInviteList:
+      type: object
+      properties:
+        entities:
+          type: array
+          items: {$ref: '#/components/schemas/MyInvite'}

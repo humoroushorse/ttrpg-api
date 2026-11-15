@@ -42,3 +42,99 @@ sql:
         emit_exact_table_names: false
         emit_empty_slices: true
         emit_pointers_for_null_types: true
+<<<<<<< Updated upstream
+=======
+  - engine: "postgresql"
+    queries: "internal/repository/spelllists/queries"
+    schema: "migrations"
+    gen:
+      go:
+        package: "spelllists"
+        out: "internal/repository/spelllists"
+        sql_package: "pgx/v5"
+        emit_json_tags: true
+        emit_prepared_queries: false
+        emit_interface: true
+        emit_exact_table_names: false
+        emit_empty_slices: true
+        emit_pointers_for_null_types: true
+        overrides:
+          - db_type: "uuid"
+            go_type: "github.com/google/uuid.UUID"
+          - db_type: "uuid"
+            nullable: true
+            go_type:
+              import: "github.com/google/uuid"
+              type: "UUID"
+              pointer: true
+  - engine: "postgresql"
+    queries: ["internal/repository/campaigns/queries", "internal/repository/access/queries"]
+    schema: "migrations"
+    gen:
+      go:
+        package: "campaigns"
+        out: "internal/repository/campaigns"
+        sql_package: "pgx/v5"
+        emit_json_tags: true
+        emit_prepared_queries: false
+        emit_interface: true
+        emit_exact_table_names: false
+        emit_empty_slices: true
+        emit_pointers_for_null_types: true
+        overrides:
+          - db_type: "uuid"
+            go_type: "github.com/google/uuid.UUID"
+          - db_type: "uuid"
+            nullable: true
+            go_type:
+              import: "github.com/google/uuid"
+              type: "UUID"
+              pointer: true
+  # the tabletop reads both histories: the dnd mirror and its own dnd_vtt migrations
+  - engine: "postgresql"
+    queries: ["internal/repository/tabletop/queries", "internal/repository/access/queries"]
+    schema: ["migrations", "migrations_vtt"]
+    gen:
+      go:
+        package: "tabletop"
+        out: "internal/repository/tabletop"
+        sql_package: "pgx/v5"
+        emit_json_tags: true
+        emit_prepared_queries: false
+        emit_interface: true
+        emit_exact_table_names: false
+        emit_empty_slices: true
+        emit_pointers_for_null_types: true
+        overrides:
+          - db_type: "uuid"
+            go_type: "github.com/google/uuid.UUID"
+          - db_type: "uuid"
+            nullable: true
+            go_type:
+              import: "github.com/google/uuid"
+              type: "UUID"
+              pointer: true
+  - engine: "postgresql"
+    queries: ["internal/repository/characters/queries", "internal/repository/access/queries"]
+    schema: "migrations"
+    gen:
+      go:
+        package: "characters"
+        out: "internal/repository/characters"
+        sql_package: "pgx/v5"
+        emit_json_tags: true
+        emit_prepared_queries: false
+        emit_interface: true
+        emit_exact_table_names: false
+        emit_empty_slices: true
+        emit_pointers_for_null_types: true
+        overrides:
+          - db_type: "uuid"
+            go_type: "github.com/google/uuid.UUID"
+          - db_type: "uuid"
+            nullable: true
+            go_type:
+              import: "github.com/google/uuid"
+              type: "UUID"
+              pointer: true
+>>>>>>> Stashed changes

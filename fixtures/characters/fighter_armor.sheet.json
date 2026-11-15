@@ -1,0 +1,692 @@
+{
+  "1": {
+    "level": 1,
+    "proficiency_bonus": {
+      "value": 2,
+      "contributions": [
+        {
+          "source": "Level 1",
+          "op": "base",
+          "value": 2
+        }
+      ]
+    },
+    "abilities": {
+      "cha": {
+        "score": {
+          "value": 10,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 10
+            }
+          ]
+        },
+        "modifier": 0
+      },
+      "con": {
+        "score": {
+          "value": 14,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 14
+            }
+          ]
+        },
+        "modifier": 2
+      },
+      "dex": {
+        "score": {
+          "value": 13,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 13
+            }
+          ]
+        },
+        "modifier": 1
+      },
+      "int": {
+        "score": {
+          "value": 8,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 8
+            }
+          ]
+        },
+        "modifier": -1
+      },
+      "str": {
+        "score": {
+          "value": 19,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 15
+            },
+            {
+              "source": "Gauntlets of Ogre Power",
+              "op": "set",
+              "value": 19,
+              "note": "at least 19"
+            }
+          ],
+          "inactive": [
+            {
+              "source": "DM: Curse of Weakness",
+              "op": "add",
+              "value": -2,
+              "note": "switched off"
+            }
+          ]
+        },
+        "modifier": 4
+      },
+      "wis": {
+        "score": {
+          "value": 12,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 12
+            }
+          ]
+        },
+        "modifier": 1
+      }
+    },
+    "saving_throws": {
+      "cha": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "proficient": false
+      },
+      "con": {
+        "value": 4,
+        "contributions": [
+          {
+            "source": "Con modifier",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Proficiency (Fighter)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "proficient": true
+      },
+      "dex": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "proficient": false
+      },
+      "int": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "proficient": false
+      },
+      "str": {
+        "value": 6,
+        "contributions": [
+          {
+            "source": "Str modifier",
+            "op": "base",
+            "value": 4
+          },
+          {
+            "source": "Proficiency (Fighter)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "proficient": true
+      },
+      "wis": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "proficient": false
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "dex",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "animal_handling": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "arcana": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "athletics": {
+        "value": 6,
+        "contributions": [
+          {
+            "source": "Str modifier",
+            "op": "base",
+            "value": 4
+          },
+          {
+            "source": "Proficiency (Fighter)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "str",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "deception": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "history": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "insight": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "intimidation": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "investigation": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "medicine": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "nature": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "perception": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          },
+          {
+            "source": "Proficiency (Fighter)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "wis",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "performance": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "persuasion": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "religion": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "sleight_of_hand": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "dex",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "stealth": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "roll": "disadvantage",
+        "disadvantage": [
+          "Chain Mail"
+        ],
+        "ability": "dex",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "survival": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      }
+    },
+    "passive": {
+      "insight": {
+        "value": 11,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Insight",
+            "op": "add",
+            "value": 1
+          }
+        ]
+      },
+      "investigation": {
+        "value": 9,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Investigation",
+            "op": "add",
+            "value": -1
+          }
+        ]
+      },
+      "perception": {
+        "value": 13,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Perception",
+            "op": "add",
+            "value": 3
+          }
+        ]
+      }
+    },
+    "initiative": {
+      "value": 1,
+      "contributions": [
+        {
+          "source": "Dex modifier",
+          "op": "base",
+          "value": 1
+        }
+      ]
+    },
+    "armor_class": {
+      "value": 19,
+      "contributions": [
+        {
+          "source": "Chain Mail",
+          "op": "base",
+          "value": 16
+        },
+        {
+          "source": "Shield",
+          "op": "add",
+          "value": 2
+        },
+        {
+          "source": "DM: Blessing of Pelor",
+          "op": "add",
+          "value": 1
+        }
+      ],
+      "inactive": [
+        {
+          "source": "Leather Armor",
+          "op": "base",
+          "value": 12,
+          "note": "not worn"
+        },
+        {
+          "source": "Unarmored",
+          "op": "base",
+          "value": 11,
+          "note": "wearing armor"
+        }
+      ]
+    },
+    "hit_points": {
+      "max": {
+        "value": 12,
+        "contributions": [
+          {
+            "source": "Level 1 Fighter (max d10)",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Con modifier × 1",
+            "op": "add",
+            "value": 2,
+            "note": "+2 per level"
+          }
+        ]
+      },
+      "hit_dice": "1d10"
+    },
+    "speed": {
+      "walk": {
+        "value": 30,
+        "contributions": [
+          {
+            "source": "Default (no species chosen)",
+            "op": "base",
+            "value": 30
+          }
+        ]
+      }
+    },
+    "senses": {},
+    "size": "",
+    "features": [
+      {
+        "name": "Fighting Style",
+        "level": 1,
+        "source": "Fighter"
+      },
+      {
+        "name": "Second Wind",
+        "level": 1,
+        "source": "Fighter"
+      },
+      {
+        "name": "Weapon Mastery",
+        "level": 1,
+        "source": "Fighter"
+      }
+    ],
+    "proficiencies": {
+      "armor": [
+        "Light",
+        "Medium",
+        "Heavy armor",
+        "Shields"
+      ],
+      "languages": [],
+      "tools": [],
+      "weapons": [
+        "Simple",
+        "Martial weapons"
+      ]
+    },
+    "resistances": [],
+    "conditional": [],
+    "attacks": [
+      {
+        "name": "Unarmed Strike",
+        "kind": "melee",
+        "ability": "str",
+        "proficient": true,
+        "bonus": {
+          "value": 6,
+          "contributions": [
+            {
+              "source": "Str modifier",
+              "op": "base",
+              "value": 4
+            },
+            {
+              "source": "Proficiency bonus",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "damage": "5 Bludgeoning",
+        "properties": []
+      }
+    ],
+    "spellcasting": null,
+    "spells": [],
+    "choice_points": [
+      {
+        "slot": "origin:species",
+        "kinds": [
+          "species"
+        ],
+        "source": "Origin",
+        "level": 1,
+        "count": 1,
+        "chosen": 0
+      },
+      {
+        "slot": "origin:background",
+        "kinds": [
+          "background"
+        ],
+        "source": "Origin",
+        "level": 1,
+        "count": 1,
+        "chosen": 0
+      },
+      {
+        "slot": "class:fighter:skills",
+        "kinds": [
+          "skill"
+        ],
+        "source": "Fighter",
+        "level": 1,
+        "count": 2,
+        "chosen": 2,
+        "choice_ids": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "severity": "warning",
+        "code": "species.missing",
+        "message": "no species chosen"
+      },
+      {
+        "severity": "warning",
+        "code": "background.missing",
+        "message": "no background chosen"
+      }
+    ],
+    "not_computed": [
+      "class resources and active features (Rage, Bardic Inspiration, Channel Divinity, Weapon Mastery picks)",
+      "magic weapon and armor bonuses (+1 Longsword)",
+      "carrying capacity"
+    ]
+  }
+}

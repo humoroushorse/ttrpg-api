@@ -1,0 +1,142 @@
+openapi: 3.0.3
+info:
+  title: DnD API
+  description: D&D catalog (sources, spells, ...) and user profiles. Same contract as py_dnd.
+  version: 1.0.0
+servers:
+- url: /
+  description: This server
+tags:
+- name: Spells
+- name: Sources
+- name: Users
+- name: Health
+security:
+- BearerAuth: []
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: Comma-separated fields to return (id is always included). Leave it off for every field.
+      schema:
+        type: string
+    Limit:
+      name: limit
+      in: query
+      description: Page size; 0 returns every match.
+      schema:
+        type: integer
+        default: 100
+        minimum: 0
+    Offset:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    Name:
+      name: name
+      in: query
+      description: Name(s) to filter on (separated by commas ","), case-insensitive substring.
+      schema:
+        type: string
+    Filter:
+      name: filter
+      in: query
+      description: AG Grid filter model as JSON, e.g. {"level":{"filterType":"number","type":"lessThanOrEqual","filter":3}}
+      schema:
+        type: string
+    Sort:
+      name: sort
+      in: query
+      description: AG Grid sort model as JSON, e.g. [{"colId":"level","sort":"asc"}]
+      schema:
+        type: string
+    EntityId:
+      name: entity_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+      - detail
+      - error
+      - code
+      properties:
+        detail:
+          type: string
+          description: The message (py_dnd's FastAPI field; what the UI reads).
+        error:
+          type: string
+        code:
+          type: string
+        trace_id:
+          type: string
+    BulkLoadResponse:
+      type: object
+      required: [filename, totals, created, updated, unchanged, errors, warnings]
+      properties:
+        filename:
+          type: string
+        totals:
+          type: object
+          properties:
+            created: {type: integer}
+            updated: {type: integer}
+            unchanged: {type: integer}
+            errored: {type: integer}
+            warning: {type: integer}
+        created:
+          type: array
+          items: {type: string}
+        updated:
+          type: array
+          description: 'Existing rows the upload changed ("slug (source): field, field").'
+          items: {type: string}
+        unchanged:
+          type: array
+          items: {type: string}
+        errors:
+          type: array
+          description: Any error means nothing was saved.
+          items: {type: string}
+        warnings:
+          type: array
+          items: {type: string}
+    GenericListResponse:
+      type: object
+      properties:
+        total_entities_count:
+          type: integer
+          description: How many entities match (excluding limit/offset).
+        limit:
+          type: integer
+        offset:
+          type: integer
+        filters:
+          type: object
+          additionalProperties: true
+        entities_count:
+          type: integer
+        entities:
+          type: array
+          items: {}
+  responses:
+    Error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+paths: {}
