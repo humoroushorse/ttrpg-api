@@ -1,0 +1,379 @@
+{
+  "description": "2024 Elf Sage Wizard (Evoker), point buy 8/14/13/15/12/10, planned to 7 with average HP. Viewed at 1, 4 and 7: HP, saves, skills and proficiency bonus grow with level; the subclass only shows from 3.",
+  "snapshot": {
+    "level": 7,
+    "ability_method": "point_buy",
+    "base_scores": {
+      "str": 8,
+      "dex": 14,
+      "con": 13,
+      "int": 15,
+      "wis": 12,
+      "cha": 10
+    },
+    "class": {
+      "name": "Wizard",
+      "year": 2024,
+      "hit_die_size": 6,
+      "saving_throws": [
+        "int",
+        "wis"
+      ],
+      "skill_choose": 2,
+      "armor": [],
+      "weapons": [
+        "Simple weapons"
+      ],
+      "tools": [],
+      "features": [
+        {
+          "name": "Spellcasting",
+          "level": 1
+        },
+        {
+          "name": "Ritual Adept",
+          "level": 1
+        },
+        {
+          "name": "Arcane Recovery",
+          "level": 1
+        },
+        {
+          "name": "Scholar",
+          "level": 2
+        },
+        {
+          "name": "Wizard Subclass",
+          "level": 3
+        },
+        {
+          "name": "Ability Score Improvement",
+          "level": 4
+        },
+        {
+          "name": "Memorize Spell",
+          "level": 5
+        },
+        {
+          "name": "Subclass Feature",
+          "level": 6
+        },
+        {
+          "name": "Ability Score Improvement",
+          "level": 8
+        }
+      ]
+    },
+    "levels": [
+      {
+        "level": 1,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 2,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 3,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 4,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 5,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 6,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 7,
+        "hp_method": "average",
+        "hp_value": null
+      }
+    ],
+    "species": {
+      "name": "Elf",
+      "size": "Medium",
+      "speed": 30,
+      "traits": [
+        {
+          "name": "Darkvision",
+          "level": 1
+        },
+        {
+          "name": "Keen Senses",
+          "level": 1
+        }
+      ]
+    },
+    "background": {
+      "name": "Sage",
+      "abilities": [
+        "con",
+        "int",
+        "wis"
+      ],
+      "skills": [
+        "arcana",
+        "history"
+      ],
+      "tools": [
+        "Calligrapher's Supplies"
+      ],
+      "feat": "Magic Initiate (Wizard)"
+    },
+    "subclass": {
+      "name": "Evoker",
+      "level": 3,
+      "features": [
+        {
+          "name": "Evocation Savant",
+          "level": 3
+        },
+        {
+          "name": "Potent Cantrip",
+          "level": 6
+        }
+      ]
+    },
+    "subclass_level": 3,
+    "choices": [
+      {
+        "id": "species",
+        "level": 1,
+        "kind": "species",
+        "slot": "origin:species",
+        "ref_name": "Elf"
+      },
+      {
+        "id": "bg",
+        "level": 1,
+        "kind": "background",
+        "slot": "origin:background",
+        "ref_name": "Sage"
+      },
+      {
+        "id": "bg-asi",
+        "level": 1,
+        "kind": "asi",
+        "slot": "background:sage:asi",
+        "granted_by": "bg",
+        "value": {
+          "increases": {
+            "con": 1,
+            "int": 2
+          }
+        }
+      },
+      {
+        "id": "bg-feat",
+        "level": 1,
+        "kind": "feat",
+        "slot": "background:sage:feat",
+        "granted_by": "bg",
+        "ref_name": "Magic Initiate"
+      },
+      {
+        "id": "skill-1",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:wizard:skills",
+        "value": {
+          "skill": "insight"
+        }
+      },
+      {
+        "id": "skill-2",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:wizard:skills",
+        "value": {
+          "skill": "investigation"
+        }
+      },
+      {
+        "id": "sub",
+        "level": 3,
+        "kind": "subclass",
+        "slot": "class:wizard:subclass",
+        "ref_name": "Evoker"
+      },
+      {
+        "id": "asi-4",
+        "level": 4,
+        "kind": "asi",
+        "slot": "class:wizard:asi",
+        "value": {
+          "increases": {
+            "int": 2
+          }
+        }
+      }
+    ],
+    "items": [],
+    "modifiers": [],
+    "rule_issues": []
+  },
+  "levels": [
+    1,
+    4,
+    7
+  ],
+  "expect": [
+    {
+      "level": 1,
+      "path": "proficiency_bonus.value",
+      "equals": 2
+    },
+    {
+      "level": 1,
+      "path": "abilities.int.score.value",
+      "equals": 17
+    },
+    {
+      "level": 1,
+      "path": "abilities.con.modifier",
+      "equals": 2
+    },
+    {
+      "level": 1,
+      "path": "hit_points.max.value",
+      "equals": 8
+    },
+    {
+      "level": 1,
+      "path": "hit_points.hit_dice",
+      "equals": "1d6"
+    },
+    {
+      "level": 1,
+      "path": "armor_class.value",
+      "equals": 12
+    },
+    {
+      "level": 1,
+      "path": "saving_throws.int.value",
+      "equals": 5
+    },
+    {
+      "level": 1,
+      "path": "saving_throws.wis.value",
+      "equals": 3
+    },
+    {
+      "level": 1,
+      "path": "saving_throws.str.value",
+      "equals": -1
+    },
+    {
+      "level": 1,
+      "path": "skills.arcana.value",
+      "equals": 5
+    },
+    {
+      "level": 1,
+      "path": "skills.insight.value",
+      "equals": 3
+    },
+    {
+      "level": 1,
+      "path": "passive.perception.value",
+      "equals": 11
+    },
+    {
+      "level": 1,
+      "path": "passive.investigation.value",
+      "equals": 15
+    },
+    {
+      "level": 1,
+      "path": "initiative.value",
+      "equals": 2
+    },
+    {
+      "level": 1,
+      "path": "speed.walk.value",
+      "equals": 30
+    },
+    {
+      "level": 1,
+      "path": "features",
+      "lacks_name": "Evocation Savant"
+    },
+    {
+      "level": 1,
+      "path": "issues",
+      "equals": []
+    },
+    {
+      "level": 4,
+      "path": "abilities.int.score.value",
+      "equals": 19
+    },
+    {
+      "level": 4,
+      "path": "hit_points.max.value",
+      "equals": 26
+    },
+    {
+      "level": 4,
+      "path": "saving_throws.int.value",
+      "equals": 6
+    },
+    {
+      "level": 4,
+      "path": "passive.investigation.value",
+      "equals": 16
+    },
+    {
+      "level": 4,
+      "path": "features",
+      "has_name": "Evocation Savant"
+    },
+    {
+      "level": 7,
+      "path": "proficiency_bonus.value",
+      "equals": 3
+    },
+    {
+      "level": 7,
+      "path": "hit_points.max.value",
+      "equals": 44
+    },
+    {
+      "level": 7,
+      "path": "hit_points.hit_dice",
+      "equals": "7d6"
+    },
+    {
+      "level": 7,
+      "path": "saving_throws.int.value",
+      "equals": 7
+    },
+    {
+      "level": 7,
+      "path": "saving_throws.wis.value",
+      "equals": 4
+    },
+    {
+      "level": 7,
+      "path": "skills.arcana.value",
+      "equals": 7
+    },
+    {
+      "level": 7,
+      "path": "features",
+      "has_name": "Potent Cantrip"
+    }
+  ]
+}

@@ -1,0 +1,381 @@
+tags:
+- name: Tabletop
+  description: >-
+    The virtual tabletop (docs/vtt): scenes, tokens, commands and the live event stream. Someone not in the
+    campaign gets a 404, and so does a player asking for a scene other than the one they're on.
+paths:
+  /api/v1/vtt/campaigns/{entity_id}/scenes:
+    parameters:
+    - $ref: '#/components/parameters/EntityId'
+    get:
+      tags: [Tabletop]
+      operationId: listVttScenes
+      summary: The campaign's scenes (DMs, as a tree by parent_id and sort_order); a player gets only the one they're on
+      responses:
+        '200':
+          description: The scenes
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/VttSceneList'}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+    post:
+      tags: [Tabletop]
+      operationId: createVttScene
+      summary: Create a scene, last among its siblings (DMs). It isn't shown to players until it's activated
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/VttSceneFields'}
+      responses:
+        '200':
+          description: The scene
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/VttScene'}
+        '401': {$ref: '#/components/responses/Error'}
+        '403': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+  /api/v1/vtt/scenes/{entity_id}:
+    parameters:
+    - $ref: '#/components/parameters/EntityId'
+    patch:
+      tags: [Tabletop]
+      operationId: updateVttScene
+      summary: Change some fields, or move the scene in the tree (DMs). A move under its own subtree is a 422
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/VttSceneFields'}
+      responses:
+        '200':
+          description: The scene
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/VttScene'}
+        '401': {$ref: '#/components/responses/Error'}
+        '403': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+    delete:
+      tags: [Tabletop]
+      operationId: deleteVttScene
+      summary: Move the scene and everything under it to the trash (DMs). A 409 while anyone is on one of them
+      responses:
+        '200':
+          description: The ids trashed
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {type: string, format: uuid}
+        '401': {$ref: '#/components/responses/Error'}
+        '403': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '409': {$ref: '#/components/responses/Error'}
+  /api/v1/vtt/campaigns/{entity_id}/active-scene:
+    parameters:
+    - $ref: '#/components/parameters/EntityId'
+    put:
+      tags: [Tabletop]
+      operationId: setVttActiveScene
+      summary: Move everyone to a scene (DMs); null takes the table down. Players the DM had moved elsewhere come too
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/VttSceneChoice'}
+      responses:
+        '200':
+          description: The event's seq
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/VttCommandResult'}
+        '401': {$ref: '#/components/responses/Error'}
+        '403': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+  /api/v1/vtt/campaigns/{entity_id}/members/{user_id}/scene:
+    parameters:
+    - $ref: '#/components/parameters/EntityId'
+    - $ref: '#/components/parameters/UserId'
+    put:
+      tags: [Tabletop]
+      operationId: setVttMemberScene
+      summary: Move one player to a scene (DMs, for a split party); null sends them back to the active scene
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/VttSceneChoice'}
+      responses:
+        '200':
+          description: The event's seq
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/VttCommandResult'}
+        '401': {$ref: '#/components/responses/Error'}
+        '403': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+  /api/v1/vtt/campaigns/{entity_id}/state:
+    parameters:
+    - $ref: '#/components/parameters/EntityId'
+    get:
+      tags: [Tabletop]
+      operationId: readVttState
+      summary: A scene and its tokens as the caller may see them, and the seq to stream from
+      parameters:
+      - name: scene
+        in: query
+        description: The scene (DMs any; players only the one they're on). Default the caller's current scene.
+        schema: {type: string, format: uuid}
+      responses:
+        '200':
+          description: The table
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/VttState'}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+  /api/v1/vtt/campaigns/{entity_id}/commands:
+    parameters:
+    - $ref: '#/components/parameters/EntityId'
+    post:
+      tags: [Tabletop]
+      operationId: postVttCommand
+      summary: Do something at the table; everyone sees it on their stream
+      description: >-
+        `token.move` (DMs any token; players their characters' tokens and the markers those characters control),
+        `token.add`, `token.update` and `token.remove` (DMs), and `ping` (anyone, not saved). Every command names
+        its `scene_id`. A `command_id` already applied answers with that event's seq and changes nothing.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/VttCommand'}
+      responses:
+        '200':
+          description: The event's seq (null for a ping), and the token for token.add and token.update
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/VttCommandResult'}
+        '401': {$ref: '#/components/responses/Error'}
+        '403': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '409': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+  /api/v1/vtt/campaigns/{entity_id}/events:
+    parameters:
+    - $ref: '#/components/parameters/EntityId'
+    get:
+      tags: [Tabletop]
+      operationId: streamVttEvents
+      summary: Server-sent events for the whole campaign, built for the caller
+      description: >-
+        One stream per user per campaign. Each saved event is `id: <seq>`, `event: <type>`, `data: <VttEvent>`;
+        pings have no id. A `reload` event means the caller must load the state again and reconnect from its seq
+        (the gap is too big, or past the log's 90 days). The stream closes when the caller's session expires or
+        they leave the campaign. A comment line every 20 s keeps proxies from closing it.
+      parameters:
+      - name: after
+        in: query
+        description: Replay events after this seq (from the state). Last-Event-ID wins when both are sent.
+        schema: {type: integer, format: int64, minimum: 0}
+      - name: Last-Event-ID
+        in: header
+        description: Sent by EventSource when it reconnects.
+        schema: {type: string}
+      responses:
+        '200':
+          description: The stream
+          content:
+            text/event-stream:
+              schema: {type: string}
+        '401': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+components:
+  schemas:
+    VttBackgroundSource:
+      type: object
+      required: [url]
+      additionalProperties: false
+      properties:
+        url: {type: string, format: uri, maxLength: 2048, description: An http(s) URL.}
+        type:
+          type: string
+          enum: [image/avif, image/webp, image/png, image/jpeg, image/gif]
+          description: Lets the client skip a format the browser can't decode.
+    VttSceneFields:
+      type: object
+      additionalProperties: false
+      description: >-
+        A create needs name, width_cells and height_cells; anything else left out gets its default. In a PATCH only
+        the fields sent change, and parent_id null moves the scene to the top level.
+      properties:
+        name: {type: string, minLength: 1, maxLength: 200}
+        parent_id: {type: string, format: uuid, nullable: true}
+        sort_order: {type: integer}
+        background_sources:
+          type: array
+          maxItems: 5
+          description: Copies of the map, best first (avif, webp, png). Empty is a blank grid.
+          items: {$ref: '#/components/schemas/VttBackgroundSource'}
+        grid_type: {type: string, enum: [square, none], default: square}
+        width_cells: {type: integer, minimum: 1, maximum: 500}
+        height_cells: {type: integer, minimum: 1, maximum: 500}
+        cell_px: {type: number, minimum: 8, maximum: 1024, default: 70, description: Image pixels per cell.}
+        grid_offset_x: {type: number, default: 0, description: Where the first cell starts on the image, in pixels.}
+        grid_offset_y: {type: number, default: 0}
+        grid_distance: {type: number, exclusiveMinimum: true, minimum: 0, default: 5, description: What a cell is worth.}
+        grid_units: {type: string, minLength: 1, maxLength: 10, default: ft}
+        settings: {$ref: '#/components/schemas/VttSceneSettings'}
+    VttSceneSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        token_reveal:
+          type: string
+          enum: [numbers, names]
+          default: numbers
+          description: >-
+            How a hostile marker shows up for players when the DM doesn't name it for them: just its number ("#3"),
+            or its own name.
+        grid_color: {type: string, pattern: '^#[0-9a-fA-F]{6}$', default: '#000000'}
+        grid_opacity: {type: number, minimum: 0, maximum: 1, default: 0.25}
+    VttScene:
+      type: object
+      required: [id, campaign_id, name, background_sources, grid_type, width_cells, height_cells, cell_px,
+        grid_offset_x, grid_offset_y, grid_distance, grid_units, settings, sort_order]
+      properties:
+        id: {type: string, format: uuid}
+        campaign_id: {type: string, format: uuid}
+        parent_id: {type: string, format: uuid, nullable: true, description: Null for players too (the tree is DM-only).}
+        sort_order: {type: integer}
+        name: {type: string}
+        background_sources:
+          type: array
+          items: {$ref: '#/components/schemas/VttBackgroundSource'}
+        grid_type: {type: string, enum: [square, none]}
+        width_cells: {type: integer}
+        height_cells: {type: integer}
+        cell_px: {type: number}
+        grid_offset_x: {type: number}
+        grid_offset_y: {type: number}
+        grid_distance: {type: number}
+        grid_units: {type: string}
+        settings: {$ref: '#/components/schemas/VttSceneSettings'}
+        created_at: {type: string, format: date-time}
+        updated_at: {type: string, format: date-time}
+    VttSceneList:
+      type: object
+      required: [entities, active_scene_id]
+      properties:
+        active_scene_id: {type: string, format: uuid, nullable: true}
+        entities:
+          type: array
+          items: {$ref: '#/components/schemas/VttScene'}
+    VttSceneChoice:
+      type: object
+      required: [scene_id]
+      additionalProperties: false
+      properties:
+        scene_id: {type: string, format: uuid, nullable: true}
+    VttToken:
+      type: object
+      description: >-
+        A token as the caller may see it. For players, name and disposition are what the DM chose to show
+        (player_name, player_disposition), the true ones are never sent, and a token with a hidden name has no
+        image. DMs also get player_name and player_disposition.
+      required: [id, scene_id, kind, name, disposition, x, y, size_cells, layer, can_move]
+      properties:
+        id: {type: string, format: uuid}
+        scene_id: {type: string, format: uuid}
+        kind: {type: string, enum: [character, marker]}
+        character_id: {type: string, format: uuid, nullable: true}
+        controller_character_id: {type: string, format: uuid, nullable: true}
+        name: {type: string, description: What to label it with; may be empty (show the number only).}
+        number: {type: integer, nullable: true, description: 'Shown as "#3"; unique in the scene.'}
+        disposition: {type: string, enum: [party, friendly, neutral, hostile]}
+        image_url: {type: string, nullable: true}
+        x: {type: number, description: Top-left corner, in cells; whole numbers when snapped.}
+        y: {type: number}
+        size_cells: {type: number, description: 0.5 Tiny, 1 Small or Medium, 2 Large, 3 Huge, 4 Gargantuan.}
+        layer: {type: string, enum: [tokens, dm]}
+        can_move: {type: boolean, description: Whether the caller may move it (the server decides).}
+        player_name: {type: string, nullable: true, description: DMs only.}
+        player_disposition: {type: string, nullable: true, description: DMs only.}
+    VttMemberScene:
+      type: object
+      required: [user_id, scene_id]
+      properties:
+        user_id: {type: string, format: uuid}
+        scene_id: {type: string, format: uuid}
+    VttState:
+      type: object
+      required: [role, seq, tokens]
+      properties:
+        role: {type: string, enum: [dm, player]}
+        seq: {type: integer, format: int64, description: 'Stream from here (`?after=`).'}
+        active_scene_id: {type: string, format: uuid, nullable: true, description: DMs only.}
+        scene:
+          nullable: true
+          description: Null when there's nothing to show yet (no active scene).
+          allOf: [{$ref: '#/components/schemas/VttScene'}]
+        tokens:
+          type: array
+          items: {$ref: '#/components/schemas/VttToken'}
+        members:
+          type: array
+          description: DMs only. The players moved off the active scene, and where to.
+          items: {$ref: '#/components/schemas/VttMemberScene'}
+    VttCommand:
+      type: object
+      required: [type, scene_id]
+      additionalProperties: false
+      description: >-
+        One of: token.move (token_id, x, y); token.add (kind, x, y, and character_id for a character or name for a
+        marker; the rest optional); token.update (token_id and the fields to change; null clears an optional one);
+        token.remove (token_id); ping (x, y).
+      properties:
+        type: {type: string, enum: [token.move, token.add, token.update, token.remove, ping]}
+        command_id: {type: string, format: uuid, description: Your id for it, so a retry isn't applied twice.}
+        scene_id: {type: string, format: uuid}
+        token_id: {type: string, format: uuid}
+        kind: {type: string, enum: [character, marker]}
+        character_id: {type: string, format: uuid}
+        controller_character_id: {type: string, format: uuid, nullable: true}
+        name: {type: string, nullable: true, maxLength: 200}
+        player_name: {type: string, nullable: true, maxLength: 200}
+        number: {type: integer, nullable: true, minimum: 1}
+        disposition: {type: string, enum: [party, friendly, neutral, hostile]}
+        player_disposition: {type: string, nullable: true, enum: [party, friendly, neutral, hostile]}
+        image_url: {type: string, nullable: true, maxLength: 2048}
+        x: {type: number}
+        y: {type: number}
+        size_cells: {type: number, exclusiveMinimum: true, minimum: 0, maximum: 50}
+        layer: {type: string, enum: [tokens, dm]}
+    VttCommandResult:
+      type: object
+      required: [seq]
+      properties:
+        seq: {type: integer, format: int64, nullable: true, description: Null for a ping.}
+        token: {$ref: '#/components/schemas/VttToken'}
+    VttEvent:
+      type: object
+      description: >-
+        The data of each stream event. Types: scene.created, scene.updated, scene.trashed, scene.activated,
+        member.moved, member.updated, member.left, token.added, token.updated, token.moved, token.removed,
+        campaign.deleted; ping (no seq).
+      required: [type, payload]
+      properties:
+        seq: {type: integer, format: int64}
+        type: {type: string}
+        scene_id: {type: string, format: uuid, nullable: true}
+        actor_id: {type: string, format: uuid, nullable: true}
+        created_at: {type: string, format: date-time}
+        payload: {type: object}

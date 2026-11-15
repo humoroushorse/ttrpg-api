@@ -1,0 +1,764 @@
+{
+  "3": {
+    "level": 3,
+    "proficiency_bonus": {
+      "value": 2,
+      "contributions": [
+        {
+          "source": "Level 3",
+          "op": "base",
+          "value": 2
+        }
+      ]
+    },
+    "abilities": {
+      "cha": {
+        "score": {
+          "value": 10,
+          "contributions": [
+            {
+              "source": "Point buy",
+              "op": "base",
+              "value": 10
+            }
+          ]
+        },
+        "modifier": 0
+      },
+      "con": {
+        "score": {
+          "value": 14,
+          "contributions": [
+            {
+              "source": "Point buy",
+              "op": "base",
+              "value": 13
+            },
+            {
+              "source": "Background: Sage",
+              "op": "add",
+              "value": 1
+            }
+          ]
+        },
+        "modifier": 2
+      },
+      "dex": {
+        "score": {
+          "value": 14,
+          "contributions": [
+            {
+              "source": "Point buy",
+              "op": "base",
+              "value": 14
+            }
+          ]
+        },
+        "modifier": 2
+      },
+      "int": {
+        "score": {
+          "value": 17,
+          "contributions": [
+            {
+              "source": "Point buy",
+              "op": "base",
+              "value": 15
+            },
+            {
+              "source": "Background: Sage",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "modifier": 3
+      },
+      "str": {
+        "score": {
+          "value": 8,
+          "contributions": [
+            {
+              "source": "Point buy",
+              "op": "base",
+              "value": 8
+            }
+          ]
+        },
+        "modifier": -1
+      },
+      "wis": {
+        "score": {
+          "value": 12,
+          "contributions": [
+            {
+              "source": "Point buy",
+              "op": "base",
+              "value": 12
+            }
+          ]
+        },
+        "modifier": 1
+      }
+    },
+    "saving_throws": {
+      "cha": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "proficient": false
+      },
+      "con": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Con modifier",
+            "op": "base",
+            "value": 2
+          }
+        ],
+        "proficient": false
+      },
+      "dex": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          }
+        ],
+        "proficient": false
+      },
+      "int": {
+        "value": 5,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Wizard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "proficient": true
+      },
+      "str": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Str modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "proficient": false
+      },
+      "wis": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          },
+          {
+            "source": "Proficiency (Wizard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "proficient": true
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          }
+        ],
+        "ability": "dex",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "animal_handling": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "arcana": {
+        "value": 5,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Background: Sage)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "int",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "athletics": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Str modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "str",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "deception": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "history": {
+        "value": 5,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Background: Sage)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "int",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "insight": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          },
+          {
+            "source": "Proficiency (Wizard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "wis",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "intimidation": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "investigation": {
+        "value": 5,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Wizard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "int",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "medicine": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "nature": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "perception": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "performance": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "persuasion": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "religion": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "sleight_of_hand": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          }
+        ],
+        "ability": "dex",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "stealth": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          }
+        ],
+        "ability": "dex",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "survival": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      }
+    },
+    "passive": {
+      "insight": {
+        "value": 13,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Insight",
+            "op": "add",
+            "value": 3
+          }
+        ]
+      },
+      "investigation": {
+        "value": 15,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Investigation",
+            "op": "add",
+            "value": 5
+          }
+        ]
+      },
+      "perception": {
+        "value": 11,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Perception",
+            "op": "add",
+            "value": 1
+          }
+        ]
+      }
+    },
+    "initiative": {
+      "value": 2,
+      "contributions": [
+        {
+          "source": "Dex modifier",
+          "op": "base",
+          "value": 2
+        }
+      ]
+    },
+    "armor_class": {
+      "value": 12,
+      "contributions": [
+        {
+          "source": "Unarmored",
+          "op": "base",
+          "value": 10
+        },
+        {
+          "source": "Dex modifier",
+          "op": "add",
+          "value": 2
+        }
+      ]
+    },
+    "hit_points": {
+      "max": {
+        "value": 20,
+        "contributions": [
+          {
+            "source": "Level 1 Wizard (max d6)",
+            "op": "base",
+            "value": 6
+          },
+          {
+            "source": "Level 2 (average d6)",
+            "op": "add",
+            "value": 4
+          },
+          {
+            "source": "Level 3 (average d6)",
+            "op": "add",
+            "value": 4
+          },
+          {
+            "source": "Con modifier × 3",
+            "op": "add",
+            "value": 6,
+            "note": "+2 per level"
+          }
+        ]
+      },
+      "hit_dice": "3d6"
+    },
+    "speed": {
+      "walk": {
+        "value": 30,
+        "contributions": [
+          {
+            "source": "Elf",
+            "op": "base",
+            "value": 30
+          }
+        ]
+      }
+    },
+    "senses": {},
+    "size": "Medium",
+    "features": [
+      {
+        "name": "Spellcasting",
+        "level": 1,
+        "source": "Wizard"
+      },
+      {
+        "name": "Ritual Adept",
+        "level": 1,
+        "source": "Wizard"
+      },
+      {
+        "name": "Arcane Recovery",
+        "level": 1,
+        "source": "Wizard"
+      },
+      {
+        "name": "Darkvision",
+        "level": 1,
+        "source": "Elf"
+      },
+      {
+        "name": "Keen Senses",
+        "level": 1,
+        "source": "Elf"
+      },
+      {
+        "name": "Magic Initiate",
+        "level": 1,
+        "source": "Feat (Sage)"
+      },
+      {
+        "name": "Scholar",
+        "level": 2,
+        "source": "Wizard"
+      },
+      {
+        "name": "Wizard Subclass",
+        "level": 3,
+        "source": "Wizard"
+      },
+      {
+        "name": "Abjuration Savant",
+        "level": 3,
+        "source": "Abjurer"
+      },
+      {
+        "name": "Arcane Ward",
+        "level": 3,
+        "source": "Abjurer"
+      }
+    ],
+    "proficiencies": {
+      "armor": [],
+      "languages": [],
+      "tools": [
+        "Calligrapher's Supplies"
+      ],
+      "weapons": [
+        "Simple weapons"
+      ]
+    },
+    "resistances": [],
+    "conditional": [],
+    "attacks": [
+      {
+        "name": "Unarmed Strike",
+        "kind": "melee",
+        "ability": "str",
+        "proficient": true,
+        "bonus": {
+          "value": 1,
+          "contributions": [
+            {
+              "source": "Str modifier",
+              "op": "base",
+              "value": -1
+            },
+            {
+              "source": "Proficiency bonus",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "damage": "0 Bludgeoning",
+        "properties": []
+      }
+    ],
+    "spellcasting": null,
+    "spells": [],
+    "choice_points": [
+      {
+        "slot": "origin:species",
+        "kinds": [
+          "species"
+        ],
+        "source": "Origin",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "species"
+        ]
+      },
+      {
+        "slot": "origin:background",
+        "kinds": [
+          "background"
+        ],
+        "source": "Origin",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg"
+        ]
+      },
+      {
+        "slot": "class:wizard:skills",
+        "kinds": [
+          "skill"
+        ],
+        "source": "Wizard",
+        "level": 1,
+        "count": 2,
+        "chosen": 2,
+        "choice_ids": [
+          "skill-1",
+          "skill-2"
+        ]
+      },
+      {
+        "slot": "class:wizard:subclass",
+        "kinds": [
+          "subclass"
+        ],
+        "source": "Wizard",
+        "level": 3,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "sub"
+        ]
+      },
+      {
+        "slot": "background:sage:asi",
+        "kinds": [
+          "asi"
+        ],
+        "source": "Background: Sage",
+        "granted_by_id": "bg",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg-asi"
+        ],
+        "from": [
+          "con",
+          "int",
+          "wis"
+        ],
+        "amount": 2,
+        "text": "+2 to one and +1 to another, or +1 to all three"
+      },
+      {
+        "slot": "background:sage:feat",
+        "kinds": [
+          "feat"
+        ],
+        "source": "Background: Sage",
+        "granted_by_id": "bg",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg-feat"
+        ],
+        "from": [
+          "Magic Initiate"
+        ],
+        "text": "Magic Initiate (Wizard)"
+      }
+    ],
+    "issues": [],
+    "not_computed": [
+      "class resources and active features (Rage, Bardic Inspiration, Channel Divinity, Weapon Mastery picks)",
+      "magic weapon and armor bonuses (+1 Longsword)",
+      "carrying capacity",
+      "spellcasting: the class has no table in the catalog (load it with the 5e.tools fields)"
+    ]
+  }
+}

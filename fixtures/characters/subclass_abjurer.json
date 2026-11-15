@@ -1,0 +1,225 @@
+{
+  "description": "The wizard at level 3 with the Abjurer subclass. Compared with the other subclass fixture, only the subclass features differ (HP 20, AC 12 in both).",
+  "snapshot": {
+    "level": 3,
+    "ability_method": "point_buy",
+    "base_scores": {
+      "str": 8,
+      "dex": 14,
+      "con": 13,
+      "int": 15,
+      "wis": 12,
+      "cha": 10
+    },
+    "class": {
+      "name": "Wizard",
+      "year": 2024,
+      "hit_die_size": 6,
+      "saving_throws": [
+        "int",
+        "wis"
+      ],
+      "skill_choose": 2,
+      "armor": [],
+      "weapons": [
+        "Simple weapons"
+      ],
+      "tools": [],
+      "features": [
+        {
+          "name": "Spellcasting",
+          "level": 1
+        },
+        {
+          "name": "Ritual Adept",
+          "level": 1
+        },
+        {
+          "name": "Arcane Recovery",
+          "level": 1
+        },
+        {
+          "name": "Scholar",
+          "level": 2
+        },
+        {
+          "name": "Wizard Subclass",
+          "level": 3
+        },
+        {
+          "name": "Ability Score Improvement",
+          "level": 4
+        },
+        {
+          "name": "Memorize Spell",
+          "level": 5
+        },
+        {
+          "name": "Subclass Feature",
+          "level": 6
+        },
+        {
+          "name": "Ability Score Improvement",
+          "level": 8
+        }
+      ]
+    },
+    "levels": [
+      {
+        "level": 1,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 2,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 3,
+        "hp_method": "average",
+        "hp_value": null
+      }
+    ],
+    "species": {
+      "name": "Elf",
+      "size": "Medium",
+      "speed": 30,
+      "traits": [
+        {
+          "name": "Darkvision",
+          "level": 1
+        },
+        {
+          "name": "Keen Senses",
+          "level": 1
+        }
+      ]
+    },
+    "background": {
+      "name": "Sage",
+      "abilities": [
+        "con",
+        "int",
+        "wis"
+      ],
+      "skills": [
+        "arcana",
+        "history"
+      ],
+      "tools": [
+        "Calligrapher's Supplies"
+      ],
+      "feat": "Magic Initiate (Wizard)"
+    },
+    "subclass": {
+      "name": "Abjurer",
+      "level": 3,
+      "features": [
+        {
+          "name": "Abjuration Savant",
+          "level": 3
+        },
+        {
+          "name": "Arcane Ward",
+          "level": 3
+        },
+        {
+          "name": "Projected Ward",
+          "level": 6
+        }
+      ]
+    },
+    "subclass_level": 3,
+    "choices": [
+      {
+        "id": "species",
+        "level": 1,
+        "kind": "species",
+        "slot": "origin:species",
+        "ref_name": "Elf"
+      },
+      {
+        "id": "bg",
+        "level": 1,
+        "kind": "background",
+        "slot": "origin:background",
+        "ref_name": "Sage"
+      },
+      {
+        "id": "bg-asi",
+        "level": 1,
+        "kind": "asi",
+        "slot": "background:sage:asi",
+        "granted_by": "bg",
+        "value": {
+          "increases": {
+            "con": 1,
+            "int": 2
+          }
+        }
+      },
+      {
+        "id": "bg-feat",
+        "level": 1,
+        "kind": "feat",
+        "slot": "background:sage:feat",
+        "granted_by": "bg",
+        "ref_name": "Magic Initiate"
+      },
+      {
+        "id": "skill-1",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:wizard:skills",
+        "value": {
+          "skill": "insight"
+        }
+      },
+      {
+        "id": "skill-2",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:wizard:skills",
+        "value": {
+          "skill": "investigation"
+        }
+      },
+      {
+        "id": "sub",
+        "level": 3,
+        "kind": "subclass",
+        "slot": "class:wizard:subclass",
+        "ref_name": "Abjurer"
+      }
+    ],
+    "items": [],
+    "modifiers": [],
+    "rule_issues": []
+  },
+  "levels": [
+    3
+  ],
+  "expect": [
+    {
+      "level": 3,
+      "path": "features",
+      "has_name": "Arcane Ward"
+    },
+    {
+      "level": 3,
+      "path": "features",
+      "lacks_name": "Evocation Savant"
+    },
+    {
+      "level": 3,
+      "path": "hit_points.max.value",
+      "equals": 20
+    },
+    {
+      "level": 3,
+      "path": "armor_class.value",
+      "equals": 12
+    }
+  ]
+}

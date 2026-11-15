@@ -1,6 +1,6 @@
 # NATS Deployment Configuration
 
-This directory contains deployment configurations for NATS, the message broker used for inter-service communication in the sprint management system.
+This directory contains deployment configurations for NATS, the message broker shared by the ttrpg-api services (go_sprint, and go_dnd's tabletop).
 
 ## Overview
 
@@ -23,61 +23,15 @@ NATS is deployed as shared infrastructure, similar to PostgreSQL and Keycloak. A
                       (sprint.{trace_id}.*.*.*)
 ```
 
-## Subject Pattern Standards
+## Subjects
 
-All services follow a standardized subject pattern for consistency and traceability:
+Every subject is listed in [`../../docs/nats-subjects.md`](../../docs/nats-subjects.md), and the naming
+rules are in `.kiro/steering/nats-messaging-patterns.md`: `service.entity.{id}.action`, with the trace id
+in the message, not the subject.
 
-### Pattern Format
-
-```
-{service}.{trace_id}.{resource}.{action}.{status}
-```
-
-### Components
-
-- **service**: Service name (e.g., `auth`, `sprint`)
-- **trace_id**: UUID for request tracing and correlation
-- **resource**: Resource being operated on (e.g., `workitem`, `sprint`, `user`)
-- **action**: Operation being performed (e.g., `create`, `update`, `delete`, `validate`)
-- **status**: Message type (e.g., `request`, `response`, `error`)
-
-### Examples
-
-#### Auth Service Subjects
-
-```
-auth.{trace_id}.validate.request
-auth.{trace_id}.validate.response
-auth.{trace_id}.user.sync.request
-auth.{trace_id}.user.sync.response
-```
-
-#### Sprint Service Subjects
-
-```
-sprint.{trace_id}.workitem.create.request
-sprint.{trace_id}.workitem.create.response
-sprint.{trace_id}.sprint.close.request
-sprint.{trace_id}.sprint.close.response
-sprint.{trace_id}.notification.workitem.created
-```
-
-### Wildcard Subscriptions
-
-For tracing and monitoring, use wildcard patterns:
-
-```
-# All messages for a specific trace
-sprint.{trace_id}.*.*.*
-auth.{trace_id}.*.*
-
-# All messages for a service
-sprint.>
-auth.>
-
-# All notifications
-*.*.notification.*
-```
+An earlier version of this README put the trace id in the subject (`sprint.{trace_id}.workitem.create.request`).
+That makes a new subject for every request, so nothing can subscribe to "this board's events" without a
+wildcard over every trace. Don't copy it.
 
 ## Message Headers
 
@@ -97,15 +51,16 @@ headers := nats.Header{
 
 ### Local Development (Docker Compose)
 
+One NATS for every service, container `ttrpg-nats`, in the `ttrpg` compose project with postgres and
+keycloak (`nats.compose.yml`). Its settings are all in `nats.conf`: nats-server takes only a few of them
+as command-line flags (`--max_payload`, for one, isn't), and an unknown flag makes it exit at once.
+
 ```bash
-# Start NATS
-make nats-up
-
-# Stop NATS
-make nats-down
-
-# View logs
+# from any service that includes ../makefiles/nats.mk
+make nats-up     # starts it and waits for /healthz
+make nats-down   # stops it; postgres and keycloak keep running
 make nats-logs
+make nats-clean  # deletes JetStream's store (~/projects/ttrpg/volume-mounts/nats)
 ```
 
 ### Kubernetes
@@ -125,7 +80,8 @@ kubectl logs -l app=nats -f
 
 ### Docker Compose
 
-See `docker-compose.yml` for local development configuration.
+`nats.compose.yml` runs the server with `nats.conf`. Check a config change with
+`docker run --rm -v "$PWD/nats.conf:/etc/nats/nats.conf:ro" nats:2.15.3-alpine -c /etc/nats/nats.conf -t`.
 
 ### Kubernetes
 
@@ -217,10 +173,10 @@ authorization {
 
 ```bash
 # Check NATS is running
-docker ps | grep nats
+docker ps --filter name=ttrpg-nats
 
 # Check NATS logs
-docker logs nats
+docker logs ttrpg-nats
 
 # Test connection
 nats-cli server check

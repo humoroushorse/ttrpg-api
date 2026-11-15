@@ -1,0 +1,166 @@
+{
+  "description": "Base Con 14 (manual, no background): HP at every level is the dice plus Con modifier \u00d7 level, so a Con change applies to every level at once.",
+  "snapshot": {
+    "level": 7,
+    "ability_method": "manual",
+    "base_scores": {
+      "str": 8,
+      "dex": 14,
+      "con": 14,
+      "int": 16,
+      "wis": 12,
+      "cha": 10
+    },
+    "class": {
+      "name": "Wizard",
+      "year": 2024,
+      "hit_die_size": 6,
+      "saving_throws": [
+        "int",
+        "wis"
+      ],
+      "skill_choose": 2,
+      "armor": [],
+      "weapons": [
+        "Simple weapons"
+      ],
+      "tools": [],
+      "features": [
+        {
+          "name": "Spellcasting",
+          "level": 1
+        },
+        {
+          "name": "Ritual Adept",
+          "level": 1
+        },
+        {
+          "name": "Arcane Recovery",
+          "level": 1
+        },
+        {
+          "name": "Scholar",
+          "level": 2
+        },
+        {
+          "name": "Wizard Subclass",
+          "level": 3
+        },
+        {
+          "name": "Ability Score Improvement",
+          "level": 4
+        },
+        {
+          "name": "Memorize Spell",
+          "level": 5
+        },
+        {
+          "name": "Subclass Feature",
+          "level": 6
+        },
+        {
+          "name": "Ability Score Improvement",
+          "level": 8
+        }
+      ]
+    },
+    "levels": [
+      {
+        "level": 1,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 2,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 3,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 4,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 5,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 6,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 7,
+        "hp_method": "average",
+        "hp_value": null
+      }
+    ],
+    "species": {
+      "name": "Elf",
+      "size": "Medium",
+      "speed": 30,
+      "traits": [
+        {
+          "name": "Darkvision",
+          "level": 1
+        },
+        {
+          "name": "Keen Senses",
+          "level": 1
+        }
+      ]
+    },
+    "subclass_level": 3,
+    "choices": [
+      {
+        "id": "skill-1",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:wizard:skills",
+        "value": {
+          "skill": "insight"
+        }
+      },
+      {
+        "id": "skill-2",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:wizard:skills",
+        "value": {
+          "skill": "investigation"
+        }
+      }
+    ],
+    "items": [],
+    "modifiers": [],
+    "rule_issues": []
+  },
+  "levels": [
+    1,
+    4,
+    7
+  ],
+  "expect": [
+    {
+      "level": 1,
+      "path": "hit_points.max.value",
+      "equals": 8
+    },
+    {
+      "level": 4,
+      "path": "hit_points.max.value",
+      "equals": 26
+    },
+    {
+      "level": 7,
+      "path": "hit_points.max.value",
+      "equals": 44
+    }
+  ]
+}

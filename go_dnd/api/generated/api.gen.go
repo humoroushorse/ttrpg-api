@@ -25,6 +25,292 @@ const (
 	BearerAuthScopes = "BearerAuth.Scopes"
 )
 
+// Defines values for CampaignRole.
+const (
+	CampaignRoleDm     CampaignRole = "dm"
+	CampaignRolePlayer CampaignRole = "player"
+)
+
+// Defines values for CampaignAccessSettingsInvite.
+const (
+	Dms     CampaignAccessSettingsInvite = "dms"
+	Members CampaignAccessSettingsInvite = "members"
+)
+
+// Defines values for CampaignAccessSettingsPartySheets.
+const (
+	Full    CampaignAccessSettingsPartySheets = "full"
+	Summary CampaignAccessSettingsPartySheets = "summary"
+)
+
+// Defines values for CampaignInviteKind.
+const (
+	Link CampaignInviteKind = "link"
+	User CampaignInviteKind = "user"
+)
+
+// Defines values for CampaignInviteCreateExpiresIn.
+const (
+	CampaignInviteCreateExpiresInN1d CampaignInviteCreateExpiresIn = "1d"
+	CampaignInviteCreateExpiresInN1h CampaignInviteCreateExpiresIn = "1h"
+	CampaignInviteCreateExpiresInN7d CampaignInviteCreateExpiresIn = "7d"
+)
+
+// Defines values for CampaignMemberRole.
+const (
+	CampaignMemberRoleDm     CampaignMemberRole = "dm"
+	CampaignMemberRolePlayer CampaignMemberRole = "player"
+)
+
+// Defines values for CampaignMemberPatchRole.
+const (
+	CampaignMemberPatchRoleDm     CampaignMemberPatchRole = "dm"
+	CampaignMemberPatchRolePlayer CampaignMemberPatchRole = "player"
+)
+
+// Defines values for CampaignRulesAbilityScoreDefault.
+const (
+	CampaignRulesAbilityScoreDefaultManual        CampaignRulesAbilityScoreDefault = "manual"
+	CampaignRulesAbilityScoreDefaultPointBuy      CampaignRulesAbilityScoreDefault = "point_buy"
+	CampaignRulesAbilityScoreDefaultRolled        CampaignRulesAbilityScoreDefault = "rolled"
+	CampaignRulesAbilityScoreDefaultStandardArray CampaignRulesAbilityScoreDefault = "standard_array"
+)
+
+// Defines values for CampaignRulesAbilityScoreMethods.
+const (
+	CampaignRulesAbilityScoreMethodsManual        CampaignRulesAbilityScoreMethods = "manual"
+	CampaignRulesAbilityScoreMethodsPointBuy      CampaignRulesAbilityScoreMethods = "point_buy"
+	CampaignRulesAbilityScoreMethodsRolled        CampaignRulesAbilityScoreMethods = "rolled"
+	CampaignRulesAbilityScoreMethodsStandardArray CampaignRulesAbilityScoreMethods = "standard_array"
+)
+
+// Defines values for CampaignRulesEdition.
+const (
+	N2014 CampaignRulesEdition = 2014
+	N2024 CampaignRulesEdition = 2024
+)
+
+// Defines values for CampaignRulesHpDefault.
+const (
+	CampaignRulesHpDefaultAverage CampaignRulesHpDefault = "average"
+	CampaignRulesHpDefaultManual  CampaignRulesHpDefault = "manual"
+	CampaignRulesHpDefaultRolled  CampaignRulesHpDefault = "rolled"
+)
+
+// Defines values for CampaignRulesHpMethods.
+const (
+	CampaignRulesHpMethodsAverage CampaignRulesHpMethods = "average"
+	CampaignRulesHpMethodsManual  CampaignRulesHpMethods = "manual"
+	CampaignRulesHpMethodsRolled  CampaignRulesHpMethods = "rolled"
+)
+
+// Defines values for CampaignRulesOptionalRulesEncumbrance.
+const (
+	CampaignRulesOptionalRulesEncumbranceOff      CampaignRulesOptionalRulesEncumbrance = "off"
+	CampaignRulesOptionalRulesEncumbranceStandard CampaignRulesOptionalRulesEncumbrance = "standard"
+	CampaignRulesOptionalRulesEncumbranceVariant  CampaignRulesOptionalRulesEncumbrance = "variant"
+)
+
+// Defines values for CampaignRulesOtherEditionByCategory.
+const (
+	CampaignRulesOtherEditionByCategoryAlways    CampaignRulesOtherEditionByCategory = "always"
+	CampaignRulesOtherEditionByCategoryIfMissing CampaignRulesOtherEditionByCategory = "if_missing"
+	CampaignRulesOtherEditionByCategoryNever     CampaignRulesOtherEditionByCategory = "never"
+)
+
+// Defines values for CampaignRulesOtherEditionDefault.
+const (
+	CampaignRulesOtherEditionDefaultAlways    CampaignRulesOtherEditionDefault = "always"
+	CampaignRulesOtherEditionDefaultIfMissing CampaignRulesOtherEditionDefault = "if_missing"
+	CampaignRulesOtherEditionDefaultNever     CampaignRulesOtherEditionDefault = "never"
+)
+
+// Defines values for CampaignRulesSchemaVersion.
+const (
+	N1 CampaignRulesSchemaVersion = 1
+)
+
+// Defines values for CharacterRulesFrom.
+const (
+	CharacterRulesFromCampaign  CharacterRulesFrom = "campaign"
+	CharacterRulesFromCharacter CharacterRulesFrom = "character"
+)
+
+// Defines values for CharacterAbilityScoresMethod.
+const (
+	CharacterAbilityScoresMethodManual        CharacterAbilityScoresMethod = "manual"
+	CharacterAbilityScoresMethodPointBuy      CharacterAbilityScoresMethod = "point_buy"
+	CharacterAbilityScoresMethodRolled        CharacterAbilityScoresMethod = "rolled"
+	CharacterAbilityScoresMethodStandardArray CharacterAbilityScoresMethod = "standard_array"
+)
+
+// Defines values for CharacterChoiceFieldsKind.
+const (
+	CharacterChoiceFieldsKindAsi                 CharacterChoiceFieldsKind = "asi"
+	CharacterChoiceFieldsKindBackground          CharacterChoiceFieldsKind = "background"
+	CharacterChoiceFieldsKindEquipmentOption     CharacterChoiceFieldsKind = "equipment_option"
+	CharacterChoiceFieldsKindExpertise           CharacterChoiceFieldsKind = "expertise"
+	CharacterChoiceFieldsKindFeat                CharacterChoiceFieldsKind = "feat"
+	CharacterChoiceFieldsKindFightingStyle       CharacterChoiceFieldsKind = "fighting_style"
+	CharacterChoiceFieldsKindLanguage            CharacterChoiceFieldsKind = "language"
+	CharacterChoiceFieldsKindOption              CharacterChoiceFieldsKind = "option"
+	CharacterChoiceFieldsKindResistance          CharacterChoiceFieldsKind = "resistance"
+	CharacterChoiceFieldsKindSavingThrow         CharacterChoiceFieldsKind = "saving_throw"
+	CharacterChoiceFieldsKindSkill               CharacterChoiceFieldsKind = "skill"
+	CharacterChoiceFieldsKindSpecies             CharacterChoiceFieldsKind = "species"
+	CharacterChoiceFieldsKindSpell               CharacterChoiceFieldsKind = "spell"
+	CharacterChoiceFieldsKindSpellcastingAbility CharacterChoiceFieldsKind = "spellcasting_ability"
+	CharacterChoiceFieldsKindSubclass            CharacterChoiceFieldsKind = "subclass"
+	CharacterChoiceFieldsKindTool                CharacterChoiceFieldsKind = "tool"
+)
+
+// Defines values for CharacterDetailRulesFrom.
+const (
+	CharacterDetailRulesFromCampaign  CharacterDetailRulesFrom = "campaign"
+	CharacterDetailRulesFromCharacter CharacterDetailRulesFrom = "character"
+)
+
+// Defines values for CharacterLevelFieldsHpMethod.
+const (
+	CharacterLevelFieldsHpMethodAverage CharacterLevelFieldsHpMethod = "average"
+	CharacterLevelFieldsHpMethodManual  CharacterLevelFieldsHpMethod = "manual"
+)
+
+// Defines values for CharacterModifierFieldsAddedAs.
+const (
+	CharacterModifierFieldsAddedAsDm     CharacterModifierFieldsAddedAs = "dm"
+	CharacterModifierFieldsAddedAsPlayer CharacterModifierFieldsAddedAs = "player"
+)
+
+// Defines values for CharacterModifierFieldsOp.
+const (
+	CharacterModifierFieldsOpAdd             CharacterModifierFieldsOp = "add"
+	CharacterModifierFieldsOpAdv             CharacterModifierFieldsOp = "adv"
+	CharacterModifierFieldsOpBase            CharacterModifierFieldsOp = "base"
+	CharacterModifierFieldsOpConditionImmune CharacterModifierFieldsOp = "condition_immune"
+	CharacterModifierFieldsOpDisadv          CharacterModifierFieldsOp = "disadv"
+	CharacterModifierFieldsOpGrant           CharacterModifierFieldsOp = "grant"
+	CharacterModifierFieldsOpImmune          CharacterModifierFieldsOp = "immune"
+	CharacterModifierFieldsOpMax             CharacterModifierFieldsOp = "max"
+	CharacterModifierFieldsOpMin             CharacterModifierFieldsOp = "min"
+	CharacterModifierFieldsOpResist          CharacterModifierFieldsOp = "resist"
+	CharacterModifierFieldsOpSet             CharacterModifierFieldsOp = "set"
+	CharacterModifierFieldsOpVuln            CharacterModifierFieldsOp = "vuln"
+)
+
+// Defines values for CharacterModifierPatchAddedAs.
+const (
+	CharacterModifierPatchAddedAsDm     CharacterModifierPatchAddedAs = "dm"
+	CharacterModifierPatchAddedAsPlayer CharacterModifierPatchAddedAs = "player"
+)
+
+// Defines values for CharacterModifierPatchOp.
+const (
+	CharacterModifierPatchOpAdd             CharacterModifierPatchOp = "add"
+	CharacterModifierPatchOpAdv             CharacterModifierPatchOp = "adv"
+	CharacterModifierPatchOpBase            CharacterModifierPatchOp = "base"
+	CharacterModifierPatchOpConditionImmune CharacterModifierPatchOp = "condition_immune"
+	CharacterModifierPatchOpDisadv          CharacterModifierPatchOp = "disadv"
+	CharacterModifierPatchOpGrant           CharacterModifierPatchOp = "grant"
+	CharacterModifierPatchOpImmune          CharacterModifierPatchOp = "immune"
+	CharacterModifierPatchOpMax             CharacterModifierPatchOp = "max"
+	CharacterModifierPatchOpMin             CharacterModifierPatchOp = "min"
+	CharacterModifierPatchOpResist          CharacterModifierPatchOp = "resist"
+	CharacterModifierPatchOpSet             CharacterModifierPatchOp = "set"
+	CharacterModifierPatchOpVuln            CharacterModifierPatchOp = "vuln"
+)
+
+// Defines values for CharacterSheetAttacksKind.
+const (
+	Melee  CharacterSheetAttacksKind = "melee"
+	Ranged CharacterSheetAttacksKind = "ranged"
+)
+
+// Defines values for CharacterSheetIssuesSeverity.
+const (
+	CharacterSheetIssuesSeverityError   CharacterSheetIssuesSeverity = "error"
+	CharacterSheetIssuesSeverityInfo    CharacterSheetIssuesSeverity = "info"
+	CharacterSheetIssuesSeverityWarning CharacterSheetIssuesSeverity = "warning"
+)
+
+// Defines values for CharacterSheetResistancesType.
+const (
+	CharacterSheetResistancesTypeImmunity      CharacterSheetResistancesType = "immunity"
+	CharacterSheetResistancesTypeResistance    CharacterSheetResistancesType = "resistance"
+	CharacterSheetResistancesTypeVulnerability CharacterSheetResistancesType = "vulnerability"
+)
+
+// Defines values for CharacterSheetSpellcastingChange.
+const (
+	LevelUp  CharacterSheetSpellcastingChange = "level_up"
+	LongRest CharacterSheetSpellcastingChange = "long_rest"
+)
+
+// Defines values for CharacterTransferOfferExpiresIn.
+const (
+	CharacterTransferOfferExpiresInN1d CharacterTransferOfferExpiresIn = "1d"
+	CharacterTransferOfferExpiresInN1h CharacterTransferOfferExpiresIn = "1h"
+	CharacterTransferOfferExpiresInN7d CharacterTransferOfferExpiresIn = "7d"
+)
+
+// Defines values for SheetOperationOp.
+const (
+	CharacterUpdate SheetOperationOp = "character.update"
+	ChoiceAdd       SheetOperationOp = "choice.add"
+	ChoiceRemove    SheetOperationOp = "choice.remove"
+	ChoiceReplace   SheetOperationOp = "choice.replace"
+	ItemAdd         SheetOperationOp = "item.add"
+	ItemRemove      SheetOperationOp = "item.remove"
+	ItemUpdate      SheetOperationOp = "item.update"
+	LevelRemove     SheetOperationOp = "level.remove"
+	LevelSet        SheetOperationOp = "level.set"
+	ModifierAdd     SheetOperationOp = "modifier.add"
+	ModifierRemove  SheetOperationOp = "modifier.remove"
+	ModifierUpdate  SheetOperationOp = "modifier.update"
+	ScoresSet       SheetOperationOp = "scores.set"
+	SpellPrepare    SheetOperationOp = "spell.prepare"
+	SpellUnprepare  SheetOperationOp = "spell.unprepare"
+)
+
+// Defines values for SheetSaveRoll.
+const (
+	SheetSaveRollAdvantage    SheetSaveRoll = "advantage"
+	SheetSaveRollDisadvantage SheetSaveRoll = "disadvantage"
+	SheetSaveRollNormal       SheetSaveRoll = "normal"
+)
+
+// Defines values for SheetSkillAbility.
+const (
+	Cha SheetSkillAbility = "cha"
+	Con SheetSkillAbility = "con"
+	Dex SheetSkillAbility = "dex"
+	Int SheetSkillAbility = "int"
+	Str SheetSkillAbility = "str"
+	Wis SheetSkillAbility = "wis"
+)
+
+// Defines values for SheetSkillProficiency.
+const (
+	SheetSkillProficiencyExpertise  SheetSkillProficiency = "expertise"
+	SheetSkillProficiencyHalf       SheetSkillProficiency = "half"
+	SheetSkillProficiencyNone       SheetSkillProficiency = "none"
+	SheetSkillProficiencyProficient SheetSkillProficiency = "proficient"
+)
+
+// Defines values for SheetSkillRoll.
+const (
+	SheetSkillRollAdvantage    SheetSkillRoll = "advantage"
+	SheetSkillRollDisadvantage SheetSkillRoll = "disadvantage"
+	SheetSkillRollNormal       SheetSkillRoll = "normal"
+)
+
+// Defines values for SheetStatRoll.
+const (
+	Advantage    SheetStatRoll = "advantage"
+	Disadvantage SheetStatRoll = "disadvantage"
+	Normal       SheetStatRoll = "normal"
+)
+
 // Defines values for SpellSchool.
 const (
 	Abjuration    SpellSchool = "abjuration"
@@ -39,6 +325,158 @@ const (
 	Transmutation SpellSchool = "transmutation"
 )
 
+<<<<<<< Updated upstream
+=======
+// Defines values for VttBackgroundSourceType.
+const (
+	Imageavif VttBackgroundSourceType = "image/avif"
+	Imagegif  VttBackgroundSourceType = "image/gif"
+	Imagejpeg VttBackgroundSourceType = "image/jpeg"
+	Imagepng  VttBackgroundSourceType = "image/png"
+	Imagewebp VttBackgroundSourceType = "image/webp"
+)
+
+// Defines values for VttCommandDisposition.
+const (
+	VttCommandDispositionFriendly VttCommandDisposition = "friendly"
+	VttCommandDispositionHostile  VttCommandDisposition = "hostile"
+	VttCommandDispositionNeutral  VttCommandDisposition = "neutral"
+	VttCommandDispositionParty    VttCommandDisposition = "party"
+)
+
+// Defines values for VttCommandKind.
+const (
+	VttCommandKindCharacter VttCommandKind = "character"
+	VttCommandKindMarker    VttCommandKind = "marker"
+)
+
+// Defines values for VttCommandLayer.
+const (
+	VttCommandLayerDm     VttCommandLayer = "dm"
+	VttCommandLayerTokens VttCommandLayer = "tokens"
+)
+
+// Defines values for VttCommandPlayerDisposition.
+const (
+	VttCommandPlayerDispositionFriendly VttCommandPlayerDisposition = "friendly"
+	VttCommandPlayerDispositionHostile  VttCommandPlayerDisposition = "hostile"
+	VttCommandPlayerDispositionNeutral  VttCommandPlayerDisposition = "neutral"
+	VttCommandPlayerDispositionParty    VttCommandPlayerDisposition = "party"
+)
+
+// Defines values for VttCommandType.
+const (
+	Ping        VttCommandType = "ping"
+	TokenAdd    VttCommandType = "token.add"
+	TokenMove   VttCommandType = "token.move"
+	TokenRemove VttCommandType = "token.remove"
+	TokenUpdate VttCommandType = "token.update"
+)
+
+// Defines values for VttSceneGridType.
+const (
+	VttSceneGridTypeNone   VttSceneGridType = "none"
+	VttSceneGridTypeSquare VttSceneGridType = "square"
+)
+
+// Defines values for VttSceneFieldsGridType.
+const (
+	None   VttSceneFieldsGridType = "none"
+	Square VttSceneFieldsGridType = "square"
+)
+
+// Defines values for VttSceneSettingsTokenReveal.
+const (
+	Names   VttSceneSettingsTokenReveal = "names"
+	Numbers VttSceneSettingsTokenReveal = "numbers"
+)
+
+// Defines values for VttStateRole.
+const (
+	VttStateRoleDm     VttStateRole = "dm"
+	VttStateRolePlayer VttStateRole = "player"
+)
+
+// Defines values for VttTokenDisposition.
+const (
+	Friendly VttTokenDisposition = "friendly"
+	Hostile  VttTokenDisposition = "hostile"
+	Neutral  VttTokenDisposition = "neutral"
+	Party    VttTokenDisposition = "party"
+)
+
+// Defines values for VttTokenKind.
+const (
+	VttTokenKindCharacter VttTokenKind = "character"
+	VttTokenKindMarker    VttTokenKind = "marker"
+)
+
+// Defines values for VttTokenLayer.
+const (
+	VttTokenLayerDm     VttTokenLayer = "dm"
+	VttTokenLayerTokens VttTokenLayer = "tokens"
+)
+
+// Defines values for ReadCharacterOptionsParamsFilters.
+const (
+	ReadCharacterOptionsParamsFiltersOff ReadCharacterOptionsParamsFilters = "off"
+	ReadCharacterOptionsParamsFiltersOn  ReadCharacterOptionsParamsFilters = "on"
+)
+
+// Background As the API returns it. ?fields= leaves the other fields out.
+type Background struct {
+	AbilityScoreBonuses *string             `json:"ability_score_bonuses,omitempty"`
+	CreatedAt           *time.Time          `json:"created_at,omitempty"`
+	CreatedBy           *openapi_types.UUID `json:"created_by"`
+
+	// Description Also accepted as description_html.
+	Description        *string             `json:"description,omitempty"`
+	DndVersion         *string             `json:"dnd_version,omitempty"`
+	DndVersionYear     *int                `json:"dnd_version_year,omitempty"`
+	EquipmentOptions   *[]interface{}      `json:"equipment_options,omitempty"`
+	EquipmentText      *string             `json:"equipment_text,omitempty"`
+	Feat               *string             `json:"feat,omitempty"`
+	Id                 *openapi_types.UUID `json:"id,omitempty"`
+	IsHomebrew         *bool               `json:"is_homebrew,omitempty"`
+	IsUnearthedArcana  *bool               `json:"is_unearthed_arcana,omitempty"`
+	Marks              *[]string           `json:"marks,omitempty"`
+	Name               *string             `json:"name,omitempty"`
+	SkillProficiencies *[]string           `json:"skill_proficiencies,omitempty"`
+	Slug               *string             `json:"slug,omitempty"`
+
+	// Source A source as other entities return it (read only).
+	Source            *SourceRef          `json:"source,omitempty"`
+	SourceId          *openapi_types.UUID `json:"source_id,omitempty"`
+	ToolProficiencies *[]string           `json:"tool_proficiencies,omitempty"`
+	UpdatedAt         *time.Time          `json:"updated_at,omitempty"`
+	UpdatedBy         *openapi_types.UUID `json:"updated_by"`
+}
+
+// BackgroundFields Every field a client writes. Unknown keys are a 422.
+type BackgroundFields struct {
+	AbilityScoreBonuses *string `json:"ability_score_bonuses,omitempty"`
+
+	// Description Also accepted as description_html.
+	Description        string             `json:"description"`
+	DndVersion         string             `json:"dnd_version"`
+	DndVersionYear     int                `json:"dnd_version_year"`
+	EquipmentOptions   *[]interface{}     `json:"equipment_options,omitempty"`
+	EquipmentText      *string            `json:"equipment_text,omitempty"`
+	Feat               *string            `json:"feat,omitempty"`
+	IsHomebrew         *bool              `json:"is_homebrew,omitempty"`
+	IsUnearthedArcana  *bool              `json:"is_unearthed_arcana,omitempty"`
+	Marks              *[]string          `json:"marks,omitempty"`
+	Name               string             `json:"name"`
+	SkillProficiencies *[]string          `json:"skill_proficiencies,omitempty"`
+	Slug               string             `json:"slug"`
+	SourceId           openapi_types.UUID `json:"source_id"`
+	ToolProficiencies  *[]string          `json:"tool_proficiencies,omitempty"`
+}
+
+// BackgroundPatch Only the fields to change (any of BackgroundFields).
+type BackgroundPatch map[string]interface{}
+
+>>>>>>> Stashed changes
 // BulkLoadResponse defines model for BulkLoadResponse.
 type BulkLoadResponse struct {
 	Created  *[]string `json:"created,omitempty"`
@@ -46,6 +484,7 @@ type BulkLoadResponse struct {
 	Warnings *[]string `json:"warnings,omitempty"`
 }
 
+<<<<<<< Updated upstream
 // CreateSpellRequest defines model for CreateSpellRequest.
 type CreateSpellRequest struct {
 	AreMaterialsConsumed               *bool                     `json:"are_materials_consumed,omitempty"`
@@ -79,6 +518,855 @@ type CreateSpellRequest struct {
 	StatBlocks                         *[]map[string]interface{} `json:"stat_blocks,omitempty"`
 }
 
+=======
+// Campaign defines model for Campaign.
+type Campaign struct {
+	CreatedAt   *time.Time          `json:"created_at,omitempty"`
+	CreatedBy   *openapi_types.UUID `json:"created_by"`
+	Description *string             `json:"description,omitempty"`
+	Id          *openapi_types.UUID `json:"id,omitempty"`
+	Name        *string             `json:"name,omitempty"`
+	OwnerId     *openapi_types.UUID `json:"owner_id,omitempty"`
+
+	// Role The caller's role in it.
+	Role *CampaignRole `json:"role,omitempty"`
+
+	// Rules The character-building rule set (CHARACTER_PLAN.md section 3). Writes fill in every field left out; unknown fields are a 422. In a PATCH, it merges into the current rules, and `other_edition.by_category.<category>: null` removes that override.
+	Rules *CampaignRules `json:"rules,omitempty"`
+
+	// Settings {access: {invite, party_sheets}} with defaults filled in; the VTT's settings later.
+	Settings  *map[string]interface{} `json:"settings,omitempty"`
+	UpdatedAt *time.Time              `json:"updated_at,omitempty"`
+	UpdatedBy *openapi_types.UUID     `json:"updated_by"`
+}
+
+// CampaignRole The caller's role in it.
+type CampaignRole string
+
+// CampaignAccessSettings Who may invite, and how much of the party's characters players see.
+type CampaignAccessSettings struct {
+	// Invite Default dms.
+	Invite *CampaignAccessSettingsInvite `json:"invite,omitempty"`
+
+	// PartySheets summary (default): the party list. full: each character's sheet, read-only.
+	PartySheets *CampaignAccessSettingsPartySheets `json:"party_sheets,omitempty"`
+}
+
+// CampaignAccessSettingsInvite Default dms.
+type CampaignAccessSettingsInvite string
+
+// CampaignAccessSettingsPartySheets summary (default): the party list. full: each character's sheet, read-only.
+type CampaignAccessSettingsPartySheets string
+
+// CampaignCharacter defines model for CampaignCharacter.
+type CampaignCharacter struct {
+	// ClassName Empty before a class is picked.
+	ClassName    *string             `json:"class_name,omitempty"`
+	CurrentLevel *int                `json:"current_level,omitempty"`
+	Id           *openapi_types.UUID `json:"id,omitempty"`
+
+	// Issues For the campaign's DMs and the character's own player; empty for the other players.
+	Issues        *[]CharacterIssue   `json:"issues,omitempty"`
+	Name          *string             `json:"name,omitempty"`
+	OwnerId       *openapi_types.UUID `json:"owner_id,omitempty"`
+	OwnerUsername *string             `json:"owner_username"`
+	SpeciesName   *string             `json:"species_name,omitempty"`
+}
+
+// CampaignCharacterList defines model for CampaignCharacterList.
+type CampaignCharacterList struct {
+	Entities      *[]CampaignCharacter    `json:"entities,omitempty"`
+	EntitiesCount *int                    `json:"entities_count,omitempty"`
+	Filters       *map[string]interface{} `json:"filters,omitempty"`
+	Limit         *int                    `json:"limit,omitempty"`
+	Offset        *int                    `json:"offset,omitempty"`
+
+	// TotalEntitiesCount How many entities match (excluding limit/offset).
+	TotalEntitiesCount *int `json:"total_entities_count,omitempty"`
+}
+
+// CampaignFields defines model for CampaignFields.
+type CampaignFields struct {
+	Description *string `json:"description,omitempty"`
+	Name        string  `json:"name"`
+
+	// Rules The character-building rule set (CHARACTER_PLAN.md section 3). Writes fill in every field left out; unknown fields are a 422. In a PATCH, it merges into the current rules, and `other_edition.by_category.<category>: null` removes that override.
+	Rules *CampaignRules `json:"rules,omitempty"`
+
+	// Settings In a PATCH, access merges into the current access settings.
+	Settings *CampaignSettings `json:"settings,omitempty"`
+}
+
+// CampaignGift defines model for CampaignGift.
+type CampaignGift struct {
+	// Currency Coins added, {cp, sp, ep, gp, pp}, each 0 or more.
+	Currency *map[string]int `json:"currency,omitempty"`
+	Items    *[]struct {
+		CustomDescription *string             `json:"custom_description,omitempty"`
+		CustomName        *string             `json:"custom_name,omitempty"`
+		ItemId            *openapi_types.UUID `json:"item_id,omitempty"`
+		Note              *string             `json:"note,omitempty"`
+		Quantity          *int                `json:"quantity,omitempty"`
+	} `json:"items,omitempty"`
+
+	// Modifiers Boons and banes, as CharacterModifierFields (added_as is dm; they start active).
+	Modifiers *[]map[string]interface{} `json:"modifiers,omitempty"`
+}
+
+// CampaignInvite defines model for CampaignInvite.
+type CampaignInvite struct {
+	CreatedAt *time.Time          `json:"created_at,omitempty"`
+	ExpiresAt *time.Time          `json:"expires_at,omitempty"`
+	Id        *openapi_types.UUID `json:"id,omitempty"`
+	InvitedBy *string             `json:"invited_by"`
+	Kind      *CampaignInviteKind `json:"kind,omitempty"`
+	MaxUses   *int                `json:"max_uses"`
+
+	// Username A user invite's invitee.
+	Username *string `json:"username"`
+	Uses     *int    `json:"uses,omitempty"`
+}
+
+// CampaignInviteKind defines model for CampaignInvite.Kind.
+type CampaignInviteKind string
+
+// CampaignInviteCreate defines model for CampaignInviteCreate.
+type CampaignInviteCreate struct {
+	ExpiresIn *CampaignInviteCreateExpiresIn `json:"expires_in,omitempty"`
+
+	// MaxUses A link's limit; none by default.
+	MaxUses *int `json:"max_uses"`
+
+	// Username Invite this user instead of making a link.
+	Username *string `json:"username,omitempty"`
+}
+
+// CampaignInviteCreateExpiresIn defines model for CampaignInviteCreate.ExpiresIn.
+type CampaignInviteCreateExpiresIn string
+
+// CampaignInviteCreated defines model for CampaignInviteCreated.
+type CampaignInviteCreated struct {
+	Invite *CampaignInvite `json:"invite,omitempty"`
+
+	// Token A link's token, shown only now: /dnd/campaigns/join/<token>.
+	Token *string `json:"token"`
+}
+
+// CampaignInviteList defines model for CampaignInviteList.
+type CampaignInviteList struct {
+	Entities *[]CampaignInvite `json:"entities,omitempty"`
+}
+
+// CampaignMember defines model for CampaignMember.
+type CampaignMember struct {
+	JoinedAt *time.Time `json:"joined_at,omitempty"`
+
+	// Me The caller.
+	Me *bool `json:"me,omitempty"`
+
+	// Owner The permanent DM.
+	Owner             *bool               `json:"owner,omitempty"`
+	ProfilePictureUrl *string             `json:"profile_picture_url"`
+	Role              *CampaignMemberRole `json:"role,omitempty"`
+	UserId            *openapi_types.UUID `json:"user_id,omitempty"`
+	Username          *string             `json:"username"`
+}
+
+// CampaignMemberRole defines model for CampaignMember.Role.
+type CampaignMemberRole string
+
+// CampaignMemberList defines model for CampaignMemberList.
+type CampaignMemberList struct {
+	Entities *[]CampaignMember `json:"entities,omitempty"`
+}
+
+// CampaignMemberPatch defines model for CampaignMemberPatch.
+type CampaignMemberPatch struct {
+	Role CampaignMemberPatchRole `json:"role"`
+}
+
+// CampaignMemberPatchRole defines model for CampaignMemberPatch.Role.
+type CampaignMemberPatchRole string
+
+// CampaignPatch defines model for CampaignPatch.
+type CampaignPatch struct {
+	Description *string `json:"description,omitempty"`
+	Name        *string `json:"name,omitempty"`
+
+	// Rules The character-building rule set (CHARACTER_PLAN.md section 3). Writes fill in every field left out; unknown fields are a 422. In a PATCH, it merges into the current rules, and `other_edition.by_category.<category>: null` removes that override.
+	Rules *CampaignRules `json:"rules,omitempty"`
+
+	// Settings In a PATCH, access merges into the current access settings.
+	Settings *CampaignSettings `json:"settings,omitempty"`
+}
+
+// CampaignRules The character-building rule set (CHARACTER_PLAN.md section 3). Writes fill in every field left out; unknown fields are a 422. In a PATCH, it merges into the current rules, and `other_edition.by_category.<category>: null` removes that override.
+type CampaignRules struct {
+	AbilityScoreDefault  *CampaignRulesAbilityScoreDefault   `json:"ability_score_default,omitempty"`
+	AbilityScoreMethods  *[]CampaignRulesAbilityScoreMethods `json:"ability_score_methods,omitempty"`
+	AllowPlaytest        *bool                               `json:"allow_playtest,omitempty"`
+	AllowUnearthedArcana *bool                               `json:"allow_unearthed_arcana,omitempty"`
+
+	// Edition The base edition.
+	Edition   *CampaignRulesEdition     `json:"edition,omitempty"`
+	HpDefault *CampaignRulesHpDefault   `json:"hp_default,omitempty"`
+	HpMethods *[]CampaignRulesHpMethods `json:"hp_methods,omitempty"`
+
+	// OptionalRules Stored and shown; not enforced yet, except spellbook.
+	OptionalRules *struct {
+		CustomOrigin            *bool                                  `json:"custom_origin,omitempty"`
+		Encumbrance             *CampaignRulesOptionalRulesEncumbrance `json:"encumbrance,omitempty"`
+		Feats                   *bool                                  `json:"feats,omitempty"`
+		MulticlassPrerequisites *bool                                  `json:"multiclass_prerequisites,omitempty"`
+		OptionalClassFeatures   *bool                                  `json:"optional_class_features,omitempty"`
+
+		// Spellbook A class with a spellbook (Wizard) learns its spells into it at each level (choice points) and prepares from it; preparing a spell outside it is a warning, not a block.
+		Spellbook *bool `json:"spellbook,omitempty"`
+	} `json:"optional_rules,omitempty"`
+	OtherEdition *struct {
+		// ByCategory Keys are species, class, subclass, background, feat, spell, item.
+		ByCategory *map[string]*CampaignRulesOtherEditionByCategory `json:"by_category,omitempty"`
+		Default    *CampaignRulesOtherEditionDefault                `json:"default,omitempty"`
+	} `json:"other_edition,omitempty"`
+	PointBuyBudget *int                        `json:"point_buy_budget,omitempty"`
+	RolledSetsKept *int                        `json:"rolled_sets_kept,omitempty"`
+	SchemaVersion  *CampaignRulesSchemaVersion `json:"schema_version,omitempty"`
+	Sources        *struct {
+		// Allow Source slugs; null allows every source.
+		Allow *[]string `json:"allow"`
+		Block *[]string `json:"block,omitempty"`
+	} `json:"sources,omitempty"`
+}
+
+// CampaignRulesAbilityScoreDefault defines model for CampaignRules.AbilityScoreDefault.
+type CampaignRulesAbilityScoreDefault string
+
+// CampaignRulesAbilityScoreMethods defines model for CampaignRules.AbilityScoreMethods.
+type CampaignRulesAbilityScoreMethods string
+
+// CampaignRulesEdition The base edition.
+type CampaignRulesEdition int
+
+// CampaignRulesHpDefault defines model for CampaignRules.HpDefault.
+type CampaignRulesHpDefault string
+
+// CampaignRulesHpMethods defines model for CampaignRules.HpMethods.
+type CampaignRulesHpMethods string
+
+// CampaignRulesOptionalRulesEncumbrance defines model for CampaignRules.OptionalRules.Encumbrance.
+type CampaignRulesOptionalRulesEncumbrance string
+
+// CampaignRulesOtherEditionByCategory defines model for CampaignRules.OtherEdition.ByCategory.
+type CampaignRulesOtherEditionByCategory string
+
+// CampaignRulesOtherEditionDefault defines model for CampaignRules.OtherEdition.Default.
+type CampaignRulesOtherEditionDefault string
+
+// CampaignRulesSchemaVersion defines model for CampaignRules.SchemaVersion.
+type CampaignRulesSchemaVersion int
+
+// CampaignSettings In a PATCH, access merges into the current access settings.
+type CampaignSettings struct {
+	// Access Who may invite, and how much of the party's characters players see.
+	Access *CampaignAccessSettings `json:"access,omitempty"`
+}
+
+// Character defines model for Character.
+type Character struct {
+	AbilityMethod    *string                 `json:"ability_method,omitempty"`
+	AbilityRollCount *int                    `json:"ability_roll_count,omitempty"`
+	AbilityRolls     *[]interface{}          `json:"ability_rolls,omitempty"`
+	BaseScores       *map[string]interface{} `json:"base_scores,omitempty"`
+	CampaignId       *openapi_types.UUID     `json:"campaign_id"`
+	CreatedAt        *time.Time              `json:"created_at,omitempty"`
+	CreatedBy        *openapi_types.UUID     `json:"created_by"`
+	Currency         *map[string]interface{} `json:"currency,omitempty"`
+	CurrentLevel     *int                    `json:"current_level,omitempty"`
+	Details          *map[string]interface{} `json:"details,omitempty"`
+	Id               *openapi_types.UUID     `json:"id,omitempty"`
+	Name             *string                 `json:"name,omitempty"`
+	OwnerId          *openapi_types.UUID     `json:"owner_id,omitempty"`
+
+	// Rules The character-building rule set (CHARACTER_PLAN.md section 3). Writes fill in every field left out; unknown fields are a 422. In a PATCH, it merges into the current rules, and `other_edition.by_category.<category>: null` removes that override.
+	Rules     *CampaignRules      `json:"rules,omitempty"`
+	RulesFrom *CharacterRulesFrom `json:"rules_from,omitempty"`
+	UpdatedAt *time.Time          `json:"updated_at,omitempty"`
+	UpdatedBy *openapi_types.UUID `json:"updated_by"`
+	Version   *int                `json:"version,omitempty"`
+
+	// Viewer What the caller may do with it (the list fills in owner and editor only).
+	Viewer *struct {
+		// CampaignRole dm, player, or empty when not in its campaign.
+		CampaignRole *string `json:"campaign_role,omitempty"`
+		CanEdit      *bool   `json:"can_edit,omitempty"`
+		CanGive      *bool   `json:"can_give,omitempty"`
+
+		// CanManage Delete it, choose its editors, hand it over, move it between campaigns.
+		CanManage *bool `json:"can_manage,omitempty"`
+		Editor    *bool `json:"editor,omitempty"`
+		Owner     *bool `json:"owner,omitempty"`
+	} `json:"viewer,omitempty"`
+}
+
+// CharacterRulesFrom defines model for Character.RulesFrom.
+type CharacterRulesFrom string
+
+// CharacterAbilityScores defines model for CharacterAbilityScores.
+type CharacterAbilityScores struct {
+	Method CharacterAbilityScoresMethod `json:"method"`
+
+	// RolledSet For rolled: the index of the kept set in ability_rolls.
+	RolledSet *int `json:"rolled_set"`
+	Scores    struct {
+		Cha int `json:"cha"`
+		Con int `json:"con"`
+		Dex int `json:"dex"`
+		Int int `json:"int"`
+		Str int `json:"str"`
+		Wis int `json:"wis"`
+	} `json:"scores"`
+}
+
+// CharacterAbilityScoresMethod defines model for CharacterAbilityScores.Method.
+type CharacterAbilityScoresMethod string
+
+// CharacterChoiceFields defines model for CharacterChoiceFields.
+type CharacterChoiceFields struct {
+	BackgroundId *openapi_types.UUID `json:"background_id"`
+	FeatId       *openapi_types.UUID `json:"feat_id"`
+
+	// GrantedById The choice that made this one possible.
+	GrantedById *openapi_types.UUID `json:"granted_by_id"`
+
+	// Id Optional client-made uuidv7.
+	Id     *openapi_types.UUID       `json:"id,omitempty"`
+	ItemId *openapi_types.UUID       `json:"item_id"`
+	Kind   CharacterChoiceFieldsKind `json:"kind"`
+	Level  int                       `json:"level"`
+
+	// OverridesFilter Pick it outside the character's own rules (not for campaign characters).
+	OverridesFilter *bool `json:"overrides_filter,omitempty"`
+
+	// Slot The choice point it answers; the sheet's choice_points list the slots (class:wizard:skills, feat:magic-initiate:grant_spell:wizard).
+	Slot       string              `json:"slot"`
+	SpeciesId  *openapi_types.UUID `json:"species_id"`
+	SpellId    *openapi_types.UUID `json:"spell_id"`
+	SubclassId *openapi_types.UUID `json:"subclass_id"`
+
+	// Value Picks that aren't catalog rows: {"skill": "arcana"}, {"increases": {"int": 2, "wis": 1}}, {"ability": "con"} (saving_throw, spellcasting_ability), {"damage_type": "fire"}, {"option": "Wizard"}.
+	Value *map[string]interface{} `json:"value"`
+}
+
+// CharacterChoiceFieldsKind defines model for CharacterChoiceFields.Kind.
+type CharacterChoiceFieldsKind string
+
+// CharacterCreate defines model for CharacterCreate.
+type CharacterCreate struct {
+	CampaignId *openapi_types.UUID `json:"campaign_id"`
+
+	// Currency {cp, sp, ep, gp, pp}
+	Currency     *map[string]interface{} `json:"currency,omitempty"`
+	CurrentLevel *int                    `json:"current_level,omitempty"`
+	Details      *map[string]interface{} `json:"details,omitempty"`
+
+	// Id Optional client-made uuidv7.
+	Id   *openapi_types.UUID `json:"id,omitempty"`
+	Name string              `json:"name"`
+
+	// Rules The character-building rule set (CHARACTER_PLAN.md section 3). Writes fill in every field left out; unknown fields are a 422. In a PATCH, it merges into the current rules, and `other_edition.by_category.<category>: null` removes that override.
+	Rules *CampaignRules `json:"rules,omitempty"`
+}
+
+// CharacterDetail defines model for CharacterDetail.
+type CharacterDetail struct {
+	AbilityMethod    *string                   `json:"ability_method,omitempty"`
+	AbilityRollCount *int                      `json:"ability_roll_count,omitempty"`
+	AbilityRolls     *[]interface{}            `json:"ability_rolls,omitempty"`
+	BaseScores       *map[string]interface{}   `json:"base_scores,omitempty"`
+	CampaignId       *openapi_types.UUID       `json:"campaign_id"`
+	Choices          *[]map[string]interface{} `json:"choices,omitempty"`
+	CreatedAt        *time.Time                `json:"created_at,omitempty"`
+	CreatedBy        *openapi_types.UUID       `json:"created_by"`
+	Currency         *map[string]interface{}   `json:"currency,omitempty"`
+	CurrentLevel     *int                      `json:"current_level,omitempty"`
+	Details          *map[string]interface{}   `json:"details,omitempty"`
+	Id               *openapi_types.UUID       `json:"id,omitempty"`
+	Items            *[]map[string]interface{} `json:"items,omitempty"`
+	Levels           *[]CharacterLevel         `json:"levels,omitempty"`
+	Modifiers        *[]map[string]interface{} `json:"modifiers,omitempty"`
+	Name             *string                   `json:"name,omitempty"`
+	OwnerId          *openapi_types.UUID       `json:"owner_id,omitempty"`
+	PreparedSpells   *[]map[string]interface{} `json:"prepared_spells,omitempty"`
+
+	// Rules The character-building rule set (CHARACTER_PLAN.md section 3). Writes fill in every field left out; unknown fields are a 422. In a PATCH, it merges into the current rules, and `other_edition.by_category.<category>: null` removes that override.
+	Rules     *CampaignRules            `json:"rules,omitempty"`
+	RulesFrom *CharacterDetailRulesFrom `json:"rules_from,omitempty"`
+	UpdatedAt *time.Time                `json:"updated_at,omitempty"`
+	UpdatedBy *openapi_types.UUID       `json:"updated_by"`
+	Version   *int                      `json:"version,omitempty"`
+
+	// Viewer What the caller may do with it (the list fills in owner and editor only).
+	Viewer *struct {
+		// CampaignRole dm, player, or empty when not in its campaign.
+		CampaignRole *string `json:"campaign_role,omitempty"`
+		CanEdit      *bool   `json:"can_edit,omitempty"`
+		CanGive      *bool   `json:"can_give,omitempty"`
+
+		// CanManage Delete it, choose its editors, hand it over, move it between campaigns.
+		CanManage *bool `json:"can_manage,omitempty"`
+		Editor    *bool `json:"editor,omitempty"`
+		Owner     *bool `json:"owner,omitempty"`
+	} `json:"viewer,omitempty"`
+}
+
+// CharacterDetailRulesFrom defines model for CharacterDetail.RulesFrom.
+type CharacterDetailRulesFrom string
+
+// CharacterEditor defines model for CharacterEditor.
+type CharacterEditor struct {
+	AddedAt *time.Time `json:"added_at,omitempty"`
+
+	// Me the caller
+	Me                *bool               `json:"me,omitempty"`
+	ProfilePictureUrl *string             `json:"profile_picture_url"`
+	UserId            *openapi_types.UUID `json:"user_id,omitempty"`
+	Username          *string             `json:"username"`
+}
+
+// CharacterEditorList defines model for CharacterEditorList.
+type CharacterEditorList struct {
+	Entities *[]CharacterEditor `json:"entities,omitempty"`
+}
+
+// CharacterIssue defines model for CharacterIssue.
+type CharacterIssue struct {
+	// Approved The DM accepted it as an exception.
+	Approved *bool               `json:"approved,omitempty"`
+	Category *string             `json:"category,omitempty"`
+	Id       *openapi_types.UUID `json:"id,omitempty"`
+	Name     *string             `json:"name,omitempty"`
+
+	// Note The DM's note on the exception.
+	Note   *string `json:"note"`
+	Reason *string `json:"reason,omitempty"`
+}
+
+// CharacterItemFields defines model for CharacterItemFields.
+type CharacterItemFields struct {
+	Attuned           *bool               `json:"attuned,omitempty"`
+	CustomDescription *string             `json:"custom_description"`
+	CustomName        *string             `json:"custom_name"`
+	Equipped          *bool               `json:"equipped,omitempty"`
+	GrantedById       *openapi_types.UUID `json:"granted_by_id"`
+	Id                *openapi_types.UUID `json:"id,omitempty"`
+	ItemId            *openapi_types.UUID `json:"item_id"`
+
+	// LevelReceived Hidden while current_level is below it.
+	LevelReceived *int `json:"level_received"`
+
+	// Note from Gerald, session 3
+	Note     *string `json:"note"`
+	Quantity *int    `json:"quantity,omitempty"`
+}
+
+// CharacterItemPatch defines model for CharacterItemPatch.
+type CharacterItemPatch struct {
+	Attuned           *bool   `json:"attuned,omitempty"`
+	CustomDescription *string `json:"custom_description"`
+	CustomName        *string `json:"custom_name"`
+	Equipped          *bool   `json:"equipped,omitempty"`
+
+	// LevelReceived Hidden while current_level is below it.
+	LevelReceived *int `json:"level_received"`
+
+	// Note from Gerald, session 3
+	Note     *string `json:"note"`
+	Quantity *int    `json:"quantity,omitempty"`
+}
+
+// CharacterLevel defines model for CharacterLevel.
+type CharacterLevel struct {
+	Class *struct {
+		DndVersionYear *int                `json:"dnd_version_year,omitempty"`
+		Id             *openapi_types.UUID `json:"id,omitempty"`
+		Name           *string             `json:"name,omitempty"`
+		Slug           *string             `json:"slug,omitempty"`
+		SourceSlug     *string             `json:"source_slug,omitempty"`
+	} `json:"class,omitempty"`
+	HpMethod *string             `json:"hp_method,omitempty"`
+	HpRolls  *[]interface{}      `json:"hp_rolls,omitempty"`
+	HpValue  *int                `json:"hp_value"`
+	Id       *openapi_types.UUID `json:"id,omitempty"`
+	Level    *int                `json:"level,omitempty"`
+}
+
+// CharacterLevelFields defines model for CharacterLevelFields.
+type CharacterLevelFields struct {
+	// ClassId Required for a new level.
+	ClassId  *openapi_types.UUID           `json:"class_id,omitempty"`
+	HpMethod *CharacterLevelFieldsHpMethod `json:"hp_method,omitempty"`
+	HpValue  *int                          `json:"hp_value"`
+}
+
+// CharacterLevelFieldsHpMethod defines model for CharacterLevelFields.HpMethod.
+type CharacterLevelFieldsHpMethod string
+
+// CharacterModifierFields defines model for CharacterModifierFields.
+type CharacterModifierFields struct {
+	Active    *bool                           `json:"active,omitempty"`
+	AddedAs   *CharacterModifierFieldsAddedAs `json:"added_as,omitempty"`
+	FromLevel *int                            `json:"from_level"`
+	Id        *openapi_types.UUID             `json:"id,omitempty"`
+	Label     string                          `json:"label"`
+	Note      *string                         `json:"note"`
+	Op        CharacterModifierFieldsOp       `json:"op"`
+
+	// Target ac, ability.str, skill.stealth, save.dex, speed.walk, hp.max, initiative, ...
+	Target string `json:"target"`
+
+	// Value 2, -1, {"dice": "1d4"}
+	Value interface{} `json:"value"`
+}
+
+// CharacterModifierFieldsAddedAs defines model for CharacterModifierFields.AddedAs.
+type CharacterModifierFieldsAddedAs string
+
+// CharacterModifierFieldsOp defines model for CharacterModifierFields.Op.
+type CharacterModifierFieldsOp string
+
+// CharacterModifierPatch defines model for CharacterModifierPatch.
+type CharacterModifierPatch struct {
+	Active    *bool                          `json:"active,omitempty"`
+	AddedAs   *CharacterModifierPatchAddedAs `json:"added_as,omitempty"`
+	FromLevel *int                           `json:"from_level"`
+	Label     *string                        `json:"label,omitempty"`
+	Note      *string                        `json:"note"`
+	Op        *CharacterModifierPatchOp      `json:"op,omitempty"`
+
+	// Target ac, ability.str, skill.stealth, save.dex, speed.walk, hp.max, initiative, ...
+	Target *string `json:"target,omitempty"`
+
+	// Value 2, -1, {"dice": "1d4"}
+	Value interface{} `json:"value,omitempty"`
+}
+
+// CharacterModifierPatchAddedAs defines model for CharacterModifierPatch.AddedAs.
+type CharacterModifierPatchAddedAs string
+
+// CharacterModifierPatchOp defines model for CharacterModifierPatch.Op.
+type CharacterModifierPatchOp string
+
+// CharacterOption defines model for CharacterOption.
+type CharacterOption struct {
+	Allowed *bool `json:"allowed,omitempty"`
+
+	// Category A feat's category.
+	Category *string `json:"category,omitempty"`
+
+	// Chosen The character already has it (picked or prepared).
+	Chosen         *bool               `json:"chosen,omitempty"`
+	DndVersionYear *int                `json:"dnd_version_year,omitempty"`
+	Id             *openapi_types.UUID `json:"id,omitempty"`
+
+	// Learned A spell to prepare that's in the spellbook (the spellbook rule).
+	Learned *bool `json:"learned,omitempty"`
+
+	// Level A spell's level.
+	Level *int    `json:"level,omitempty"`
+	Name  *string `json:"name,omitempty"`
+
+	// Reasons Why it isn't allowed (or, with filters=off, why it would break the rules).
+	Reasons    *[]string `json:"reasons,omitempty"`
+	Slug       *string   `json:"slug,omitempty"`
+	SourceSlug *string   `json:"source_slug,omitempty"`
+}
+
+// CharacterOptions defines model for CharacterOptions.
+type CharacterOptions struct {
+	Entities      *[]CharacterOption      `json:"entities,omitempty"`
+	EntitiesCount *int                    `json:"entities_count,omitempty"`
+	Filters       *map[string]interface{} `json:"filters,omitempty"`
+	Kind          *string                 `json:"kind,omitempty"`
+	Level         *int                    `json:"level,omitempty"`
+	Limit         *int                    `json:"limit,omitempty"`
+	Offset        *int                    `json:"offset,omitempty"`
+	Slot          *string                 `json:"slot"`
+
+	// TotalEntitiesCount How many entities match (excluding limit/offset).
+	TotalEntitiesCount *int `json:"total_entities_count,omitempty"`
+}
+
+// CharacterPatch defines model for CharacterPatch.
+type CharacterPatch struct {
+	ClassId      *openapi_types.UUID     `json:"class_id,omitempty"`
+	Currency     *map[string]interface{} `json:"currency,omitempty"`
+	CurrentLevel *int                    `json:"current_level,omitempty"`
+	Details      *map[string]interface{} `json:"details,omitempty"`
+	Name         *string                 `json:"name,omitempty"`
+
+	// Rules The character-building rule set (CHARACTER_PLAN.md section 3). Writes fill in every field left out; unknown fields are a 422. In a PATCH, it merges into the current rules, and `other_edition.by_category.<category>: null` removes that override.
+	Rules *CampaignRules `json:"rules,omitempty"`
+}
+
+// CharacterSheet Maps are keyed by ability (str...) or skill (arcana, sleight_of_hand...) codes.
+type CharacterSheet struct {
+	Abilities *map[string]struct {
+		Modifier *int       `json:"modifier,omitempty"`
+		Score    *SheetStat `json:"score,omitempty"`
+	} `json:"abilities,omitempty"`
+	ArmorClass *SheetStat `json:"armor_class,omitempty"`
+
+	// Attacks Equipped weapons, then the unarmed strike.
+	Attacks *[]struct {
+		Ability *string    `json:"ability,omitempty"`
+		Bonus   *SheetStat `json:"bonus,omitempty"`
+
+		// Damage "1d8+3 Slashing"
+		Damage     *string                    `json:"damage,omitempty"`
+		Kind       *CharacterSheetAttacksKind `json:"kind,omitempty"`
+		Mastery    *string                    `json:"mastery,omitempty"`
+		Name       *string                    `json:"name,omitempty"`
+		Proficient *bool                      `json:"proficient,omitempty"`
+		Properties *[]string                  `json:"properties,omitempty"`
+		Range      *string                    `json:"range,omitempty"`
+		Versatile  *string                    `json:"versatile,omitempty"`
+	} `json:"attacks,omitempty"`
+
+	// ChoicePoints Every pick the build asks for. Answer one with choices that have this slot, granted_by_id and one of these kinds.
+	ChoicePoints *[]SheetChoicePoint `json:"choice_points,omitempty"`
+
+	// ClassTable The class table's other columns at this level (Rages, Sneak Attack, ...).
+	ClassTable *map[string]interface{} `json:"class_table,omitempty"`
+
+	// Conditional Advantage or disadvantage that only applies sometimes (saves to end the Poisoned condition).
+	Conditional *[]struct {
+		Condition *string   `json:"condition,omitempty"`
+		Mod       *string   `json:"mod,omitempty"`
+		On        *[]string `json:"on,omitempty"`
+		Source    *string   `json:"source,omitempty"`
+		Text      *string   `json:"text,omitempty"`
+	} `json:"conditional,omitempty"`
+	Features *[]struct {
+		Level  *int    `json:"level,omitempty"`
+		Name   *string `json:"name,omitempty"`
+		Source *string `json:"source,omitempty"`
+	} `json:"features,omitempty"`
+	HitPoints *struct {
+		HitDice *string    `json:"hit_dice,omitempty"`
+		Max     *SheetStat `json:"max,omitempty"`
+	} `json:"hit_points,omitempty"`
+	Initiative *SheetStat `json:"initiative,omitempty"`
+	Issues     *[]struct {
+		Code    *string `json:"code,omitempty"`
+		Message *string `json:"message,omitempty"`
+
+		// Severity info is an approved exception
+		Severity *CharacterSheetIssuesSeverity `json:"severity,omitempty"`
+	} `json:"issues,omitempty"`
+	Level            *int                  `json:"level,omitempty"`
+	NotComputed      *[]string             `json:"not_computed,omitempty"`
+	Passive          *map[string]SheetStat `json:"passive,omitempty"`
+	Proficiencies    *map[string][]string  `json:"proficiencies,omitempty"`
+	ProficiencyBonus *SheetStat            `json:"proficiency_bonus,omitempty"`
+	Resistances      *[]struct {
+		// Against A damage type (fire) or a condition (charmed).
+		Against *string                        `json:"against,omitempty"`
+		Source  *string                        `json:"source,omitempty"`
+		Type    *CharacterSheetResistancesType `json:"type,omitempty"`
+	} `json:"resistances,omitempty"`
+	SavingThrows *map[string]SheetSave `json:"saving_throws,omitempty"`
+
+	// Senses darkvision, blindsight, ...; the value is the range in feet.
+	Senses *map[string]SheetStat  `json:"senses,omitempty"`
+	Size   *string                `json:"size,omitempty"`
+	Skills *map[string]SheetSkill `json:"skills,omitempty"`
+	Speed  *map[string]SheetStat  `json:"speed,omitempty"`
+
+	// Spellcasting The class's (or a casting subclass's) spellcasting; null when the character doesn't cast. Over or under a limit is a warning in issues, not an error.
+	Spellcasting *struct {
+		Ability  *string     `json:"ability,omitempty"`
+		Attack   *SheetStat  `json:"attack,omitempty"`
+		Cantrips *SheetLimit `json:"cantrips"`
+
+		// Change long_rest: level 1+ spells are prepared from the class's list (prepared_spells). level_up: they're picked at each level (choice points), like cantrips for every class.
+		Change *CharacterSheetSpellcastingChange `json:"change,omitempty"`
+
+		// HasSpellbook The class keeps a spellbook (Wizard), so the spellbook rule applies to it.
+		HasSpellbook  *bool       `json:"has_spellbook,omitempty"`
+		PactSlotLevel *int        `json:"pact_slot_level,omitempty"`
+		PactSlots     *int        `json:"pact_slots,omitempty"`
+		Prepared      *SheetLimit `json:"prepared"`
+		SaveDc        *SheetStat  `json:"save_dc,omitempty"`
+
+		// Slots Spell slots for spell levels 1-9.
+		Slots  *[]int  `json:"slots,omitempty"`
+		Source *string `json:"source,omitempty"`
+
+		// SpellbookRule The spellbook rule is on for this character.
+		SpellbookRule *bool `json:"spellbook_rule,omitempty"`
+	} `json:"spellcasting"`
+
+	// Spells Spells from feats and species traits (class spells are prepared_spells).
+	Spells *[]struct {
+		Ability *string `json:"ability,omitempty"`
+		Attack  *int    `json:"attack,omitempty"`
+
+		// Name A picked spell's name.
+		Name   *string `json:"name,omitempty"`
+		Note   *string `json:"note,omitempty"`
+		SaveDc *int    `json:"save_dc,omitempty"`
+		Source *string `json:"source,omitempty"`
+
+		// Spell A fixed spell's catalog slug.
+		Spell *string `json:"spell,omitempty"`
+		Uses  *string `json:"uses,omitempty"`
+	} `json:"spells,omitempty"`
+}
+
+// CharacterSheetAttacksKind defines model for CharacterSheet.Attacks.Kind.
+type CharacterSheetAttacksKind string
+
+// CharacterSheetIssuesSeverity info is an approved exception
+type CharacterSheetIssuesSeverity string
+
+// CharacterSheetResistancesType defines model for CharacterSheet.Resistances.Type.
+type CharacterSheetResistancesType string
+
+// CharacterSheetSpellcastingChange long_rest: level 1+ spells are prepared from the class's list (prepared_spells). level_up: they're picked at each level (choice points), like cantrips for every class.
+type CharacterSheetSpellcastingChange string
+
+// CharacterTransferOffer defines model for CharacterTransferOffer.
+type CharacterTransferOffer struct {
+	ExpiresIn *CharacterTransferOfferExpiresIn `json:"expires_in,omitempty"`
+	UserId    *openapi_types.UUID              `json:"user_id,omitempty"`
+	Username  *string                          `json:"username,omitempty"`
+}
+
+// CharacterTransferOfferExpiresIn defines model for CharacterTransferOffer.ExpiresIn.
+type CharacterTransferOfferExpiresIn string
+
+// CharacterTransferResponse defines model for CharacterTransferResponse.
+type CharacterTransferResponse struct {
+	Transfer *struct {
+		CreatedAt  *time.Time          `json:"created_at,omitempty"`
+		ExpiresAt  *time.Time          `json:"expires_at,omitempty"`
+		ToUserId   *openapi_types.UUID `json:"to_user_id,omitempty"`
+		ToUsername *string             `json:"to_username"`
+	} `json:"transfer"`
+}
+
+// Class As the API returns it. ?fields= leaves the other fields out.
+type Class struct {
+	CasterProgression *string             `json:"caster_progression"`
+	CreatedAt         *time.Time          `json:"created_at,omitempty"`
+	CreatedBy         *openapi_types.UUID `json:"created_by"`
+
+	// Description Also accepted as description_html.
+	Description       *string                 `json:"description,omitempty"`
+	DndVersion        *string                 `json:"dnd_version,omitempty"`
+	DndVersionYear    *int                    `json:"dnd_version_year,omitempty"`
+	Features          *[]interface{}          `json:"features,omitempty"`
+	HitDie            *string                 `json:"hit_die,omitempty"`
+	HitDieSize        *int                    `json:"hit_die_size"`
+	Id                *openapi_types.UUID     `json:"id,omitempty"`
+	IsHomebrew        *bool                   `json:"is_homebrew,omitempty"`
+	IsUnearthedArcana *bool                   `json:"is_unearthed_arcana,omitempty"`
+	LevelTable        *[]interface{}          `json:"level_table,omitempty"`
+	Marks             *[]string               `json:"marks,omitempty"`
+	Name              *string                 `json:"name,omitempty"`
+	PrimaryAbility    *string                 `json:"primary_ability,omitempty"`
+	Proficiencies     *map[string]interface{} `json:"proficiencies,omitempty"`
+	Slug              *string                 `json:"slug,omitempty"`
+
+	// Source A source as other entities return it (read only).
+	Source                   *SourceRef              `json:"source,omitempty"`
+	SourceId                 *openapi_types.UUID     `json:"source_id,omitempty"`
+	SpellList                *string                 `json:"spell_list"`
+	SpellPreparation         *map[string]interface{} `json:"spell_preparation"`
+	SpellcastingAbility      *string                 `json:"spellcasting_ability"`
+	StartingEquipment        *string                 `json:"starting_equipment,omitempty"`
+	StartingEquipmentOptions *[]interface{}          `json:"starting_equipment_options,omitempty"`
+	SubclassSlugs            *[]string               `json:"subclass_slugs,omitempty"`
+	UpdatedAt                *time.Time              `json:"updated_at,omitempty"`
+	UpdatedBy                *openapi_types.UUID     `json:"updated_by"`
+}
+
+// ClassFields Every field a client writes. Unknown keys are a 422.
+type ClassFields struct {
+	CasterProgression *string `json:"caster_progression"`
+
+	// Description Also accepted as description_html.
+	Description              string                  `json:"description"`
+	DndVersion               string                  `json:"dnd_version"`
+	DndVersionYear           int                     `json:"dnd_version_year"`
+	Features                 *[]interface{}          `json:"features,omitempty"`
+	HitDie                   string                  `json:"hit_die"`
+	HitDieSize               *int                    `json:"hit_die_size"`
+	IsHomebrew               *bool                   `json:"is_homebrew,omitempty"`
+	IsUnearthedArcana        *bool                   `json:"is_unearthed_arcana,omitempty"`
+	LevelTable               *[]interface{}          `json:"level_table,omitempty"`
+	Marks                    *[]string               `json:"marks,omitempty"`
+	Name                     string                  `json:"name"`
+	PrimaryAbility           *string                 `json:"primary_ability,omitempty"`
+	Proficiencies            *map[string]interface{} `json:"proficiencies,omitempty"`
+	Slug                     string                  `json:"slug"`
+	SourceId                 openapi_types.UUID      `json:"source_id"`
+	SpellList                *string                 `json:"spell_list"`
+	SpellPreparation         *map[string]interface{} `json:"spell_preparation"`
+	SpellcastingAbility      *string                 `json:"spellcasting_ability"`
+	StartingEquipment        *string                 `json:"starting_equipment,omitempty"`
+	StartingEquipmentOptions *[]interface{}          `json:"starting_equipment_options,omitempty"`
+	SubclassSlugs            *[]string               `json:"subclass_slugs,omitempty"`
+}
+
+// ClassPatch Only the fields to change (any of ClassFields).
+type ClassPatch map[string]interface{}
+
+// Condition As the API returns it. ?fields= leaves the other fields out.
+type Condition struct {
+	CreatedAt *time.Time          `json:"created_at,omitempty"`
+	CreatedBy *openapi_types.UUID `json:"created_by"`
+
+	// Description Also accepted as description_html.
+	Description       *string             `json:"description,omitempty"`
+	DndVersion        *string             `json:"dnd_version,omitempty"`
+	DndVersionYear    *int                `json:"dnd_version_year,omitempty"`
+	Effects           *[]interface{}      `json:"effects,omitempty"`
+	Id                *openapi_types.UUID `json:"id,omitempty"`
+	IsHomebrew        *bool               `json:"is_homebrew,omitempty"`
+	IsUnearthedArcana *bool               `json:"is_unearthed_arcana,omitempty"`
+	Levels            *[]interface{}      `json:"levels,omitempty"`
+	Marks             *[]string           `json:"marks,omitempty"`
+	Name              *string             `json:"name,omitempty"`
+	Slug              *string             `json:"slug,omitempty"`
+
+	// Source A source as other entities return it (read only).
+	Source    *SourceRef          `json:"source,omitempty"`
+	SourceId  *openapi_types.UUID `json:"source_id,omitempty"`
+	UpdatedAt *time.Time          `json:"updated_at,omitempty"`
+	UpdatedBy *openapi_types.UUID `json:"updated_by"`
+}
+
+// ConditionFields Every field a client writes. Unknown keys are a 422.
+type ConditionFields struct {
+	// Description Also accepted as description_html.
+	Description       string             `json:"description"`
+	DndVersion        string             `json:"dnd_version"`
+	DndVersionYear    int                `json:"dnd_version_year"`
+	Effects           *[]interface{}     `json:"effects,omitempty"`
+	IsHomebrew        *bool              `json:"is_homebrew,omitempty"`
+	IsUnearthedArcana *bool              `json:"is_unearthed_arcana,omitempty"`
+	Levels            *[]interface{}     `json:"levels,omitempty"`
+	Marks             *[]string          `json:"marks,omitempty"`
+	Name              string             `json:"name"`
+	Slug              string             `json:"slug"`
+	SourceId          openapi_types.UUID `json:"source_id"`
+}
+
+// ConditionPatch Only the fields to change (any of ConditionFields).
+type ConditionPatch map[string]interface{}
+
+>>>>>>> Stashed changes
 // DndUser defines model for DndUser.
 type DndUser struct {
 	Id                openapi_types.UUID `json:"id"`
@@ -93,7 +1381,358 @@ type ErrorResponse struct {
 	TraceId *string `json:"trace_id,omitempty"`
 }
 
+<<<<<<< Updated upstream
 // Source defines model for Source.
+=======
+// Feat As the API returns it. ?fields= leaves the other fields out.
+type Feat struct {
+	Category  *string             `json:"category"`
+	CreatedAt *time.Time          `json:"created_at,omitempty"`
+	CreatedBy *openapi_types.UUID `json:"created_by"`
+
+	// Description Also accepted as description_html.
+	Description       *string                 `json:"description,omitempty"`
+	DndVersion        *string                 `json:"dnd_version,omitempty"`
+	DndVersionYear    *int                    `json:"dnd_version_year,omitempty"`
+	Effects           *[]interface{}          `json:"effects,omitempty"`
+	Id                *openapi_types.UUID     `json:"id,omitempty"`
+	IsHomebrew        *bool                   `json:"is_homebrew,omitempty"`
+	IsUnearthedArcana *bool                   `json:"is_unearthed_arcana,omitempty"`
+	Marks             *[]string               `json:"marks,omitempty"`
+	Name              *string                 `json:"name,omitempty"`
+	Prerequisites     *map[string]interface{} `json:"prerequisites"`
+	Slug              *string                 `json:"slug,omitempty"`
+
+	// Source A source as other entities return it (read only).
+	Source    *SourceRef          `json:"source,omitempty"`
+	SourceId  *openapi_types.UUID `json:"source_id,omitempty"`
+	UpdatedAt *time.Time          `json:"updated_at,omitempty"`
+	UpdatedBy *openapi_types.UUID `json:"updated_by"`
+}
+
+// FeatFields Every field a client writes. Unknown keys are a 422.
+type FeatFields struct {
+	Category *string `json:"category"`
+
+	// Description Also accepted as description_html.
+	Description       string                  `json:"description"`
+	DndVersion        string                  `json:"dnd_version"`
+	DndVersionYear    int                     `json:"dnd_version_year"`
+	Effects           *[]interface{}          `json:"effects,omitempty"`
+	IsHomebrew        *bool                   `json:"is_homebrew,omitempty"`
+	IsUnearthedArcana *bool                   `json:"is_unearthed_arcana,omitempty"`
+	Marks             *[]string               `json:"marks,omitempty"`
+	Name              string                  `json:"name"`
+	Prerequisites     *map[string]interface{} `json:"prerequisites"`
+	Slug              string                  `json:"slug"`
+	SourceId          openapi_types.UUID      `json:"source_id"`
+}
+
+// FeatPatch Only the fields to change (any of FeatFields).
+type FeatPatch map[string]interface{}
+
+// GenericListResponse defines model for GenericListResponse.
+type GenericListResponse struct {
+	Entities      *[]interface{}          `json:"entities,omitempty"`
+	EntitiesCount *int                    `json:"entities_count,omitempty"`
+	Filters       *map[string]interface{} `json:"filters,omitempty"`
+	Limit         *int                    `json:"limit,omitempty"`
+	Offset        *int                    `json:"offset,omitempty"`
+
+	// TotalEntitiesCount How many entities match (excluding limit/offset).
+	TotalEntitiesCount *int `json:"total_entities_count,omitempty"`
+}
+
+// GlossaryEntry As the API returns it. ?fields= leaves the other fields out.
+type GlossaryEntry struct {
+	Category  *string             `json:"category,omitempty"`
+	CreatedAt *time.Time          `json:"created_at,omitempty"`
+	CreatedBy *openapi_types.UUID `json:"created_by"`
+
+	// Description Also accepted as description_html.
+	Description       *string             `json:"description,omitempty"`
+	DndVersion        *string             `json:"dnd_version,omitempty"`
+	DndVersionYear    *int                `json:"dnd_version_year,omitempty"`
+	Effects           *[]interface{}      `json:"effects,omitempty"`
+	Id                *openapi_types.UUID `json:"id,omitempty"`
+	IsHomebrew        *bool               `json:"is_homebrew,omitempty"`
+	IsUnearthedArcana *bool               `json:"is_unearthed_arcana,omitempty"`
+	Levels            *[]interface{}      `json:"levels,omitempty"`
+	Marks             *[]string           `json:"marks,omitempty"`
+	Name              *string             `json:"name,omitempty"`
+	Slug              *string             `json:"slug,omitempty"`
+
+	// Source A source as other entities return it (read only).
+	Source    *SourceRef          `json:"source,omitempty"`
+	SourceId  *openapi_types.UUID `json:"source_id,omitempty"`
+	UpdatedAt *time.Time          `json:"updated_at,omitempty"`
+	UpdatedBy *openapi_types.UUID `json:"updated_by"`
+}
+
+// GlossaryEntryFields Every field a client writes. Unknown keys are a 422.
+type GlossaryEntryFields struct {
+	Category *string `json:"category,omitempty"`
+
+	// Description Also accepted as description_html.
+	Description       string             `json:"description"`
+	DndVersion        string             `json:"dnd_version"`
+	DndVersionYear    int                `json:"dnd_version_year"`
+	Effects           *[]interface{}     `json:"effects,omitempty"`
+	IsHomebrew        *bool              `json:"is_homebrew,omitempty"`
+	IsUnearthedArcana *bool              `json:"is_unearthed_arcana,omitempty"`
+	Levels            *[]interface{}     `json:"levels,omitempty"`
+	Marks             *[]string          `json:"marks,omitempty"`
+	Name              string             `json:"name"`
+	Slug              string             `json:"slug"`
+	SourceId          openapi_types.UUID `json:"source_id"`
+}
+
+// GlossaryEntryPatch Only the fields to change (any of GlossaryEntryFields).
+type GlossaryEntryPatch map[string]interface{}
+
+// IncomingTransfer defines model for IncomingTransfer.
+type IncomingTransfer struct {
+	CampaignId    *openapi_types.UUID `json:"campaign_id"`
+	CampaignName  *string             `json:"campaign_name"`
+	CharacterId   *openapi_types.UUID `json:"character_id,omitempty"`
+	CharacterName *string             `json:"character_name,omitempty"`
+	CreatedAt     *time.Time          `json:"created_at,omitempty"`
+	CurrentLevel  *int                `json:"current_level,omitempty"`
+	ExpiresAt     *time.Time          `json:"expires_at,omitempty"`
+	FromUsername  *string             `json:"from_username"`
+}
+
+// IncomingTransferList defines model for IncomingTransferList.
+type IncomingTransferList struct {
+	Entities *[]IncomingTransfer `json:"entities,omitempty"`
+}
+
+// InviteLinkPreview defines model for InviteLinkPreview.
+type InviteLinkPreview struct {
+	CampaignId   *openapi_types.UUID `json:"campaign_id,omitempty"`
+	CampaignName *string             `json:"campaign_name,omitempty"`
+	ExpiresAt    *time.Time          `json:"expires_at,omitempty"`
+	InvitedBy    *string             `json:"invited_by"`
+
+	// Member The caller is already in it.
+	Member *bool `json:"member,omitempty"`
+}
+
+// Item As the API returns it. ?fields= leaves the other fields out.
+type Item struct {
+	AttunementRequirement *string             `json:"attunement_requirement"`
+	BaseItem              *string             `json:"base_item"`
+	Category              *string             `json:"category"`
+	Cost                  *string             `json:"cost"`
+	CreatedAt             *time.Time          `json:"created_at,omitempty"`
+	CreatedBy             *openapi_types.UUID `json:"created_by"`
+
+	// Description Also accepted as description_html.
+	Description        *string                 `json:"description,omitempty"`
+	DndVersion         *string                 `json:"dnd_version,omitempty"`
+	DndVersionYear     *int                    `json:"dnd_version_year,omitempty"`
+	Effects            *[]interface{}          `json:"effects,omitempty"`
+	Id                 *openapi_types.UUID     `json:"id,omitempty"`
+	IsHomebrew         *bool                   `json:"is_homebrew,omitempty"`
+	IsMagic            *bool                   `json:"is_magic,omitempty"`
+	IsUnearthedArcana  *bool                   `json:"is_unearthed_arcana,omitempty"`
+	MagicItemType      *string                 `json:"magic_item_type"`
+	Marks              *[]string               `json:"marks,omitempty"`
+	Name               *string                 `json:"name,omitempty"`
+	Properties         *map[string]interface{} `json:"properties,omitempty"`
+	Rarity             *string                 `json:"rarity"`
+	RarityText         *string                 `json:"rarity_text"`
+	RequiresAttunement *bool                   `json:"requires_attunement,omitempty"`
+	Slug               *string                 `json:"slug,omitempty"`
+
+	// Source A source as other entities return it (read only).
+	Source      *SourceRef          `json:"source,omitempty"`
+	SourceId    *openapi_types.UUID `json:"source_id,omitempty"`
+	Subcategory *string             `json:"subcategory"`
+	UpdatedAt   *time.Time          `json:"updated_at,omitempty"`
+	UpdatedBy   *openapi_types.UUID `json:"updated_by"`
+	Weight      *string             `json:"weight"`
+}
+
+// ItemFields Every field a client writes. Unknown keys are a 422.
+type ItemFields struct {
+	AttunementRequirement *string `json:"attunement_requirement"`
+	BaseItem              *string `json:"base_item"`
+	Category              *string `json:"category"`
+	Cost                  *string `json:"cost"`
+
+	// Description Also accepted as description_html.
+	Description        string                  `json:"description"`
+	DndVersion         string                  `json:"dnd_version"`
+	DndVersionYear     int                     `json:"dnd_version_year"`
+	Effects            *[]interface{}          `json:"effects,omitempty"`
+	IsHomebrew         *bool                   `json:"is_homebrew,omitempty"`
+	IsMagic            *bool                   `json:"is_magic,omitempty"`
+	IsUnearthedArcana  *bool                   `json:"is_unearthed_arcana,omitempty"`
+	MagicItemType      *string                 `json:"magic_item_type"`
+	Marks              *[]string               `json:"marks,omitempty"`
+	Name               string                  `json:"name"`
+	Properties         *map[string]interface{} `json:"properties,omitempty"`
+	Rarity             *string                 `json:"rarity"`
+	RarityText         *string                 `json:"rarity_text"`
+	RequiresAttunement *bool                   `json:"requires_attunement,omitempty"`
+	Slug               string                  `json:"slug"`
+	SourceId           openapi_types.UUID      `json:"source_id"`
+	Subcategory        *string                 `json:"subcategory"`
+	Weight             *string                 `json:"weight"`
+}
+
+// ItemPatch Only the fields to change (any of ItemFields).
+type ItemPatch map[string]interface{}
+
+// MyInvite defines model for MyInvite.
+type MyInvite struct {
+	CampaignId   *openapi_types.UUID `json:"campaign_id,omitempty"`
+	CampaignName *string             `json:"campaign_name,omitempty"`
+	CreatedAt    *time.Time          `json:"created_at,omitempty"`
+	ExpiresAt    *time.Time          `json:"expires_at,omitempty"`
+	Id           *openapi_types.UUID `json:"id,omitempty"`
+	InvitedBy    *string             `json:"invited_by"`
+}
+
+// MyInviteList defines model for MyInviteList.
+type MyInviteList struct {
+	Entities *[]MyInvite `json:"entities,omitempty"`
+}
+
+// SheetChoicePoint defines model for SheetChoicePoint.
+type SheetChoicePoint struct {
+	// AbilityCount An ability increase gives amount × ability_count points.
+	AbilityCount *int `json:"ability_count,omitempty"`
+
+	// Amount An ability increase's most per ability.
+	Amount *int  `json:"amount,omitempty"`
+	Any    *bool `json:"any,omitempty"`
+
+	// ChoiceIds The ids of the choices that answer it (left out when none do).
+	ChoiceIds   *[]string `json:"choice_ids,omitempty"`
+	Chosen      *int      `json:"chosen,omitempty"`
+	Count       *int      `json:"count,omitempty"`
+	From        *[]string `json:"from,omitempty"`
+	GrantedById *string   `json:"granted_by_id,omitempty"`
+	Kinds       *[]string `json:"kinds,omitempty"`
+	Level       *int      `json:"level,omitempty"`
+
+	// Open Takes any number (spells copied into a spellbook); count is however many are chosen.
+	Open *bool `json:"open,omitempty"`
+
+	// Options What each value in `from` gives (the starting equipment packages).
+	Options *[]struct {
+		Label string `json:"label"`
+		Text  string `json:"text"`
+	} `json:"options,omitempty"`
+	Slot        *string `json:"slot,omitempty"`
+	Source      *string `json:"source,omitempty"`
+	SpellFilter *struct {
+		Classes *[]string `json:"classes,omitempty"`
+
+		// Level Exactly this spell level (0 is a cantrip).
+		Level *int `json:"level,omitempty"`
+
+		// MaxLevel A class's spells go up to the highest slot at the point's level.
+		MaxLevel *int      `json:"max_level,omitempty"`
+		MinLevel *int      `json:"min_level,omitempty"`
+		Ritual   *bool     `json:"ritual,omitempty"`
+		Schools  *[]string `json:"schools,omitempty"`
+	} `json:"spell_filter,omitempty"`
+	Text *string `json:"text,omitempty"`
+}
+
+// SheetContribution defines model for SheetContribution.
+type SheetContribution struct {
+	Note   *string `json:"note,omitempty"`
+	Op     *string `json:"op,omitempty"`
+	Source *string `json:"source,omitempty"`
+	Value  *int    `json:"value,omitempty"`
+}
+
+// SheetLimit defines model for SheetLimit.
+type SheetLimit struct {
+	Chosen *int `json:"chosen,omitempty"`
+	Limit  *int `json:"limit,omitempty"`
+}
+
+// SheetOperation One change, as its route takes it: `body` is that route's request body. choice.add, choice.replace and choice.remove (choice_id), level.set and level.remove (level), scores.set, character.update, item.add, item.update and item.remove (item_id), spell.prepare and spell.unprepare (spell_id), modifier.add, modifier.update and modifier.remove (modifier_id).
+type SheetOperation struct {
+	Body       *map[string]interface{} `json:"body,omitempty"`
+	ChoiceId   *openapi_types.UUID     `json:"choice_id,omitempty"`
+	ItemId     *openapi_types.UUID     `json:"item_id,omitempty"`
+	Level      *int                    `json:"level,omitempty"`
+	ModifierId *openapi_types.UUID     `json:"modifier_id,omitempty"`
+	Op         SheetOperationOp        `json:"op"`
+	SpellId    *openapi_types.UUID     `json:"spell_id,omitempty"`
+}
+
+// SheetOperationOp defines model for SheetOperation.Op.
+type SheetOperationOp string
+
+// SheetSave defines model for SheetSave.
+type SheetSave struct {
+	Advantage     *[]string            `json:"advantage,omitempty"`
+	Contributions *[]SheetContribution `json:"contributions,omitempty"`
+	Disadvantage  *[]string            `json:"disadvantage,omitempty"`
+	Inactive      *[]SheetContribution `json:"inactive,omitempty"`
+	Proficient    *bool                `json:"proficient,omitempty"`
+	Roll          *SheetSaveRoll       `json:"roll,omitempty"`
+	Value         *int                 `json:"value,omitempty"`
+}
+
+// SheetSaveRoll defines model for SheetSave.Roll.
+type SheetSaveRoll string
+
+// SheetSkill defines model for SheetSkill.
+type SheetSkill struct {
+	Ability       SheetSkillAbility    `json:"ability"`
+	Advantage     *[]string            `json:"advantage,omitempty"`
+	Contributions *[]SheetContribution `json:"contributions,omitempty"`
+	Disadvantage  *[]string            `json:"disadvantage,omitempty"`
+
+	// Expertise Expertise was picked; it only counts with proficiency.
+	Expertise bool                 `json:"expertise"`
+	Inactive  *[]SheetContribution `json:"inactive,omitempty"`
+
+	// Proficiency What the bonus adds. half is half the proficiency bonus (Jack of All Trades); expertise is counted expertise (with proficiency).
+	Proficiency SheetSkillProficiency `json:"proficiency"`
+	Proficient  bool                  `json:"proficient"`
+	Roll        *SheetSkillRoll       `json:"roll,omitempty"`
+	Value       *int                  `json:"value,omitempty"`
+}
+
+// SheetSkillAbility defines model for SheetSkill.Ability.
+type SheetSkillAbility string
+
+// SheetSkillProficiency What the bonus adds. half is half the proficiency bonus (Jack of All Trades); expertise is counted expertise (with proficiency).
+type SheetSkillProficiency string
+
+// SheetSkillRoll defines model for SheetSkill.Roll.
+type SheetSkillRoll string
+
+// SheetStat defines model for SheetStat.
+type SheetStat struct {
+	Advantage     *[]string            `json:"advantage,omitempty"`
+	Contributions *[]SheetContribution `json:"contributions,omitempty"`
+	Disadvantage  *[]string            `json:"disadvantage,omitempty"`
+	Inactive      *[]SheetContribution `json:"inactive,omitempty"`
+	Roll          *SheetStatRoll       `json:"roll,omitempty"`
+	Value         *int                 `json:"value,omitempty"`
+}
+
+// SheetStatRoll defines model for SheetStat.Roll.
+type SheetStatRoll string
+
+// SomeUser A user who has signed in, by id or by username.
+type SomeUser struct {
+	UserId   *openapi_types.UUID `json:"user_id,omitempty"`
+	Username *string             `json:"username,omitempty"`
+}
+
+// Source A source as the API returns it. ?fields= leaves the other fields out.
+>>>>>>> Stashed changes
 type Source struct {
 	CreatedAt      *time.Time          `json:"created_at,omitempty"`
 	CreatedBy      *openapi_types.UUID `json:"created_by,omitempty"`
@@ -147,12 +1786,786 @@ type Spell struct {
 // SpellSchool defines model for SpellSchool.
 type SpellSchool string
 
+<<<<<<< Updated upstream
+=======
+// Subclass As the API returns it. ?fields= leaves the other fields out.
+type Subclass struct {
+	CasterProgression *string             `json:"caster_progression"`
+	CreatedAt         *time.Time          `json:"created_at,omitempty"`
+	CreatedBy         *openapi_types.UUID `json:"created_by"`
+
+	// Description Also accepted as description_html.
+	Description       *string             `json:"description,omitempty"`
+	DndVersion        *string             `json:"dnd_version,omitempty"`
+	DndVersionYear    *int                `json:"dnd_version_year,omitempty"`
+	Features          *[]interface{}      `json:"features,omitempty"`
+	Id                *openapi_types.UUID `json:"id,omitempty"`
+	IsHomebrew        *bool               `json:"is_homebrew,omitempty"`
+	IsUnearthedArcana *bool               `json:"is_unearthed_arcana,omitempty"`
+	LevelGained       *int                `json:"level_gained,omitempty"`
+	LevelTable        *[]interface{}      `json:"level_table,omitempty"`
+	Marks             *[]string           `json:"marks,omitempty"`
+	Name              *string             `json:"name,omitempty"`
+	ParentClassSlug   *string             `json:"parent_class_slug,omitempty"`
+	Slug              *string             `json:"slug,omitempty"`
+
+	// Source A source as other entities return it (read only).
+	Source              *SourceRef              `json:"source,omitempty"`
+	SourceId            *openapi_types.UUID     `json:"source_id,omitempty"`
+	SpellListAdditions  *[]string               `json:"spell_list_additions,omitempty"`
+	SpellPreparation    *map[string]interface{} `json:"spell_preparation"`
+	SpellcastingAbility *string                 `json:"spellcasting_ability"`
+	UpdatedAt           *time.Time              `json:"updated_at,omitempty"`
+	UpdatedBy           *openapi_types.UUID     `json:"updated_by"`
+}
+
+// SubclassFields Every field a client writes. Unknown keys are a 422.
+type SubclassFields struct {
+	CasterProgression *string `json:"caster_progression"`
+
+	// Description Also accepted as description_html.
+	Description         string                  `json:"description"`
+	DndVersion          string                  `json:"dnd_version"`
+	DndVersionYear      int                     `json:"dnd_version_year"`
+	Features            *[]interface{}          `json:"features,omitempty"`
+	IsHomebrew          *bool                   `json:"is_homebrew,omitempty"`
+	IsUnearthedArcana   *bool                   `json:"is_unearthed_arcana,omitempty"`
+	LevelGained         *int                    `json:"level_gained,omitempty"`
+	LevelTable          *[]interface{}          `json:"level_table,omitempty"`
+	Marks               *[]string               `json:"marks,omitempty"`
+	Name                string                  `json:"name"`
+	ParentClassSlug     string                  `json:"parent_class_slug"`
+	Slug                string                  `json:"slug"`
+	SourceId            openapi_types.UUID      `json:"source_id"`
+	SpellListAdditions  *[]string               `json:"spell_list_additions,omitempty"`
+	SpellPreparation    *map[string]interface{} `json:"spell_preparation"`
+	SpellcastingAbility *string                 `json:"spellcasting_ability"`
+}
+
+// SubclassPatch Only the fields to change (any of SubclassFields).
+type SubclassPatch map[string]interface{}
+
+>>>>>>> Stashed changes
 // UpdateUserRequest defines model for UpdateUserRequest.
 type UpdateUserRequest struct {
 	ProfilePictureUrl *string `json:"profile_picture_url"`
 	Username          *string `json:"username"`
 }
 
+<<<<<<< Updated upstream
+=======
+// Vtt What the VTT needs to resolve the spell; schema ttrpg-api/schemas/vtt_spell.v1.schema.json. Writes are checked against it and stored with every default filled in.
+type Vtt map[string]interface{}
+
+// VttBackgroundSource defines model for VttBackgroundSource.
+type VttBackgroundSource struct {
+	// Type Lets the client skip a format the browser can't decode.
+	Type *VttBackgroundSourceType `json:"type,omitempty"`
+
+	// Url An http(s) URL.
+	Url string `json:"url"`
+}
+
+// VttBackgroundSourceType Lets the client skip a format the browser can't decode.
+type VttBackgroundSourceType string
+
+// VttCommand One of: token.move (token_id, x, y); token.add (kind, x, y, and character_id for a character or name for a marker; the rest optional); token.update (token_id and the fields to change; null clears an optional one); token.remove (token_id); ping (x, y).
+type VttCommand struct {
+	CharacterId *openapi_types.UUID `json:"character_id,omitempty"`
+
+	// CommandId Your id for it
+	CommandId             *openapi_types.UUID          `json:"command_id,omitempty"`
+	ControllerCharacterId *openapi_types.UUID          `json:"controller_character_id"`
+	Disposition           *VttCommandDisposition       `json:"disposition,omitempty"`
+	ImageUrl              *string                      `json:"image_url"`
+	Kind                  *VttCommandKind              `json:"kind,omitempty"`
+	Layer                 *VttCommandLayer             `json:"layer,omitempty"`
+	Name                  *string                      `json:"name"`
+	Number                *int                         `json:"number"`
+	PlayerDisposition     *VttCommandPlayerDisposition `json:"player_disposition"`
+	PlayerName            *string                      `json:"player_name"`
+	SceneId               openapi_types.UUID           `json:"scene_id"`
+	SizeCells             *float32                     `json:"size_cells,omitempty"`
+	TokenId               *openapi_types.UUID          `json:"token_id,omitempty"`
+	Type                  VttCommandType               `json:"type"`
+	X                     *float32                     `json:"x,omitempty"`
+	Y                     *float32                     `json:"y,omitempty"`
+}
+
+// VttCommandDisposition defines model for VttCommand.Disposition.
+type VttCommandDisposition string
+
+// VttCommandKind defines model for VttCommand.Kind.
+type VttCommandKind string
+
+// VttCommandLayer defines model for VttCommand.Layer.
+type VttCommandLayer string
+
+// VttCommandPlayerDisposition defines model for VttCommand.PlayerDisposition.
+type VttCommandPlayerDisposition string
+
+// VttCommandType defines model for VttCommand.Type.
+type VttCommandType string
+
+// VttCommandResult defines model for VttCommandResult.
+type VttCommandResult struct {
+	// Seq Null for a ping.
+	Seq *int64 `json:"seq"`
+
+	// Token A token as the caller may see it. For players, name and disposition are what the DM chose to show (player_name, player_disposition), the true ones are never sent, and a token with a hidden name has no image. DMs also get player_name and player_disposition.
+	Token *VttToken `json:"token,omitempty"`
+}
+
+// VttMemberScene defines model for VttMemberScene.
+type VttMemberScene struct {
+	SceneId openapi_types.UUID `json:"scene_id"`
+	UserId  openapi_types.UUID `json:"user_id"`
+}
+
+// VttScene defines model for VttScene.
+type VttScene struct {
+	BackgroundSources []VttBackgroundSource `json:"background_sources"`
+	CampaignId        openapi_types.UUID    `json:"campaign_id"`
+	CellPx            float32               `json:"cell_px"`
+	CreatedAt         *time.Time            `json:"created_at,omitempty"`
+	GridDistance      float32               `json:"grid_distance"`
+	GridOffsetX       float32               `json:"grid_offset_x"`
+	GridOffsetY       float32               `json:"grid_offset_y"`
+	GridType          VttSceneGridType      `json:"grid_type"`
+	GridUnits         string                `json:"grid_units"`
+	HeightCells       int                   `json:"height_cells"`
+	Id                openapi_types.UUID    `json:"id"`
+	Name              string                `json:"name"`
+
+	// ParentId Null for players too (the tree is DM-only).
+	ParentId   *openapi_types.UUID `json:"parent_id"`
+	Settings   VttSceneSettings    `json:"settings"`
+	SortOrder  int                 `json:"sort_order"`
+	UpdatedAt  *time.Time          `json:"updated_at,omitempty"`
+	WidthCells int                 `json:"width_cells"`
+}
+
+// VttSceneGridType defines model for VttScene.GridType.
+type VttSceneGridType string
+
+// VttSceneChoice defines model for VttSceneChoice.
+type VttSceneChoice struct {
+	SceneId *openapi_types.UUID `json:"scene_id"`
+}
+
+// VttSceneFields A create needs name, width_cells and height_cells; anything else left out gets its default. In a PATCH only the fields sent change, and parent_id null moves the scene to the top level.
+type VttSceneFields struct {
+	// BackgroundSources Copies of the map, best first (avif, webp, png). Empty is a blank grid.
+	BackgroundSources *[]VttBackgroundSource `json:"background_sources,omitempty"`
+
+	// CellPx Image pixels per cell.
+	CellPx *float32 `json:"cell_px,omitempty"`
+
+	// GridDistance What a cell is worth.
+	GridDistance *float32 `json:"grid_distance,omitempty"`
+
+	// GridOffsetX Where the first cell starts on the image
+	GridOffsetX *float32                `json:"grid_offset_x,omitempty"`
+	GridOffsetY *float32                `json:"grid_offset_y,omitempty"`
+	GridType    *VttSceneFieldsGridType `json:"grid_type,omitempty"`
+	GridUnits   *string                 `json:"grid_units,omitempty"`
+	HeightCells *int                    `json:"height_cells,omitempty"`
+	Name        *string                 `json:"name,omitempty"`
+	ParentId    *openapi_types.UUID     `json:"parent_id"`
+	Settings    *VttSceneSettings       `json:"settings,omitempty"`
+	SortOrder   *int                    `json:"sort_order,omitempty"`
+	WidthCells  *int                    `json:"width_cells,omitempty"`
+}
+
+// VttSceneFieldsGridType defines model for VttSceneFields.GridType.
+type VttSceneFieldsGridType string
+
+// VttSceneList defines model for VttSceneList.
+type VttSceneList struct {
+	ActiveSceneId *openapi_types.UUID `json:"active_scene_id"`
+	Entities      []VttScene          `json:"entities"`
+}
+
+// VttSceneSettings defines model for VttSceneSettings.
+type VttSceneSettings struct {
+	GridColor   *string  `json:"grid_color,omitempty"`
+	GridOpacity *float32 `json:"grid_opacity,omitempty"`
+
+	// TokenReveal How a hostile marker shows up for players when the DM doesn't name it for them: just its number ("#3"), or its own name.
+	TokenReveal *VttSceneSettingsTokenReveal `json:"token_reveal,omitempty"`
+}
+
+// VttSceneSettingsTokenReveal How a hostile marker shows up for players when the DM doesn't name it for them: just its number ("#3"), or its own name.
+type VttSceneSettingsTokenReveal string
+
+// VttState defines model for VttState.
+type VttState struct {
+	// ActiveSceneId DMs only.
+	ActiveSceneId *openapi_types.UUID `json:"active_scene_id"`
+
+	// Members DMs only. The players moved off the active scene, and where to.
+	Members *[]VttMemberScene `json:"members,omitempty"`
+	Role    VttStateRole      `json:"role"`
+
+	// Scene Null when there's nothing to show yet (no active scene).
+	Scene *VttScene `json:"scene"`
+
+	// Seq Stream from here (`?after=`).
+	Seq    int64      `json:"seq"`
+	Tokens []VttToken `json:"tokens"`
+}
+
+// VttStateRole defines model for VttState.Role.
+type VttStateRole string
+
+// VttToken A token as the caller may see it. For players, name and disposition are what the DM chose to show (player_name, player_disposition), the true ones are never sent, and a token with a hidden name has no image. DMs also get player_name and player_disposition.
+type VttToken struct {
+	// CanMove Whether the caller may move it (the server decides).
+	CanMove               bool                `json:"can_move"`
+	CharacterId           *openapi_types.UUID `json:"character_id"`
+	ControllerCharacterId *openapi_types.UUID `json:"controller_character_id"`
+	Disposition           VttTokenDisposition `json:"disposition"`
+	Id                    openapi_types.UUID  `json:"id"`
+	ImageUrl              *string             `json:"image_url"`
+	Kind                  VttTokenKind        `json:"kind"`
+	Layer                 VttTokenLayer       `json:"layer"`
+
+	// Name What to label it with; may be empty (show the number only).
+	Name string `json:"name"`
+
+	// Number Shown as "#3"; unique in the scene.
+	Number *int `json:"number"`
+
+	// PlayerDisposition DMs only.
+	PlayerDisposition *string `json:"player_disposition"`
+
+	// PlayerName DMs only.
+	PlayerName *string            `json:"player_name"`
+	SceneId    openapi_types.UUID `json:"scene_id"`
+
+	// SizeCells 0.5 Tiny
+	SizeCells float32 `json:"size_cells"`
+
+	// X Top-left corner
+	X float32 `json:"x"`
+	Y float32 `json:"y"`
+}
+
+// VttTokenDisposition defines model for VttToken.Disposition.
+type VttTokenDisposition string
+
+// VttTokenKind defines model for VttToken.Kind.
+type VttTokenKind string
+
+// VttTokenLayer defines model for VttToken.Layer.
+type VttTokenLayer string
+
+// CharacterId defines model for CharacterId.
+type CharacterId = openapi_types.UUID
+
+// ChoiceId defines model for ChoiceId.
+type ChoiceId = openapi_types.UUID
+
+// EntityId defines model for EntityId.
+type EntityId = openapi_types.UUID
+
+// Fields defines model for Fields.
+type Fields = string
+
+// Filter defines model for Filter.
+type Filter = string
+
+// IfMatch defines model for IfMatch.
+type IfMatch = string
+
+// InviteId defines model for InviteId.
+type InviteId = openapi_types.UUID
+
+// InviteToken defines model for InviteToken.
+type InviteToken = string
+
+// ItemId defines model for ItemId.
+type ItemId = openapi_types.UUID
+
+// Limit defines model for Limit.
+type Limit = int
+
+// ModifierId defines model for ModifierId.
+type ModifierId = openapi_types.UUID
+
+// Name defines model for Name.
+type Name = string
+
+// Offset defines model for Offset.
+type Offset = int
+
+// OpId defines model for OpId.
+type OpId = openapi_types.UUID
+
+// RefId defines model for RefId.
+type RefId = openapi_types.UUID
+
+// Sort defines model for Sort.
+type Sort = string
+
+// SpellId defines model for SpellId.
+type SpellId = openapi_types.UUID
+
+// UserId defines model for UserId.
+type UserId = openapi_types.UUID
+
+// Error defines model for Error.
+type Error = ErrorResponse
+
+// BulkLoadBackgroundsMultipartBody defines parameters for BulkLoadBackgrounds.
+type BulkLoadBackgroundsMultipartBody struct {
+	File openapi_types.File `json:"file"`
+}
+
+// QueryBackgroundsParams defines parameters for QueryBackgrounds.
+type QueryBackgroundsParams struct {
+	// Name Name(s) to filter on (separated by commas ","), case-insensitive substring.
+	Name *Name `form:"name,omitempty" json:"name,omitempty"`
+
+	// Filter AG Grid filter model as JSON, e.g. {"level":{"filterType":"number","type":"lessThanOrEqual","filter":3}}
+	Filter *Filter `form:"filter,omitempty" json:"filter,omitempty"`
+
+	// Sort AG Grid sort model as JSON, e.g. [{"colId":"level","sort":"asc"}]
+	Sort *Sort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Limit Page size; 0 returns every match.
+	Limit  *Limit  `form:"limit,omitempty" json:"limit,omitempty"`
+	Offset *Offset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadBackgroundParams defines parameters for ReadBackground.
+type ReadBackgroundParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadBackgroundBySlugsParams defines parameters for ReadBackgroundBySlugs.
+type ReadBackgroundBySlugsParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// QueryCampaignsParams defines parameters for QueryCampaigns.
+type QueryCampaignsParams struct {
+	// Limit Page size; 0 returns every match.
+	Limit  *Limit  `form:"limit,omitempty" json:"limit,omitempty"`
+	Offset *Offset `form:"offset,omitempty" json:"offset,omitempty"`
+}
+
+// ApproveCampaignExceptionJSONBody defines parameters for ApproveCampaignException.
+type ApproveCampaignExceptionJSONBody struct {
+	Note *string `json:"note"`
+}
+
+// CreateCampaignGiftParams defines parameters for CreateCampaignGift.
+type CreateCampaignGiftParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+}
+
+// CreateCharacterParams defines parameters for CreateCharacter.
+type CreateCharacterParams struct {
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// QueryCharactersParams defines parameters for QueryCharacters.
+type QueryCharactersParams struct {
+	// Limit Page size; 0 returns every match.
+	Limit  *Limit  `form:"limit,omitempty" json:"limit,omitempty"`
+	Offset *Offset `form:"offset,omitempty" json:"offset,omitempty"`
+}
+
+// UpdateCharacterParams defines parameters for UpdateCharacter.
+type UpdateCharacterParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// RollCharacterAbilitiesParams defines parameters for RollCharacterAbilities.
+type RollCharacterAbilitiesParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// SetCharacterAbilityScoresParams defines parameters for SetCharacterAbilityScores.
+type SetCharacterAbilityScoresParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// CreateCharacterChoiceParams defines parameters for CreateCharacterChoice.
+type CreateCharacterChoiceParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// DeleteCharacterChoiceParams defines parameters for DeleteCharacterChoice.
+type DeleteCharacterChoiceParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// ReplaceCharacterChoiceParams defines parameters for ReplaceCharacterChoice.
+type ReplaceCharacterChoiceParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// CreateCharacterItemParams defines parameters for CreateCharacterItem.
+type CreateCharacterItemParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// DeleteCharacterItemParams defines parameters for DeleteCharacterItem.
+type DeleteCharacterItemParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// UpdateCharacterItemParams defines parameters for UpdateCharacterItem.
+type UpdateCharacterItemParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// DeleteCharacterLevelParams defines parameters for DeleteCharacterLevel.
+type DeleteCharacterLevelParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// PutCharacterLevelParams defines parameters for PutCharacterLevel.
+type PutCharacterLevelParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// RollCharacterLevelHPParams defines parameters for RollCharacterLevelHP.
+type RollCharacterLevelHPParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// CreateCharacterModifierParams defines parameters for CreateCharacterModifier.
+type CreateCharacterModifierParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// DeleteCharacterModifierParams defines parameters for DeleteCharacterModifier.
+type DeleteCharacterModifierParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// UpdateCharacterModifierParams defines parameters for UpdateCharacterModifier.
+type UpdateCharacterModifierParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// ReadCharacterOptionsParams defines parameters for ReadCharacterOptions.
+type ReadCharacterOptionsParams struct {
+	Slot *string `form:"slot,omitempty" json:"slot,omitempty"`
+
+	// Level The level to check against (default current_level).
+	Level *int `form:"level,omitempty" json:"level,omitempty"`
+
+	// Name Only entries whose name contains this (any case).
+	Name    *string                            `form:"name,omitempty" json:"name,omitempty"`
+	Filters *ReadCharacterOptionsParamsFilters `form:"filters,omitempty" json:"filters,omitempty"`
+
+	// Allowed Only allowed entries, plus the ones the character already has.
+	Allowed *bool `form:"allowed,omitempty" json:"allowed,omitempty"`
+
+	// Limit Page size; 0 returns every match.
+	Limit  *Limit  `form:"limit,omitempty" json:"limit,omitempty"`
+	Offset *Offset `form:"offset,omitempty" json:"offset,omitempty"`
+}
+
+// ReadCharacterOptionsParamsFilters defines parameters for ReadCharacterOptions.
+type ReadCharacterOptionsParamsFilters string
+
+// UnprepareCharacterSpellParams defines parameters for UnprepareCharacterSpell.
+type UnprepareCharacterSpellParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// PrepareCharacterSpellParams defines parameters for PrepareCharacterSpell.
+type PrepareCharacterSpellParams struct {
+	// IfMatch The character's version; the write is a 409 if it has changed since.
+	IfMatch *IfMatch `json:"If-Match,omitempty"`
+
+	// OpId A uuid for this operation; an operation already applied (an offline replay) isn't applied again.
+	OpId *OpId `json:"Op-Id,omitempty"`
+}
+
+// ReadCharacterSheetParams defines parameters for ReadCharacterSheet.
+type ReadCharacterSheetParams struct {
+	Level *int `form:"level,omitempty" json:"level,omitempty"`
+}
+
+// PreviewCharacterSheetJSONBody defines parameters for PreviewCharacterSheet.
+type PreviewCharacterSheetJSONBody struct {
+	Operations []SheetOperation `json:"operations"`
+}
+
+// PreviewCharacterSheetParams defines parameters for PreviewCharacterSheet.
+type PreviewCharacterSheetParams struct {
+	Level *int `form:"level,omitempty" json:"level,omitempty"`
+}
+
+// BulkLoadClassesMultipartBody defines parameters for BulkLoadClasses.
+type BulkLoadClassesMultipartBody struct {
+	File openapi_types.File `json:"file"`
+}
+
+// QueryClassesParams defines parameters for QueryClasses.
+type QueryClassesParams struct {
+	// Name Name(s) to filter on (separated by commas ","), case-insensitive substring.
+	Name *Name `form:"name,omitempty" json:"name,omitempty"`
+
+	// Filter AG Grid filter model as JSON, e.g. {"level":{"filterType":"number","type":"lessThanOrEqual","filter":3}}
+	Filter *Filter `form:"filter,omitempty" json:"filter,omitempty"`
+
+	// Sort AG Grid sort model as JSON, e.g. [{"colId":"level","sort":"asc"}]
+	Sort *Sort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Limit Page size; 0 returns every match.
+	Limit  *Limit  `form:"limit,omitempty" json:"limit,omitempty"`
+	Offset *Offset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// BulkLoadSpellListsMultipartBody defines parameters for BulkLoadSpellLists.
+type BulkLoadSpellListsMultipartBody struct {
+	File openapi_types.File `json:"file"`
+}
+
+// AddClassSpellParams defines parameters for AddClassSpell.
+type AddClassSpellParams struct {
+	// Qualifier "Optional" or a subclass ("Dunamancy"); omit for the class list
+	Qualifier *string `form:"qualifier,omitempty" json:"qualifier,omitempty"`
+}
+
+// ReadClassParams defines parameters for ReadClass.
+type ReadClassParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadClassBySlugsParams defines parameters for ReadClassBySlugs.
+type ReadClassBySlugsParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// BulkLoadConditionsMultipartBody defines parameters for BulkLoadConditions.
+type BulkLoadConditionsMultipartBody struct {
+	File openapi_types.File `json:"file"`
+}
+
+// QueryConditionsParams defines parameters for QueryConditions.
+type QueryConditionsParams struct {
+	// Name Name(s) to filter on (separated by commas ","), case-insensitive substring.
+	Name *Name `form:"name,omitempty" json:"name,omitempty"`
+
+	// Filter AG Grid filter model as JSON, e.g. {"level":{"filterType":"number","type":"lessThanOrEqual","filter":3}}
+	Filter *Filter `form:"filter,omitempty" json:"filter,omitempty"`
+
+	// Sort AG Grid sort model as JSON, e.g. [{"colId":"level","sort":"asc"}]
+	Sort *Sort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Limit Page size; 0 returns every match.
+	Limit  *Limit  `form:"limit,omitempty" json:"limit,omitempty"`
+	Offset *Offset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadConditionParams defines parameters for ReadCondition.
+type ReadConditionParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadConditionBySlugsParams defines parameters for ReadConditionBySlugs.
+type ReadConditionBySlugsParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// BulkLoadFeatsMultipartBody defines parameters for BulkLoadFeats.
+type BulkLoadFeatsMultipartBody struct {
+	File openapi_types.File `json:"file"`
+}
+
+// QueryFeatsParams defines parameters for QueryFeats.
+type QueryFeatsParams struct {
+	// Name Name(s) to filter on (separated by commas ","), case-insensitive substring.
+	Name *Name `form:"name,omitempty" json:"name,omitempty"`
+
+	// Filter AG Grid filter model as JSON, e.g. {"level":{"filterType":"number","type":"lessThanOrEqual","filter":3}}
+	Filter *Filter `form:"filter,omitempty" json:"filter,omitempty"`
+
+	// Sort AG Grid sort model as JSON, e.g. [{"colId":"level","sort":"asc"}]
+	Sort *Sort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Limit Page size; 0 returns every match.
+	Limit  *Limit  `form:"limit,omitempty" json:"limit,omitempty"`
+	Offset *Offset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadFeatParams defines parameters for ReadFeat.
+type ReadFeatParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadFeatBySlugsParams defines parameters for ReadFeatBySlugs.
+type ReadFeatBySlugsParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// BulkLoadGlossaryEntriesMultipartBody defines parameters for BulkLoadGlossaryEntries.
+type BulkLoadGlossaryEntriesMultipartBody struct {
+	File openapi_types.File `json:"file"`
+}
+
+// QueryGlossaryEntriesParams defines parameters for QueryGlossaryEntries.
+type QueryGlossaryEntriesParams struct {
+	// Name Name(s) to filter on (separated by commas ","), case-insensitive substring.
+	Name *Name `form:"name,omitempty" json:"name,omitempty"`
+
+	// Filter AG Grid filter model as JSON, e.g. {"level":{"filterType":"number","type":"lessThanOrEqual","filter":3}}
+	Filter *Filter `form:"filter,omitempty" json:"filter,omitempty"`
+
+	// Sort AG Grid sort model as JSON, e.g. [{"colId":"level","sort":"asc"}]
+	Sort *Sort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Limit Page size; 0 returns every match.
+	Limit  *Limit  `form:"limit,omitempty" json:"limit,omitempty"`
+	Offset *Offset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadGlossaryEntryParams defines parameters for ReadGlossaryEntry.
+type ReadGlossaryEntryParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadGlossaryEntryBySlugsParams defines parameters for ReadGlossaryEntryBySlugs.
+type ReadGlossaryEntryBySlugsParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// BulkLoadItemsMultipartBody defines parameters for BulkLoadItems.
+type BulkLoadItemsMultipartBody struct {
+	File openapi_types.File `json:"file"`
+}
+
+// QueryItemsParams defines parameters for QueryItems.
+type QueryItemsParams struct {
+	// Name Name(s) to filter on (separated by commas ","), case-insensitive substring.
+	Name *Name `form:"name,omitempty" json:"name,omitempty"`
+
+	// Filter AG Grid filter model as JSON, e.g. {"level":{"filterType":"number","type":"lessThanOrEqual","filter":3}}
+	Filter *Filter `form:"filter,omitempty" json:"filter,omitempty"`
+
+	// Sort AG Grid sort model as JSON, e.g. [{"colId":"level","sort":"asc"}]
+	Sort *Sort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Limit Page size; 0 returns every match.
+	Limit  *Limit  `form:"limit,omitempty" json:"limit,omitempty"`
+	Offset *Offset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadItemParams defines parameters for ReadItem.
+type ReadItemParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadItemBySlugsParams defines parameters for ReadItemBySlugs.
+type ReadItemBySlugsParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+>>>>>>> Stashed changes
 // BulkLoadSourcesMultipartBody defines parameters for BulkLoadSources.
 type BulkLoadSourcesMultipartBody struct {
 	File *openapi_types.File `json:"file,omitempty"`
@@ -183,6 +2596,213 @@ type QuerySpellsParams struct {
 	Offset *int         `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
+<<<<<<< Updated upstream
+=======
+// ReadSpellParams defines parameters for ReadSpell.
+type ReadSpellParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadSpellBySlugsParams defines parameters for ReadSpellBySlugs.
+type ReadSpellBySlugsParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// BulkLoadSubclassesMultipartBody defines parameters for BulkLoadSubclasses.
+type BulkLoadSubclassesMultipartBody struct {
+	File openapi_types.File `json:"file"`
+}
+
+// QuerySubclassesParams defines parameters for QuerySubclasses.
+type QuerySubclassesParams struct {
+	// Name Name(s) to filter on (separated by commas ","), case-insensitive substring.
+	Name *Name `form:"name,omitempty" json:"name,omitempty"`
+
+	// Filter AG Grid filter model as JSON, e.g. {"level":{"filterType":"number","type":"lessThanOrEqual","filter":3}}
+	Filter *Filter `form:"filter,omitempty" json:"filter,omitempty"`
+
+	// Sort AG Grid sort model as JSON, e.g. [{"colId":"level","sort":"asc"}]
+	Sort *Sort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Limit Page size; 0 returns every match.
+	Limit  *Limit  `form:"limit,omitempty" json:"limit,omitempty"`
+	Offset *Offset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadSubclassParams defines parameters for ReadSubclass.
+type ReadSubclassParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// ReadSubclassBySlugsParams defines parameters for ReadSubclassBySlugs.
+type ReadSubclassBySlugsParams struct {
+	// Fields Comma-separated fields to return (id is always included). Leave it off for every field.
+	Fields *Fields `form:"fields,omitempty" json:"fields,omitempty"`
+}
+
+// StreamVttEventsParams defines parameters for StreamVttEvents.
+type StreamVttEventsParams struct {
+	// After Replay events after this seq (from the state). Last-Event-ID wins when both are sent.
+	After *int64 `form:"after,omitempty" json:"after,omitempty"`
+
+	// LastEventID Sent by EventSource when it reconnects.
+	LastEventID *string `json:"Last-Event-ID,omitempty"`
+}
+
+// ReadVttStateParams defines parameters for ReadVttState.
+type ReadVttStateParams struct {
+	// Scene The scene (DMs any; players only the one they're on). Default the caller's current scene.
+	Scene *openapi_types.UUID `form:"scene,omitempty" json:"scene,omitempty"`
+}
+
+// CreateBackgroundJSONRequestBody defines body for CreateBackground for application/json ContentType.
+type CreateBackgroundJSONRequestBody = BackgroundFields
+
+// BulkLoadBackgroundsMultipartRequestBody defines body for BulkLoadBackgrounds for multipart/form-data ContentType.
+type BulkLoadBackgroundsMultipartRequestBody BulkLoadBackgroundsMultipartBody
+
+// UpdateBackgroundJSONRequestBody defines body for UpdateBackground for application/json ContentType.
+type UpdateBackgroundJSONRequestBody = BackgroundPatch
+
+// ReplaceBackgroundJSONRequestBody defines body for ReplaceBackground for application/json ContentType.
+type ReplaceBackgroundJSONRequestBody = BackgroundFields
+
+// CreateCampaignJSONRequestBody defines body for CreateCampaign for application/json ContentType.
+type CreateCampaignJSONRequestBody = CampaignFields
+
+// UpdateCampaignJSONRequestBody defines body for UpdateCampaign for application/json ContentType.
+type UpdateCampaignJSONRequestBody = CampaignPatch
+
+// ReplaceCampaignJSONRequestBody defines body for ReplaceCampaign for application/json ContentType.
+type ReplaceCampaignJSONRequestBody = CampaignFields
+
+// ApproveCampaignExceptionJSONRequestBody defines body for ApproveCampaignException for application/json ContentType.
+type ApproveCampaignExceptionJSONRequestBody ApproveCampaignExceptionJSONBody
+
+// CreateCampaignGiftJSONRequestBody defines body for CreateCampaignGift for application/json ContentType.
+type CreateCampaignGiftJSONRequestBody = CampaignGift
+
+// CreateCampaignInviteJSONRequestBody defines body for CreateCampaignInvite for application/json ContentType.
+type CreateCampaignInviteJSONRequestBody = CampaignInviteCreate
+
+// UpdateCampaignMemberJSONRequestBody defines body for UpdateCampaignMember for application/json ContentType.
+type UpdateCampaignMemberJSONRequestBody = CampaignMemberPatch
+
+// PreviewCampaignRulesJSONRequestBody defines body for PreviewCampaignRules for application/json ContentType.
+type PreviewCampaignRulesJSONRequestBody = CampaignRules
+
+// CreateCharacterJSONRequestBody defines body for CreateCharacter for application/json ContentType.
+type CreateCharacterJSONRequestBody = CharacterCreate
+
+// UpdateCharacterJSONRequestBody defines body for UpdateCharacter for application/json ContentType.
+type UpdateCharacterJSONRequestBody = CharacterPatch
+
+// SetCharacterAbilityScoresJSONRequestBody defines body for SetCharacterAbilityScores for application/json ContentType.
+type SetCharacterAbilityScoresJSONRequestBody = CharacterAbilityScores
+
+// CreateCharacterChoiceJSONRequestBody defines body for CreateCharacterChoice for application/json ContentType.
+type CreateCharacterChoiceJSONRequestBody = CharacterChoiceFields
+
+// ReplaceCharacterChoiceJSONRequestBody defines body for ReplaceCharacterChoice for application/json ContentType.
+type ReplaceCharacterChoiceJSONRequestBody = CharacterChoiceFields
+
+// AddCharacterEditorJSONRequestBody defines body for AddCharacterEditor for application/json ContentType.
+type AddCharacterEditorJSONRequestBody = SomeUser
+
+// CreateCharacterItemJSONRequestBody defines body for CreateCharacterItem for application/json ContentType.
+type CreateCharacterItemJSONRequestBody = CharacterItemFields
+
+// UpdateCharacterItemJSONRequestBody defines body for UpdateCharacterItem for application/json ContentType.
+type UpdateCharacterItemJSONRequestBody = CharacterItemPatch
+
+// PutCharacterLevelJSONRequestBody defines body for PutCharacterLevel for application/json ContentType.
+type PutCharacterLevelJSONRequestBody = CharacterLevelFields
+
+// CreateCharacterModifierJSONRequestBody defines body for CreateCharacterModifier for application/json ContentType.
+type CreateCharacterModifierJSONRequestBody = CharacterModifierFields
+
+// UpdateCharacterModifierJSONRequestBody defines body for UpdateCharacterModifier for application/json ContentType.
+type UpdateCharacterModifierJSONRequestBody = CharacterModifierPatch
+
+// PreviewCharacterSheetJSONRequestBody defines body for PreviewCharacterSheet for application/json ContentType.
+type PreviewCharacterSheetJSONRequestBody PreviewCharacterSheetJSONBody
+
+// OfferCharacterTransferJSONRequestBody defines body for OfferCharacterTransfer for application/json ContentType.
+type OfferCharacterTransferJSONRequestBody = CharacterTransferOffer
+
+// CreateClassJSONRequestBody defines body for CreateClass for application/json ContentType.
+type CreateClassJSONRequestBody = ClassFields
+
+// BulkLoadClassesMultipartRequestBody defines body for BulkLoadClasses for multipart/form-data ContentType.
+type BulkLoadClassesMultipartRequestBody BulkLoadClassesMultipartBody
+
+// BulkLoadSpellListsMultipartRequestBody defines body for BulkLoadSpellLists for multipart/form-data ContentType.
+type BulkLoadSpellListsMultipartRequestBody BulkLoadSpellListsMultipartBody
+
+// UpdateClassJSONRequestBody defines body for UpdateClass for application/json ContentType.
+type UpdateClassJSONRequestBody = ClassPatch
+
+// ReplaceClassJSONRequestBody defines body for ReplaceClass for application/json ContentType.
+type ReplaceClassJSONRequestBody = ClassFields
+
+// CreateConditionJSONRequestBody defines body for CreateCondition for application/json ContentType.
+type CreateConditionJSONRequestBody = ConditionFields
+
+// BulkLoadConditionsMultipartRequestBody defines body for BulkLoadConditions for multipart/form-data ContentType.
+type BulkLoadConditionsMultipartRequestBody BulkLoadConditionsMultipartBody
+
+// UpdateConditionJSONRequestBody defines body for UpdateCondition for application/json ContentType.
+type UpdateConditionJSONRequestBody = ConditionPatch
+
+// ReplaceConditionJSONRequestBody defines body for ReplaceCondition for application/json ContentType.
+type ReplaceConditionJSONRequestBody = ConditionFields
+
+// CreateFeatJSONRequestBody defines body for CreateFeat for application/json ContentType.
+type CreateFeatJSONRequestBody = FeatFields
+
+// BulkLoadFeatsMultipartRequestBody defines body for BulkLoadFeats for multipart/form-data ContentType.
+type BulkLoadFeatsMultipartRequestBody BulkLoadFeatsMultipartBody
+
+// UpdateFeatJSONRequestBody defines body for UpdateFeat for application/json ContentType.
+type UpdateFeatJSONRequestBody = FeatPatch
+
+// ReplaceFeatJSONRequestBody defines body for ReplaceFeat for application/json ContentType.
+type ReplaceFeatJSONRequestBody = FeatFields
+
+// CreateGlossaryEntryJSONRequestBody defines body for CreateGlossaryEntry for application/json ContentType.
+type CreateGlossaryEntryJSONRequestBody = GlossaryEntryFields
+
+// BulkLoadGlossaryEntriesMultipartRequestBody defines body for BulkLoadGlossaryEntries for multipart/form-data ContentType.
+type BulkLoadGlossaryEntriesMultipartRequestBody BulkLoadGlossaryEntriesMultipartBody
+
+// UpdateGlossaryEntryJSONRequestBody defines body for UpdateGlossaryEntry for application/json ContentType.
+type UpdateGlossaryEntryJSONRequestBody = GlossaryEntryPatch
+
+// ReplaceGlossaryEntryJSONRequestBody defines body for ReplaceGlossaryEntry for application/json ContentType.
+type ReplaceGlossaryEntryJSONRequestBody = GlossaryEntryFields
+
+// CreateItemJSONRequestBody defines body for CreateItem for application/json ContentType.
+type CreateItemJSONRequestBody = ItemFields
+
+// BulkLoadItemsMultipartRequestBody defines body for BulkLoadItems for multipart/form-data ContentType.
+type BulkLoadItemsMultipartRequestBody BulkLoadItemsMultipartBody
+
+// UpdateItemJSONRequestBody defines body for UpdateItem for application/json ContentType.
+type UpdateItemJSONRequestBody = ItemPatch
+
+// ReplaceItemJSONRequestBody defines body for ReplaceItem for application/json ContentType.
+type ReplaceItemJSONRequestBody = ItemFields
+
+// CreateSourceJSONRequestBody defines body for CreateSource for application/json ContentType.
+type CreateSourceJSONRequestBody = SourceFields
+
+>>>>>>> Stashed changes
 // BulkLoadSourcesMultipartRequestBody defines body for BulkLoadSources for multipart/form-data ContentType.
 type BulkLoadSourcesMultipartRequestBody BulkLoadSourcesMultipartBody
 
@@ -195,9 +2815,348 @@ type CreateSpellJSONRequestBody = CreateSpellRequest
 // UpdateUserJSONRequestBody defines body for UpdateUser for application/json ContentType.
 type UpdateUserJSONRequestBody = UpdateUserRequest
 
+// SetVttActiveSceneJSONRequestBody defines body for SetVttActiveScene for application/json ContentType.
+type SetVttActiveSceneJSONRequestBody = VttSceneChoice
+
+// PostVttCommandJSONRequestBody defines body for PostVttCommand for application/json ContentType.
+type PostVttCommandJSONRequestBody = VttCommand
+
+// SetVttMemberSceneJSONRequestBody defines body for SetVttMemberScene for application/json ContentType.
+type SetVttMemberSceneJSONRequestBody = VttSceneChoice
+
+// CreateVttSceneJSONRequestBody defines body for CreateVttScene for application/json ContentType.
+type CreateVttSceneJSONRequestBody = VttSceneFields
+
+// UpdateVttSceneJSONRequestBody defines body for UpdateVttScene for application/json ContentType.
+type UpdateVttSceneJSONRequestBody = VttSceneFields
+
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
 
+<<<<<<< Updated upstream
+=======
+	// (GET /api/v1/backgrounds/{entity_id})
+	ReadBackground(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadBackgroundParams)
+	// Change some fields; null clears an optional field
+	// (PATCH /api/v1/backgrounds/{entity_id})
+	UpdateBackground(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Replace; fields left out go back to their defaults
+	// (PUT /api/v1/backgrounds/{entity_id})
+	ReplaceBackground(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// One entry by its source's slug and its own (phb_2024/blinded)
+	// (GET /api/v1/backgrounds/{source_slug}/{slug})
+	ReadBackgroundBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadBackgroundBySlugsParams)
+	// Create a campaign; the caller is its DM. Rules left out get their defaults
+	// (POST /api/v1/campaigns)
+	CreateCampaign(w http.ResponseWriter, r *http.Request)
+	// The caller's campaigns, by name
+	// (GET /api/v1/campaigns/query)
+	QueryCampaigns(w http.ResponseWriter, r *http.Request, params QueryCampaignsParams)
+	// The rules a new campaign starts with
+	// (GET /api/v1/campaigns/rules/defaults)
+	ReadDefaultRules(w http.ResponseWriter, r *http.Request)
+	// Soft delete. Returns the id
+	// (DELETE /api/v1/campaigns/{entity_id})
+	DeleteCampaign(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// One of the caller's campaigns (anyone else's is a 404)
+	// (GET /api/v1/campaigns/{entity_id})
+	ReadCampaign(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Change some fields; rules merge into the current rules
+	// (PATCH /api/v1/campaigns/{entity_id})
+	UpdateCampaign(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Replace a campaign; fields left out (rules included) go back to their defaults
+	// (PUT /api/v1/campaigns/{entity_id})
+	ReplaceCampaign(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// The campaign's characters, each with what breaks its current rules
+	// (GET /api/v1/campaigns/{entity_id}/characters)
+	ReadCampaignCharacters(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// The character leaves the campaign (back to its own rules)
+	// (DELETE /api/v1/campaigns/{entity_id}/characters/{character_id})
+	RemoveCampaignCharacter(w http.ResponseWriter, r *http.Request, entityId EntityId, characterId CharacterId)
+	// Add an existing character; a 409 with `issues` when it breaks the campaign's rules
+	// (POST /api/v1/campaigns/{entity_id}/characters/{character_id})
+	AddCampaignCharacter(w http.ResponseWriter, r *http.Request, entityId EntityId, characterId CharacterId)
+	// Take back an approved exception
+	// (DELETE /api/v1/campaigns/{entity_id}/characters/{character_id}/exceptions/{ref_id})
+	RevokeCampaignException(w http.ResponseWriter, r *http.Request, entityId EntityId, characterId CharacterId, refId RefId)
+	// The DM accepts a catalog entry the character uses that breaks the campaign's rules
+	// (PUT /api/v1/campaigns/{entity_id}/characters/{character_id}/exceptions/{ref_id})
+	ApproveCampaignException(w http.ResponseWriter, r *http.Request, entityId EntityId, characterId CharacterId, refId RefId)
+	// A DM gives a character in the campaign items, coins (added) and boons or banes
+	// (POST /api/v1/campaigns/{entity_id}/characters/{character_id}/gifts)
+	CreateCampaignGift(w http.ResponseWriter, r *http.Request, entityId EntityId, characterId CharacterId, params CreateCampaignGiftParams)
+	// The campaign's open invites (DMs)
+	// (GET /api/v1/campaigns/{entity_id}/invites)
+	ListCampaignInvites(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// An invite link, or an invite for one user by username (DMs, or members when settings.access.invite is members)
+	// (POST /api/v1/campaigns/{entity_id}/invites)
+	CreateCampaignInvite(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Revoke an invite (DMs)
+	// (DELETE /api/v1/campaigns/{entity_id}/invites/{invite_id})
+	RevokeCampaignInvite(w http.ResponseWriter, r *http.Request, entityId EntityId, inviteId InviteId)
+	// The campaign's members, DMs first (any member)
+	// (GET /api/v1/campaigns/{entity_id}/members)
+	ListCampaignMembers(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Leave (your own user id) or remove a member (DMs; never the owner). Their characters leave too
+	// (DELETE /api/v1/campaigns/{entity_id}/members/{user_id})
+	RemoveCampaignMember(w http.ResponseWriter, r *http.Request, entityId EntityId, userId UserId)
+	// Make a member a DM or a player (DMs; never the owner)
+	// (PATCH /api/v1/campaigns/{entity_id}/members/{user_id})
+	UpdateCampaignMember(w http.ResponseWriter, r *http.Request, entityId EntityId, userId UserId)
+	// What a rules change (merged like a PATCH) would flag; saves nothing
+	// (POST /api/v1/campaigns/{entity_id}/rules/preview)
+	PreviewCampaignRules(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Characters offered to the caller
+	// (GET /api/v1/character-transfers)
+	ListIncomingTransfers(w http.ResponseWriter, r *http.Request)
+	// Become the character's owner
+	// (POST /api/v1/character-transfers/{character_id}/accept)
+	AcceptCharacterTransfer(w http.ResponseWriter, r *http.Request, characterId CharacterId)
+	// Turn the offer down
+	// (POST /api/v1/character-transfers/{character_id}/decline)
+	DeclineCharacterTransfer(w http.ResponseWriter, r *http.Request, characterId CharacterId)
+	// Create a character, for a campaign (which supplies the rules) or with its own rules
+	// (POST /api/v1/characters)
+	CreateCharacter(w http.ResponseWriter, r *http.Request, params CreateCharacterParams)
+	// The caller's characters, by name (without levels)
+	// (GET /api/v1/characters/query)
+	QueryCharacters(w http.ResponseWriter, r *http.Request, params QueryCharactersParams)
+	// Soft delete. Returns the id
+	// (DELETE /api/v1/characters/{entity_id})
+	DeleteCharacter(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// One of the caller's characters, with its planned levels (anyone else's is a 404)
+	// (GET /api/v1/characters/{entity_id})
+	ReadCharacter(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Change some fields; own rules merge; class_id changes the class on every planned level
+	// (PATCH /api/v1/characters/{entity_id})
+	UpdateCharacter(w http.ResponseWriter, r *http.Request, entityId EntityId, params UpdateCharacterParams)
+	// Roll a set of six scores (4d6, drop the lowest) on the server
+	// (POST /api/v1/characters/{entity_id}/ability-rolls)
+	RollCharacterAbilities(w http.ResponseWriter, r *http.Request, entityId EntityId, params RollCharacterAbilitiesParams)
+	// Set the method and the six base scores (before any bonus)
+	// (PUT /api/v1/characters/{entity_id}/ability-scores)
+	SetCharacterAbilityScores(w http.ResponseWriter, r *http.Request, entityId EntityId, params SetCharacterAbilityScoresParams)
+	// Add a choice (species, background, subclass, feat, asi, skill, ...) at the level it's made
+	// (POST /api/v1/characters/{entity_id}/choices)
+	CreateCharacterChoice(w http.ResponseWriter, r *http.Request, entityId EntityId, params CreateCharacterChoiceParams)
+	// Remove a choice; a 409 while choices it granted remain (items it granted stay)
+	// (DELETE /api/v1/characters/{entity_id}/choices/{choice_id})
+	DeleteCharacterChoice(w http.ResponseWriter, r *http.Request, entityId EntityId, choiceId ChoiceId, params DeleteCharacterChoiceParams)
+	// Replace a choice (swap a background at level 10). Choices it granted stay linked
+	// (PUT /api/v1/characters/{entity_id}/choices/{choice_id})
+	ReplaceCharacterChoice(w http.ResponseWriter, r *http.Request, entityId EntityId, choiceId ChoiceId, params ReplaceCharacterChoiceParams)
+	// Who the owner lets edit the character (the owner and its editors see this)
+	// (GET /api/v1/characters/{entity_id}/editors)
+	ListCharacterEditors(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Let someone edit the character (its owner), by user_id or username
+	// (POST /api/v1/characters/{entity_id}/editors)
+	AddCharacterEditor(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Take someone off the editors (its owner), or yourself
+	// (DELETE /api/v1/characters/{entity_id}/editors/{user_id})
+	RemoveCharacterEditor(w http.ResponseWriter, r *http.Request, entityId EntityId, userId UserId)
+	// Add an item: from the catalog (item_id) or custom (custom_name)
+	// (POST /api/v1/characters/{entity_id}/items)
+	CreateCharacterItem(w http.ResponseWriter, r *http.Request, entityId EntityId, params CreateCharacterItemParams)
+	// Remove an item
+	// (DELETE /api/v1/characters/{entity_id}/items/{item_id})
+	DeleteCharacterItem(w http.ResponseWriter, r *http.Request, entityId EntityId, itemId ItemId, params DeleteCharacterItemParams)
+	// Change quantity, equipped, attuned, level_received, note, custom fields
+	// (PATCH /api/v1/characters/{entity_id}/items/{item_id})
+	UpdateCharacterItem(w http.ResponseWriter, r *http.Request, entityId EntityId, itemId ItemId, params UpdateCharacterItemParams)
+	// Remove the top planned level (lower current_level to level down without losing the plan)
+	// (DELETE /api/v1/characters/{entity_id}/levels/{level})
+	DeleteCharacterLevel(w http.ResponseWriter, r *http.Request, entityId EntityId, level int, params DeleteCharacterLevelParams)
+	// Plan a level or change one
+	// (PUT /api/v1/characters/{entity_id}/levels/{level})
+	PutCharacterLevel(w http.ResponseWriter, r *http.Request, entityId EntityId, level int, params PutCharacterLevelParams)
+	// Roll the class's hit die for a planned level (2-20); rerolls are kept, the newest counts
+	// (POST /api/v1/characters/{entity_id}/levels/{level}/hp-roll)
+	RollCharacterLevelHP(w http.ResponseWriter, r *http.Request, entityId EntityId, level int, params RollCharacterLevelHPParams)
+	// Add a boon or bane (+1 AC from the DM, a -2 Str curse, Mage Armor)
+	// (POST /api/v1/characters/{entity_id}/modifiers)
+	CreateCharacterModifier(w http.ResponseWriter, r *http.Request, entityId EntityId, params CreateCharacterModifierParams)
+	// Remove a modifier
+	// (DELETE /api/v1/characters/{entity_id}/modifiers/{modifier_id})
+	DeleteCharacterModifier(w http.ResponseWriter, r *http.Request, entityId EntityId, modifierId ModifierId, params DeleteCharacterModifierParams)
+	// Change a modifier (switch it off with active: false)
+	// (PATCH /api/v1/characters/{entity_id}/modifiers/{modifier_id})
+	UpdateCharacterModifier(w http.ResponseWriter, r *http.Request, entityId EntityId, modifierId ModifierId, params UpdateCharacterModifierParams)
+	// What can be picked, with the rules applied
+	// (GET /api/v1/characters/{entity_id}/options/{kind})
+	ReadCharacterOptions(w http.ResponseWriter, r *http.Request, entityId EntityId, kind string, params ReadCharacterOptionsParams)
+	// Unprepare a spell
+	// (DELETE /api/v1/characters/{entity_id}/prepared-spells/{spell_id})
+	UnprepareCharacterSpell(w http.ResponseWriter, r *http.Request, entityId EntityId, spellId SpellId, params UnprepareCharacterSpellParams)
+	// Prepare a level 1+ spell from the class's list (over or under the limit is allowed; the sheet warns)
+	// (PUT /api/v1/characters/{entity_id}/prepared-spells/{spell_id})
+	PrepareCharacterSpell(w http.ResponseWriter, r *http.Request, entityId EntityId, spellId SpellId, params PrepareCharacterSpellParams)
+	// The computed sheet: every number with its contributions, plus issues to look at
+	// (GET /api/v1/characters/{entity_id}/sheet)
+	ReadCharacterSheet(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadCharacterSheetParams)
+	// The sheet after some changes, without saving them
+	// (POST /api/v1/characters/{entity_id}/sheet/preview)
+	PreviewCharacterSheet(w http.ResponseWriter, r *http.Request, entityId EntityId, params PreviewCharacterSheetParams)
+	// Take the offer back (its owner)
+	// (DELETE /api/v1/characters/{entity_id}/transfer)
+	CancelCharacterTransfer(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// The owner's pending offer to hand the character over
+	// (GET /api/v1/characters/{entity_id}/transfer)
+	ReadCharacterTransfer(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Offer the character to someone (its owner); they accept before it expires (7d by default)
+	// (PUT /api/v1/characters/{entity_id}/transfer)
+	OfferCharacterTransfer(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Create; a (source, slug) that's taken is a 409
+	// (POST /api/v1/classes)
+	CreateClass(w http.ResponseWriter, r *http.Request)
+	// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+	// (POST /api/v1/classes/bulk)
+	BulkLoadClasses(w http.ResponseWriter, r *http.Request)
+	// By name then newest edition, after sort
+	// (GET /api/v1/classes/query)
+	QueryClasses(w http.ResponseWriter, r *http.Request, params QueryClassesParams)
+	// Add links from a spells _all.json (each row's classes); only adds, never removes
+	// (POST /api/v1/classes/spell-lists/bulk)
+	BulkLoadSpellLists(w http.ResponseWriter, r *http.Request)
+	// The spells on a class's list (live spells only), by spell name
+	// (GET /api/v1/classes/{class_id}/spells)
+	ReadClassSpells(w http.ResponseWriter, r *http.Request, classId openapi_types.UUID)
+	// Take a spell off a class's list (deletes the link). Returns the spell id
+	// (DELETE /api/v1/classes/{class_id}/spells/{spell_id})
+	RemoveClassSpell(w http.ResponseWriter, r *http.Request, classId openapi_types.UUID, spellId openapi_types.UUID)
+	// Put a spell on a class's list; returns the existing link, unchanged, if it's already there
+	// (POST /api/v1/classes/{class_id}/spells/{spell_id})
+	AddClassSpell(w http.ResponseWriter, r *http.Request, classId openapi_types.UUID, spellId openapi_types.UUID, params AddClassSpellParams)
+	// Soft delete. Returns the id
+	// (DELETE /api/v1/classes/{entity_id})
+	DeleteClass(w http.ResponseWriter, r *http.Request, entityId EntityId)
+
+	// (GET /api/v1/classes/{entity_id})
+	ReadClass(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadClassParams)
+	// Change some fields; null clears an optional field
+	// (PATCH /api/v1/classes/{entity_id})
+	UpdateClass(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Replace; fields left out go back to their defaults
+	// (PUT /api/v1/classes/{entity_id})
+	ReplaceClass(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// One entry by its source's slug and its own (phb_2024/blinded)
+	// (GET /api/v1/classes/{source_slug}/{slug})
+	ReadClassBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadClassBySlugsParams)
+	// Create; a (source, slug) that's taken is a 409
+	// (POST /api/v1/conditions)
+	CreateCondition(w http.ResponseWriter, r *http.Request)
+	// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+	// (POST /api/v1/conditions/bulk)
+	BulkLoadConditions(w http.ResponseWriter, r *http.Request)
+	// By name then newest edition, after sort
+	// (GET /api/v1/conditions/query)
+	QueryConditions(w http.ResponseWriter, r *http.Request, params QueryConditionsParams)
+	// Soft delete. Returns the id
+	// (DELETE /api/v1/conditions/{entity_id})
+	DeleteCondition(w http.ResponseWriter, r *http.Request, entityId EntityId)
+
+	// (GET /api/v1/conditions/{entity_id})
+	ReadCondition(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadConditionParams)
+	// Change some fields; null clears an optional field
+	// (PATCH /api/v1/conditions/{entity_id})
+	UpdateCondition(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Replace; fields left out go back to their defaults
+	// (PUT /api/v1/conditions/{entity_id})
+	ReplaceCondition(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// One entry by its source's slug and its own (phb_2024/blinded)
+	// (GET /api/v1/conditions/{source_slug}/{slug})
+	ReadConditionBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadConditionBySlugsParams)
+	// Create; a (source, slug) that's taken is a 409
+	// (POST /api/v1/feats)
+	CreateFeat(w http.ResponseWriter, r *http.Request)
+	// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+	// (POST /api/v1/feats/bulk)
+	BulkLoadFeats(w http.ResponseWriter, r *http.Request)
+	// By name then newest edition, after sort
+	// (GET /api/v1/feats/query)
+	QueryFeats(w http.ResponseWriter, r *http.Request, params QueryFeatsParams)
+	// Soft delete. Returns the id
+	// (DELETE /api/v1/feats/{entity_id})
+	DeleteFeat(w http.ResponseWriter, r *http.Request, entityId EntityId)
+
+	// (GET /api/v1/feats/{entity_id})
+	ReadFeat(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadFeatParams)
+	// Change some fields; null clears an optional field
+	// (PATCH /api/v1/feats/{entity_id})
+	UpdateFeat(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Replace; fields left out go back to their defaults
+	// (PUT /api/v1/feats/{entity_id})
+	ReplaceFeat(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// One entry by its source's slug and its own (phb_2024/blinded)
+	// (GET /api/v1/feats/{source_slug}/{slug})
+	ReadFeatBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadFeatBySlugsParams)
+	// Create; a (source, slug) that's taken is a 409
+	// (POST /api/v1/glossary)
+	CreateGlossaryEntry(w http.ResponseWriter, r *http.Request)
+	// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+	// (POST /api/v1/glossary/bulk)
+	BulkLoadGlossaryEntries(w http.ResponseWriter, r *http.Request)
+	// By name then newest edition, after sort
+	// (GET /api/v1/glossary/query)
+	QueryGlossaryEntries(w http.ResponseWriter, r *http.Request, params QueryGlossaryEntriesParams)
+	// Soft delete. Returns the id
+	// (DELETE /api/v1/glossary/{entity_id})
+	DeleteGlossaryEntry(w http.ResponseWriter, r *http.Request, entityId EntityId)
+
+	// (GET /api/v1/glossary/{entity_id})
+	ReadGlossaryEntry(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadGlossaryEntryParams)
+	// Change some fields; null clears an optional field
+	// (PATCH /api/v1/glossary/{entity_id})
+	UpdateGlossaryEntry(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Replace; fields left out go back to their defaults
+	// (PUT /api/v1/glossary/{entity_id})
+	ReplaceGlossaryEntry(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// One entry by its source's slug and its own (phb_2024/blinded)
+	// (GET /api/v1/glossary/{source_slug}/{slug})
+	ReadGlossaryEntryBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadGlossaryEntryBySlugsParams)
+	// What an invite link is for, before joining (any signed-in user with the link)
+	// (GET /api/v1/invite-links/{token})
+	ReadInviteLink(w http.ResponseWriter, r *http.Request, token InviteToken)
+	// Join the campaign as a player. Already a member, nothing changes
+	// (POST /api/v1/invite-links/{token}/accept)
+	AcceptInviteLink(w http.ResponseWriter, r *http.Request, token InviteToken)
+	// The caller's open invites to campaigns they aren't in
+	// (GET /api/v1/invites)
+	ListMyInvites(w http.ResponseWriter, r *http.Request)
+	// Accept an invite sent to you, and join as a player
+	// (POST /api/v1/invites/{invite_id}/accept)
+	AcceptInvite(w http.ResponseWriter, r *http.Request, inviteId InviteId)
+	// Decline an invite sent to you
+	// (POST /api/v1/invites/{invite_id}/decline)
+	DeclineInvite(w http.ResponseWriter, r *http.Request, inviteId InviteId)
+	// Create; a (source, slug) that's taken is a 409
+	// (POST /api/v1/items)
+	CreateItem(w http.ResponseWriter, r *http.Request)
+	// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+	// (POST /api/v1/items/bulk)
+	BulkLoadItems(w http.ResponseWriter, r *http.Request)
+	// By name then newest edition, after sort
+	// (GET /api/v1/items/query)
+	QueryItems(w http.ResponseWriter, r *http.Request, params QueryItemsParams)
+	// Soft delete. Returns the id
+	// (DELETE /api/v1/items/{entity_id})
+	DeleteItem(w http.ResponseWriter, r *http.Request, entityId EntityId)
+
+	// (GET /api/v1/items/{entity_id})
+	ReadItem(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadItemParams)
+	// Change some fields; null clears an optional field
+	// (PATCH /api/v1/items/{entity_id})
+	UpdateItem(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Replace; fields left out go back to their defaults
+	// (PUT /api/v1/items/{entity_id})
+	ReplaceItem(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// One entry by its source's slug and its own (phb_2024/blinded)
+	// (GET /api/v1/items/{source_slug}/{slug})
+	ReadItemBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadItemBySlugsParams)
+	// Create a source (a slug, or a name or short name in the same edition, that's taken is a 409)
+	// (POST /api/v1/sources)
+	CreateSource(w http.ResponseWriter, r *http.Request)
+	// Create or update sources from a file, keyed on slug (the ETL's source_id)
+>>>>>>> Stashed changes
 	// (POST /api/v1/sources/bulk)
 	BulkLoadSources(w http.ResponseWriter, r *http.Request)
 
@@ -221,6 +3180,33 @@ type ServerInterface interface {
 
 	// (PATCH /api/v1/users/{id})
 	UpdateUser(w http.ResponseWriter, r *http.Request, id openapi_types.UUID)
+	// Move everyone to a scene (DMs); null takes the table down. Players the DM had moved elsewhere come too
+	// (PUT /api/v1/vtt/campaigns/{entity_id}/active-scene)
+	SetVttActiveScene(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Do something at the table; everyone sees it on their stream
+	// (POST /api/v1/vtt/campaigns/{entity_id}/commands)
+	PostVttCommand(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Server-sent events for the whole campaign, built for the caller
+	// (GET /api/v1/vtt/campaigns/{entity_id}/events)
+	StreamVttEvents(w http.ResponseWriter, r *http.Request, entityId EntityId, params StreamVttEventsParams)
+	// Move one player to a scene (DMs, for a split party); null sends them back to the active scene
+	// (PUT /api/v1/vtt/campaigns/{entity_id}/members/{user_id}/scene)
+	SetVttMemberScene(w http.ResponseWriter, r *http.Request, entityId EntityId, userId UserId)
+	// The campaign's scenes (DMs, as a tree by parent_id and sort_order); a player gets only the one they're on
+	// (GET /api/v1/vtt/campaigns/{entity_id}/scenes)
+	ListVttScenes(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Create a scene, last among its siblings (DMs). It isn't shown to players until it's activated
+	// (POST /api/v1/vtt/campaigns/{entity_id}/scenes)
+	CreateVttScene(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// A scene and its tokens as the caller may see them, and the seq to stream from
+	// (GET /api/v1/vtt/campaigns/{entity_id}/state)
+	ReadVttState(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadVttStateParams)
+	// Move the scene and everything under it to the trash (DMs). A 409 while anyone is on one of them
+	// (DELETE /api/v1/vtt/scenes/{entity_id})
+	DeleteVttScene(w http.ResponseWriter, r *http.Request, entityId EntityId)
+	// Change some fields, or move the scene in the tree (DMs). A move under its own subtree is a 422
+	// (PATCH /api/v1/vtt/scenes/{entity_id})
+	UpdateVttScene(w http.ResponseWriter, r *http.Request, entityId EntityId)
 
 	// (GET /health/live)
 	HealthLive(w http.ResponseWriter, r *http.Request)
@@ -233,6 +3219,670 @@ type ServerInterface interface {
 
 type Unimplemented struct{}
 
+<<<<<<< Updated upstream
+=======
+// Create; a (source, slug) that's taken is a 409
+// (POST /api/v1/backgrounds)
+func (_ Unimplemented) CreateBackground(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+// (POST /api/v1/backgrounds/bulk)
+func (_ Unimplemented) BulkLoadBackgrounds(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// By name then newest edition, after sort
+// (GET /api/v1/backgrounds/query)
+func (_ Unimplemented) QueryBackgrounds(w http.ResponseWriter, r *http.Request, params QueryBackgroundsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Soft delete. Returns the id
+// (DELETE /api/v1/backgrounds/{entity_id})
+func (_ Unimplemented) DeleteBackground(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// (GET /api/v1/backgrounds/{entity_id})
+func (_ Unimplemented) ReadBackground(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadBackgroundParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change some fields; null clears an optional field
+// (PATCH /api/v1/backgrounds/{entity_id})
+func (_ Unimplemented) UpdateBackground(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace; fields left out go back to their defaults
+// (PUT /api/v1/backgrounds/{entity_id})
+func (_ Unimplemented) ReplaceBackground(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// One entry by its source's slug and its own (phb_2024/blinded)
+// (GET /api/v1/backgrounds/{source_slug}/{slug})
+func (_ Unimplemented) ReadBackgroundBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadBackgroundBySlugsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create a campaign; the caller is its DM. Rules left out get their defaults
+// (POST /api/v1/campaigns)
+func (_ Unimplemented) CreateCampaign(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// The caller's campaigns, by name
+// (GET /api/v1/campaigns/query)
+func (_ Unimplemented) QueryCampaigns(w http.ResponseWriter, r *http.Request, params QueryCampaignsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// The rules a new campaign starts with
+// (GET /api/v1/campaigns/rules/defaults)
+func (_ Unimplemented) ReadDefaultRules(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Soft delete. Returns the id
+// (DELETE /api/v1/campaigns/{entity_id})
+func (_ Unimplemented) DeleteCampaign(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// One of the caller's campaigns (anyone else's is a 404)
+// (GET /api/v1/campaigns/{entity_id})
+func (_ Unimplemented) ReadCampaign(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change some fields; rules merge into the current rules
+// (PATCH /api/v1/campaigns/{entity_id})
+func (_ Unimplemented) UpdateCampaign(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace a campaign; fields left out (rules included) go back to their defaults
+// (PUT /api/v1/campaigns/{entity_id})
+func (_ Unimplemented) ReplaceCampaign(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// The campaign's characters, each with what breaks its current rules
+// (GET /api/v1/campaigns/{entity_id}/characters)
+func (_ Unimplemented) ReadCampaignCharacters(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// The character leaves the campaign (back to its own rules)
+// (DELETE /api/v1/campaigns/{entity_id}/characters/{character_id})
+func (_ Unimplemented) RemoveCampaignCharacter(w http.ResponseWriter, r *http.Request, entityId EntityId, characterId CharacterId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Add an existing character; a 409 with `issues` when it breaks the campaign's rules
+// (POST /api/v1/campaigns/{entity_id}/characters/{character_id})
+func (_ Unimplemented) AddCampaignCharacter(w http.ResponseWriter, r *http.Request, entityId EntityId, characterId CharacterId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Take back an approved exception
+// (DELETE /api/v1/campaigns/{entity_id}/characters/{character_id}/exceptions/{ref_id})
+func (_ Unimplemented) RevokeCampaignException(w http.ResponseWriter, r *http.Request, entityId EntityId, characterId CharacterId, refId RefId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// The DM accepts a catalog entry the character uses that breaks the campaign's rules
+// (PUT /api/v1/campaigns/{entity_id}/characters/{character_id}/exceptions/{ref_id})
+func (_ Unimplemented) ApproveCampaignException(w http.ResponseWriter, r *http.Request, entityId EntityId, characterId CharacterId, refId RefId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// A DM gives a character in the campaign items, coins (added) and boons or banes
+// (POST /api/v1/campaigns/{entity_id}/characters/{character_id}/gifts)
+func (_ Unimplemented) CreateCampaignGift(w http.ResponseWriter, r *http.Request, entityId EntityId, characterId CharacterId, params CreateCampaignGiftParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// The campaign's open invites (DMs)
+// (GET /api/v1/campaigns/{entity_id}/invites)
+func (_ Unimplemented) ListCampaignInvites(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// An invite link, or an invite for one user by username (DMs, or members when settings.access.invite is members)
+// (POST /api/v1/campaigns/{entity_id}/invites)
+func (_ Unimplemented) CreateCampaignInvite(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Revoke an invite (DMs)
+// (DELETE /api/v1/campaigns/{entity_id}/invites/{invite_id})
+func (_ Unimplemented) RevokeCampaignInvite(w http.ResponseWriter, r *http.Request, entityId EntityId, inviteId InviteId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// The campaign's members, DMs first (any member)
+// (GET /api/v1/campaigns/{entity_id}/members)
+func (_ Unimplemented) ListCampaignMembers(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Leave (your own user id) or remove a member (DMs; never the owner). Their characters leave too
+// (DELETE /api/v1/campaigns/{entity_id}/members/{user_id})
+func (_ Unimplemented) RemoveCampaignMember(w http.ResponseWriter, r *http.Request, entityId EntityId, userId UserId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Make a member a DM or a player (DMs; never the owner)
+// (PATCH /api/v1/campaigns/{entity_id}/members/{user_id})
+func (_ Unimplemented) UpdateCampaignMember(w http.ResponseWriter, r *http.Request, entityId EntityId, userId UserId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// What a rules change (merged like a PATCH) would flag; saves nothing
+// (POST /api/v1/campaigns/{entity_id}/rules/preview)
+func (_ Unimplemented) PreviewCampaignRules(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Characters offered to the caller
+// (GET /api/v1/character-transfers)
+func (_ Unimplemented) ListIncomingTransfers(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Become the character's owner
+// (POST /api/v1/character-transfers/{character_id}/accept)
+func (_ Unimplemented) AcceptCharacterTransfer(w http.ResponseWriter, r *http.Request, characterId CharacterId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Turn the offer down
+// (POST /api/v1/character-transfers/{character_id}/decline)
+func (_ Unimplemented) DeclineCharacterTransfer(w http.ResponseWriter, r *http.Request, characterId CharacterId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create a character, for a campaign (which supplies the rules) or with its own rules
+// (POST /api/v1/characters)
+func (_ Unimplemented) CreateCharacter(w http.ResponseWriter, r *http.Request, params CreateCharacterParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// The caller's characters, by name (without levels)
+// (GET /api/v1/characters/query)
+func (_ Unimplemented) QueryCharacters(w http.ResponseWriter, r *http.Request, params QueryCharactersParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Soft delete. Returns the id
+// (DELETE /api/v1/characters/{entity_id})
+func (_ Unimplemented) DeleteCharacter(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// One of the caller's characters, with its planned levels (anyone else's is a 404)
+// (GET /api/v1/characters/{entity_id})
+func (_ Unimplemented) ReadCharacter(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change some fields; own rules merge; class_id changes the class on every planned level
+// (PATCH /api/v1/characters/{entity_id})
+func (_ Unimplemented) UpdateCharacter(w http.ResponseWriter, r *http.Request, entityId EntityId, params UpdateCharacterParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Roll a set of six scores (4d6, drop the lowest) on the server
+// (POST /api/v1/characters/{entity_id}/ability-rolls)
+func (_ Unimplemented) RollCharacterAbilities(w http.ResponseWriter, r *http.Request, entityId EntityId, params RollCharacterAbilitiesParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Set the method and the six base scores (before any bonus)
+// (PUT /api/v1/characters/{entity_id}/ability-scores)
+func (_ Unimplemented) SetCharacterAbilityScores(w http.ResponseWriter, r *http.Request, entityId EntityId, params SetCharacterAbilityScoresParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Add a choice (species, background, subclass, feat, asi, skill, ...) at the level it's made
+// (POST /api/v1/characters/{entity_id}/choices)
+func (_ Unimplemented) CreateCharacterChoice(w http.ResponseWriter, r *http.Request, entityId EntityId, params CreateCharacterChoiceParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Remove a choice; a 409 while choices it granted remain (items it granted stay)
+// (DELETE /api/v1/characters/{entity_id}/choices/{choice_id})
+func (_ Unimplemented) DeleteCharacterChoice(w http.ResponseWriter, r *http.Request, entityId EntityId, choiceId ChoiceId, params DeleteCharacterChoiceParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace a choice (swap a background at level 10). Choices it granted stay linked
+// (PUT /api/v1/characters/{entity_id}/choices/{choice_id})
+func (_ Unimplemented) ReplaceCharacterChoice(w http.ResponseWriter, r *http.Request, entityId EntityId, choiceId ChoiceId, params ReplaceCharacterChoiceParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Who the owner lets edit the character (the owner and its editors see this)
+// (GET /api/v1/characters/{entity_id}/editors)
+func (_ Unimplemented) ListCharacterEditors(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Let someone edit the character (its owner), by user_id or username
+// (POST /api/v1/characters/{entity_id}/editors)
+func (_ Unimplemented) AddCharacterEditor(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Take someone off the editors (its owner), or yourself
+// (DELETE /api/v1/characters/{entity_id}/editors/{user_id})
+func (_ Unimplemented) RemoveCharacterEditor(w http.ResponseWriter, r *http.Request, entityId EntityId, userId UserId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Add an item: from the catalog (item_id) or custom (custom_name)
+// (POST /api/v1/characters/{entity_id}/items)
+func (_ Unimplemented) CreateCharacterItem(w http.ResponseWriter, r *http.Request, entityId EntityId, params CreateCharacterItemParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Remove an item
+// (DELETE /api/v1/characters/{entity_id}/items/{item_id})
+func (_ Unimplemented) DeleteCharacterItem(w http.ResponseWriter, r *http.Request, entityId EntityId, itemId ItemId, params DeleteCharacterItemParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change quantity, equipped, attuned, level_received, note, custom fields
+// (PATCH /api/v1/characters/{entity_id}/items/{item_id})
+func (_ Unimplemented) UpdateCharacterItem(w http.ResponseWriter, r *http.Request, entityId EntityId, itemId ItemId, params UpdateCharacterItemParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Remove the top planned level (lower current_level to level down without losing the plan)
+// (DELETE /api/v1/characters/{entity_id}/levels/{level})
+func (_ Unimplemented) DeleteCharacterLevel(w http.ResponseWriter, r *http.Request, entityId EntityId, level int, params DeleteCharacterLevelParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Plan a level or change one
+// (PUT /api/v1/characters/{entity_id}/levels/{level})
+func (_ Unimplemented) PutCharacterLevel(w http.ResponseWriter, r *http.Request, entityId EntityId, level int, params PutCharacterLevelParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Roll the class's hit die for a planned level (2-20); rerolls are kept, the newest counts
+// (POST /api/v1/characters/{entity_id}/levels/{level}/hp-roll)
+func (_ Unimplemented) RollCharacterLevelHP(w http.ResponseWriter, r *http.Request, entityId EntityId, level int, params RollCharacterLevelHPParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Add a boon or bane (+1 AC from the DM, a -2 Str curse, Mage Armor)
+// (POST /api/v1/characters/{entity_id}/modifiers)
+func (_ Unimplemented) CreateCharacterModifier(w http.ResponseWriter, r *http.Request, entityId EntityId, params CreateCharacterModifierParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Remove a modifier
+// (DELETE /api/v1/characters/{entity_id}/modifiers/{modifier_id})
+func (_ Unimplemented) DeleteCharacterModifier(w http.ResponseWriter, r *http.Request, entityId EntityId, modifierId ModifierId, params DeleteCharacterModifierParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change a modifier (switch it off with active: false)
+// (PATCH /api/v1/characters/{entity_id}/modifiers/{modifier_id})
+func (_ Unimplemented) UpdateCharacterModifier(w http.ResponseWriter, r *http.Request, entityId EntityId, modifierId ModifierId, params UpdateCharacterModifierParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// What can be picked, with the rules applied
+// (GET /api/v1/characters/{entity_id}/options/{kind})
+func (_ Unimplemented) ReadCharacterOptions(w http.ResponseWriter, r *http.Request, entityId EntityId, kind string, params ReadCharacterOptionsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Unprepare a spell
+// (DELETE /api/v1/characters/{entity_id}/prepared-spells/{spell_id})
+func (_ Unimplemented) UnprepareCharacterSpell(w http.ResponseWriter, r *http.Request, entityId EntityId, spellId SpellId, params UnprepareCharacterSpellParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Prepare a level 1+ spell from the class's list (over or under the limit is allowed; the sheet warns)
+// (PUT /api/v1/characters/{entity_id}/prepared-spells/{spell_id})
+func (_ Unimplemented) PrepareCharacterSpell(w http.ResponseWriter, r *http.Request, entityId EntityId, spellId SpellId, params PrepareCharacterSpellParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// The computed sheet: every number with its contributions, plus issues to look at
+// (GET /api/v1/characters/{entity_id}/sheet)
+func (_ Unimplemented) ReadCharacterSheet(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadCharacterSheetParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// The sheet after some changes, without saving them
+// (POST /api/v1/characters/{entity_id}/sheet/preview)
+func (_ Unimplemented) PreviewCharacterSheet(w http.ResponseWriter, r *http.Request, entityId EntityId, params PreviewCharacterSheetParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Take the offer back (its owner)
+// (DELETE /api/v1/characters/{entity_id}/transfer)
+func (_ Unimplemented) CancelCharacterTransfer(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// The owner's pending offer to hand the character over
+// (GET /api/v1/characters/{entity_id}/transfer)
+func (_ Unimplemented) ReadCharacterTransfer(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Offer the character to someone (its owner); they accept before it expires (7d by default)
+// (PUT /api/v1/characters/{entity_id}/transfer)
+func (_ Unimplemented) OfferCharacterTransfer(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create; a (source, slug) that's taken is a 409
+// (POST /api/v1/classes)
+func (_ Unimplemented) CreateClass(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+// (POST /api/v1/classes/bulk)
+func (_ Unimplemented) BulkLoadClasses(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// By name then newest edition, after sort
+// (GET /api/v1/classes/query)
+func (_ Unimplemented) QueryClasses(w http.ResponseWriter, r *http.Request, params QueryClassesParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Add links from a spells _all.json (each row's classes); only adds, never removes
+// (POST /api/v1/classes/spell-lists/bulk)
+func (_ Unimplemented) BulkLoadSpellLists(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// The spells on a class's list (live spells only), by spell name
+// (GET /api/v1/classes/{class_id}/spells)
+func (_ Unimplemented) ReadClassSpells(w http.ResponseWriter, r *http.Request, classId openapi_types.UUID) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Take a spell off a class's list (deletes the link). Returns the spell id
+// (DELETE /api/v1/classes/{class_id}/spells/{spell_id})
+func (_ Unimplemented) RemoveClassSpell(w http.ResponseWriter, r *http.Request, classId openapi_types.UUID, spellId openapi_types.UUID) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Put a spell on a class's list; returns the existing link, unchanged, if it's already there
+// (POST /api/v1/classes/{class_id}/spells/{spell_id})
+func (_ Unimplemented) AddClassSpell(w http.ResponseWriter, r *http.Request, classId openapi_types.UUID, spellId openapi_types.UUID, params AddClassSpellParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Soft delete. Returns the id
+// (DELETE /api/v1/classes/{entity_id})
+func (_ Unimplemented) DeleteClass(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// (GET /api/v1/classes/{entity_id})
+func (_ Unimplemented) ReadClass(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadClassParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change some fields; null clears an optional field
+// (PATCH /api/v1/classes/{entity_id})
+func (_ Unimplemented) UpdateClass(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace; fields left out go back to their defaults
+// (PUT /api/v1/classes/{entity_id})
+func (_ Unimplemented) ReplaceClass(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// One entry by its source's slug and its own (phb_2024/blinded)
+// (GET /api/v1/classes/{source_slug}/{slug})
+func (_ Unimplemented) ReadClassBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadClassBySlugsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create; a (source, slug) that's taken is a 409
+// (POST /api/v1/conditions)
+func (_ Unimplemented) CreateCondition(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+// (POST /api/v1/conditions/bulk)
+func (_ Unimplemented) BulkLoadConditions(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// By name then newest edition, after sort
+// (GET /api/v1/conditions/query)
+func (_ Unimplemented) QueryConditions(w http.ResponseWriter, r *http.Request, params QueryConditionsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Soft delete. Returns the id
+// (DELETE /api/v1/conditions/{entity_id})
+func (_ Unimplemented) DeleteCondition(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// (GET /api/v1/conditions/{entity_id})
+func (_ Unimplemented) ReadCondition(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadConditionParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change some fields; null clears an optional field
+// (PATCH /api/v1/conditions/{entity_id})
+func (_ Unimplemented) UpdateCondition(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace; fields left out go back to their defaults
+// (PUT /api/v1/conditions/{entity_id})
+func (_ Unimplemented) ReplaceCondition(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// One entry by its source's slug and its own (phb_2024/blinded)
+// (GET /api/v1/conditions/{source_slug}/{slug})
+func (_ Unimplemented) ReadConditionBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadConditionBySlugsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create; a (source, slug) that's taken is a 409
+// (POST /api/v1/feats)
+func (_ Unimplemented) CreateFeat(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+// (POST /api/v1/feats/bulk)
+func (_ Unimplemented) BulkLoadFeats(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// By name then newest edition, after sort
+// (GET /api/v1/feats/query)
+func (_ Unimplemented) QueryFeats(w http.ResponseWriter, r *http.Request, params QueryFeatsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Soft delete. Returns the id
+// (DELETE /api/v1/feats/{entity_id})
+func (_ Unimplemented) DeleteFeat(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// (GET /api/v1/feats/{entity_id})
+func (_ Unimplemented) ReadFeat(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadFeatParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change some fields; null clears an optional field
+// (PATCH /api/v1/feats/{entity_id})
+func (_ Unimplemented) UpdateFeat(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace; fields left out go back to their defaults
+// (PUT /api/v1/feats/{entity_id})
+func (_ Unimplemented) ReplaceFeat(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// One entry by its source's slug and its own (phb_2024/blinded)
+// (GET /api/v1/feats/{source_slug}/{slug})
+func (_ Unimplemented) ReadFeatBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadFeatBySlugsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create; a (source, slug) that's taken is a 409
+// (POST /api/v1/glossary)
+func (_ Unimplemented) CreateGlossaryEntry(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+// (POST /api/v1/glossary/bulk)
+func (_ Unimplemented) BulkLoadGlossaryEntries(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// By name then newest edition, after sort
+// (GET /api/v1/glossary/query)
+func (_ Unimplemented) QueryGlossaryEntries(w http.ResponseWriter, r *http.Request, params QueryGlossaryEntriesParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Soft delete. Returns the id
+// (DELETE /api/v1/glossary/{entity_id})
+func (_ Unimplemented) DeleteGlossaryEntry(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// (GET /api/v1/glossary/{entity_id})
+func (_ Unimplemented) ReadGlossaryEntry(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadGlossaryEntryParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change some fields; null clears an optional field
+// (PATCH /api/v1/glossary/{entity_id})
+func (_ Unimplemented) UpdateGlossaryEntry(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace; fields left out go back to their defaults
+// (PUT /api/v1/glossary/{entity_id})
+func (_ Unimplemented) ReplaceGlossaryEntry(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// One entry by its source's slug and its own (phb_2024/blinded)
+// (GET /api/v1/glossary/{source_slug}/{slug})
+func (_ Unimplemented) ReadGlossaryEntryBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadGlossaryEntryBySlugsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// What an invite link is for, before joining (any signed-in user with the link)
+// (GET /api/v1/invite-links/{token})
+func (_ Unimplemented) ReadInviteLink(w http.ResponseWriter, r *http.Request, token InviteToken) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Join the campaign as a player. Already a member, nothing changes
+// (POST /api/v1/invite-links/{token}/accept)
+func (_ Unimplemented) AcceptInviteLink(w http.ResponseWriter, r *http.Request, token InviteToken) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// The caller's open invites to campaigns they aren't in
+// (GET /api/v1/invites)
+func (_ Unimplemented) ListMyInvites(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Accept an invite sent to you, and join as a player
+// (POST /api/v1/invites/{invite_id}/accept)
+func (_ Unimplemented) AcceptInvite(w http.ResponseWriter, r *http.Request, inviteId InviteId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Decline an invite sent to you
+// (POST /api/v1/invites/{invite_id}/decline)
+func (_ Unimplemented) DeclineInvite(w http.ResponseWriter, r *http.Request, inviteId InviteId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create; a (source, slug) that's taken is a 409
+// (POST /api/v1/items)
+func (_ Unimplemented) CreateItem(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create or update from a file (an ETL _all.json), keyed on (source, slug); all or nothing
+// (POST /api/v1/items/bulk)
+func (_ Unimplemented) BulkLoadItems(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// By name then newest edition, after sort
+// (GET /api/v1/items/query)
+func (_ Unimplemented) QueryItems(w http.ResponseWriter, r *http.Request, params QueryItemsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Soft delete. Returns the id
+// (DELETE /api/v1/items/{entity_id})
+func (_ Unimplemented) DeleteItem(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// (GET /api/v1/items/{entity_id})
+func (_ Unimplemented) ReadItem(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadItemParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change some fields; null clears an optional field
+// (PATCH /api/v1/items/{entity_id})
+func (_ Unimplemented) UpdateItem(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Replace; fields left out go back to their defaults
+// (PUT /api/v1/items/{entity_id})
+func (_ Unimplemented) ReplaceItem(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// One entry by its source's slug and its own (phb_2024/blinded)
+// (GET /api/v1/items/{source_slug}/{slug})
+func (_ Unimplemented) ReadItemBySlugs(w http.ResponseWriter, r *http.Request, sourceSlug string, slug string, params ReadItemBySlugsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create a source (a slug, or a name or short name in the same edition, that's taken is a 409)
+// (POST /api/v1/sources)
+func (_ Unimplemented) CreateSource(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create or update sources from a file, keyed on slug (the ETL's source_id)
+>>>>>>> Stashed changes
 // (POST /api/v1/sources/bulk)
 func (_ Unimplemented) BulkLoadSources(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotImplemented)
@@ -273,6 +3923,60 @@ func (_ Unimplemented) UpdateUser(w http.ResponseWriter, r *http.Request, id ope
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
+// Move everyone to a scene (DMs); null takes the table down. Players the DM had moved elsewhere come too
+// (PUT /api/v1/vtt/campaigns/{entity_id}/active-scene)
+func (_ Unimplemented) SetVttActiveScene(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Do something at the table; everyone sees it on their stream
+// (POST /api/v1/vtt/campaigns/{entity_id}/commands)
+func (_ Unimplemented) PostVttCommand(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Server-sent events for the whole campaign, built for the caller
+// (GET /api/v1/vtt/campaigns/{entity_id}/events)
+func (_ Unimplemented) StreamVttEvents(w http.ResponseWriter, r *http.Request, entityId EntityId, params StreamVttEventsParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Move one player to a scene (DMs, for a split party); null sends them back to the active scene
+// (PUT /api/v1/vtt/campaigns/{entity_id}/members/{user_id}/scene)
+func (_ Unimplemented) SetVttMemberScene(w http.ResponseWriter, r *http.Request, entityId EntityId, userId UserId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// The campaign's scenes (DMs, as a tree by parent_id and sort_order); a player gets only the one they're on
+// (GET /api/v1/vtt/campaigns/{entity_id}/scenes)
+func (_ Unimplemented) ListVttScenes(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Create a scene, last among its siblings (DMs). It isn't shown to players until it's activated
+// (POST /api/v1/vtt/campaigns/{entity_id}/scenes)
+func (_ Unimplemented) CreateVttScene(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// A scene and its tokens as the caller may see them, and the seq to stream from
+// (GET /api/v1/vtt/campaigns/{entity_id}/state)
+func (_ Unimplemented) ReadVttState(w http.ResponseWriter, r *http.Request, entityId EntityId, params ReadVttStateParams) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Move the scene and everything under it to the trash (DMs). A 409 while anyone is on one of them
+// (DELETE /api/v1/vtt/scenes/{entity_id})
+func (_ Unimplemented) DeleteVttScene(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// Change some fields, or move the scene in the tree (DMs). A move under its own subtree is a 422
+// (PATCH /api/v1/vtt/scenes/{entity_id})
+func (_ Unimplemented) UpdateVttScene(w http.ResponseWriter, r *http.Request, entityId EntityId) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
 // (GET /health/live)
 func (_ Unimplemented) HealthLive(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotImplemented)
@@ -292,6 +3996,4797 @@ type ServerInterfaceWrapper struct {
 
 type MiddlewareFunc func(http.Handler) http.Handler
 
+<<<<<<< Updated upstream
+=======
+// CreateBackground operation middleware
+func (siw *ServerInterfaceWrapper) CreateBackground(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateBackground(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// BulkLoadBackgrounds operation middleware
+func (siw *ServerInterfaceWrapper) BulkLoadBackgrounds(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.BulkLoadBackgrounds(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// QueryBackgrounds operation middleware
+func (siw *ServerInterfaceWrapper) QueryBackgrounds(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params QueryBackgroundsParams
+
+	// ------------- Optional query parameter "name" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "name", r.URL.Query(), &params.Name)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "filter" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "filter", r.URL.Query(), &params.Filter)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "filter", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "sort" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "sort", r.URL.Query(), &params.Sort)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "sort", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", r.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "offset", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.QueryBackgrounds(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteBackground operation middleware
+func (siw *ServerInterfaceWrapper) DeleteBackground(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteBackground(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadBackground operation middleware
+func (siw *ServerInterfaceWrapper) ReadBackground(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadBackgroundParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadBackground(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateBackground operation middleware
+func (siw *ServerInterfaceWrapper) UpdateBackground(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateBackground(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceBackground operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceBackground(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceBackground(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadBackgroundBySlugs operation middleware
+func (siw *ServerInterfaceWrapper) ReadBackgroundBySlugs(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "source_slug" -------------
+	var sourceSlug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "source_slug", chi.URLParam(r, "source_slug"), &sourceSlug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "source_slug", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "slug" -------------
+	var slug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "slug", chi.URLParam(r, "slug"), &slug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "slug", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadBackgroundBySlugsParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadBackgroundBySlugs(w, r, sourceSlug, slug, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateCampaign operation middleware
+func (siw *ServerInterfaceWrapper) CreateCampaign(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateCampaign(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// QueryCampaigns operation middleware
+func (siw *ServerInterfaceWrapper) QueryCampaigns(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params QueryCampaignsParams
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", r.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "offset", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.QueryCampaigns(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadDefaultRules operation middleware
+func (siw *ServerInterfaceWrapper) ReadDefaultRules(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadDefaultRules(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteCampaign operation middleware
+func (siw *ServerInterfaceWrapper) DeleteCampaign(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteCampaign(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadCampaign operation middleware
+func (siw *ServerInterfaceWrapper) ReadCampaign(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadCampaign(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateCampaign operation middleware
+func (siw *ServerInterfaceWrapper) UpdateCampaign(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateCampaign(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceCampaign operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceCampaign(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceCampaign(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadCampaignCharacters operation middleware
+func (siw *ServerInterfaceWrapper) ReadCampaignCharacters(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadCampaignCharacters(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// RemoveCampaignCharacter operation middleware
+func (siw *ServerInterfaceWrapper) RemoveCampaignCharacter(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "character_id" -------------
+	var characterId CharacterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "character_id", chi.URLParam(r, "character_id"), &characterId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "character_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RemoveCampaignCharacter(w, r, entityId, characterId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// AddCampaignCharacter operation middleware
+func (siw *ServerInterfaceWrapper) AddCampaignCharacter(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "character_id" -------------
+	var characterId CharacterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "character_id", chi.URLParam(r, "character_id"), &characterId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "character_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.AddCampaignCharacter(w, r, entityId, characterId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// RevokeCampaignException operation middleware
+func (siw *ServerInterfaceWrapper) RevokeCampaignException(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "character_id" -------------
+	var characterId CharacterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "character_id", chi.URLParam(r, "character_id"), &characterId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "character_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "ref_id" -------------
+	var refId RefId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "ref_id", chi.URLParam(r, "ref_id"), &refId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "ref_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RevokeCampaignException(w, r, entityId, characterId, refId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ApproveCampaignException operation middleware
+func (siw *ServerInterfaceWrapper) ApproveCampaignException(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "character_id" -------------
+	var characterId CharacterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "character_id", chi.URLParam(r, "character_id"), &characterId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "character_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "ref_id" -------------
+	var refId RefId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "ref_id", chi.URLParam(r, "ref_id"), &refId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "ref_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ApproveCampaignException(w, r, entityId, characterId, refId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateCampaignGift operation middleware
+func (siw *ServerInterfaceWrapper) CreateCampaignGift(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "character_id" -------------
+	var characterId CharacterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "character_id", chi.URLParam(r, "character_id"), &characterId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "character_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateCampaignGiftParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateCampaignGift(w, r, entityId, characterId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListCampaignInvites operation middleware
+func (siw *ServerInterfaceWrapper) ListCampaignInvites(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListCampaignInvites(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateCampaignInvite operation middleware
+func (siw *ServerInterfaceWrapper) CreateCampaignInvite(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateCampaignInvite(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// RevokeCampaignInvite operation middleware
+func (siw *ServerInterfaceWrapper) RevokeCampaignInvite(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "invite_id" -------------
+	var inviteId InviteId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "invite_id", chi.URLParam(r, "invite_id"), &inviteId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "invite_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RevokeCampaignInvite(w, r, entityId, inviteId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListCampaignMembers operation middleware
+func (siw *ServerInterfaceWrapper) ListCampaignMembers(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListCampaignMembers(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// RemoveCampaignMember operation middleware
+func (siw *ServerInterfaceWrapper) RemoveCampaignMember(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "user_id" -------------
+	var userId UserId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "user_id", chi.URLParam(r, "user_id"), &userId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "user_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RemoveCampaignMember(w, r, entityId, userId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateCampaignMember operation middleware
+func (siw *ServerInterfaceWrapper) UpdateCampaignMember(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "user_id" -------------
+	var userId UserId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "user_id", chi.URLParam(r, "user_id"), &userId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "user_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateCampaignMember(w, r, entityId, userId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PreviewCampaignRules operation middleware
+func (siw *ServerInterfaceWrapper) PreviewCampaignRules(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PreviewCampaignRules(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListIncomingTransfers operation middleware
+func (siw *ServerInterfaceWrapper) ListIncomingTransfers(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListIncomingTransfers(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// AcceptCharacterTransfer operation middleware
+func (siw *ServerInterfaceWrapper) AcceptCharacterTransfer(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "character_id" -------------
+	var characterId CharacterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "character_id", chi.URLParam(r, "character_id"), &characterId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "character_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.AcceptCharacterTransfer(w, r, characterId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeclineCharacterTransfer operation middleware
+func (siw *ServerInterfaceWrapper) DeclineCharacterTransfer(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "character_id" -------------
+	var characterId CharacterId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "character_id", chi.URLParam(r, "character_id"), &characterId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "character_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeclineCharacterTransfer(w, r, characterId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateCharacter operation middleware
+func (siw *ServerInterfaceWrapper) CreateCharacter(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateCharacterParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateCharacter(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// QueryCharacters operation middleware
+func (siw *ServerInterfaceWrapper) QueryCharacters(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params QueryCharactersParams
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", r.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "offset", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.QueryCharacters(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteCharacter operation middleware
+func (siw *ServerInterfaceWrapper) DeleteCharacter(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteCharacter(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadCharacter operation middleware
+func (siw *ServerInterfaceWrapper) ReadCharacter(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadCharacter(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateCharacter operation middleware
+func (siw *ServerInterfaceWrapper) UpdateCharacter(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateCharacterParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateCharacter(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// RollCharacterAbilities operation middleware
+func (siw *ServerInterfaceWrapper) RollCharacterAbilities(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params RollCharacterAbilitiesParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RollCharacterAbilities(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// SetCharacterAbilityScores operation middleware
+func (siw *ServerInterfaceWrapper) SetCharacterAbilityScores(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params SetCharacterAbilityScoresParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.SetCharacterAbilityScores(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateCharacterChoice operation middleware
+func (siw *ServerInterfaceWrapper) CreateCharacterChoice(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateCharacterChoiceParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateCharacterChoice(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteCharacterChoice operation middleware
+func (siw *ServerInterfaceWrapper) DeleteCharacterChoice(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "choice_id" -------------
+	var choiceId ChoiceId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "choice_id", chi.URLParam(r, "choice_id"), &choiceId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "choice_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteCharacterChoiceParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteCharacterChoice(w, r, entityId, choiceId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceCharacterChoice operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceCharacterChoice(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "choice_id" -------------
+	var choiceId ChoiceId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "choice_id", chi.URLParam(r, "choice_id"), &choiceId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "choice_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReplaceCharacterChoiceParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceCharacterChoice(w, r, entityId, choiceId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListCharacterEditors operation middleware
+func (siw *ServerInterfaceWrapper) ListCharacterEditors(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListCharacterEditors(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// AddCharacterEditor operation middleware
+func (siw *ServerInterfaceWrapper) AddCharacterEditor(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.AddCharacterEditor(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// RemoveCharacterEditor operation middleware
+func (siw *ServerInterfaceWrapper) RemoveCharacterEditor(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "user_id" -------------
+	var userId UserId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "user_id", chi.URLParam(r, "user_id"), &userId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "user_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RemoveCharacterEditor(w, r, entityId, userId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateCharacterItem operation middleware
+func (siw *ServerInterfaceWrapper) CreateCharacterItem(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateCharacterItemParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateCharacterItem(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteCharacterItem operation middleware
+func (siw *ServerInterfaceWrapper) DeleteCharacterItem(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "item_id" -------------
+	var itemId ItemId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "item_id", chi.URLParam(r, "item_id"), &itemId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "item_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteCharacterItemParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteCharacterItem(w, r, entityId, itemId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateCharacterItem operation middleware
+func (siw *ServerInterfaceWrapper) UpdateCharacterItem(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "item_id" -------------
+	var itemId ItemId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "item_id", chi.URLParam(r, "item_id"), &itemId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "item_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateCharacterItemParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateCharacterItem(w, r, entityId, itemId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteCharacterLevel operation middleware
+func (siw *ServerInterfaceWrapper) DeleteCharacterLevel(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "level" -------------
+	var level int
+
+	err = runtime.BindStyledParameterWithOptions("simple", "level", chi.URLParam(r, "level"), &level, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "level", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteCharacterLevelParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteCharacterLevel(w, r, entityId, level, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PutCharacterLevel operation middleware
+func (siw *ServerInterfaceWrapper) PutCharacterLevel(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "level" -------------
+	var level int
+
+	err = runtime.BindStyledParameterWithOptions("simple", "level", chi.URLParam(r, "level"), &level, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "level", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PutCharacterLevelParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PutCharacterLevel(w, r, entityId, level, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// RollCharacterLevelHP operation middleware
+func (siw *ServerInterfaceWrapper) RollCharacterLevelHP(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "level" -------------
+	var level int
+
+	err = runtime.BindStyledParameterWithOptions("simple", "level", chi.URLParam(r, "level"), &level, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "level", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params RollCharacterLevelHPParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RollCharacterLevelHP(w, r, entityId, level, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateCharacterModifier operation middleware
+func (siw *ServerInterfaceWrapper) CreateCharacterModifier(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateCharacterModifierParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateCharacterModifier(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteCharacterModifier operation middleware
+func (siw *ServerInterfaceWrapper) DeleteCharacterModifier(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "modifier_id" -------------
+	var modifierId ModifierId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "modifier_id", chi.URLParam(r, "modifier_id"), &modifierId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "modifier_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteCharacterModifierParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteCharacterModifier(w, r, entityId, modifierId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateCharacterModifier operation middleware
+func (siw *ServerInterfaceWrapper) UpdateCharacterModifier(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "modifier_id" -------------
+	var modifierId ModifierId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "modifier_id", chi.URLParam(r, "modifier_id"), &modifierId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "modifier_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateCharacterModifierParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateCharacterModifier(w, r, entityId, modifierId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadCharacterOptions operation middleware
+func (siw *ServerInterfaceWrapper) ReadCharacterOptions(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "kind" -------------
+	var kind string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "kind", chi.URLParam(r, "kind"), &kind, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "kind", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadCharacterOptionsParams
+
+	// ------------- Optional query parameter "slot" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "slot", r.URL.Query(), &params.Slot)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "slot", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "level" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "level", r.URL.Query(), &params.Level)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "level", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "name" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "name", r.URL.Query(), &params.Name)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "filters" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "filters", r.URL.Query(), &params.Filters)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "filters", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "allowed" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "allowed", r.URL.Query(), &params.Allowed)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "allowed", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", r.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "offset", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadCharacterOptions(w, r, entityId, kind, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UnprepareCharacterSpell operation middleware
+func (siw *ServerInterfaceWrapper) UnprepareCharacterSpell(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "spell_id" -------------
+	var spellId SpellId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "spell_id", chi.URLParam(r, "spell_id"), &spellId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "spell_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UnprepareCharacterSpellParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UnprepareCharacterSpell(w, r, entityId, spellId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PrepareCharacterSpell operation middleware
+func (siw *ServerInterfaceWrapper) PrepareCharacterSpell(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "spell_id" -------------
+	var spellId SpellId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "spell_id", chi.URLParam(r, "spell_id"), &spellId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "spell_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PrepareCharacterSpellParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "If-Match" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("If-Match")]; found {
+		var IfMatch IfMatch
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "If-Match", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "If-Match", valueList[0], &IfMatch, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "If-Match", Err: err})
+			return
+		}
+
+		params.IfMatch = &IfMatch
+
+	}
+
+	// ------------- Optional header parameter "Op-Id" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Op-Id")]; found {
+		var OpId OpId
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Op-Id", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Op-Id", valueList[0], &OpId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Op-Id", Err: err})
+			return
+		}
+
+		params.OpId = &OpId
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PrepareCharacterSpell(w, r, entityId, spellId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadCharacterSheet operation middleware
+func (siw *ServerInterfaceWrapper) ReadCharacterSheet(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadCharacterSheetParams
+
+	// ------------- Optional query parameter "level" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "level", r.URL.Query(), &params.Level)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "level", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadCharacterSheet(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PreviewCharacterSheet operation middleware
+func (siw *ServerInterfaceWrapper) PreviewCharacterSheet(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PreviewCharacterSheetParams
+
+	// ------------- Optional query parameter "level" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "level", r.URL.Query(), &params.Level)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "level", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PreviewCharacterSheet(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CancelCharacterTransfer operation middleware
+func (siw *ServerInterfaceWrapper) CancelCharacterTransfer(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CancelCharacterTransfer(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadCharacterTransfer operation middleware
+func (siw *ServerInterfaceWrapper) ReadCharacterTransfer(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadCharacterTransfer(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// OfferCharacterTransfer operation middleware
+func (siw *ServerInterfaceWrapper) OfferCharacterTransfer(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.OfferCharacterTransfer(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateClass operation middleware
+func (siw *ServerInterfaceWrapper) CreateClass(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateClass(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// BulkLoadClasses operation middleware
+func (siw *ServerInterfaceWrapper) BulkLoadClasses(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.BulkLoadClasses(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// QueryClasses operation middleware
+func (siw *ServerInterfaceWrapper) QueryClasses(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params QueryClassesParams
+
+	// ------------- Optional query parameter "name" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "name", r.URL.Query(), &params.Name)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "filter" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "filter", r.URL.Query(), &params.Filter)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "filter", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "sort" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "sort", r.URL.Query(), &params.Sort)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "sort", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", r.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "offset", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.QueryClasses(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// BulkLoadSpellLists operation middleware
+func (siw *ServerInterfaceWrapper) BulkLoadSpellLists(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.BulkLoadSpellLists(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadClassSpells operation middleware
+func (siw *ServerInterfaceWrapper) ReadClassSpells(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "class_id" -------------
+	var classId openapi_types.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "class_id", chi.URLParam(r, "class_id"), &classId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "class_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadClassSpells(w, r, classId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// RemoveClassSpell operation middleware
+func (siw *ServerInterfaceWrapper) RemoveClassSpell(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "class_id" -------------
+	var classId openapi_types.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "class_id", chi.URLParam(r, "class_id"), &classId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "class_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "spell_id" -------------
+	var spellId openapi_types.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "spell_id", chi.URLParam(r, "spell_id"), &spellId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "spell_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RemoveClassSpell(w, r, classId, spellId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// AddClassSpell operation middleware
+func (siw *ServerInterfaceWrapper) AddClassSpell(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "class_id" -------------
+	var classId openapi_types.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "class_id", chi.URLParam(r, "class_id"), &classId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "class_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "spell_id" -------------
+	var spellId openapi_types.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "spell_id", chi.URLParam(r, "spell_id"), &spellId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "spell_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params AddClassSpellParams
+
+	// ------------- Optional query parameter "qualifier" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "qualifier", r.URL.Query(), &params.Qualifier)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "qualifier", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.AddClassSpell(w, r, classId, spellId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteClass operation middleware
+func (siw *ServerInterfaceWrapper) DeleteClass(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteClass(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadClass operation middleware
+func (siw *ServerInterfaceWrapper) ReadClass(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadClassParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadClass(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateClass operation middleware
+func (siw *ServerInterfaceWrapper) UpdateClass(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateClass(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceClass operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceClass(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceClass(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadClassBySlugs operation middleware
+func (siw *ServerInterfaceWrapper) ReadClassBySlugs(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "source_slug" -------------
+	var sourceSlug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "source_slug", chi.URLParam(r, "source_slug"), &sourceSlug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "source_slug", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "slug" -------------
+	var slug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "slug", chi.URLParam(r, "slug"), &slug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "slug", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadClassBySlugsParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadClassBySlugs(w, r, sourceSlug, slug, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateCondition operation middleware
+func (siw *ServerInterfaceWrapper) CreateCondition(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateCondition(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// BulkLoadConditions operation middleware
+func (siw *ServerInterfaceWrapper) BulkLoadConditions(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.BulkLoadConditions(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// QueryConditions operation middleware
+func (siw *ServerInterfaceWrapper) QueryConditions(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params QueryConditionsParams
+
+	// ------------- Optional query parameter "name" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "name", r.URL.Query(), &params.Name)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "filter" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "filter", r.URL.Query(), &params.Filter)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "filter", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "sort" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "sort", r.URL.Query(), &params.Sort)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "sort", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", r.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "offset", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.QueryConditions(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteCondition operation middleware
+func (siw *ServerInterfaceWrapper) DeleteCondition(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteCondition(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadCondition operation middleware
+func (siw *ServerInterfaceWrapper) ReadCondition(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadConditionParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadCondition(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateCondition operation middleware
+func (siw *ServerInterfaceWrapper) UpdateCondition(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateCondition(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceCondition operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceCondition(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceCondition(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadConditionBySlugs operation middleware
+func (siw *ServerInterfaceWrapper) ReadConditionBySlugs(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "source_slug" -------------
+	var sourceSlug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "source_slug", chi.URLParam(r, "source_slug"), &sourceSlug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "source_slug", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "slug" -------------
+	var slug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "slug", chi.URLParam(r, "slug"), &slug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "slug", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadConditionBySlugsParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadConditionBySlugs(w, r, sourceSlug, slug, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateFeat operation middleware
+func (siw *ServerInterfaceWrapper) CreateFeat(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateFeat(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// BulkLoadFeats operation middleware
+func (siw *ServerInterfaceWrapper) BulkLoadFeats(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.BulkLoadFeats(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// QueryFeats operation middleware
+func (siw *ServerInterfaceWrapper) QueryFeats(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params QueryFeatsParams
+
+	// ------------- Optional query parameter "name" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "name", r.URL.Query(), &params.Name)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "filter" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "filter", r.URL.Query(), &params.Filter)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "filter", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "sort" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "sort", r.URL.Query(), &params.Sort)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "sort", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", r.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "offset", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.QueryFeats(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteFeat operation middleware
+func (siw *ServerInterfaceWrapper) DeleteFeat(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteFeat(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadFeat operation middleware
+func (siw *ServerInterfaceWrapper) ReadFeat(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadFeatParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadFeat(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateFeat operation middleware
+func (siw *ServerInterfaceWrapper) UpdateFeat(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateFeat(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceFeat operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceFeat(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceFeat(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadFeatBySlugs operation middleware
+func (siw *ServerInterfaceWrapper) ReadFeatBySlugs(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "source_slug" -------------
+	var sourceSlug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "source_slug", chi.URLParam(r, "source_slug"), &sourceSlug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "source_slug", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "slug" -------------
+	var slug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "slug", chi.URLParam(r, "slug"), &slug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "slug", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadFeatBySlugsParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadFeatBySlugs(w, r, sourceSlug, slug, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateGlossaryEntry operation middleware
+func (siw *ServerInterfaceWrapper) CreateGlossaryEntry(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateGlossaryEntry(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// BulkLoadGlossaryEntries operation middleware
+func (siw *ServerInterfaceWrapper) BulkLoadGlossaryEntries(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.BulkLoadGlossaryEntries(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// QueryGlossaryEntries operation middleware
+func (siw *ServerInterfaceWrapper) QueryGlossaryEntries(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params QueryGlossaryEntriesParams
+
+	// ------------- Optional query parameter "name" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "name", r.URL.Query(), &params.Name)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "filter" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "filter", r.URL.Query(), &params.Filter)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "filter", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "sort" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "sort", r.URL.Query(), &params.Sort)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "sort", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", r.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "offset", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.QueryGlossaryEntries(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteGlossaryEntry operation middleware
+func (siw *ServerInterfaceWrapper) DeleteGlossaryEntry(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteGlossaryEntry(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadGlossaryEntry operation middleware
+func (siw *ServerInterfaceWrapper) ReadGlossaryEntry(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadGlossaryEntryParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadGlossaryEntry(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateGlossaryEntry operation middleware
+func (siw *ServerInterfaceWrapper) UpdateGlossaryEntry(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateGlossaryEntry(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceGlossaryEntry operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceGlossaryEntry(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceGlossaryEntry(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadGlossaryEntryBySlugs operation middleware
+func (siw *ServerInterfaceWrapper) ReadGlossaryEntryBySlugs(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "source_slug" -------------
+	var sourceSlug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "source_slug", chi.URLParam(r, "source_slug"), &sourceSlug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "source_slug", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "slug" -------------
+	var slug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "slug", chi.URLParam(r, "slug"), &slug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "slug", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadGlossaryEntryBySlugsParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadGlossaryEntryBySlugs(w, r, sourceSlug, slug, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadInviteLink operation middleware
+func (siw *ServerInterfaceWrapper) ReadInviteLink(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "token" -------------
+	var token InviteToken
+
+	err = runtime.BindStyledParameterWithOptions("simple", "token", chi.URLParam(r, "token"), &token, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "token", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadInviteLink(w, r, token)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// AcceptInviteLink operation middleware
+func (siw *ServerInterfaceWrapper) AcceptInviteLink(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "token" -------------
+	var token InviteToken
+
+	err = runtime.BindStyledParameterWithOptions("simple", "token", chi.URLParam(r, "token"), &token, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "token", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.AcceptInviteLink(w, r, token)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListMyInvites operation middleware
+func (siw *ServerInterfaceWrapper) ListMyInvites(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListMyInvites(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// AcceptInvite operation middleware
+func (siw *ServerInterfaceWrapper) AcceptInvite(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "invite_id" -------------
+	var inviteId InviteId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "invite_id", chi.URLParam(r, "invite_id"), &inviteId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "invite_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.AcceptInvite(w, r, inviteId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeclineInvite operation middleware
+func (siw *ServerInterfaceWrapper) DeclineInvite(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "invite_id" -------------
+	var inviteId InviteId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "invite_id", chi.URLParam(r, "invite_id"), &inviteId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "invite_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeclineInvite(w, r, inviteId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateItem operation middleware
+func (siw *ServerInterfaceWrapper) CreateItem(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateItem(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// BulkLoadItems operation middleware
+func (siw *ServerInterfaceWrapper) BulkLoadItems(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.BulkLoadItems(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// QueryItems operation middleware
+func (siw *ServerInterfaceWrapper) QueryItems(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params QueryItemsParams
+
+	// ------------- Optional query parameter "name" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "name", r.URL.Query(), &params.Name)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "name", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "filter" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "filter", r.URL.Query(), &params.Filter)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "filter", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "sort" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "sort", r.URL.Query(), &params.Sort)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "sort", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", r.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", r.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "offset", Err: err})
+		return
+	}
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.QueryItems(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteItem operation middleware
+func (siw *ServerInterfaceWrapper) DeleteItem(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteItem(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadItem operation middleware
+func (siw *ServerInterfaceWrapper) ReadItem(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadItemParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadItem(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateItem operation middleware
+func (siw *ServerInterfaceWrapper) UpdateItem(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateItem(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReplaceItem operation middleware
+func (siw *ServerInterfaceWrapper) ReplaceItem(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReplaceItem(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadItemBySlugs operation middleware
+func (siw *ServerInterfaceWrapper) ReadItemBySlugs(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "source_slug" -------------
+	var sourceSlug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "source_slug", chi.URLParam(r, "source_slug"), &sourceSlug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "source_slug", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "slug" -------------
+	var slug string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "slug", chi.URLParam(r, "slug"), &slug, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "slug", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadItemBySlugsParams
+
+	// ------------- Optional query parameter "fields" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "fields", r.URL.Query(), &params.Fields)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "fields", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadItemBySlugs(w, r, sourceSlug, slug, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateSource operation middleware
+func (siw *ServerInterfaceWrapper) CreateSource(w http.ResponseWriter, r *http.Request) {
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateSource(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+>>>>>>> Stashed changes
 // BulkLoadSources operation middleware
 func (siw *ServerInterfaceWrapper) BulkLoadSources(w http.ResponseWriter, r *http.Request) {
 
@@ -553,6 +9048,337 @@ func (siw *ServerInterfaceWrapper) UpdateUser(w http.ResponseWriter, r *http.Req
 	handler.ServeHTTP(w, r)
 }
 
+// SetVttActiveScene operation middleware
+func (siw *ServerInterfaceWrapper) SetVttActiveScene(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.SetVttActiveScene(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PostVttCommand operation middleware
+func (siw *ServerInterfaceWrapper) PostVttCommand(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PostVttCommand(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// StreamVttEvents operation middleware
+func (siw *ServerInterfaceWrapper) StreamVttEvents(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params StreamVttEventsParams
+
+	// ------------- Optional query parameter "after" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "after", r.URL.Query(), &params.After)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "after", Err: err})
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Last-Event-ID" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Last-Event-ID")]; found {
+		var LastEventID string
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Last-Event-ID", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Last-Event-ID", valueList[0], &LastEventID, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Last-Event-ID", Err: err})
+			return
+		}
+
+		params.LastEventID = &LastEventID
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.StreamVttEvents(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// SetVttMemberScene operation middleware
+func (siw *ServerInterfaceWrapper) SetVttMemberScene(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "user_id" -------------
+	var userId UserId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "user_id", chi.URLParam(r, "user_id"), &userId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "user_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.SetVttMemberScene(w, r, entityId, userId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListVttScenes operation middleware
+func (siw *ServerInterfaceWrapper) ListVttScenes(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListVttScenes(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateVttScene operation middleware
+func (siw *ServerInterfaceWrapper) CreateVttScene(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateVttScene(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReadVttState operation middleware
+func (siw *ServerInterfaceWrapper) ReadVttState(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReadVttStateParams
+
+	// ------------- Optional query parameter "scene" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "scene", r.URL.Query(), &params.Scene)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "scene", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReadVttState(w, r, entityId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteVttScene operation middleware
+func (siw *ServerInterfaceWrapper) DeleteVttScene(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteVttScene(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateVttScene operation middleware
+func (siw *ServerInterfaceWrapper) UpdateVttScene(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+
+	// ------------- Path parameter "entity_id" -------------
+	var entityId EntityId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "entity_id", chi.URLParam(r, "entity_id"), &entityId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "entity_id", Err: err})
+		return
+	}
+
+	ctx := r.Context()
+
+	ctx = context.WithValue(ctx, BearerAuthScopes, []string{})
+
+	r = r.WithContext(ctx)
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateVttScene(w, r, entityId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // HealthLive operation middleware
 func (siw *ServerInterfaceWrapper) HealthLive(w http.ResponseWriter, r *http.Request) {
 
@@ -695,6 +9521,342 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	}
 
 	r.Group(func(r chi.Router) {
+<<<<<<< Updated upstream
+=======
+		r.Post(options.BaseURL+"/api/v1/backgrounds", wrapper.CreateBackground)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/backgrounds/bulk", wrapper.BulkLoadBackgrounds)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/backgrounds/query", wrapper.QueryBackgrounds)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/backgrounds/{entity_id}", wrapper.DeleteBackground)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/backgrounds/{entity_id}", wrapper.ReadBackground)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/backgrounds/{entity_id}", wrapper.UpdateBackground)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/backgrounds/{entity_id}", wrapper.ReplaceBackground)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/backgrounds/{source_slug}/{slug}", wrapper.ReadBackgroundBySlugs)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/campaigns", wrapper.CreateCampaign)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/campaigns/query", wrapper.QueryCampaigns)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/campaigns/rules/defaults", wrapper.ReadDefaultRules)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/campaigns/{entity_id}", wrapper.DeleteCampaign)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/campaigns/{entity_id}", wrapper.ReadCampaign)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/campaigns/{entity_id}", wrapper.UpdateCampaign)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/campaigns/{entity_id}", wrapper.ReplaceCampaign)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/campaigns/{entity_id}/characters", wrapper.ReadCampaignCharacters)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/campaigns/{entity_id}/characters/{character_id}", wrapper.RemoveCampaignCharacter)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/campaigns/{entity_id}/characters/{character_id}", wrapper.AddCampaignCharacter)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/campaigns/{entity_id}/characters/{character_id}/exceptions/{ref_id}", wrapper.RevokeCampaignException)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/campaigns/{entity_id}/characters/{character_id}/exceptions/{ref_id}", wrapper.ApproveCampaignException)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/campaigns/{entity_id}/characters/{character_id}/gifts", wrapper.CreateCampaignGift)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/campaigns/{entity_id}/invites", wrapper.ListCampaignInvites)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/campaigns/{entity_id}/invites", wrapper.CreateCampaignInvite)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/campaigns/{entity_id}/invites/{invite_id}", wrapper.RevokeCampaignInvite)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/campaigns/{entity_id}/members", wrapper.ListCampaignMembers)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/campaigns/{entity_id}/members/{user_id}", wrapper.RemoveCampaignMember)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/campaigns/{entity_id}/members/{user_id}", wrapper.UpdateCampaignMember)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/campaigns/{entity_id}/rules/preview", wrapper.PreviewCampaignRules)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/character-transfers", wrapper.ListIncomingTransfers)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/character-transfers/{character_id}/accept", wrapper.AcceptCharacterTransfer)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/character-transfers/{character_id}/decline", wrapper.DeclineCharacterTransfer)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/characters", wrapper.CreateCharacter)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/characters/query", wrapper.QueryCharacters)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/characters/{entity_id}", wrapper.DeleteCharacter)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/characters/{entity_id}", wrapper.ReadCharacter)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/characters/{entity_id}", wrapper.UpdateCharacter)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/characters/{entity_id}/ability-rolls", wrapper.RollCharacterAbilities)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/characters/{entity_id}/ability-scores", wrapper.SetCharacterAbilityScores)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/characters/{entity_id}/choices", wrapper.CreateCharacterChoice)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/characters/{entity_id}/choices/{choice_id}", wrapper.DeleteCharacterChoice)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/characters/{entity_id}/choices/{choice_id}", wrapper.ReplaceCharacterChoice)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/characters/{entity_id}/editors", wrapper.ListCharacterEditors)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/characters/{entity_id}/editors", wrapper.AddCharacterEditor)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/characters/{entity_id}/editors/{user_id}", wrapper.RemoveCharacterEditor)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/characters/{entity_id}/items", wrapper.CreateCharacterItem)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/characters/{entity_id}/items/{item_id}", wrapper.DeleteCharacterItem)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/characters/{entity_id}/items/{item_id}", wrapper.UpdateCharacterItem)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/characters/{entity_id}/levels/{level}", wrapper.DeleteCharacterLevel)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/characters/{entity_id}/levels/{level}", wrapper.PutCharacterLevel)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/characters/{entity_id}/levels/{level}/hp-roll", wrapper.RollCharacterLevelHP)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/characters/{entity_id}/modifiers", wrapper.CreateCharacterModifier)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/characters/{entity_id}/modifiers/{modifier_id}", wrapper.DeleteCharacterModifier)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/characters/{entity_id}/modifiers/{modifier_id}", wrapper.UpdateCharacterModifier)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/characters/{entity_id}/options/{kind}", wrapper.ReadCharacterOptions)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/characters/{entity_id}/prepared-spells/{spell_id}", wrapper.UnprepareCharacterSpell)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/characters/{entity_id}/prepared-spells/{spell_id}", wrapper.PrepareCharacterSpell)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/characters/{entity_id}/sheet", wrapper.ReadCharacterSheet)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/characters/{entity_id}/sheet/preview", wrapper.PreviewCharacterSheet)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/characters/{entity_id}/transfer", wrapper.CancelCharacterTransfer)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/characters/{entity_id}/transfer", wrapper.ReadCharacterTransfer)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/characters/{entity_id}/transfer", wrapper.OfferCharacterTransfer)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/classes", wrapper.CreateClass)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/classes/bulk", wrapper.BulkLoadClasses)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/classes/query", wrapper.QueryClasses)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/classes/spell-lists/bulk", wrapper.BulkLoadSpellLists)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/classes/{class_id}/spells", wrapper.ReadClassSpells)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/classes/{class_id}/spells/{spell_id}", wrapper.RemoveClassSpell)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/classes/{class_id}/spells/{spell_id}", wrapper.AddClassSpell)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/classes/{entity_id}", wrapper.DeleteClass)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/classes/{entity_id}", wrapper.ReadClass)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/classes/{entity_id}", wrapper.UpdateClass)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/classes/{entity_id}", wrapper.ReplaceClass)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/classes/{source_slug}/{slug}", wrapper.ReadClassBySlugs)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/conditions", wrapper.CreateCondition)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/conditions/bulk", wrapper.BulkLoadConditions)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/conditions/query", wrapper.QueryConditions)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/conditions/{entity_id}", wrapper.DeleteCondition)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/conditions/{entity_id}", wrapper.ReadCondition)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/conditions/{entity_id}", wrapper.UpdateCondition)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/conditions/{entity_id}", wrapper.ReplaceCondition)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/conditions/{source_slug}/{slug}", wrapper.ReadConditionBySlugs)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/feats", wrapper.CreateFeat)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/feats/bulk", wrapper.BulkLoadFeats)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/feats/query", wrapper.QueryFeats)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/feats/{entity_id}", wrapper.DeleteFeat)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/feats/{entity_id}", wrapper.ReadFeat)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/feats/{entity_id}", wrapper.UpdateFeat)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/feats/{entity_id}", wrapper.ReplaceFeat)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/feats/{source_slug}/{slug}", wrapper.ReadFeatBySlugs)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/glossary", wrapper.CreateGlossaryEntry)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/glossary/bulk", wrapper.BulkLoadGlossaryEntries)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/glossary/query", wrapper.QueryGlossaryEntries)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/glossary/{entity_id}", wrapper.DeleteGlossaryEntry)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/glossary/{entity_id}", wrapper.ReadGlossaryEntry)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/glossary/{entity_id}", wrapper.UpdateGlossaryEntry)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/glossary/{entity_id}", wrapper.ReplaceGlossaryEntry)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/glossary/{source_slug}/{slug}", wrapper.ReadGlossaryEntryBySlugs)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/invite-links/{token}", wrapper.ReadInviteLink)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/invite-links/{token}/accept", wrapper.AcceptInviteLink)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/invites", wrapper.ListMyInvites)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/invites/{invite_id}/accept", wrapper.AcceptInvite)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/invites/{invite_id}/decline", wrapper.DeclineInvite)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/items", wrapper.CreateItem)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/items/bulk", wrapper.BulkLoadItems)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/items/query", wrapper.QueryItems)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/items/{entity_id}", wrapper.DeleteItem)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/items/{entity_id}", wrapper.ReadItem)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/items/{entity_id}", wrapper.UpdateItem)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/items/{entity_id}", wrapper.ReplaceItem)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/items/{source_slug}/{slug}", wrapper.ReadItemBySlugs)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/sources", wrapper.CreateSource)
+	})
+	r.Group(func(r chi.Router) {
+>>>>>>> Stashed changes
 		r.Post(options.BaseURL+"/api/v1/sources/bulk", wrapper.BulkLoadSources)
 	})
 	r.Group(func(r chi.Router) {
@@ -719,6 +9881,33 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Patch(options.BaseURL+"/api/v1/users/{id}", wrapper.UpdateUser)
 	})
 	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/vtt/campaigns/{entity_id}/active-scene", wrapper.SetVttActiveScene)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/vtt/campaigns/{entity_id}/commands", wrapper.PostVttCommand)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/vtt/campaigns/{entity_id}/events", wrapper.StreamVttEvents)
+	})
+	r.Group(func(r chi.Router) {
+		r.Put(options.BaseURL+"/api/v1/vtt/campaigns/{entity_id}/members/{user_id}/scene", wrapper.SetVttMemberScene)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/vtt/campaigns/{entity_id}/scenes", wrapper.ListVttScenes)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/api/v1/vtt/campaigns/{entity_id}/scenes", wrapper.CreateVttScene)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/api/v1/vtt/campaigns/{entity_id}/state", wrapper.ReadVttState)
+	})
+	r.Group(func(r chi.Router) {
+		r.Delete(options.BaseURL+"/api/v1/vtt/scenes/{entity_id}", wrapper.DeleteVttScene)
+	})
+	r.Group(func(r chi.Router) {
+		r.Patch(options.BaseURL+"/api/v1/vtt/scenes/{entity_id}", wrapper.UpdateVttScene)
+	})
+	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/health/live", wrapper.HealthLive)
 	})
 	r.Group(func(r chi.Router) {
@@ -731,6 +9920,7 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 // Base64 encoded, gzipped, json marshaled Swagger object
 var swaggerSpec = []string{
 
+<<<<<<< Updated upstream
 	"H4sIAAAAAAAC/+xZW28btxL+Kwue86hYcpJz0Ootrps2RQqkcdM+uMZixB1pmXDJDS9KVUP/vSC5V4lr",
 	"rRJXTgG/acnhcDjf3HVLqCxKKVAYTea3RNMcC/A/Lyz/8FpC9hZ1KYVGt1YqWaIyDD0FVQgGM/eTGSz8",
 	"mtmUSOZEG8XEimwn9QIoBRv3jUpJpY878wmUYGJ11Kl2QS7eIzWO4jsv8FWJnL/Fjxa12X8UKEwLMKgY",
@@ -758,6 +9948,342 @@ var swaggerSpec = []string{
 	"ROzWxZkcgZt8ytkaByPMj57mtSOJw7xTnKBaM4oJ0wl4vt05Fplf37SSBM59URRCtjkgy1tPc6QwgfF2",
 	"Qv4XABokdN5eEY+QvE/SH89d3ziv1KjWtdvv9GOSAk8yVxPIsppv+smiH9TNp1PuCHKpzfyb2ew52bYS",
 	"3NZR46ru5dqVup1vlwLknYVK/u3N9u8AAAD//4sB19rMJQAA",
+=======
+	"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",
+>>>>>>> Stashed changes
 }
 
 // GetSwagger returns the content of the embedded swagger specification file

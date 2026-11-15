@@ -29,6 +29,16 @@ combined = {
         'responses': {},
         'securitySchemes': {},
     },
+<<<<<<< Updated upstream
+=======
+    # relative, so the docs page calls whatever host served it (localhost, 127.0.0.1, a proxy):
+    # same origin, no CORS
+    "servers": [{"url": "/", "description": "This server"}],
+    "tags": auth.get("tags", []) + ordered.get("tags", []),
+    "paths": {"/api/v1" + path: methods for path, methods in auth.get("paths", {}).items()},
+    "components": {"schemas": {}, "responses": {}, "parameters": {}, "securitySchemes": {}},
+    "security": [{"BearerAuth": []}],
+>>>>>>> Stashed changes
 }
 
 # Auth paths first, prefixed with /api/v1

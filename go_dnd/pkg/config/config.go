@@ -73,7 +73,8 @@ func LoadFromEnv() (*Config, error) {
 		NATS: NATSConfig{
 			URL:           getEnv("NATS_URL", "nats://localhost:4222"),
 			ReconnectWait: getEnvAsDuration("NATS_RECONNECT_WAIT", 2*time.Second),
-			MaxReconnects: getEnvAsInt("NATS_MAX_RECONNECTS", 10),
+			// -1: keep trying. A pod that gave up would never get table events from the others again
+			MaxReconnects: getEnvAsInt("NATS_MAX_RECONNECTS", -1),
 		},
 		Auth: AuthConfig{
 			ServiceURL:  getEnv("AUTH_SERVICE_URL", "http://localhost:8081"),
@@ -133,8 +134,8 @@ func (c *Config) Validate() error {
 	if c.NATS.ReconnectWait <= 0 {
 		return fmt.Errorf("NATS reconnect wait must be positive")
 	}
-	if c.NATS.MaxReconnects < 0 {
-		return fmt.Errorf("NATS max reconnects cannot be negative")
+	if c.NATS.MaxReconnects < -1 {
+		return fmt.Errorf("NATS max reconnects must be -1 (forever) or more")
 	}
 	if c.Auth.ServiceURL == "" {
 		return fmt.Errorf("auth service URL is required")

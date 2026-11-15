@@ -1,0 +1,461 @@
+{
+  "description": "feat_tough with Great Weapon Master instead of Tough at level 4: HP drops by 2 per level from 4 on, Tough leaves the HP tooltip, and Str gets the feat's +1.",
+  "snapshot": {
+    "level": 8,
+    "ability_method": "standard_array",
+    "base_scores": {
+      "str": 15,
+      "dex": 13,
+      "con": 14,
+      "int": 8,
+      "wis": 12,
+      "cha": 10
+    },
+    "class": {
+      "name": "Fighter",
+      "year": 2024,
+      "hit_die_size": 10,
+      "saving_throws": [
+        "str",
+        "con"
+      ],
+      "skill_choose": 2,
+      "skill_from": [
+        "acrobatics",
+        "animal_handling",
+        "athletics",
+        "history",
+        "insight",
+        "intimidation",
+        "persuasion",
+        "perception",
+        "survival"
+      ],
+      "armor": [
+        "Light",
+        "Medium",
+        "Heavy armor",
+        "Shields"
+      ],
+      "weapons": [
+        "Simple",
+        "Martial weapons"
+      ],
+      "tools": [],
+      "armor_categories": [
+        "light",
+        "medium",
+        "heavy",
+        "shield"
+      ],
+      "weapon_categories": [
+        "simple",
+        "martial"
+      ],
+      "features": [
+        {
+          "name": "Fighting Style",
+          "level": 1,
+          "effects": [
+            {
+              "type": "grant_feat",
+              "choice": {
+                "from": [
+                  "Fighting Style"
+                ],
+                "count": 1
+              }
+            }
+          ]
+        },
+        {
+          "name": "Second Wind",
+          "level": 1
+        },
+        {
+          "name": "Weapon Mastery",
+          "level": 1
+        },
+        {
+          "name": "Action Surge",
+          "level": 2
+        },
+        {
+          "name": "Tactical Mind",
+          "level": 2
+        },
+        {
+          "name": "Fighter Subclass",
+          "level": 3
+        },
+        {
+          "name": "Ability Score Improvement",
+          "level": 4
+        },
+        {
+          "name": "Extra Attack",
+          "level": 5
+        },
+        {
+          "name": "Tactical Shift",
+          "level": 5
+        },
+        {
+          "name": "Ability Score Improvement",
+          "level": 6
+        },
+        {
+          "name": "Ability Score Improvement",
+          "level": 8
+        }
+      ],
+      "slug": "fighter",
+      "table": [
+        {
+          "level": 1,
+          "columns": {
+            "Second Wind": 2,
+            "Weapon Mastery": 3
+          }
+        },
+        {
+          "level": 3,
+          "columns": {
+            "Second Wind": 2,
+            "Weapon Mastery": 3
+          }
+        },
+        {
+          "level": 4,
+          "columns": {
+            "Second Wind": 3,
+            "Weapon Mastery": 4
+          }
+        },
+        {
+          "level": 8,
+          "columns": {
+            "Second Wind": 3,
+            "Weapon Mastery": 4
+          }
+        }
+      ]
+    },
+    "levels": [
+      {
+        "level": 1,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 2,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 3,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 4,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 5,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 6,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 7,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 8,
+        "hp_method": "average",
+        "hp_value": null
+      }
+    ],
+    "species": {
+      "name": "Human",
+      "slug": "species:human",
+      "size": "Medium",
+      "speed": 30,
+      "traits": [
+        {
+          "name": "Resourceful",
+          "level": 1
+        },
+        {
+          "name": "Skillful",
+          "level": 1
+        },
+        {
+          "name": "Versatile",
+          "level": 1
+        }
+      ]
+    },
+    "background": {
+      "name": "Soldier",
+      "slug": "background:soldier",
+      "abilities": [
+        "str",
+        "dex",
+        "con"
+      ],
+      "skills": [
+        "athletics",
+        "intimidation"
+      ],
+      "tools": [
+        "Choose one kind of Gaming Set"
+      ],
+      "feat": "Savage Attacker"
+    },
+    "subclass": {
+      "name": "Champion",
+      "slug": "fighter_champion",
+      "level": 3,
+      "features": [
+        {
+          "name": "Improved Critical",
+          "level": 3
+        },
+        {
+          "name": "Remarkable Athlete",
+          "level": 3,
+          "effects": [
+            {
+              "type": "roll_modifier",
+              "mod": "advantage",
+              "on": [
+                "initiative",
+                "ability_check:athletics"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Additional Fighting Style",
+          "level": 7,
+          "effects": [
+            {
+              "type": "grant_feat",
+              "choice": {
+                "from": [
+                  "Fighting Style"
+                ],
+                "count": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "subclass_level": 3,
+    "feats": [
+      {
+        "choice_id": "style",
+        "name": "Great Weapon Fighting",
+        "slug": "feat:great-weapon-fighting",
+        "category": "Fighting Style",
+        "effects": []
+      },
+      {
+        "choice_id": "feat-4",
+        "name": "Great Weapon Master",
+        "slug": "feat:great-weapon-master",
+        "category": "General",
+        "effects": [
+          {
+            "type": "ability_score_increase",
+            "ability": "str",
+            "amount": 1,
+            "max": 20
+          }
+        ]
+      },
+      {
+        "choice_id": "style-7",
+        "name": "Archery",
+        "slug": "feat:archery",
+        "category": "Fighting Style",
+        "effects": []
+      }
+    ],
+    "choices": [
+      {
+        "id": "species",
+        "level": 1,
+        "kind": "species",
+        "slot": "origin:species",
+        "ref_name": "Human"
+      },
+      {
+        "id": "bg",
+        "level": 1,
+        "kind": "background",
+        "slot": "origin:background",
+        "ref_name": "Soldier"
+      },
+      {
+        "id": "bg-asi",
+        "level": 1,
+        "kind": "asi",
+        "slot": "background:soldier:asi",
+        "granted_by": "bg",
+        "value": {
+          "increases": {
+            "str": 2,
+            "con": 1
+          }
+        }
+      },
+      {
+        "id": "bg-feat",
+        "level": 1,
+        "kind": "feat",
+        "slot": "background:soldier:feat",
+        "granted_by": "bg",
+        "ref_name": "Savage Attacker"
+      },
+      {
+        "id": "skill-1",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:fighter:skills",
+        "value": {
+          "skill": "perception"
+        }
+      },
+      {
+        "id": "skill-2",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:fighter:skills",
+        "value": {
+          "skill": "survival"
+        }
+      },
+      {
+        "id": "bg-tool",
+        "level": 1,
+        "kind": "tool",
+        "slot": "background:soldier:tool",
+        "granted_by": "bg",
+        "value": {
+          "tool": "Dice Set"
+        }
+      },
+      {
+        "id": "style",
+        "level": 1,
+        "kind": "feat",
+        "slot": "class:fighter:fighting-style:grant_feat",
+        "ref_name": "Great Weapon Fighting"
+      },
+      {
+        "id": "sub",
+        "level": 3,
+        "kind": "subclass",
+        "slot": "class:fighter:subclass",
+        "ref_name": "Champion"
+      },
+      {
+        "id": "feat-4",
+        "level": 4,
+        "kind": "feat",
+        "slot": "class:fighter:asi",
+        "ref_name": "Great Weapon Master"
+      },
+      {
+        "id": "asi-6",
+        "level": 6,
+        "kind": "asi",
+        "slot": "class:fighter:asi",
+        "value": {
+          "increases": {
+            "dex": 2
+          }
+        }
+      },
+      {
+        "id": "style-7",
+        "level": 7,
+        "kind": "feat",
+        "slot": "subclass:fighter_champion:additional-fighting-style:grant_feat",
+        "granted_by": "sub",
+        "ref_name": "Archery"
+      },
+      {
+        "id": "asi-8",
+        "level": 8,
+        "kind": "asi",
+        "slot": "class:fighter:asi",
+        "value": {
+          "increases": {
+            "str": 2
+          }
+        }
+      }
+    ],
+    "items": [],
+    "modifiers": [],
+    "rule_issues": []
+  },
+  "levels": [
+    3,
+    4,
+    8
+  ],
+  "expect": [
+    {
+      "level": 3,
+      "path": "hit_points.max.value",
+      "equals": 28
+    },
+    {
+      "level": 4,
+      "path": "hit_points.max.value",
+      "equals": 36
+    },
+    {
+      "level": 4,
+      "path": "hit_points.max.contributions",
+      "lacks_name": "Feat: Tough"
+    },
+    {
+      "level": 4,
+      "path": "abilities.str.score.value",
+      "equals": 18
+    },
+    {
+      "level": 4,
+      "path": "abilities.str.score.contributions",
+      "has_name": "Feat: Great Weapon Master"
+    },
+    {
+      "level": 8,
+      "path": "hit_points.max.value",
+      "equals": 68
+    },
+    {
+      "level": 8,
+      "path": "abilities.str.score.value",
+      "equals": 20
+    },
+    {
+      "level": 8,
+      "path": "issues",
+      "equals": []
+    }
+  ]
+}

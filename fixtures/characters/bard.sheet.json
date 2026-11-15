@@ -1,0 +1,2122 @@
+{
+  "1": {
+    "level": 1,
+    "proficiency_bonus": {
+      "value": 2,
+      "contributions": [
+        {
+          "source": "Level 1",
+          "op": "base",
+          "value": 2
+        }
+      ]
+    },
+    "abilities": {
+      "cha": {
+        "score": {
+          "value": 17,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 15
+            },
+            {
+              "source": "Background: Entertainer",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "modifier": 3
+      },
+      "con": {
+        "score": {
+          "value": 13,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 13
+            }
+          ]
+        },
+        "modifier": 1
+      },
+      "dex": {
+        "score": {
+          "value": 15,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 14
+            },
+            {
+              "source": "Background: Entertainer",
+              "op": "add",
+              "value": 1
+            }
+          ]
+        },
+        "modifier": 2
+      },
+      "int": {
+        "score": {
+          "value": 10,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 10
+            }
+          ]
+        },
+        "modifier": 0
+      },
+      "str": {
+        "score": {
+          "value": 8,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 8
+            }
+          ]
+        },
+        "modifier": -1
+      },
+      "wis": {
+        "score": {
+          "value": 12,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 12
+            }
+          ]
+        },
+        "modifier": 1
+      }
+    },
+    "saving_throws": {
+      "cha": {
+        "value": 5,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Bard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "proficient": true
+      },
+      "con": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Con modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "proficient": false
+      },
+      "dex": {
+        "value": 4,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Proficiency (Bard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "proficient": true
+      },
+      "int": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "proficient": false
+      },
+      "str": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Str modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "proficient": false
+      },
+      "wis": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "proficient": false
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "value": 4,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Proficiency (Background: Entertainer)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "dex",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "animal_handling": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "arcana": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "athletics": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Str modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "ability": "str",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "deception": {
+        "value": 5,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Bard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "cha",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "history": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "insight": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          },
+          {
+            "source": "Proficiency (Bard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "wis",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "intimidation": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 3
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "investigation": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "medicine": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "nature": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "perception": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "performance": {
+        "value": 5,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Background: Entertainer)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "cha",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "persuasion": {
+        "value": 5,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Bard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "cha",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "religion": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "sleight_of_hand": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          }
+        ],
+        "ability": "dex",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "stealth": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          }
+        ],
+        "ability": "dex",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      },
+      "survival": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "none"
+      }
+    },
+    "passive": {
+      "insight": {
+        "value": 13,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Insight",
+            "op": "add",
+            "value": 3
+          }
+        ]
+      },
+      "investigation": {
+        "value": 10,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Investigation",
+            "op": "add",
+            "value": 0
+          }
+        ]
+      },
+      "perception": {
+        "value": 11,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Perception",
+            "op": "add",
+            "value": 1
+          }
+        ]
+      }
+    },
+    "initiative": {
+      "value": 2,
+      "contributions": [
+        {
+          "source": "Dex modifier",
+          "op": "base",
+          "value": 2
+        }
+      ]
+    },
+    "armor_class": {
+      "value": 12,
+      "contributions": [
+        {
+          "source": "Unarmored",
+          "op": "base",
+          "value": 10
+        },
+        {
+          "source": "Dex modifier",
+          "op": "add",
+          "value": 2
+        }
+      ]
+    },
+    "hit_points": {
+      "max": {
+        "value": 9,
+        "contributions": [
+          {
+            "source": "Level 1 Bard (max d8)",
+            "op": "base",
+            "value": 8
+          },
+          {
+            "source": "Con modifier × 1",
+            "op": "add",
+            "value": 1,
+            "note": "+1 per level"
+          }
+        ]
+      },
+      "hit_dice": "1d8"
+    },
+    "speed": {
+      "walk": {
+        "value": 30,
+        "contributions": [
+          {
+            "source": "Human",
+            "op": "base",
+            "value": 30
+          }
+        ]
+      }
+    },
+    "senses": {},
+    "size": "Medium",
+    "features": [
+      {
+        "name": "Bardic Inspiration",
+        "level": 1,
+        "source": "Bard"
+      },
+      {
+        "name": "Spellcasting",
+        "level": 1,
+        "source": "Bard"
+      },
+      {
+        "name": "Resourceful",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Skillful",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Versatile",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Musician",
+        "level": 1,
+        "source": "Feat (Entertainer)"
+      }
+    ],
+    "proficiencies": {
+      "armor": [
+        "Light armor"
+      ],
+      "languages": [],
+      "tools": [
+        "Lyre",
+        "Lute",
+        "Flute",
+        "Drum",
+        "Bagpipes",
+        "Horn",
+        "Viol"
+      ],
+      "weapons": [
+        "Simple weapons"
+      ]
+    },
+    "resistances": [],
+    "conditional": [],
+    "attacks": [
+      {
+        "name": "Unarmed Strike",
+        "kind": "melee",
+        "ability": "str",
+        "proficient": true,
+        "bonus": {
+          "value": 1,
+          "contributions": [
+            {
+              "source": "Str modifier",
+              "op": "base",
+              "value": -1
+            },
+            {
+              "source": "Proficiency bonus",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "damage": "0 Bludgeoning",
+        "properties": []
+      }
+    ],
+    "spellcasting": {
+      "source": "Bard",
+      "ability": "cha",
+      "save_dc": {
+        "value": 13,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 8
+          },
+          {
+            "source": "Proficiency bonus",
+            "op": "add",
+            "value": 2
+          },
+          {
+            "source": "Cha modifier",
+            "op": "add",
+            "value": 3
+          }
+        ]
+      },
+      "attack": {
+        "value": 5,
+        "contributions": [
+          {
+            "source": "Proficiency bonus",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Cha modifier",
+            "op": "add",
+            "value": 3
+          }
+        ]
+      },
+      "cantrips": {
+        "limit": 2,
+        "chosen": 2
+      },
+      "prepared": {
+        "limit": 4,
+        "chosen": 4
+      },
+      "change": "level_up",
+      "slots": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "spells": [],
+    "class_table": {
+      "Bardic Die": "1d6"
+    },
+    "choice_points": [
+      {
+        "slot": "origin:species",
+        "kinds": [
+          "species"
+        ],
+        "source": "Origin",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "species"
+        ]
+      },
+      {
+        "slot": "origin:background",
+        "kinds": [
+          "background"
+        ],
+        "source": "Origin",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg"
+        ]
+      },
+      {
+        "slot": "class:bard:skills",
+        "kinds": [
+          "skill"
+        ],
+        "source": "Bard",
+        "level": 1,
+        "count": 3,
+        "chosen": 3,
+        "choice_ids": [
+          "skill-deception",
+          "skill-persuasion",
+          "skill-insight"
+        ],
+        "from": [
+          "acrobatics",
+          "animal_handling",
+          "arcana",
+          "athletics",
+          "deception",
+          "history",
+          "insight",
+          "intimidation",
+          "investigation",
+          "medicine",
+          "nature",
+          "perception",
+          "performance",
+          "persuasion",
+          "religion",
+          "sleight_of_hand",
+          "stealth",
+          "survival"
+        ]
+      },
+      {
+        "slot": "class:bard:tools",
+        "kinds": [
+          "tool"
+        ],
+        "source": "Bard",
+        "level": 1,
+        "count": 3,
+        "chosen": 3,
+        "choice_ids": [
+          "tool-Bagpipes",
+          "tool-Horn",
+          "tool-Viol"
+        ],
+        "any": true,
+        "text": "any Musical Instrument"
+      },
+      {
+        "slot": "class:bard:cantrips:1",
+        "kinds": [
+          "spell"
+        ],
+        "source": "Bard",
+        "level": 1,
+        "count": 2,
+        "chosen": 2,
+        "choice_ids": [
+          "cantrip-1",
+          "cantrip-2"
+        ],
+        "spell_filter": {
+          "level": 0,
+          "classes": [
+            "Bard"
+          ]
+        },
+        "text": "Bard cantrips"
+      },
+      {
+        "slot": "class:bard:spells:1",
+        "kinds": [
+          "spell"
+        ],
+        "source": "Bard",
+        "level": 1,
+        "count": 4,
+        "chosen": 4,
+        "choice_ids": [
+          "spell-1-1",
+          "spell-1-2",
+          "spell-1-3",
+          "spell-1-4"
+        ],
+        "spell_filter": {
+          "min_level": 1,
+          "max_level": 1,
+          "classes": [
+            "Bard"
+          ]
+        },
+        "text": "Bard level 1 spells"
+      },
+      {
+        "slot": "class:bard:equipment",
+        "kinds": [
+          "equipment_option"
+        ],
+        "source": "Bard",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "equip"
+        ],
+        "from": [
+          "A",
+          "B"
+        ],
+        "text": "starting equipment",
+        "options": [
+          {
+            "label": "A",
+            "text": "Leather Armor, Dagger ×2, Entertainer's Pack, a Musical Instrument of your choice, 19 GP"
+          },
+          {
+            "label": "B",
+            "text": "90 GP"
+          }
+        ]
+      },
+      {
+        "slot": "class:bard:equipment:pick",
+        "kinds": [
+          "equipment_option"
+        ],
+        "source": "Bard",
+        "granted_by_id": "equip",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "equip-pick"
+        ],
+        "any": true,
+        "text": "a Musical Instrument of your choice"
+      },
+      {
+        "slot": "background:entertainer:asi",
+        "kinds": [
+          "asi"
+        ],
+        "source": "Background: Entertainer",
+        "granted_by_id": "bg",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg-asi"
+        ],
+        "from": [
+          "str",
+          "dex",
+          "cha"
+        ],
+        "amount": 2,
+        "text": "+2 to one and +1 to another, or +1 to all three"
+      },
+      {
+        "slot": "background:entertainer:tool",
+        "kinds": [
+          "tool"
+        ],
+        "source": "Background: Entertainer",
+        "granted_by_id": "bg",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg-tool"
+        ],
+        "any": true,
+        "text": "Choose one kind of Musical Instrument"
+      },
+      {
+        "slot": "background:entertainer:feat",
+        "kinds": [
+          "feat"
+        ],
+        "source": "Background: Entertainer",
+        "granted_by_id": "bg",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg-feat"
+        ],
+        "from": [
+          "Musician"
+        ],
+        "text": "Musician"
+      },
+      {
+        "slot": "feat:musician:tool_proficiency",
+        "kinds": [
+          "tool"
+        ],
+        "source": "Feat: Musician",
+        "granted_by_id": "bg-feat",
+        "level": 1,
+        "count": 3,
+        "chosen": 3,
+        "choice_ids": [
+          "mus-Lute",
+          "mus-Flute",
+          "mus-Drum"
+        ],
+        "any": true,
+        "text": "(any Musical Instrument)"
+      }
+    ],
+    "issues": [],
+    "not_computed": [
+      "class resources and active features (Rage, Bardic Inspiration, Channel Divinity, Weapon Mastery picks)",
+      "magic weapon and armor bonuses (+1 Longsword)",
+      "carrying capacity"
+    ]
+  },
+  "3": {
+    "level": 3,
+    "proficiency_bonus": {
+      "value": 2,
+      "contributions": [
+        {
+          "source": "Level 3",
+          "op": "base",
+          "value": 2
+        }
+      ]
+    },
+    "abilities": {
+      "cha": {
+        "score": {
+          "value": 17,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 15
+            },
+            {
+              "source": "Background: Entertainer",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "modifier": 3
+      },
+      "con": {
+        "score": {
+          "value": 13,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 13
+            }
+          ]
+        },
+        "modifier": 1
+      },
+      "dex": {
+        "score": {
+          "value": 15,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 14
+            },
+            {
+              "source": "Background: Entertainer",
+              "op": "add",
+              "value": 1
+            }
+          ]
+        },
+        "modifier": 2
+      },
+      "int": {
+        "score": {
+          "value": 10,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 10
+            }
+          ]
+        },
+        "modifier": 0
+      },
+      "str": {
+        "score": {
+          "value": 8,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 8
+            }
+          ]
+        },
+        "modifier": -1
+      },
+      "wis": {
+        "score": {
+          "value": 12,
+          "contributions": [
+            {
+              "source": "Standard array",
+              "op": "base",
+              "value": 12
+            }
+          ]
+        },
+        "modifier": 1
+      }
+    },
+    "saving_throws": {
+      "cha": {
+        "value": 5,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Bard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "proficient": true
+      },
+      "con": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Con modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "proficient": false
+      },
+      "dex": {
+        "value": 4,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Proficiency (Bard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "proficient": true
+      },
+      "int": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 0
+          }
+        ],
+        "proficient": false
+      },
+      "str": {
+        "value": -1,
+        "contributions": [
+          {
+            "source": "Str modifier",
+            "op": "base",
+            "value": -1
+          }
+        ],
+        "proficient": false
+      },
+      "wis": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          }
+        ],
+        "proficient": false
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "value": 4,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Proficiency (Background: Entertainer)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "dex",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "animal_handling": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          },
+          {
+            "source": "Bard: Jack of all Trades",
+            "op": "add",
+            "value": 1,
+            "note": "half proficiency bonus"
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "half"
+      },
+      "arcana": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 0
+          },
+          {
+            "source": "Proficiency (College of Lore)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "int",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "athletics": {
+        "value": 0,
+        "contributions": [
+          {
+            "source": "Str modifier",
+            "op": "base",
+            "value": -1
+          },
+          {
+            "source": "Bard: Jack of all Trades",
+            "op": "add",
+            "value": 1,
+            "note": "half proficiency bonus"
+          }
+        ],
+        "ability": "str",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "half"
+      },
+      "deception": {
+        "value": 5,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Bard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "cha",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "history": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 0
+          },
+          {
+            "source": "Proficiency (College of Lore)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "int",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "insight": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          },
+          {
+            "source": "Proficiency (Bard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "wis",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "intimidation": {
+        "value": 4,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Bard: Jack of all Trades",
+            "op": "add",
+            "value": 1,
+            "note": "half proficiency bonus"
+          }
+        ],
+        "ability": "cha",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "half"
+      },
+      "investigation": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 0
+          },
+          {
+            "source": "Bard: Jack of all Trades",
+            "op": "add",
+            "value": 1,
+            "note": "half proficiency bonus"
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "half"
+      },
+      "medicine": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          },
+          {
+            "source": "Bard: Jack of all Trades",
+            "op": "add",
+            "value": 1,
+            "note": "half proficiency bonus"
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "half"
+      },
+      "nature": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 0
+          },
+          {
+            "source": "Proficiency (College of Lore)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "int",
+        "proficient": true,
+        "expertise": false,
+        "proficiency": "proficient"
+      },
+      "perception": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          },
+          {
+            "source": "Bard: Jack of all Trades",
+            "op": "add",
+            "value": 1,
+            "note": "half proficiency bonus"
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "half"
+      },
+      "performance": {
+        "value": 7,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Background: Entertainer)",
+            "op": "add",
+            "value": 2
+          },
+          {
+            "source": "Expertise (Bard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "cha",
+        "proficient": true,
+        "expertise": true,
+        "proficiency": "expertise"
+      },
+      "persuasion": {
+        "value": 7,
+        "contributions": [
+          {
+            "source": "Cha modifier",
+            "op": "base",
+            "value": 3
+          },
+          {
+            "source": "Proficiency (Bard)",
+            "op": "add",
+            "value": 2
+          },
+          {
+            "source": "Expertise (Bard)",
+            "op": "add",
+            "value": 2
+          }
+        ],
+        "ability": "cha",
+        "proficient": true,
+        "expertise": true,
+        "proficiency": "expertise"
+      },
+      "religion": {
+        "value": 1,
+        "contributions": [
+          {
+            "source": "Int modifier",
+            "op": "base",
+            "value": 0
+          },
+          {
+            "source": "Bard: Jack of all Trades",
+            "op": "add",
+            "value": 1,
+            "note": "half proficiency bonus"
+          }
+        ],
+        "ability": "int",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "half"
+      },
+      "sleight_of_hand": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Bard: Jack of all Trades",
+            "op": "add",
+            "value": 1,
+            "note": "half proficiency bonus"
+          }
+        ],
+        "ability": "dex",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "half"
+      },
+      "stealth": {
+        "value": 3,
+        "contributions": [
+          {
+            "source": "Dex modifier",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Bard: Jack of all Trades",
+            "op": "add",
+            "value": 1,
+            "note": "half proficiency bonus"
+          }
+        ],
+        "ability": "dex",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "half"
+      },
+      "survival": {
+        "value": 2,
+        "contributions": [
+          {
+            "source": "Wis modifier",
+            "op": "base",
+            "value": 1
+          },
+          {
+            "source": "Bard: Jack of all Trades",
+            "op": "add",
+            "value": 1,
+            "note": "half proficiency bonus"
+          }
+        ],
+        "ability": "wis",
+        "proficient": false,
+        "expertise": false,
+        "proficiency": "half"
+      }
+    },
+    "passive": {
+      "insight": {
+        "value": 13,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Insight",
+            "op": "add",
+            "value": 3
+          }
+        ]
+      },
+      "investigation": {
+        "value": 11,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Investigation",
+            "op": "add",
+            "value": 1
+          }
+        ]
+      },
+      "perception": {
+        "value": 12,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 10
+          },
+          {
+            "source": "Perception",
+            "op": "add",
+            "value": 2
+          }
+        ]
+      }
+    },
+    "initiative": {
+      "value": 3,
+      "contributions": [
+        {
+          "source": "Dex modifier",
+          "op": "base",
+          "value": 2
+        },
+        {
+          "source": "Bard: Jack of all Trades",
+          "op": "add",
+          "value": 1,
+          "note": "half proficiency bonus"
+        }
+      ]
+    },
+    "armor_class": {
+      "value": 12,
+      "contributions": [
+        {
+          "source": "Unarmored",
+          "op": "base",
+          "value": 10
+        },
+        {
+          "source": "Dex modifier",
+          "op": "add",
+          "value": 2
+        }
+      ]
+    },
+    "hit_points": {
+      "max": {
+        "value": 21,
+        "contributions": [
+          {
+            "source": "Level 1 Bard (max d8)",
+            "op": "base",
+            "value": 8
+          },
+          {
+            "source": "Level 2 (average d8)",
+            "op": "add",
+            "value": 5
+          },
+          {
+            "source": "Level 3 (average d8)",
+            "op": "add",
+            "value": 5
+          },
+          {
+            "source": "Con modifier × 3",
+            "op": "add",
+            "value": 3,
+            "note": "+1 per level"
+          }
+        ]
+      },
+      "hit_dice": "3d8"
+    },
+    "speed": {
+      "walk": {
+        "value": 30,
+        "contributions": [
+          {
+            "source": "Human",
+            "op": "base",
+            "value": 30
+          }
+        ]
+      }
+    },
+    "senses": {},
+    "size": "Medium",
+    "features": [
+      {
+        "name": "Bardic Inspiration",
+        "level": 1,
+        "source": "Bard"
+      },
+      {
+        "name": "Spellcasting",
+        "level": 1,
+        "source": "Bard"
+      },
+      {
+        "name": "Resourceful",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Skillful",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Versatile",
+        "level": 1,
+        "source": "Human"
+      },
+      {
+        "name": "Musician",
+        "level": 1,
+        "source": "Feat (Entertainer)"
+      },
+      {
+        "name": "Expertise",
+        "level": 2,
+        "source": "Bard"
+      },
+      {
+        "name": "Jack of all Trades",
+        "level": 2,
+        "source": "Bard"
+      },
+      {
+        "name": "Bard Subclass",
+        "level": 3,
+        "source": "Bard"
+      },
+      {
+        "name": "Bonus Proficiencies",
+        "level": 3,
+        "source": "College of Lore"
+      },
+      {
+        "name": "Cutting Words",
+        "level": 3,
+        "source": "College of Lore"
+      }
+    ],
+    "proficiencies": {
+      "armor": [
+        "Light armor"
+      ],
+      "languages": [],
+      "tools": [
+        "Lyre",
+        "Lute",
+        "Flute",
+        "Drum",
+        "Bagpipes",
+        "Horn",
+        "Viol"
+      ],
+      "weapons": [
+        "Simple weapons"
+      ]
+    },
+    "resistances": [],
+    "conditional": [],
+    "attacks": [
+      {
+        "name": "Unarmed Strike",
+        "kind": "melee",
+        "ability": "str",
+        "proficient": true,
+        "bonus": {
+          "value": 1,
+          "contributions": [
+            {
+              "source": "Str modifier",
+              "op": "base",
+              "value": -1
+            },
+            {
+              "source": "Proficiency bonus",
+              "op": "add",
+              "value": 2
+            }
+          ]
+        },
+        "damage": "0 Bludgeoning",
+        "properties": []
+      }
+    ],
+    "spellcasting": {
+      "source": "Bard",
+      "ability": "cha",
+      "save_dc": {
+        "value": 13,
+        "contributions": [
+          {
+            "source": "Base",
+            "op": "base",
+            "value": 8
+          },
+          {
+            "source": "Proficiency bonus",
+            "op": "add",
+            "value": 2
+          },
+          {
+            "source": "Cha modifier",
+            "op": "add",
+            "value": 3
+          }
+        ]
+      },
+      "attack": {
+        "value": 5,
+        "contributions": [
+          {
+            "source": "Proficiency bonus",
+            "op": "base",
+            "value": 2
+          },
+          {
+            "source": "Cha modifier",
+            "op": "add",
+            "value": 3
+          }
+        ]
+      },
+      "cantrips": {
+        "limit": 2,
+        "chosen": 2
+      },
+      "prepared": {
+        "limit": 6,
+        "chosen": 6
+      },
+      "change": "level_up",
+      "slots": [
+        4,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "spells": [],
+    "class_table": {
+      "Bardic Die": "1d6"
+    },
+    "choice_points": [
+      {
+        "slot": "origin:species",
+        "kinds": [
+          "species"
+        ],
+        "source": "Origin",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "species"
+        ]
+      },
+      {
+        "slot": "origin:background",
+        "kinds": [
+          "background"
+        ],
+        "source": "Origin",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg"
+        ]
+      },
+      {
+        "slot": "class:bard:skills",
+        "kinds": [
+          "skill"
+        ],
+        "source": "Bard",
+        "level": 1,
+        "count": 3,
+        "chosen": 3,
+        "choice_ids": [
+          "skill-deception",
+          "skill-persuasion",
+          "skill-insight"
+        ],
+        "from": [
+          "acrobatics",
+          "animal_handling",
+          "arcana",
+          "athletics",
+          "deception",
+          "history",
+          "insight",
+          "intimidation",
+          "investigation",
+          "medicine",
+          "nature",
+          "perception",
+          "performance",
+          "persuasion",
+          "religion",
+          "sleight_of_hand",
+          "stealth",
+          "survival"
+        ]
+      },
+      {
+        "slot": "class:bard:tools",
+        "kinds": [
+          "tool"
+        ],
+        "source": "Bard",
+        "level": 1,
+        "count": 3,
+        "chosen": 3,
+        "choice_ids": [
+          "tool-Bagpipes",
+          "tool-Horn",
+          "tool-Viol"
+        ],
+        "any": true,
+        "text": "any Musical Instrument"
+      },
+      {
+        "slot": "class:bard:subclass",
+        "kinds": [
+          "subclass"
+        ],
+        "source": "Bard",
+        "level": 3,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "sub"
+        ]
+      },
+      {
+        "slot": "class:bard:cantrips:1",
+        "kinds": [
+          "spell"
+        ],
+        "source": "Bard",
+        "level": 1,
+        "count": 2,
+        "chosen": 2,
+        "choice_ids": [
+          "cantrip-1",
+          "cantrip-2"
+        ],
+        "spell_filter": {
+          "level": 0,
+          "classes": [
+            "Bard"
+          ]
+        },
+        "text": "Bard cantrips"
+      },
+      {
+        "slot": "class:bard:spells:1",
+        "kinds": [
+          "spell"
+        ],
+        "source": "Bard",
+        "level": 1,
+        "count": 4,
+        "chosen": 4,
+        "choice_ids": [
+          "spell-1-1",
+          "spell-1-2",
+          "spell-1-3",
+          "spell-1-4"
+        ],
+        "spell_filter": {
+          "min_level": 1,
+          "max_level": 1,
+          "classes": [
+            "Bard"
+          ]
+        },
+        "text": "Bard level 1 spells"
+      },
+      {
+        "slot": "class:bard:spells:2",
+        "kinds": [
+          "spell"
+        ],
+        "source": "Bard",
+        "level": 2,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "spell-2-1"
+        ],
+        "spell_filter": {
+          "min_level": 1,
+          "max_level": 1,
+          "classes": [
+            "Bard"
+          ]
+        },
+        "text": "Bard level 1 spells"
+      },
+      {
+        "slot": "class:bard:spells:3",
+        "kinds": [
+          "spell"
+        ],
+        "source": "Bard",
+        "level": 3,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "spell-3-1"
+        ],
+        "spell_filter": {
+          "min_level": 1,
+          "max_level": 2,
+          "classes": [
+            "Bard"
+          ]
+        },
+        "text": "Bard level 1-2 spells"
+      },
+      {
+        "slot": "class:bard:equipment",
+        "kinds": [
+          "equipment_option"
+        ],
+        "source": "Bard",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "equip"
+        ],
+        "from": [
+          "A",
+          "B"
+        ],
+        "text": "starting equipment",
+        "options": [
+          {
+            "label": "A",
+            "text": "Leather Armor, Dagger ×2, Entertainer's Pack, a Musical Instrument of your choice, 19 GP"
+          },
+          {
+            "label": "B",
+            "text": "90 GP"
+          }
+        ]
+      },
+      {
+        "slot": "class:bard:equipment:pick",
+        "kinds": [
+          "equipment_option"
+        ],
+        "source": "Bard",
+        "granted_by_id": "equip",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "equip-pick"
+        ],
+        "any": true,
+        "text": "a Musical Instrument of your choice"
+      },
+      {
+        "slot": "background:entertainer:asi",
+        "kinds": [
+          "asi"
+        ],
+        "source": "Background: Entertainer",
+        "granted_by_id": "bg",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg-asi"
+        ],
+        "from": [
+          "str",
+          "dex",
+          "cha"
+        ],
+        "amount": 2,
+        "text": "+2 to one and +1 to another, or +1 to all three"
+      },
+      {
+        "slot": "background:entertainer:tool",
+        "kinds": [
+          "tool"
+        ],
+        "source": "Background: Entertainer",
+        "granted_by_id": "bg",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg-tool"
+        ],
+        "any": true,
+        "text": "Choose one kind of Musical Instrument"
+      },
+      {
+        "slot": "background:entertainer:feat",
+        "kinds": [
+          "feat"
+        ],
+        "source": "Background: Entertainer",
+        "granted_by_id": "bg",
+        "level": 1,
+        "count": 1,
+        "chosen": 1,
+        "choice_ids": [
+          "bg-feat"
+        ],
+        "from": [
+          "Musician"
+        ],
+        "text": "Musician"
+      },
+      {
+        "slot": "class:bard:expertise:expertise",
+        "kinds": [
+          "expertise"
+        ],
+        "source": "Bard: Expertise",
+        "level": 2,
+        "count": 2,
+        "chosen": 2,
+        "choice_ids": [
+          "exp-persuasion",
+          "exp-performance"
+        ],
+        "any": true,
+        "text": "Two skills you're proficient in."
+      },
+      {
+        "slot": "subclass:bard_college-of-lore:bonus-proficiencies:skill_proficiency",
+        "kinds": [
+          "skill"
+        ],
+        "source": "College of Lore: Bonus Proficiencies",
+        "granted_by_id": "sub",
+        "level": 3,
+        "count": 3,
+        "chosen": 3,
+        "choice_ids": [
+          "lore-arcana",
+          "lore-history",
+          "lore-nature"
+        ],
+        "any": true
+      },
+      {
+        "slot": "feat:musician:tool_proficiency",
+        "kinds": [
+          "tool"
+        ],
+        "source": "Feat: Musician",
+        "granted_by_id": "bg-feat",
+        "level": 1,
+        "count": 3,
+        "chosen": 3,
+        "choice_ids": [
+          "mus-Lute",
+          "mus-Flute",
+          "mus-Drum"
+        ],
+        "any": true,
+        "text": "(any Musical Instrument)"
+      }
+    ],
+    "issues": [],
+    "not_computed": [
+      "class resources and active features (Rage, Bardic Inspiration, Channel Divinity, Weapon Mastery picks)",
+      "magic weapon and armor bonuses (+1 Longsword)",
+      "carrying capacity"
+    ]
+  }
+}

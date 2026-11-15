@@ -1,0 +1,1182 @@
+{
+  "description": "The spellcasting fixture's Wizard under the spellbook rule (optional_rules.spellbook). Six spells learned at 1, one of two at 2 (choice.missing), Feather Fall copied in (an open pick). Four prepared: Thunderwave isn't in the spellbook (a warning, not a block). 4 of 4 at 1; at 2 the limit is 5, so one too few.",
+  "snapshot": {
+    "level": 1,
+    "ability_method": "point_buy",
+    "base_scores": {
+      "str": 8,
+      "dex": 14,
+      "con": 13,
+      "int": 15,
+      "wis": 12,
+      "cha": 10
+    },
+    "class": {
+      "name": "Wizard",
+      "year": 2024,
+      "hit_die_size": 6,
+      "saving_throws": [
+        "int",
+        "wis"
+      ],
+      "skill_choose": 2,
+      "skill_from": [
+        "arcana",
+        "history",
+        "insight",
+        "investigation",
+        "medicine",
+        "nature",
+        "religion"
+      ],
+      "armor": [],
+      "weapons": [
+        "Simple weapons"
+      ],
+      "tools": [],
+      "armor_categories": [],
+      "weapon_categories": [
+        "simple"
+      ],
+      "features": [
+        {
+          "name": "Spellcasting",
+          "level": 1
+        },
+        {
+          "name": "Ritual Adept",
+          "level": 1
+        },
+        {
+          "name": "Arcane Recovery",
+          "level": 1
+        },
+        {
+          "name": "Scholar",
+          "level": 2,
+          "effects": [
+            {
+              "type": "expertise",
+              "text": "One of these skills you're proficient in.",
+              "choice": {
+                "from": [
+                  "arcana",
+                  "history",
+                  "investigation",
+                  "medicine",
+                  "nature",
+                  "religion"
+                ],
+                "count": 1
+              }
+            }
+          ]
+        },
+        {
+          "name": "Arcane Tradition",
+          "level": 3
+        },
+        {
+          "name": "Ability Score Improvement",
+          "level": 4
+        },
+        {
+          "name": "Memorize Spell",
+          "level": 5
+        }
+      ],
+      "slug": "wizard",
+      "spellcasting": {
+        "ability": "int",
+        "progression": "full",
+        "change": "long_rest",
+        "spellbook": [
+          6,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      "table": [
+        {
+          "level": 1,
+          "cantrips": 3,
+          "prepared": 4,
+          "slots": [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 2,
+          "cantrips": 3,
+          "prepared": 5,
+          "slots": [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 3,
+          "cantrips": 3,
+          "prepared": 6,
+          "slots": [
+            4,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 4,
+          "cantrips": 4,
+          "prepared": 7,
+          "slots": [
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 5,
+          "cantrips": 4,
+          "prepared": 9,
+          "slots": [
+            4,
+            3,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 6,
+          "cantrips": 4,
+          "prepared": 10,
+          "slots": [
+            4,
+            3,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 7,
+          "cantrips": 4,
+          "prepared": 11,
+          "slots": [
+            4,
+            3,
+            3,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 8,
+          "cantrips": 4,
+          "prepared": 12,
+          "slots": [
+            4,
+            3,
+            3,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 9,
+          "cantrips": 4,
+          "prepared": 14,
+          "slots": [
+            4,
+            3,
+            3,
+            3,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 10,
+          "cantrips": 5,
+          "prepared": 15,
+          "slots": [
+            4,
+            3,
+            3,
+            3,
+            2,
+            0,
+            0,
+            0,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 11,
+          "cantrips": 5,
+          "prepared": 16,
+          "slots": [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            0,
+            0,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 12,
+          "cantrips": 5,
+          "prepared": 16,
+          "slots": [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            0,
+            0,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 13,
+          "cantrips": 5,
+          "prepared": 17,
+          "slots": [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            0,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 14,
+          "cantrips": 5,
+          "prepared": 18,
+          "slots": [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            0,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 15,
+          "cantrips": 5,
+          "prepared": 19,
+          "slots": [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 16,
+          "cantrips": 5,
+          "prepared": 21,
+          "slots": [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1,
+            0
+          ],
+          "columns": {}
+        },
+        {
+          "level": 17,
+          "cantrips": 5,
+          "prepared": 22,
+          "slots": [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "columns": {}
+        },
+        {
+          "level": 18,
+          "cantrips": 5,
+          "prepared": 23,
+          "slots": [
+            4,
+            3,
+            3,
+            3,
+            3,
+            1,
+            1,
+            1,
+            1
+          ],
+          "columns": {}
+        },
+        {
+          "level": 19,
+          "cantrips": 5,
+          "prepared": 24,
+          "slots": [
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1
+          ],
+          "columns": {}
+        },
+        {
+          "level": 20,
+          "cantrips": 5,
+          "prepared": 25,
+          "slots": [
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            1,
+            1
+          ],
+          "columns": {}
+        }
+      ]
+    },
+    "levels": [
+      {
+        "level": 1,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 2,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 3,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 4,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 5,
+        "hp_method": "average",
+        "hp_value": null
+      }
+    ],
+    "species": {
+      "name": "Elf",
+      "slug": "species:elf",
+      "size": "Medium",
+      "speed": 30,
+      "traits": [
+        {
+          "name": "Darkvision",
+          "level": 1,
+          "effects": [
+            {
+              "type": "sense",
+              "text": "You have Darkvision with a range of 60 feet.",
+              "kind": "darkvision",
+              "range": 60
+            }
+          ]
+        },
+        {
+          "name": "Elven Lineage",
+          "level": 1,
+          "effects": [
+            {
+              "type": "option",
+              "choice": {
+                "from": [
+                  "Drow",
+                  "High Elf",
+                  "Wood Elf",
+                  "Lorwyn Elf",
+                  "Shadowmoor Elf"
+                ],
+                "count": 1
+              }
+            },
+            {
+              "type": "spellcasting_ability",
+              "choice": {
+                "from": [
+                  "int",
+                  "wis",
+                  "cha"
+                ],
+                "count": 1
+              }
+            },
+            {
+              "type": "sense",
+              "kind": "darkvision",
+              "range": 120,
+              "option": "Drow"
+            },
+            {
+              "type": "grant_spell",
+              "spell": "dancing-lights",
+              "option": "Drow"
+            },
+            {
+              "type": "grant_spell",
+              "spell": "faerie-fire",
+              "uses": "1/long rest",
+              "level": 3,
+              "option": "Drow"
+            },
+            {
+              "type": "grant_spell",
+              "spell": "darkness",
+              "uses": "1/long rest",
+              "level": 5,
+              "option": "Drow"
+            },
+            {
+              "type": "grant_spell",
+              "text": "Whenever you finish a Long Rest, you can replace that cantrip with a different cantrip from the Wizard spell list.",
+              "spell": "prestidigitation",
+              "option": "High Elf"
+            },
+            {
+              "type": "grant_spell",
+              "spell": "detect-magic",
+              "uses": "1/long rest",
+              "level": 3,
+              "option": "High Elf"
+            },
+            {
+              "type": "grant_spell",
+              "spell": "misty-step",
+              "uses": "1/long rest",
+              "level": 5,
+              "option": "High Elf"
+            },
+            {
+              "type": "speed",
+              "value": 35,
+              "kind": "walk",
+              "option": "Wood Elf"
+            },
+            {
+              "type": "grant_spell",
+              "spell": "druidcraft",
+              "option": "Wood Elf"
+            },
+            {
+              "type": "grant_spell",
+              "spell": "longstrider",
+              "uses": "1/long rest",
+              "level": 3,
+              "option": "Wood Elf"
+            },
+            {
+              "type": "grant_spell",
+              "spell": "pass-without-trace",
+              "uses": "1/long rest",
+              "level": 5,
+              "option": "Wood Elf"
+            },
+            {
+              "type": "grant_spell",
+              "text": "Whenever you finish a Long Rest, you can replace that cantrip with a different cantrip from the Druid spell list.",
+              "spell": "thorn-whip",
+              "option": "Lorwyn Elf"
+            },
+            {
+              "type": "grant_spell",
+              "spell": "command",
+              "uses": "1/long rest",
+              "level": 3,
+              "option": "Lorwyn Elf"
+            },
+            {
+              "type": "grant_spell",
+              "spell": "silence",
+              "uses": "1/long rest",
+              "level": 5,
+              "option": "Lorwyn Elf"
+            },
+            {
+              "type": "sense",
+              "kind": "darkvision",
+              "range": 120,
+              "option": "Shadowmoor Elf"
+            },
+            {
+              "type": "grant_spell",
+              "spell": "starry-wisp",
+              "option": "Shadowmoor Elf"
+            },
+            {
+              "type": "grant_spell",
+              "spell": "heroism",
+              "uses": "1/long rest",
+              "level": 3,
+              "option": "Shadowmoor Elf"
+            },
+            {
+              "type": "grant_spell",
+              "spell": "gentle-repose",
+              "uses": "1/long rest",
+              "level": 5,
+              "option": "Shadowmoor Elf"
+            }
+          ]
+        },
+        {
+          "name": "Fey Ancestry",
+          "level": 1,
+          "effects": [
+            {
+              "type": "roll_modifier",
+              "text": "Advantage on saving throws to avoid or end the Charmed condition",
+              "condition": "charmed",
+              "mod": "advantage",
+              "on": [
+                "saving_throw"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Keen Senses",
+          "level": 1,
+          "effects": [
+            {
+              "type": "skill_proficiency",
+              "choice": {
+                "from": [
+                  "insight",
+                  "perception",
+                  "survival"
+                ],
+                "count": 1
+              }
+            }
+          ]
+        },
+        {
+          "name": "Trance",
+          "level": 1
+        }
+      ]
+    },
+    "background": {
+      "name": "Sage",
+      "slug": "background:sage",
+      "abilities": [
+        "con",
+        "int",
+        "wis"
+      ],
+      "skills": [
+        "arcana",
+        "history"
+      ],
+      "tools": [
+        "Calligrapher's Supplies"
+      ],
+      "feat": "Magic Initiate (Wizard)"
+    },
+    "subclass": {
+      "name": "Evoker",
+      "slug": "wizard_evoker",
+      "level": 3,
+      "features": [
+        {
+          "name": "Evocation Savant",
+          "level": 3
+        },
+        {
+          "name": "Potent Cantrip",
+          "level": 3
+        }
+      ]
+    },
+    "subclass_level": 3,
+    "feats": [
+      {
+        "choice_id": "bg-feat",
+        "name": "Magic Initiate",
+        "slug": "feat:magic-initiate",
+        "category": "Origin",
+        "effects": [
+          {
+            "type": "option",
+            "choice": {
+              "from": [
+                "Cleric",
+                "Druid",
+                "Wizard"
+              ],
+              "count": 1
+            }
+          },
+          {
+            "type": "spellcasting_ability",
+            "choice": {
+              "from": [
+                "int",
+                "wis",
+                "cha"
+              ],
+              "count": 1
+            },
+            "option": "Cleric"
+          },
+          {
+            "type": "grant_spell",
+            "spell_filter": {
+              "level": 0,
+              "classes": [
+                "Cleric"
+              ]
+            },
+            "choice": {
+              "count": 2
+            },
+            "option": "Cleric"
+          },
+          {
+            "type": "grant_spell",
+            "uses": "1/long rest",
+            "spell_filter": {
+              "level": 1,
+              "classes": [
+                "Cleric"
+              ]
+            },
+            "choice": {
+              "count": 1
+            },
+            "option": "Cleric"
+          },
+          {
+            "type": "spellcasting_ability",
+            "choice": {
+              "from": [
+                "int",
+                "wis",
+                "cha"
+              ],
+              "count": 1
+            },
+            "option": "Druid"
+          },
+          {
+            "type": "grant_spell",
+            "spell_filter": {
+              "level": 0,
+              "classes": [
+                "Druid"
+              ]
+            },
+            "choice": {
+              "count": 2
+            },
+            "option": "Druid"
+          },
+          {
+            "type": "grant_spell",
+            "uses": "1/long rest",
+            "spell_filter": {
+              "level": 1,
+              "classes": [
+                "Druid"
+              ]
+            },
+            "choice": {
+              "count": 1
+            },
+            "option": "Druid"
+          },
+          {
+            "type": "spellcasting_ability",
+            "choice": {
+              "from": [
+                "int",
+                "wis",
+                "cha"
+              ],
+              "count": 1
+            },
+            "option": "Wizard"
+          },
+          {
+            "type": "grant_spell",
+            "spell_filter": {
+              "level": 0,
+              "classes": [
+                "Wizard"
+              ]
+            },
+            "choice": {
+              "count": 2
+            },
+            "option": "Wizard"
+          },
+          {
+            "type": "grant_spell",
+            "uses": "1/long rest",
+            "spell_filter": {
+              "level": 1,
+              "classes": [
+                "Wizard"
+              ]
+            },
+            "choice": {
+              "count": 1
+            },
+            "option": "Wizard"
+          }
+        ]
+      }
+    ],
+    "choices": [
+      {
+        "id": "species",
+        "level": 1,
+        "kind": "species",
+        "slot": "origin:species",
+        "ref_name": "Elf"
+      },
+      {
+        "id": "bg",
+        "level": 1,
+        "kind": "background",
+        "slot": "origin:background",
+        "ref_name": "Sage"
+      },
+      {
+        "id": "bg-asi",
+        "level": 1,
+        "kind": "asi",
+        "slot": "background:sage:asi",
+        "granted_by": "bg",
+        "value": {
+          "increases": {
+            "int": 2,
+            "con": 1
+          }
+        }
+      },
+      {
+        "id": "bg-feat",
+        "level": 1,
+        "kind": "feat",
+        "slot": "background:sage:feat",
+        "granted_by": "bg",
+        "ref_name": "Magic Initiate"
+      },
+      {
+        "id": "skill-1",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:wizard:skills",
+        "value": {
+          "skill": "investigation"
+        }
+      },
+      {
+        "id": "skill-2",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:wizard:skills",
+        "value": {
+          "skill": "insight"
+        }
+      },
+      {
+        "id": "lineage",
+        "level": 1,
+        "kind": "option",
+        "slot": "species:elf:elven-lineage:option",
+        "granted_by": "species",
+        "value": {
+          "option": "High Elf"
+        }
+      },
+      {
+        "id": "lineage-ability",
+        "level": 1,
+        "kind": "spellcasting_ability",
+        "slot": "species:elf:elven-lineage:spellcasting_ability",
+        "granted_by": "species",
+        "value": {
+          "ability": "int"
+        }
+      },
+      {
+        "id": "keen",
+        "level": 1,
+        "kind": "skill",
+        "slot": "species:elf:keen-senses:skill_proficiency",
+        "granted_by": "species",
+        "value": {
+          "skill": "perception"
+        }
+      },
+      {
+        "id": "mi-ability",
+        "level": 1,
+        "kind": "spellcasting_ability",
+        "slot": "feat:magic-initiate:spellcasting_ability:wizard",
+        "granted_by": "bg-feat",
+        "value": {
+          "ability": "int"
+        }
+      },
+      {
+        "id": "mi-c1",
+        "level": 1,
+        "kind": "spell",
+        "slot": "feat:magic-initiate:grant_spell:wizard",
+        "granted_by": "bg-feat",
+        "ref_name": "Minor Illusion"
+      },
+      {
+        "id": "mi-c2",
+        "level": 1,
+        "kind": "spell",
+        "slot": "feat:magic-initiate:grant_spell:wizard",
+        "granted_by": "bg-feat",
+        "ref_name": "Mind Sliver"
+      },
+      {
+        "id": "scholar",
+        "level": 2,
+        "kind": "expertise",
+        "slot": "class:wizard:scholar:expertise",
+        "value": {
+          "skill": "arcana"
+        }
+      },
+      {
+        "id": "sub",
+        "level": 3,
+        "kind": "subclass",
+        "slot": "class:wizard:subclass",
+        "ref_name": "Evoker"
+      },
+      {
+        "id": "asi-4",
+        "level": 4,
+        "kind": "asi",
+        "slot": "class:wizard:asi",
+        "value": {
+          "increases": {
+            "int": 2
+          }
+        }
+      },
+      {
+        "id": "cantrip-1",
+        "level": 1,
+        "kind": "spell",
+        "slot": "class:wizard:cantrips:1",
+        "ref_name": "Fire Bolt"
+      },
+      {
+        "id": "cantrip-2",
+        "level": 1,
+        "kind": "spell",
+        "slot": "class:wizard:cantrips:1",
+        "ref_name": "Mage Hand"
+      },
+      {
+        "id": "cantrip-3",
+        "level": 1,
+        "kind": "spell",
+        "slot": "class:wizard:cantrips:1",
+        "ref_name": "Light"
+      },
+      {
+        "id": "cantrip-4",
+        "level": 4,
+        "kind": "spell",
+        "slot": "class:wizard:cantrips:4",
+        "ref_name": "Ray of Frost"
+      },
+      {
+        "id": "cantrip-5",
+        "level": 4,
+        "kind": "spell",
+        "slot": "class:wizard:cantrips:4",
+        "ref_name": "Shocking Grasp"
+      },
+      {
+        "id": "book-1-1",
+        "level": 1,
+        "kind": "spell",
+        "slot": "class:wizard:spellbook:1",
+        "ref_name": "Magic Missile"
+      },
+      {
+        "id": "book-1-2",
+        "level": 1,
+        "kind": "spell",
+        "slot": "class:wizard:spellbook:1",
+        "ref_name": "Shield"
+      },
+      {
+        "id": "book-1-3",
+        "level": 1,
+        "kind": "spell",
+        "slot": "class:wizard:spellbook:1",
+        "ref_name": "Mage Armor"
+      },
+      {
+        "id": "book-1-4",
+        "level": 1,
+        "kind": "spell",
+        "slot": "class:wizard:spellbook:1",
+        "ref_name": "Detect Magic"
+      },
+      {
+        "id": "book-1-5",
+        "level": 1,
+        "kind": "spell",
+        "slot": "class:wizard:spellbook:1",
+        "ref_name": "Sleep"
+      },
+      {
+        "id": "book-1-6",
+        "level": 1,
+        "kind": "spell",
+        "slot": "class:wizard:spellbook:1",
+        "ref_name": "Burning Hands"
+      },
+      {
+        "id": "book-2-1",
+        "level": 2,
+        "kind": "spell",
+        "slot": "class:wizard:spellbook:2",
+        "ref_name": "Find Familiar"
+      },
+      {
+        "id": "book-copied-1",
+        "level": 1,
+        "kind": "spell",
+        "slot": "class:wizard:spellbook:copied",
+        "ref_name": "Feather Fall"
+      }
+    ],
+    "items": [],
+    "prepared_spells": [
+      {
+        "name": "Magic Missile",
+        "level": 1
+      },
+      {
+        "name": "Shield",
+        "level": 1
+      },
+      {
+        "name": "Feather Fall",
+        "level": 1
+      },
+      {
+        "name": "Thunderwave",
+        "level": 1
+      }
+    ],
+    "modifiers": [],
+    "rule_issues": [],
+    "spellbook_rule": true
+  },
+  "levels": [
+    1,
+    2
+  ],
+  "expect": [
+    {
+      "level": 1,
+      "path": "spellcasting.spellbook_rule",
+      "equals": true
+    },
+    {
+      "level": 1,
+      "path": "spellcasting.has_spellbook",
+      "equals": true
+    },
+    {
+      "level": 1,
+      "path": "spellcasting.prepared",
+      "equals": {
+        "limit": 4,
+        "chosen": 4
+      }
+    },
+    {
+      "level": 1,
+      "path": "issues",
+      "has_name": "spells.spellbook"
+    },
+    {
+      "level": 1,
+      "path": "issues",
+      "lacks_name": "spells.prepared"
+    },
+    {
+      "level": 1,
+      "path": "choice_points",
+      "has_name": "class:wizard:spellbook:1"
+    },
+    {
+      "level": 1,
+      "path": "choice_points",
+      "has_name": "class:wizard:spellbook:copied"
+    },
+    {
+      "level": 1,
+      "path": "choice_points",
+      "lacks_name": "class:wizard:spellbook:2"
+    },
+    {
+      "level": 2,
+      "path": "spellcasting.prepared",
+      "equals": {
+        "limit": 5,
+        "chosen": 4
+      }
+    },
+    {
+      "level": 2,
+      "path": "issues",
+      "has_name": "spells.prepared"
+    },
+    {
+      "level": 2,
+      "path": "choice_points",
+      "has_name": "class:wizard:spellbook:2"
+    },
+    {
+      "level": 2,
+      "path": "issues",
+      "has_name": "choice.missing"
+    }
+  ]
+}

@@ -1,0 +1,501 @@
+{
+  "description": "2024 Human Hermit Monk (Warrior of Mercy), standard array, Dex 15 / Wis 16 after the background, Dex 17 at 4. Unarmored Defense (10 + Dex + Wis), Unarmored Movement from the class table (+10 at 2, +15 at 6), Martial Arts: Dex for the unarmed strike and the quarterstaff, and the Martial Arts die once it beats the weapon's (1d8 from 5). The shield is carried, not used.",
+  "snapshot": {
+    "level": 6,
+    "ability_method": "standard_array",
+    "base_scores": {
+      "str": 10,
+      "dex": 15,
+      "con": 13,
+      "int": 8,
+      "wis": 14,
+      "cha": 12
+    },
+    "class": {
+      "name": "Monk",
+      "year": 2024,
+      "hit_die_size": 8,
+      "saving_throws": [
+        "str",
+        "dex"
+      ],
+      "skill_choose": 2,
+      "skill_from": [
+        "acrobatics",
+        "athletics",
+        "history",
+        "insight",
+        "religion",
+        "stealth"
+      ],
+      "armor": [],
+      "weapons": [
+        "Simple weapons",
+        "Martial weapons that have the Light property"
+      ],
+      "tools": [],
+      "armor_categories": [],
+      "weapon_categories": [
+        "simple",
+        "martial:light"
+      ],
+      "features": [
+        {
+          "name": "Martial Arts",
+          "level": 1,
+          "effects": [
+            {
+              "type": "martial_arts",
+              "text": "Unarmed Strikes and Monk weapons can use Dexterity and deal your Martial Arts die.",
+              "table": "Martial Arts"
+            }
+          ]
+        },
+        {
+          "name": "Unarmored Defense",
+          "level": 1,
+          "effects": [
+            {
+              "type": "ac_set",
+              "text": "While you aren't wearing armor or wielding a Shield, your base Armor Class equals 10 plus your Dexterity and Wisdom modifiers.",
+              "ability": "wis",
+              "value": 10,
+              "on": [
+                "unarmored",
+                "no_shield"
+              ],
+              "add_dex": true
+            }
+          ]
+        },
+        {
+          "name": "Monk’s Focus",
+          "level": 2
+        },
+        {
+          "name": "Unarmored Movement",
+          "level": 2,
+          "effects": [
+            {
+              "type": "speed",
+              "on": [
+                "unarmored",
+                "no_shield"
+              ],
+              "kind": "walk",
+              "table": "Unarmored Movement"
+            }
+          ]
+        },
+        {
+          "name": "Uncanny Metabolism",
+          "level": 2
+        },
+        {
+          "name": "Deflect Attacks",
+          "level": 3
+        },
+        {
+          "name": "Monk Subclass",
+          "level": 3
+        },
+        {
+          "name": "Ability Score Improvement",
+          "level": 4
+        },
+        {
+          "name": "Slow Fall",
+          "level": 4
+        },
+        {
+          "name": "Extra Attack",
+          "level": 5
+        },
+        {
+          "name": "Stunning Strike",
+          "level": 5
+        },
+        {
+          "name": "Empowered Strikes",
+          "level": 6
+        }
+      ],
+      "slug": "monk",
+      "tool_choices": [
+        {
+          "count": 1,
+          "from": [
+            "Artisan's Tools",
+            "Musical Instrument"
+          ]
+        }
+      ],
+      "table": [
+        {
+          "level": 1,
+          "columns": {
+            "Martial Arts": "1d6",
+            "Focus Points": 0,
+            "Unarmored Movement": "—"
+          }
+        },
+        {
+          "level": 2,
+          "columns": {
+            "Martial Arts": "1d6",
+            "Focus Points": 2,
+            "Unarmored Movement": "+10 ft."
+          }
+        },
+        {
+          "level": 6,
+          "columns": {
+            "Martial Arts": "1d8",
+            "Focus Points": 6,
+            "Unarmored Movement": "+15 ft."
+          }
+        }
+      ]
+    },
+    "levels": [
+      {
+        "level": 1,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 2,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 3,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 4,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 5,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 6,
+        "hp_method": "average",
+        "hp_value": null
+      }
+    ],
+    "species": {
+      "name": "Human",
+      "slug": "species:human",
+      "size": "Medium",
+      "speed": 30,
+      "traits": [
+        {
+          "name": "Resourceful",
+          "level": 1
+        },
+        {
+          "name": "Skillful",
+          "level": 1
+        },
+        {
+          "name": "Versatile",
+          "level": 1
+        }
+      ]
+    },
+    "background": {
+      "name": "Hermit",
+      "slug": "background:hermit",
+      "abilities": [
+        "con",
+        "wis",
+        "cha"
+      ],
+      "skills": [
+        "medicine",
+        "religion"
+      ],
+      "tools": [
+        "Herbalism Kit"
+      ],
+      "feat": "Healer"
+    },
+    "subclass": {
+      "name": "Warrior of Mercy",
+      "slug": "monk_warrior-of-mercy",
+      "level": 3,
+      "features": [
+        {
+          "name": "Hand of Harm",
+          "level": 3
+        },
+        {
+          "name": "Hand of Healing",
+          "level": 3
+        },
+        {
+          "name": "Implements of Mercy",
+          "level": 3,
+          "effects": [
+            {
+              "type": "skill_proficiency",
+              "skill": "insight"
+            },
+            {
+              "type": "skill_proficiency",
+              "skill": "medicine"
+            },
+            {
+              "type": "tool_proficiency",
+              "tool": "Herbalism Kit"
+            }
+          ]
+        },
+        {
+          "name": "Physician’s Touch",
+          "level": 6
+        }
+      ]
+    },
+    "subclass_level": 3,
+    "feats": [
+      {
+        "choice_id": "bg-feat",
+        "name": "Healer",
+        "slug": "feat:healer",
+        "category": "Origin",
+        "effects": []
+      }
+    ],
+    "choices": [
+      {
+        "id": "species",
+        "level": 1,
+        "kind": "species",
+        "slot": "origin:species",
+        "ref_name": "Human"
+      },
+      {
+        "id": "bg",
+        "level": 1,
+        "kind": "background",
+        "slot": "origin:background",
+        "ref_name": "Hermit"
+      },
+      {
+        "id": "bg-asi",
+        "level": 1,
+        "kind": "asi",
+        "slot": "background:hermit:asi",
+        "granted_by": "bg",
+        "value": {
+          "increases": {
+            "wis": 2,
+            "con": 1
+          }
+        }
+      },
+      {
+        "id": "bg-feat",
+        "level": 1,
+        "kind": "feat",
+        "slot": "background:hermit:feat",
+        "granted_by": "bg",
+        "ref_name": "Healer"
+      },
+      {
+        "id": "skill-1",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:monk:skills",
+        "value": {
+          "skill": "acrobatics"
+        }
+      },
+      {
+        "id": "skill-2",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:monk:skills",
+        "value": {
+          "skill": "stealth"
+        }
+      },
+      {
+        "id": "tool",
+        "level": 1,
+        "kind": "tool",
+        "slot": "class:monk:tools",
+        "value": {
+          "tool": "Flute"
+        }
+      },
+      {
+        "id": "sub",
+        "level": 3,
+        "kind": "subclass",
+        "slot": "class:monk:subclass",
+        "ref_name": "Warrior of Mercy"
+      },
+      {
+        "id": "asi-4",
+        "level": 4,
+        "kind": "asi",
+        "slot": "class:monk:asi",
+        "value": {
+          "increases": {
+            "dex": 2
+          }
+        }
+      }
+    ],
+    "items": [
+      {
+        "name": "Quarterstaff",
+        "category": "weapon",
+        "subcategory": "Simple Melee Weapons",
+        "equipped": true,
+        "attuned": false,
+        "requires_attunement": false,
+        "level_received": null,
+        "properties": {
+          "Damage": "1d6 Bludgeoning",
+          "Properties": "Versatile (1d8)",
+          "Mastery": "Topple"
+        },
+        "effects": []
+      },
+      {
+        "name": "Shield",
+        "category": "armor",
+        "subcategory": "Shield",
+        "equipped": false,
+        "attuned": false,
+        "requires_attunement": false,
+        "level_received": null,
+        "properties": {
+          "Armor Class (AC)": "+2"
+        },
+        "effects": [
+          {
+            "type": "ac_bonus",
+            "text": "AC +2",
+            "amount": 2,
+            "source": "Shield"
+          }
+        ]
+      }
+    ],
+    "modifiers": [],
+    "rule_issues": []
+  },
+  "levels": [
+    1,
+    2,
+    6
+  ],
+  "expect": [
+    {
+      "level": 1,
+      "path": "armor_class.value",
+      "equals": 15
+    },
+    {
+      "level": 1,
+      "path": "armor_class.contributions",
+      "has_name": "Monk: Unarmored Defense"
+    },
+    {
+      "level": 1,
+      "path": "speed.walk.value",
+      "equals": 30
+    },
+    {
+      "level": 1,
+      "path": "attacks.0.name",
+      "equals": "Quarterstaff"
+    },
+    {
+      "level": 1,
+      "path": "attacks.0.bonus.value",
+      "equals": 4
+    },
+    {
+      "level": 1,
+      "path": "attacks.0.damage",
+      "equals": "1d6+2 Bludgeoning"
+    },
+    {
+      "level": 1,
+      "path": "attacks.0.versatile",
+      "equals": "1d8+2"
+    },
+    {
+      "level": 1,
+      "path": "attacks.1.damage",
+      "equals": "1d6+2 Bludgeoning"
+    },
+    {
+      "level": 1,
+      "path": "issues",
+      "equals": []
+    },
+    {
+      "level": 2,
+      "path": "speed.walk.value",
+      "equals": 40
+    },
+    {
+      "level": 6,
+      "path": "armor_class.value",
+      "equals": 16
+    },
+    {
+      "level": 6,
+      "path": "speed.walk.value",
+      "equals": 45
+    },
+    {
+      "level": 6,
+      "path": "attacks.0.damage",
+      "equals": "1d8+3 Bludgeoning"
+    },
+    {
+      "level": 6,
+      "path": "attacks.1.bonus.value",
+      "equals": 6
+    },
+    {
+      "level": 6,
+      "path": "attacks.1.damage",
+      "equals": "1d8+3 Bludgeoning"
+    },
+    {
+      "level": 6,
+      "path": "skills.insight.proficient",
+      "equals": true
+    },
+    {
+      "level": 6,
+      "path": "issues",
+      "equals": [
+        {
+          "code": "proficiency.duplicate",
+          "message": "Proficient in Medicine 2 times (Background: Hermit, Warrior of Mercy: Implements of Mercy): the extra adds nothing",
+          "severity": "warning"
+        },
+        {
+          "code": "proficiency.duplicate",
+          "message": "Proficient in Herbalism Kit 2 times (Background: Hermit, Warrior of Mercy: Implements of Mercy): the extra adds nothing",
+          "severity": "warning"
+        }
+      ]
+    }
+  ]
+}

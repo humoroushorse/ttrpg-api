@@ -1,0 +1,553 @@
+{
+  "description": "2024 Dwarf Soldier Fighter (Champion) with the Defense fighting style, Str 17 / Dex 14 / Con 14, at 1 and 5. Dwarven Toughness (+1 HP per level), poison resistance, advantage on saves against Poisoned (conditional), Darkvision 120. Chain mail + shield + Defense = AC 19. Attacks: longsword (versatile), dagger (finesse, thrown: Str is higher), longbow (Dex), the unarmed strike; the unequipped handaxe isn't listed.",
+  "snapshot": {
+    "level": 5,
+    "ability_method": "standard_array",
+    "base_scores": {
+      "str": 15,
+      "dex": 14,
+      "con": 13,
+      "int": 8,
+      "wis": 12,
+      "cha": 10
+    },
+    "class": {
+      "name": "Fighter",
+      "year": 2024,
+      "hit_die_size": 10,
+      "saving_throws": [
+        "str",
+        "con"
+      ],
+      "skill_choose": 2,
+      "skill_from": [
+        "acrobatics",
+        "animal_handling",
+        "athletics",
+        "history",
+        "insight",
+        "intimidation",
+        "persuasion",
+        "perception",
+        "survival"
+      ],
+      "armor": [
+        "Light",
+        "Medium",
+        "Heavy armor",
+        "Shields"
+      ],
+      "weapons": [
+        "Simple",
+        "Martial weapons"
+      ],
+      "tools": [],
+      "armor_categories": [
+        "light",
+        "medium",
+        "heavy",
+        "shield"
+      ],
+      "weapon_categories": [
+        "simple",
+        "martial"
+      ],
+      "features": [
+        {
+          "name": "Fighting Style",
+          "level": 1,
+          "effects": [
+            {
+              "type": "grant_feat",
+              "choice": {
+                "from": [
+                  "Fighting Style"
+                ],
+                "count": 1
+              }
+            }
+          ]
+        },
+        {
+          "name": "Second Wind",
+          "level": 1
+        },
+        {
+          "name": "Weapon Mastery",
+          "level": 1
+        },
+        {
+          "name": "Action Surge",
+          "level": 2
+        },
+        {
+          "name": "Tactical Mind",
+          "level": 2
+        },
+        {
+          "name": "Fighter Subclass",
+          "level": 3
+        },
+        {
+          "name": "Ability Score Improvement",
+          "level": 4
+        },
+        {
+          "name": "Extra Attack",
+          "level": 5
+        },
+        {
+          "name": "Tactical Shift",
+          "level": 5
+        }
+      ],
+      "slug": "fighter",
+      "table": [
+        {
+          "level": 1,
+          "columns": {
+            "Second Wind": 2,
+            "Weapon Mastery": 3
+          }
+        },
+        {
+          "level": 5,
+          "columns": {
+            "Second Wind": 3,
+            "Weapon Mastery": 4
+          }
+        }
+      ]
+    },
+    "levels": [
+      {
+        "level": 1,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 2,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 3,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 4,
+        "hp_method": "average",
+        "hp_value": null
+      },
+      {
+        "level": 5,
+        "hp_method": "average",
+        "hp_value": null
+      }
+    ],
+    "species": {
+      "name": "Dwarf",
+      "slug": "species:dwarf",
+      "size": "Medium",
+      "speed": 30,
+      "traits": [
+        {
+          "name": "Darkvision",
+          "level": 1,
+          "effects": [
+            {
+              "type": "sense",
+              "text": "You have Darkvision with a range of 120 feet.",
+              "kind": "darkvision",
+              "range": 120
+            }
+          ]
+        },
+        {
+          "name": "Dwarven Resilience",
+          "level": 1,
+          "effects": [
+            {
+              "type": "resistance",
+              "damage_type": "poison"
+            },
+            {
+              "type": "roll_modifier",
+              "text": "Advantage on saving throws to avoid or end the Poisoned condition",
+              "condition": "poisoned",
+              "mod": "advantage",
+              "on": [
+                "saving_throw"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dwarven Toughness",
+          "level": 1,
+          "effects": [
+            {
+              "type": "hp_bonus",
+              "amount": 1,
+              "scale": "level"
+            }
+          ]
+        },
+        {
+          "name": "Stonecunning",
+          "level": 1
+        }
+      ]
+    },
+    "background": {
+      "name": "Soldier",
+      "slug": "background:soldier",
+      "abilities": [
+        "str",
+        "dex",
+        "con"
+      ],
+      "skills": [
+        "athletics",
+        "intimidation"
+      ],
+      "tools": [
+        "Choose one kind of Gaming Set"
+      ],
+      "feat": "Savage Attacker"
+    },
+    "subclass": {
+      "name": "Champion",
+      "slug": "fighter_champion",
+      "level": 3,
+      "features": [
+        {
+          "name": "Improved Critical",
+          "level": 3
+        },
+        {
+          "name": "Remarkable Athlete",
+          "level": 3,
+          "effects": [
+            {
+              "type": "roll_modifier",
+              "mod": "advantage",
+              "on": [
+                "initiative",
+                "ability_check:athletics"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "subclass_level": 3,
+    "feats": [
+      {
+        "choice_id": "style",
+        "name": "Defense",
+        "slug": "feat:defense",
+        "category": "Fighting Style",
+        "effects": [
+          {
+            "type": "ac_bonus",
+            "text": "While you're wearing Light, Medium, or Heavy armor, you gain a +1 bonus to Armor Class.",
+            "amount": 1,
+            "on": [
+              "armored"
+            ],
+            "source": "Defense"
+          }
+        ]
+      }
+    ],
+    "choices": [
+      {
+        "id": "species",
+        "level": 1,
+        "kind": "species",
+        "slot": "origin:species",
+        "ref_name": "Dwarf"
+      },
+      {
+        "id": "bg",
+        "level": 1,
+        "kind": "background",
+        "slot": "origin:background",
+        "ref_name": "Soldier"
+      },
+      {
+        "id": "bg-asi",
+        "level": 1,
+        "kind": "asi",
+        "slot": "background:soldier:asi",
+        "granted_by": "bg",
+        "value": {
+          "increases": {
+            "str": 2,
+            "con": 1
+          }
+        }
+      },
+      {
+        "id": "bg-feat",
+        "level": 1,
+        "kind": "feat",
+        "slot": "background:soldier:feat",
+        "granted_by": "bg",
+        "ref_name": "Savage Attacker"
+      },
+      {
+        "id": "skill-1",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:fighter:skills",
+        "value": {
+          "skill": "perception"
+        }
+      },
+      {
+        "id": "skill-2",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:fighter:skills",
+        "value": {
+          "skill": "survival"
+        }
+      },
+      {
+        "id": "bg-tool",
+        "level": 1,
+        "kind": "tool",
+        "slot": "background:soldier:tool",
+        "granted_by": "bg",
+        "value": {
+          "tool": "Dice Set"
+        }
+      },
+      {
+        "id": "style",
+        "level": 1,
+        "kind": "feat",
+        "slot": "class:fighter:fighting-style:grant_feat",
+        "ref_name": "Defense"
+      },
+      {
+        "id": "sub",
+        "level": 3,
+        "kind": "subclass",
+        "slot": "class:fighter:subclass",
+        "ref_name": "Champion"
+      },
+      {
+        "id": "asi-4",
+        "level": 4,
+        "kind": "asi",
+        "slot": "class:fighter:asi",
+        "value": {
+          "increases": {
+            "str": 2
+          }
+        }
+      }
+    ],
+    "items": [
+      {
+        "name": "Chain Mail",
+        "category": "armor",
+        "subcategory": "Heavy Armor",
+        "equipped": true,
+        "attuned": false,
+        "requires_attunement": false,
+        "level_received": null,
+        "properties": {
+          "Armor Class (AC)": "16",
+          "Strength": "Str 13",
+          "Stealth": "Disadvantage"
+        },
+        "effects": [
+          {
+            "type": "ac_set",
+            "text": "AC 16",
+            "value": 16,
+            "source": "Chain Mail",
+            "add_dex": false
+          },
+          {
+            "type": "roll_modifier",
+            "text": "Stealth: Disadvantage",
+            "mod": "disadvantage",
+            "on": [
+              "ability_check:stealth"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Shield",
+        "category": "armor",
+        "subcategory": "Shield",
+        "equipped": true,
+        "attuned": false,
+        "requires_attunement": false,
+        "level_received": null,
+        "properties": {
+          "Armor Class (AC)": "+2"
+        },
+        "effects": [
+          {
+            "type": "ac_bonus",
+            "text": "AC +2",
+            "amount": 2,
+            "source": "Shield"
+          }
+        ]
+      },
+      {
+        "name": "Longsword",
+        "category": "weapon",
+        "subcategory": "Martial Melee Weapons",
+        "equipped": true,
+        "attuned": false,
+        "requires_attunement": false,
+        "level_received": null,
+        "properties": {
+          "Damage": "1d8 Slashing",
+          "Properties": "Versatile (1d10)",
+          "Mastery": "Sap"
+        },
+        "effects": []
+      },
+      {
+        "name": "Dagger",
+        "category": "weapon",
+        "subcategory": "Simple Melee Weapons",
+        "equipped": true,
+        "attuned": false,
+        "requires_attunement": false,
+        "level_received": null,
+        "properties": {
+          "Damage": "1d4 Piercing",
+          "Properties": "Finesse, Light, Thrown (Range 20/60)",
+          "Mastery": "Nick"
+        },
+        "effects": []
+      },
+      {
+        "name": "Longbow",
+        "category": "weapon",
+        "subcategory": "Martial Ranged Weapons",
+        "equipped": true,
+        "attuned": false,
+        "requires_attunement": false,
+        "level_received": null,
+        "properties": {
+          "Damage": "1d8 Piercing",
+          "Properties": "Ammunition (Range 150/600; Arrow), Heavy, Two-Handed",
+          "Mastery": "Slow"
+        },
+        "effects": []
+      },
+      {
+        "name": "Handaxe",
+        "category": "weapon",
+        "subcategory": "Simple Melee Weapons",
+        "equipped": false,
+        "attuned": false,
+        "requires_attunement": false,
+        "level_received": null,
+        "properties": {
+          "Damage": "1d6 Slashing",
+          "Properties": "Light, Thrown (Range 20/60)",
+          "Mastery": "Vex"
+        },
+        "effects": []
+      }
+    ],
+    "modifiers": [],
+    "rule_issues": []
+  },
+  "levels": [
+    1,
+    5
+  ],
+  "expect": [
+    {
+      "level": 1,
+      "path": "hit_points.max.value",
+      "equals": 13
+    },
+    {
+      "level": 1,
+      "path": "hit_points.max.contributions",
+      "has_name": "Dwarf: Dwarven Toughness"
+    },
+    {
+      "level": 1,
+      "path": "armor_class.value",
+      "equals": 19
+    },
+    {
+      "level": 1,
+      "path": "armor_class.contributions",
+      "has_name": "Feat: Defense"
+    },
+    {
+      "level": 1,
+      "path": "senses.darkvision.value",
+      "equals": 120
+    },
+    {
+      "level": 1,
+      "path": "resistances",
+      "equals": [
+        {
+          "type": "resistance",
+          "against": "poison",
+          "source": "Dwarf: Dwarven Resilience"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "path": "conditional",
+      "has_name": "Dwarf: Dwarven Resilience"
+    },
+    {
+      "level": 1,
+      "path": "skills.stealth.roll",
+      "equals": "disadvantage"
+    },
+    {
+      "level": 1,
+      "path": "attacks",
+      "has_name": "Longsword"
+    },
+    {
+      "level": 1,
+      "path": "attacks",
+      "lacks_name": "Handaxe"
+    },
+    {
+      "level": 1,
+      "path": "issues",
+      "equals": []
+    },
+    {
+      "level": 5,
+      "path": "hit_points.max.value",
+      "equals": 49
+    },
+    {
+      "level": 5,
+      "path": "abilities.str.score.value",
+      "equals": 19
+    },
+    {
+      "level": 5,
+      "path": "issues",
+      "equals": []
+    }
+  ]
+}

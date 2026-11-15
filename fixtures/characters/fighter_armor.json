@@ -1,0 +1,219 @@
+{
+  "description": "2024 Fighter, standard array, in chain mail with a shield, a DM's +1 AC, and Gauntlets of Ogre Power (Str becomes 19). AC 16 + 2 + 1; Unarmored and the unworn leather armor show as inactive; chain mail gives Stealth disadvantage.",
+  "snapshot": {
+    "level": 1,
+    "ability_method": "standard_array",
+    "base_scores": {
+      "str": 15,
+      "dex": 13,
+      "con": 14,
+      "int": 8,
+      "wis": 12,
+      "cha": 10
+    },
+    "class": {
+      "name": "Fighter",
+      "year": 2024,
+      "hit_die_size": 10,
+      "saving_throws": [
+        "str",
+        "con"
+      ],
+      "skill_choose": 2,
+      "armor": [
+        "Light",
+        "Medium",
+        "Heavy armor",
+        "Shields"
+      ],
+      "weapons": [
+        "Simple",
+        "Martial weapons"
+      ],
+      "tools": [],
+      "features": [
+        {
+          "name": "Fighting Style",
+          "level": 1
+        },
+        {
+          "name": "Second Wind",
+          "level": 1
+        },
+        {
+          "name": "Weapon Mastery",
+          "level": 1
+        }
+      ]
+    },
+    "levels": [
+      {
+        "level": 1,
+        "hp_method": "average",
+        "hp_value": null
+      }
+    ],
+    "subclass_level": 3,
+    "choices": [
+      {
+        "id": "s1",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:fighter:skills",
+        "value": {
+          "skill": "athletics"
+        }
+      },
+      {
+        "id": "s2",
+        "level": 1,
+        "kind": "skill",
+        "slot": "class:fighter:skills",
+        "value": {
+          "skill": "perception"
+        }
+      }
+    ],
+    "items": [
+      {
+        "name": "Chain Mail",
+        "category": "armor",
+        "subcategory": "Heavy Armor",
+        "equipped": true,
+        "attuned": false,
+        "requires_attunement": false,
+        "level_received": null,
+        "effects": [
+          {
+            "type": "ac_set",
+            "value": 16,
+            "add_dex": false
+          },
+          {
+            "type": "roll_modifier",
+            "mod": "disadvantage",
+            "on": [
+              "ability_check:stealth"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Shield",
+        "category": "armor",
+        "subcategory": "Shield",
+        "equipped": true,
+        "attuned": false,
+        "requires_attunement": false,
+        "level_received": null,
+        "effects": [
+          {
+            "type": "ac_bonus",
+            "amount": 2
+          }
+        ]
+      },
+      {
+        "name": "Leather Armor",
+        "category": "armor",
+        "subcategory": "Light Armor",
+        "equipped": false,
+        "attuned": false,
+        "requires_attunement": false,
+        "level_received": null,
+        "effects": [
+          {
+            "type": "ac_set",
+            "value": 11,
+            "add_dex": true
+          }
+        ]
+      }
+    ],
+    "modifiers": [
+      {
+        "label": "Blessing of Pelor",
+        "target": "ac",
+        "op": "add",
+        "value": 1,
+        "from_level": null,
+        "active": true,
+        "added_as": "dm"
+      },
+      {
+        "label": "Gauntlets of Ogre Power",
+        "target": "ability.str",
+        "op": "min",
+        "value": 19,
+        "from_level": null,
+        "active": true,
+        "added_as": "player"
+      },
+      {
+        "label": "Curse of Weakness",
+        "target": "ability.str",
+        "op": "add",
+        "value": -2,
+        "from_level": null,
+        "active": false,
+        "added_as": "dm"
+      }
+    ],
+    "rule_issues": []
+  },
+  "levels": [
+    1
+  ],
+  "expect": [
+    {
+      "level": 1,
+      "path": "armor_class.value",
+      "equals": 19
+    },
+    {
+      "level": 1,
+      "path": "armor_class.contributions",
+      "has_name": "DM: Blessing of Pelor"
+    },
+    {
+      "level": 1,
+      "path": "armor_class.inactive",
+      "has_name": "Unarmored"
+    },
+    {
+      "level": 1,
+      "path": "armor_class.inactive",
+      "has_name": "Leather Armor"
+    },
+    {
+      "level": 1,
+      "path": "skills.stealth.roll",
+      "equals": "disadvantage"
+    },
+    {
+      "level": 1,
+      "path": "abilities.str.score.value",
+      "equals": 19
+    },
+    {
+      "level": 1,
+      "path": "saving_throws.str.value",
+      "equals": 6
+    },
+    {
+      "level": 1,
+      "path": "saving_throws.con.value",
+      "equals": 4
+    },
+    {
+      "level": 1,
+      "path": "skills.athletics.value",
+      "equals": 6
+    },
+    {
+      "level": 1,
+      "path": "hit_points.max.value",
+      "equals": 12
+    }
+  ]
+}

@@ -54,3 +54,14 @@ func (rw *responseWriter) WriteHeader(status int) {
 	rw.status = status
 	rw.ResponseWriter.WriteHeader(status)
 }
+
+// Unwrap lets http.ResponseController reach the server's writer, so a stream (the tabletop's event
+// stream) can flush and clear its write deadline through this wrapper.
+func (rw *responseWriter) Unwrap() http.ResponseWriter { return rw.ResponseWriter }
+
+// Flush keeps the wrapper an http.Flusher for code that asserts it directly.
+func (rw *responseWriter) Flush() {
+	if f, ok := rw.ResponseWriter.(http.Flusher); ok {
+		f.Flush()
+	}
+}

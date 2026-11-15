@@ -1,0 +1,20 @@
+services:
+  nats:
+    container_name: ttrpg-nats
+    image: nats:2.15.3-alpine
+    # every setting is in nats.conf; nats-server only takes a few of them as flags
+    command: ["-c", "/etc/nats/nats.conf"]
+    restart: always
+    ports:
+      - 4222:4222 # clients
+      - 8222:8222 # monitoring (/healthz, /varz, /connz, /subsz)
+    volumes:
+      - ~/projects/ttrpg/ttrpg-api/deploy/nats/nats.conf:/etc/nats/nats.conf:ro
+      # JetStream's store (nats.conf store_dir); `make nats-clean` removes it
+      - ~/projects/ttrpg/volume-mounts/nats:/data
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8222/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s

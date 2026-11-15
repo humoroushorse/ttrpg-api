@@ -12,9 +12,17 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	authmiddleware "github.com/humoroushorse/go_auth/pkg/auth/middleware"
 	api "github.com/humoroushorse/go_dnd/api/generated"
+<<<<<<< Updated upstream
+=======
+	"github.com/humoroushorse/go_dnd/internal/campaigns"
+	"github.com/humoroushorse/go_dnd/internal/catalog"
+	"github.com/humoroushorse/go_dnd/internal/characters"
+	"github.com/humoroushorse/go_dnd/internal/entities"
+>>>>>>> Stashed changes
 	"github.com/humoroushorse/go_dnd/internal/handlers"
 	"github.com/humoroushorse/go_dnd/internal/middleware"
 	repoSources "github.com/humoroushorse/go_dnd/internal/repository/sources"
@@ -23,6 +31,13 @@ import (
 	svcSources "github.com/humoroushorse/go_dnd/internal/service/sources"
 	svcSpells "github.com/humoroushorse/go_dnd/internal/service/spells"
 	svcUsers "github.com/humoroushorse/go_dnd/internal/service/users"
+<<<<<<< Updated upstream
+=======
+	"github.com/humoroushorse/go_dnd/internal/sources"
+	"github.com/humoroushorse/go_dnd/internal/spelllists"
+	"github.com/humoroushorse/go_dnd/internal/spells"
+	"github.com/humoroushorse/go_dnd/internal/tabletop"
+>>>>>>> Stashed changes
 	"github.com/humoroushorse/go_dnd/pkg/config"
 	"github.com/humoroushorse/go_dnd/pkg/logging"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -35,10 +50,22 @@ var swaggerUI embed.FS
 
 // server wires all handlers and implements api.ServerInterface.
 type server struct {
+<<<<<<< Updated upstream
 	spells  *handlers.SpellHandler
 	sources *handlers.SourceHandler
 	users   *handlers.UserHandler
 	master  *pgxpool.Pool
+=======
+	*sources.SourceRoutes
+	*spells.SpellRoutes
+	*entities.Routes
+	*spelllists.SpellListRoutes
+	*campaigns.CampaignRoutes
+	*characters.CharacterRoutes
+	*tabletop.TableRoutes
+	users  *handlers.UserHandler
+	master *pgxpool.Pool
+>>>>>>> Stashed changes
 }
 
 func (s *server) ListSpells(w http.ResponseWriter, r *http.Request, params api.ListSpellsParams) {
@@ -119,11 +146,41 @@ func main() {
 	sourceRepo := repoSources.NewRepository(masterPool, replicaPool)
 	userRepo := repoUsers.NewRepository(masterPool, replicaPool)
 
+<<<<<<< Updated upstream
 	srv := &server{
 		spells:  handlers.NewSpellHandler(svcSpells.NewService(spellRepo, sourceRepo)),
 		sources: handlers.NewSourceHandler(svcSources.NewService(sourceRepo)),
 		users:   handlers.NewUserHandler(svcUsers.NewService(userRepo)),
 		master:  masterPool,
+=======
+	// the tabletop: core NATS carries table events between pods (DECISIONS.md, "Many go_dnd pods from
+	// the start"). The pod starts even with NATS down; tables then catch up through the hub's check.
+	background, stopBackground := context.WithCancel(context.Background())
+	defer stopBackground()
+	bus, err := tabletop.NewNATSBus(cfg.NATS, logger)
+	if err != nil {
+		logger.Error("failed to set up nats", "error", err)
+		os.Exit(1)
+	}
+	defer bus.Close()
+	hub := tabletop.NewHub(bus, tabletop.NewLogReader(masterPool), logger)
+	go hub.Check(background, 20*time.Second)
+	go tabletop.RunPartitions(background, masterPool, logger)
+	table := tabletop.NewTable(hub)
+
+	userIDs := identity.NewResolver(masterPool)
+	catalogHandler := catalog.NewHandler(masterPool, replicaPool, userIDs)
+	srv := &server{
+		SourceRoutes:    sources.NewRoutes(masterPool, replicaPool, userIDs),
+		SpellRoutes:     spells.NewRoutes(catalogHandler),
+		Routes:          entities.NewRoutes(catalogHandler),
+		SpellListRoutes: spelllists.NewRoutes(masterPool, replicaPool, userIDs),
+		CampaignRoutes:  campaigns.NewRoutes(masterPool, replicaPool, userIDs, table),
+		CharacterRoutes: characters.NewRoutes(masterPool, replicaPool, userIDs, table),
+		TableRoutes:     tabletop.NewRoutes(masterPool, replicaPool, userIDs, table),
+		users:           handlers.NewUserHandler(svcUsers.NewService(userRepo)),
+		master:          masterPool,
+>>>>>>> Stashed changes
 	}
 
 	jwtValidator := authmiddleware.NewJWTValidator(authmiddleware.JWTConfig{
@@ -202,11 +259,17 @@ func main() {
 
 	addr := fmt.Sprintf(":%d", cfg.Server.Port)
 	httpServer := &http.Server{
-		Addr:         addr,
-		Handler:      mux,
-		ReadTimeout:  cfg.Server.ReadTimeout,
+		Addr:              addr,
+		Handler:           mux,
+		ReadHeaderTimeout: 10 * time.Second,
+		ReadTimeout:       cfg.Server.ReadTimeout,
+		// table streams clear both deadlines for themselves (internal/tabletop/stream.go)
 		WriteTimeout: cfg.Server.WriteTimeout,
+		IdleTimeout:  2 * time.Minute,
 	}
+	// Shutdown waits for requests to finish, and a table stream never would: close them first. The
+	// tabs reconnect to another pod with Last-Event-ID and lose nothing.
+	httpServer.RegisterOnShutdown(hub.Close)
 
 	go func() {
 		logger.Info("server listening",
