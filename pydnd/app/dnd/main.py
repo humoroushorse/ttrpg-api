@@ -1,22 +1,23 @@
 """Main file for the pydnd API."""
 
+import contextlib
 import sys
+from collections.abc import AsyncIterator
 from functools import lru_cache
 
 import uvicorn
-from dnd import schemas
-from dnd.api.v1.api import api_router
-from dnd.core import Settings, uncached_settings
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 from prometheus_fastapi_instrumentator import Instrumentator
 
-app = FastAPI(title=uncached_settings.PROJECT_NAME)
+from dnd import schemas
+from dnd.api.v1.api import api_router
+from dnd.core import Settings, uncached_settings
 
 
-@app.on_event("startup")
-def startup() -> None:
+@contextlib.asynccontextmanager
+async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
     """Application startup routines."""
     log_level = uncached_settings.LOG_LEVEL
     logger.add(
@@ -33,6 +34,10 @@ def startup() -> None:
     logger.error("This is a error log!")
     logger.critical("This is a critical log!")
     logger.exception("This is a exception log!")
+    yield
+
+
+app = FastAPI(title=uncached_settings.PROJECT_NAME, lifespan=lifespan)
 
 
 origins = [

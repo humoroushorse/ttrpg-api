@@ -307,8 +307,8 @@ SELECT count(*) as current_connections,
 FROM pg_stat_activity;
 
 -- Check connections by state
-SELECT state, count(*) 
-FROM pg_stat_activity 
+SELECT state, count(*)
+FROM pg_stat_activity
 GROUP BY state;
 
 -- Check long-running queries
@@ -350,9 +350,9 @@ kubectl rollout restart deployment/sprint-management -n sprint-management
 CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 
 -- Find slow queries
-SELECT query, 
-       mean_exec_time, 
-       calls, 
+SELECT query,
+       mean_exec_time,
+       calls,
        total_exec_time
 FROM pg_stat_statements
 ORDER BY mean_exec_time DESC
@@ -377,12 +377,12 @@ ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC;
 
 ```sql
 -- Add missing indexes
-CREATE INDEX CONCURRENTLY idx_work_items_assignee 
-ON sprint_management.work_items(assignee_id) 
+CREATE INDEX CONCURRENTLY idx_work_items_assignee
+ON sprint_management.work_items(assignee_id)
 WHERE deleted_at IS NULL;
 
-CREATE INDEX CONCURRENTLY idx_work_items_sprint 
-ON sprint_management.work_items(sprint_id) 
+CREATE INDEX CONCURRENTLY idx_work_items_sprint
+ON sprint_management.work_items(sprint_id)
 WHERE deleted_at IS NULL;
 
 -- Analyze tables

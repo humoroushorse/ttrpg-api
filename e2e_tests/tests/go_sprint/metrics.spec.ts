@@ -1,7 +1,7 @@
 /**
  * Sprint Metrics endpoint tests for go_sprint service
  * Tests metrics, burndown, and velocity endpoints with various sprint states
- * 
+ *
  * @tags @go_sprint @metrics
  * Requirements: Sprint metrics calculation, burndown charts, velocity tracking
  */
@@ -66,12 +66,12 @@ test.describe('Sprint Metrics Endpoint Tests @go_sprint @metrics', () => {
   test.beforeEach(async () => {
     config = getConfig();
     apiClient = new APIClient(config, false);
-    
+
     // Login and set auth token
     const user = await loginAsUser(apiClient);
     authToken = user.token;
     apiClient.setAuthToken(authToken);
-    
+
     testDataHelper = new TestDataHelper(apiClient);
   });
 
@@ -87,9 +87,9 @@ test.describe('Sprint Metrics Endpoint Tests @go_sprint @metrics', () => {
       name: 'Active Sprint for Metrics',
       description: 'Sprint with work items for metrics testing',
     });
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${sprint.id}/metrics`;
-    
+
     const response = await apiClient.get<SprintMetrics>(url);
 
     // Verify response status
@@ -117,10 +117,10 @@ test.describe('Sprint Metrics Endpoint Tests @go_sprint @metrics', () => {
     expect(response.data.total_items).toBeGreaterThanOrEqual(0);
     expect(response.data.completion_percentage).toBeGreaterThanOrEqual(0);
     expect(response.data.completion_percentage).toBeLessThanOrEqual(100);
-    
+
     // Total items should equal sum of status categories
-    const sumOfItems = response.data.completed_items + 
-                       response.data.in_progress_items + 
+    const sumOfItems = response.data.completed_items +
+                       response.data.in_progress_items +
                        response.data.todo_items;
     expect(response.data.total_items).toBe(sumOfItems);
   });
@@ -132,9 +132,9 @@ test.describe('Sprint Metrics Endpoint Tests @go_sprint @metrics', () => {
       name: 'Sprint for Metrics',
       description: 'Sprint for metrics testing',
     });
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${sprint.id}/metrics`;
-    
+
     const response = await apiClient.get<SprintMetrics>(url);
 
     // Verify response status
@@ -159,9 +159,9 @@ test.describe('Sprint Metrics Endpoint Tests @go_sprint @metrics', () => {
       name: 'Planned Sprint for Metrics',
       description: 'Planned sprint with no work items',
     });
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${sprint.id}/metrics`;
-    
+
     const response = await apiClient.get<SprintMetrics>(url);
 
     // Verify response status
@@ -181,7 +181,7 @@ test.describe('Sprint Metrics Endpoint Tests @go_sprint @metrics', () => {
     // Feature: playwright-api-testing, Property 8: Missing Endpoint Detection
     const nonExistentId = '00000000-0000-0000-0000-999999999999';
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${nonExistentId}/metrics`;
-    
+
     const response = await apiClient.get<ErrorResponse>(url);
 
     // Verify response status is 404 Not Found
@@ -199,10 +199,10 @@ test.describe('Sprint Metrics Endpoint Tests @go_sprint @metrics', () => {
     const sprint = await testDataHelper.createSprint({
       name: 'Sprint for Auth Test',
     });
-    
+
     const unauthClient = new APIClient(config, false);
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${sprint.id}/metrics`;
-    
+
     const response = await unauthClient.get<ErrorResponse>(url);
 
     // Verify response status is 401 Unauthorized
@@ -222,12 +222,12 @@ test.describe('Sprint Burndown Endpoint Tests @go_sprint @metrics', () => {
   test.beforeEach(async () => {
     config = getConfig();
     apiClient = new APIClient(config, false);
-    
+
     // Login and set auth token
     const user = await loginAsUser(apiClient);
     authToken = user.token;
     apiClient.setAuthToken(authToken);
-    
+
     testDataHelper = new TestDataHelper(apiClient);
   });
 
@@ -243,9 +243,9 @@ test.describe('Sprint Burndown Endpoint Tests @go_sprint @metrics', () => {
       name: 'Active Sprint for Burndown',
       description: 'Sprint for burndown testing',
     });
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${sprint.id}/burndown`;
-    
+
     const response = await apiClient.get<BurndownData | ErrorResponse>(url);
 
     // Verify response status - may return 500 if burndown service has issues
@@ -293,9 +293,9 @@ test.describe('Sprint Burndown Endpoint Tests @go_sprint @metrics', () => {
       name: 'Sprint for Burndown',
       description: 'Sprint for burndown testing',
     });
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${sprint.id}/burndown`;
-    
+
     const response = await apiClient.get<BurndownData | ErrorResponse>(url);
 
     // Verify response status - may return 500 if burndown service has issues
@@ -322,9 +322,9 @@ test.describe('Sprint Burndown Endpoint Tests @go_sprint @metrics', () => {
       name: 'Planned Sprint for Burndown',
       description: 'Planned sprint for burndown testing',
     });
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${sprint.id}/burndown`;
-    
+
     const response = await apiClient.get<BurndownData | ErrorResponse>(url);
 
     // Verify response status - may return 500 if burndown service has issues
@@ -347,7 +347,7 @@ test.describe('Sprint Burndown Endpoint Tests @go_sprint @metrics', () => {
     // Feature: playwright-api-testing, Property 8: Missing Endpoint Detection
     const nonExistentId = '00000000-0000-0000-0000-999999999999';
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${nonExistentId}/burndown`;
-    
+
     const response = await apiClient.get<ErrorResponse>(url);
 
     // Verify response status is 404 Not Found
@@ -365,10 +365,10 @@ test.describe('Sprint Burndown Endpoint Tests @go_sprint @metrics', () => {
     const sprint = await testDataHelper.createSprint({
       name: 'Sprint for Auth Test',
     });
-    
+
     const unauthClient = new APIClient(config, false);
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${sprint.id}/burndown`;
-    
+
     const response = await unauthClient.get<ErrorResponse>(url);
 
     // Verify response status is 401 Unauthorized
@@ -388,12 +388,12 @@ test.describe('Sprint Velocity Endpoint Tests @go_sprint @metrics', () => {
   test.beforeEach(async () => {
     config = getConfig();
     apiClient = new APIClient(config, false);
-    
+
     // Login and set auth token
     const user = await loginAsUser(apiClient);
     authToken = user.token;
     apiClient.setAuthToken(authToken);
-    
+
     testDataHelper = new TestDataHelper(apiClient);
   });
 
@@ -411,9 +411,9 @@ test.describe('Sprint Velocity Endpoint Tests @go_sprint @metrics', () => {
       name: 'Sprint for Velocity',
       description: 'Sprint for velocity testing',
     });
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${sprint.id}/velocity`;
-    
+
     const response = await apiClient.get<VelocityData | ErrorResponse>(url);
 
     // Since we can't easily create a completed sprint, this will return 409
@@ -438,7 +438,7 @@ test.describe('Sprint Velocity Endpoint Tests @go_sprint @metrics', () => {
       expect(data.velocity).toBeGreaterThanOrEqual(0);
       expect(data.completed_points).toBeGreaterThanOrEqual(0);
       expect(data.committed_points).toBeGreaterThanOrEqual(0);
-      
+
       // Velocity should equal completed points for a sprint
       expect(data.velocity).toBe(data.completed_points);
 
@@ -462,9 +462,9 @@ test.describe('Sprint Velocity Endpoint Tests @go_sprint @metrics', () => {
       name: 'Active Sprint for Velocity',
       description: 'Active sprint - not completed',
     });
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${sprint.id}/velocity`;
-    
+
     const response = await apiClient.get<ErrorResponse>(url);
 
     // Verify response status is 409 Conflict (business rule: only completed sprints)
@@ -474,7 +474,7 @@ test.describe('Sprint Velocity Endpoint Tests @go_sprint @metrics', () => {
     expect(response.data).toHaveProperty('error');
     expect(response.data.error).toHaveProperty('code');
     expect(response.data.error).toHaveProperty('message');
-    
+
     // Verify error message indicates sprint must be completed
     expect(response.data.error.message.toLowerCase()).toContain('completed');
   });
@@ -486,9 +486,9 @@ test.describe('Sprint Velocity Endpoint Tests @go_sprint @metrics', () => {
       name: 'Planned Sprint for Velocity',
       description: 'Planned sprint - not completed',
     });
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${sprint.id}/velocity`;
-    
+
     const response = await apiClient.get<ErrorResponse>(url);
 
     // Verify response status is 409 Conflict (business rule: only completed sprints)
@@ -498,7 +498,7 @@ test.describe('Sprint Velocity Endpoint Tests @go_sprint @metrics', () => {
     expect(response.data).toHaveProperty('error');
     expect(response.data.error).toHaveProperty('code');
     expect(response.data.error).toHaveProperty('message');
-    
+
     // Verify error message indicates sprint must be completed
     expect(response.data.error.message.toLowerCase()).toContain('completed');
   });
@@ -507,7 +507,7 @@ test.describe('Sprint Velocity Endpoint Tests @go_sprint @metrics', () => {
     // Feature: playwright-api-testing, Property 8: Missing Endpoint Detection
     const nonExistentId = '00000000-0000-0000-0000-999999999999';
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${nonExistentId}/velocity`;
-    
+
     const response = await apiClient.get<ErrorResponse>(url);
 
     // Verify response status is 404 Not Found
@@ -525,10 +525,10 @@ test.describe('Sprint Velocity Endpoint Tests @go_sprint @metrics', () => {
     const sprint = await testDataHelper.createSprint({
       name: 'Sprint for Auth Test',
     });
-    
+
     const unauthClient = new APIClient(config, false);
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${sprint.id}/velocity`;
-    
+
     const response = await unauthClient.get<ErrorResponse>(url);
 
     // Verify response status is 401 Unauthorized

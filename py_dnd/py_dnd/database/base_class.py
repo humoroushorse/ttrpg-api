@@ -2,7 +2,8 @@
 
 from typing import Any
 
-from sqlalchemy import JSON, MetaData
+from sqlalchemy import MetaData, Text
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB
 from sqlalchemy.orm import DeclarativeBase
 
 from py_dnd.shared.enums import DbSchemaEnum
@@ -34,7 +35,12 @@ class DndSchemaBase(DeclarativeBase):
         "schema": DbSchemaEnum.DND.value,
     }
 
-    type_annotation_map = {dict[str, Any]: JSON}
+    # JSONB everywhere (VTT_ROADMAP 4.8); string lists are text arrays
+    type_annotation_map = {
+        dict[str, Any]: JSONB,
+        list[dict[str, Any]]: JSONB,
+        list[str]: ARRAY(Text),
+    }
 
     metadata = MetaData(naming_convention=naming_convention)
 

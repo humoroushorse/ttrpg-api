@@ -1,15 +1,15 @@
 """Shared enums."""
 
-from enum import Enum, IntEnum
+from enum import Enum, IntEnum, StrEnum
 
 
-class DbSchemaEnum(str, Enum):
+class DbSchemaEnum(StrEnum):
     """Database Schema Options."""
 
     DND = "dnd"
 
 
-class SpellSchoolEnum(str, Enum):
+class SpellSchoolEnum(StrEnum):
     """Spell school options."""
 
     ABJURATION = "abjuration"
@@ -39,7 +39,7 @@ class SpellLevelEnum(IntEnum, Enum):
     NINTH = 9
 
 
-class DamageTypeEnum(str, Enum):
+class DamageTypeEnum(StrEnum):
     """Damage type options."""
 
     # special cases
@@ -61,7 +61,7 @@ class DamageTypeEnum(str, Enum):
     THUNDER = "thunder"
 
 
-class AbilityScoreEnum(str, Enum):
+class AbilityScoreEnum(StrEnum):
     """Ability score options."""
 
     STR = "str"

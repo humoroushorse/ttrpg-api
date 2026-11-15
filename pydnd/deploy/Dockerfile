@@ -6,7 +6,7 @@
 # python-base
 #    Creating a python base with shared environment variables
 ################################################################################
-FROM python:3.12.2-slim AS python-base
+FROM python:3.15-slim AS python-base
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -24,7 +24,8 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 ################################################################################
 # builder-base
 #    'builder-base' stage is used to build dependencies
-#    python3-dev, libpq-dev -> required for psycopg2
+#    python3-dev, libpq-dev -> only needed if psycopg has to build from source
+#    (psycopg[binary] ships prebuilt wheels for 3.15)
 ################################################################################
 FROM python-base AS builder-base
 RUN buildDeps="build-essential" \
@@ -39,7 +40,7 @@ RUN buildDeps="build-essential" \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Poetry - respects $POETRY_VERSION & $POETRY_HOME
-ENV POETRY_VERSION=1.7.1
+ENV POETRY_VERSION=2.5.1
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=${POETRY_HOME} python3 - --version ${POETRY_VERSION} && \
     chmod a+x /opt/poetry/bin/poetry

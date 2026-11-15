@@ -1,16 +1,16 @@
 """Module used for keycloak backend calls."""
 
 import time
-from functools import lru_cache
+from functools import cache, lru_cache
 from typing import Annotated
 
-import aiohttp
 from fastapi import Cookie, Depends, HTTPException, status
 from fastapi.security import OAuth2AuthorizationCodeBearer
 from keycloak import KeycloakAdmin
 from keycloak.exceptions import KeycloakAuthenticationError, KeycloakGetError
 from keycloak.keycloak_openid import KeycloakOpenID
 from loguru import logger
+lazy import aiohttp
 
 from py_dnd.core.config import Settings, get_settings
 from py_dnd.features.auth.schemas import AuthUserToken, RegisterUserInput, Token
@@ -41,24 +41,20 @@ keycloak_openid = KeycloakOpenID(
     verify=True,
 )
 
-# Configure the Keycloak admin client — lazy init so realm must exist at call time
-_keycloak_admin: KeycloakAdmin | None = None
 
-
+@cache
 def get_keycloak_admin() -> KeycloakAdmin:
-    """Get or create the KeycloakAdmin client."""
-    global _keycloak_admin
-    if _keycloak_admin is None:
-        _keycloak_admin = KeycloakAdmin(
-            server_url=settings.KEYCLOAK_SERVER_URL,
-            realm_name="master",
-            client_id="admin-cli",
-            username=settings.KEYCLOAK_ADMIN_USERNAME,
-            password=settings.KEYCLOAK_ADMIN_PASSWORD,
-            verify=True,
-        )
-        _keycloak_admin.connection.realm_name = settings.KEYCLOAK_REALM_NAME
-    return _keycloak_admin
+    """Get the KeycloakAdmin client, created on first call so the realm only has to exist by then."""
+    keycloak_admin = KeycloakAdmin(
+        server_url=settings.KEYCLOAK_SERVER_URL,
+        realm_name="master",
+        client_id="admin-cli",
+        username=settings.KEYCLOAK_ADMIN_USERNAME,
+        password=settings.KEYCLOAK_ADMIN_PASSWORD,
+        verify=True,
+    )
+    keycloak_admin.connection.realm_name = settings.KEYCLOAK_REALM_NAME
+    return keycloak_admin
 
 
 # async def get_idp_public_key():
@@ -307,19 +303,26 @@ async def create_keycloak_user(user: RegisterUserInput) -> str:
     create_url = f"{settings.KEYCLOAK_SERVER_URL}/admin/realms/{settings.KEYCLOAK_REALM_NAME}/users"
 
     async with aiohttp.ClientSession() as session:
-        async with session.post(token_url, data={
-            "client_id": "admin-cli",
-            "username": settings.KEYCLOAK_ADMIN_USERNAME,
-            "password": settings.KEYCLOAK_ADMIN_PASSWORD,
-            "grant_type": "password",
-        }) as resp:
+        async with session.post(
+            token_url,
+            data={
+                "client_id": "admin-cli",
+                "username": settings.KEYCLOAK_ADMIN_USERNAME,
+                "password": settings.KEYCLOAK_ADMIN_PASSWORD,
+                "grant_type": "password",
+            },
+        ) as resp:
             resp.raise_for_status()
             token = (await resp.json())["access_token"]
 
-        async with session.post(create_url, json=user_data, headers={
-            "Authorization": f"Bearer {token}",
-            "Content-Type": "application/json",
-        }) as resp:
+        async with session.post(
+            create_url,
+            json=user_data,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json",
+            },
+        ) as resp:
             if resp.status == 409:
                 raise HTTPException(status_code=409, detail="User already exists")
             resp.raise_for_status()

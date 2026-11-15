@@ -108,7 +108,7 @@ func (q *Queries) CreateWorkItem(ctx context.Context, arg CreateWorkItemParams) 
 }
 
 const getWorkItemByID = `-- name: GetWorkItemByID :one
-SELECT 
+SELECT
     wi.id, wi.type, wi.title, wi.description, wi.status, wi.priority, wi.story_points, wi.assignee_id, wi.reporter_id, wi.parent_id, wi.sprint_id, wi.created_at, wi.updated_at, wi.deleted_at, wi.deleted_by, wi.project_id, wi.ticket_number,
     p.key as project_key
 FROM sprint_management.work_items wi
@@ -272,7 +272,7 @@ func (q *Queries) ListSoftDeletedWorkItems(ctx context.Context, arg ListSoftDele
 }
 
 const listWorkItems = `-- name: ListWorkItems :many
-SELECT 
+SELECT
     wi.id, wi.type, wi.title, wi.description, wi.status, wi.priority, wi.story_points, wi.assignee_id, wi.reporter_id, wi.parent_id, wi.sprint_id, wi.created_at, wi.updated_at, wi.deleted_at, wi.deleted_by, wi.project_id, wi.ticket_number,
     p.key as project_key
 FROM sprint_management.work_items wi
@@ -448,7 +448,7 @@ func (q *Queries) ListWorkItemsByParent(ctx context.Context, parentID pgtype.UUI
 }
 
 const listWorkItemsBySprint = `-- name: ListWorkItemsBySprint :many
-SELECT 
+SELECT
     wi.id, wi.type, wi.title, wi.description, wi.status, wi.priority, wi.story_points, wi.assignee_id, wi.reporter_id, wi.parent_id, wi.sprint_id, wi.created_at, wi.updated_at, wi.deleted_at, wi.deleted_by, wi.project_id, wi.ticket_number,
     p.key as project_key
 FROM sprint_management.work_items wi

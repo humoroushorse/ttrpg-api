@@ -1,18 +1,15 @@
 """Helper functions for integration tests."""
 
-from typing import Type, TypeVar
-
-from dnd import schemas
-from dnd.core import uncached_settings
-from dnd.database.base_class import DbBase
 from fastapi import status
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
-ModelType = TypeVar("ModelType", bound=DbBase)
+from dnd import schemas
+from dnd.core import uncached_settings
+from dnd.database.base_class import DbBase
 
 
-def purge_table(client: TestClient, db: Session, model: Type[ModelType], endpoint: str) -> None:
+def purge_table[ModelType: DbBase](client: TestClient, db: Session, model: type[ModelType], endpoint: str) -> None:
     """Completely purge a table and then check that nothing exists at the endpoint."""
     db.query(model).delete()
     db.commit()

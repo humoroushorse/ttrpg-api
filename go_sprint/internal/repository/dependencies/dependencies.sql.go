@@ -71,8 +71,8 @@ func (q *Queries) DeleteDependency(ctx context.Context, id pgtype.UUID) error {
 const dependencyExists = `-- name: DependencyExists :one
 SELECT EXISTS(
     SELECT 1 FROM sprint_management.work_item_dependencies
-    WHERE source_id = $1 
-    AND target_id = $2 
+    WHERE source_id = $1
+    AND target_id = $2
     AND dependency_type = $3
 ) as exists
 `
@@ -127,9 +127,9 @@ const getBlockingDependencies = `-- name: GetBlockingDependencies :many
 SELECT d.id, d.source_id, d.target_id, d.dependency_type, d.created_at, d.created_by, wi.status as source_status
 FROM sprint_management.work_item_dependencies d
 JOIN sprint_management.work_items wi ON d.source_id = wi.id
-WHERE d.target_id = $1 
+WHERE d.target_id = $1
 AND d.dependency_type = 'blocks'
-AND wi.status != 'done' 
+AND wi.status != 'done'
 AND wi.deleted_at IS NULL
 ORDER BY d.created_at DESC
 `
@@ -260,7 +260,7 @@ func (q *Queries) GetDependencyByID(ctx context.Context, id pgtype.UUID) (Sprint
 const hasBlockingDependencies = `-- name: HasBlockingDependencies :one
 SELECT EXISTS(
     SELECT 1 FROM sprint_management.work_item_dependencies
-    WHERE target_id = $1 
+    WHERE target_id = $1
     AND dependency_type = 'blocks'
     AND source_id IN (
         SELECT id FROM sprint_management.work_items

@@ -5,7 +5,7 @@ info:
   description: |
     Reusable authentication service that integrates with Keycloak.
     Provides login, token refresh, logout, and user management endpoints.
-    
+
     This service can be used standalone or proxied by other services.
 
 servers:

@@ -191,7 +191,7 @@ When exporting data, you can apply filters to export only specific records:
 
 ### Exporting Data
 
-1. **Choose Right Format**: 
+1. **Choose Right Format**:
    - CSV: For simple data analysis and spreadsheet tools
    - JSON: For programmatic processing and API integration
    - Excel: For business users and formatted reports

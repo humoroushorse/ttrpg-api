@@ -38,7 +38,7 @@ WHERE source_id = $1 OR target_id = $1;
 -- name: HasBlockingDependencies :one
 SELECT EXISTS(
     SELECT 1 FROM sprint_management.work_item_dependencies
-    WHERE target_id = $1 
+    WHERE target_id = $1
     AND dependency_type = 'blocks'
     AND source_id IN (
         SELECT id FROM sprint_management.work_items
@@ -50,16 +50,16 @@ SELECT EXISTS(
 SELECT d.*, wi.status as source_status
 FROM sprint_management.work_item_dependencies d
 JOIN sprint_management.work_items wi ON d.source_id = wi.id
-WHERE d.target_id = $1 
+WHERE d.target_id = $1
 AND d.dependency_type = 'blocks'
-AND wi.status != 'done' 
+AND wi.status != 'done'
 AND wi.deleted_at IS NULL
 ORDER BY d.created_at DESC;
 
 -- name: DependencyExists :one
 SELECT EXISTS(
     SELECT 1 FROM sprint_management.work_item_dependencies
-    WHERE source_id = $1 
-    AND target_id = $2 
+    WHERE source_id = $1
+    AND target_id = $2
     AND dependency_type = $3
 ) as exists;

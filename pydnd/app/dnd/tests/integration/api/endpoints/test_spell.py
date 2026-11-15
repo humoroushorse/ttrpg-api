@@ -3,13 +3,14 @@
 import random
 
 import pytest
-from dnd import models, schemas
-from dnd.core import uncached_settings
-from dnd.tests.integration import helpers
 from fastapi import status
 from fastapi.encoders import jsonable_encoder
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
+
+from dnd import models, schemas
+from dnd.core import uncached_settings
+from dnd.tests.integration import helpers
 
 # spells_phb.json adds like 3-4 seconds to the integration tests runtime
 BULK_SPELLS_SEEDS_FILE = "spells_tashas.json"

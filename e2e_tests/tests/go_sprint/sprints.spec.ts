@@ -1,7 +1,7 @@
 /**
  * Sprints endpoint tests for go_sprint service
  * Tests sprint list, filtering, pagination, and CRUD operations
- * 
+ *
  * @tags @go_sprint
  * Requirements: 11.1, 11.2, 11.3, 11.4, 11.5
  */
@@ -40,11 +40,11 @@ test.describe('Sprints List Endpoint Tests @go_sprint', () => {
   test.beforeEach(async () => {
     config = getConfig();
     apiClient = new APIClient(config, false);
-    
+
     // Login and set auth token
     const user = await loginAsUser(apiClient);
     apiClient.setAuthToken(user.token);
-    
+
     testDataHelper = new TestDataHelper(apiClient);
   });
 
@@ -56,10 +56,10 @@ test.describe('Sprints List Endpoint Tests @go_sprint', () => {
   test('should list sprints without filters', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
     // Feature: playwright-api-testing, Property 10: Pagination Consistency
-    
+
     // Create some test sprints
     await testDataHelper.createSprints(3);
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints`;
     const response = await apiClient.get<SprintListResponse>(url);
 
@@ -96,13 +96,13 @@ test.describe('Sprints List Endpoint Tests @go_sprint', () => {
 
   test('should filter sprints by status', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     // Create sprints with different statuses
     // Note: Sprints are created with 'planned' status by default
     await testDataHelper.createSprint({ name: 'Planned Sprint 1' });
     await testDataHelper.createSprint({ name: 'Planned Sprint 2' });
     await testDataHelper.createSprint({ name: 'Planned Sprint 3' });
-    
+
     // Filter by status 'planned'
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints`;
     const response = await apiClient.get<SprintListResponse>(url, { params: { status: 'planned' } });
@@ -116,7 +116,7 @@ test.describe('Sprints List Endpoint Tests @go_sprint', () => {
 
     // Verify at least our created sprints are present
     expect(response.data.items.length).toBeGreaterThanOrEqual(3);
-    
+
     // Verify all returned sprints have status 'planned'
     const plannedSprints = response.data.items.filter((sprint: Sprint) => sprint.status === 'planned');
     expect(plannedSprints.length).toBe(response.data.items.length);
@@ -124,10 +124,10 @@ test.describe('Sprints List Endpoint Tests @go_sprint', () => {
 
   test('should paginate sprints with limit parameter', async () => {
     // Feature: playwright-api-testing, Property 10: Pagination Consistency
-    
+
     // Create multiple sprints
     await testDataHelper.createSprints(5);
-    
+
     // Request with limit of 2
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints`;
     const response = await apiClient.get<SprintListResponse>(url, { params: { limit: 2 } });
@@ -144,7 +144,7 @@ test.describe('Sprints List Endpoint Tests @go_sprint', () => {
 
     // Verify pagination metadata
     expect(response.data.pagination).toHaveProperty('has_more');
-    
+
     // If there are more sprints, has_more should be true
     if (response.data.items.length === 2) {
       // We created 5 sprints, so there should be more
@@ -154,10 +154,10 @@ test.describe('Sprints List Endpoint Tests @go_sprint', () => {
 
   test('should support cursor-based pagination', async () => {
     // Feature: playwright-api-testing, Property 10: Pagination Consistency
-    
+
     // Create multiple sprints
     await testDataHelper.createSprints(5);
-    
+
     // Get first page
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints`;
     const firstPageResponse = await apiClient.get<SprintListResponse>(url, { params: { limit: 2 } });
@@ -176,11 +176,11 @@ test.describe('Sprints List Endpoint Tests @go_sprint', () => {
 
       expect(secondPageResponse.status).toBe(200);
       expect(secondPageResponse.data).toHaveProperty('items');
-      
+
       // Verify we got different sprints (no duplicates)
       const firstPageIds = firstPageResponse.data.items.map((sprint: Sprint) => sprint.id);
       const secondPageIds = secondPageResponse.data.items.map((sprint: Sprint) => sprint.id);
-      
+
       const duplicates = firstPageIds.filter((id: string) => secondPageIds.includes(id));
       expect(duplicates.length).toBe(0);
     }
@@ -188,9 +188,9 @@ test.describe('Sprints List Endpoint Tests @go_sprint', () => {
 
   test('should validate response schema for sprints list', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     await testDataHelper.createSprint();
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints`;
     const response = await apiClient.get<SprintListResponse>(url);
 
@@ -240,7 +240,7 @@ test.describe('Sprints List Endpoint Tests @go_sprint', () => {
 
   test('should handle empty results gracefully', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     // Query with a filter that should return no results
     // Note: Using a status filter that won't match any of our test data
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints`;
@@ -267,11 +267,11 @@ test.describe('Sprints CRUD Endpoint Tests @go_sprint', () => {
   test.beforeEach(async () => {
     config = getConfig();
     apiClient = new APIClient(config, false);
-    
+
     // Login and set auth token
     const user = await loginAsUser(apiClient);
     apiClient.setAuthToken(user.token);
-    
+
     testDataHelper = new TestDataHelper(apiClient);
   });
 
@@ -283,15 +283,15 @@ test.describe('Sprints CRUD Endpoint Tests @go_sprint', () => {
   test('should create sprint with valid payload', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
     // Feature: playwright-api-testing, Property 7: Test Data Cleanup
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints`;
-    
+
     // Calculate dates (start tomorrow, end in 2 weeks)
     const startDate = new Date();
     startDate.setDate(startDate.getDate() + 1);
     const endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + 14);
-    
+
     const payload = {
       name: 'Sprint 2024-Q1',
       description: 'First quarter sprint for 2024',
@@ -327,15 +327,15 @@ test.describe('Sprints CRUD Endpoint Tests @go_sprint', () => {
 
   test('should fail to create sprint with invalid dates - end before start', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints`;
-    
+
     // Create invalid dates (end date before start date)
     const startDate = new Date();
     startDate.setDate(startDate.getDate() + 14);
     const endDate = new Date();
     endDate.setDate(endDate.getDate() + 1);
-    
+
     const payload = {
       name: 'Invalid Sprint',
       description: 'Sprint with invalid dates',
@@ -357,7 +357,7 @@ test.describe('Sprints CRUD Endpoint Tests @go_sprint', () => {
 
   test('should fail to create sprint with missing required fields', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints`;
     const payload = {
       name: 'Incomplete Sprint',
@@ -377,15 +377,15 @@ test.describe('Sprints CRUD Endpoint Tests @go_sprint', () => {
 
   test('should fail to create sprint with past dates', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints`;
-    
+
     // Create dates in the past
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 14);
     const endDate = new Date();
     endDate.setDate(endDate.getDate() - 1);
-    
+
     const payload = {
       name: 'Past Sprint',
       description: 'Sprint with past dates',
@@ -405,7 +405,7 @@ test.describe('Sprints CRUD Endpoint Tests @go_sprint', () => {
 
   test('should get sprint by ID for existing sprint', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     // Create a sprint first
     const createdSprint = await testDataHelper.createSprint({
       name: 'Test Sprint for Retrieval',
@@ -430,7 +430,7 @@ test.describe('Sprints CRUD Endpoint Tests @go_sprint', () => {
 
   test('should return 404 for non-existing sprint ID', async () => {
     // Feature: playwright-api-testing, Property 8: Missing Endpoint Detection
-    
+
     // Use a UUID that doesn't exist
     const nonExistentId = '00000000-0000-0000-0000-000000000000';
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/${nonExistentId}`;
@@ -447,14 +447,14 @@ test.describe('Sprints CRUD Endpoint Tests @go_sprint', () => {
 
   test('should validate created sprint matches request payload', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints`;
-    
+
     const startDate = new Date();
     startDate.setDate(startDate.getDate() + 7);
     const endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + 21);
-    
+
     const payload = {
       name: 'Sprint 2024-Q2',
       description: 'Second quarter sprint with extended duration',
@@ -480,10 +480,10 @@ test.describe('Sprints CRUD Endpoint Tests @go_sprint', () => {
 
   test('should require authentication for sprints endpoints', async () => {
     // Feature: playwright-api-testing, Property 9: Authenticated Request Authorization
-    
+
     // Create a new client without authentication
     const unauthClient = new APIClient(config, false);
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints`;
     const response = await unauthClient.get<ErrorResponse>(url);
 
@@ -496,14 +496,14 @@ test.describe('Sprints CRUD Endpoint Tests @go_sprint', () => {
 
   test('should create sprint with optional fields', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
-    
+
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints`;
-    
+
     const startDate = new Date();
     startDate.setDate(startDate.getDate() + 1);
     const endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + 14);
-    
+
     const payload = {
       name: 'Minimal Sprint',
       start_date: startDate.toISOString().split('T')[0],

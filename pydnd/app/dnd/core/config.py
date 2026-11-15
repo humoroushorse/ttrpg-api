@@ -1,6 +1,6 @@
 """App configuration file."""
 
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -17,10 +17,7 @@ class Settings(BaseSettings):
     HOST: str | None = "0.0.0.0"
     PORT: int | None = 8001
 
-    class Config:
-        """BaseSettings Config overrides."""
-
-        env_file = ".env"
+    model_config = SettingsConfigDict(env_file=".env")
 
 
 uncached_settings = Settings()

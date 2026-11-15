@@ -1,7 +1,7 @@
 /**
  * User info and logout endpoint tests for go_auth service
  * Tests user information retrieval and logout functionality
- * 
+ *
  * @tags @go_auth
  * Requirements: 16.4, 16.5
  */
@@ -26,9 +26,9 @@ test.describe('User Info Endpoint Tests @go_auth', () => {
   test('should successfully get user info with valid token', async () => {
     // Feature: playwright-api-testing, Property 2: Endpoint Response Schema Compliance
     // Feature: playwright-api-testing, Property 9: Authenticated Request Authorization
-    
+
     const userInfoUrl = `${config.services.goAuth.baseUrl}/auth/user`;
-    
+
     // Login to get a valid token
     const authenticatedUser = await loginAsUser(apiClient);
     apiClient.setAuthToken(authenticatedUser.token);
@@ -53,9 +53,9 @@ test.describe('User Info Endpoint Tests @go_auth', () => {
 
   test('should fail to get user info with invalid token', async () => {
     // Feature: playwright-api-testing, Property 9: Authenticated Request Authorization
-    
+
     const userInfoUrl = `${config.services.goAuth.baseUrl}/auth/user`;
-    
+
     // Set an invalid token
     apiClient.setAuthToken('invalid_token_12345');
 
@@ -72,9 +72,9 @@ test.describe('User Info Endpoint Tests @go_auth', () => {
 
   test('should fail to get user info without token', async () => {
     // Feature: playwright-api-testing, Property 9: Authenticated Request Authorization
-    
+
     const userInfoUrl = `${config.services.goAuth.baseUrl}/auth/user`;
-    
+
     // Don't set any token
     apiClient.clearTokens();
 
@@ -91,7 +91,7 @@ test.describe('User Info Endpoint Tests @go_auth', () => {
 
   test('should fail to get user info with malformed token', async () => {
     const userInfoUrl = `${config.services.goAuth.baseUrl}/auth/user`;
-    
+
     // Set a malformed token
     apiClient.setAuthToken('not.a.valid.jwt');
 
@@ -108,7 +108,7 @@ test.describe('User Info Endpoint Tests @go_auth', () => {
 
   test('should include email in user info response', async () => {
     const userInfoUrl = `${config.services.goAuth.baseUrl}/auth/user`;
-    
+
     // Login to get a valid token
     const authenticatedUser = await loginAsUser(apiClient);
     apiClient.setAuthToken(authenticatedUser.token);
@@ -128,7 +128,7 @@ test.describe('User Info Endpoint Tests @go_auth', () => {
 
   test('should include optional user profile fields', async () => {
     const userInfoUrl = `${config.services.goAuth.baseUrl}/auth/user`;
-    
+
     // Login to get a valid token
     const authenticatedUser = await loginAsUser(apiClient);
     apiClient.setAuthToken(authenticatedUser.token);
@@ -166,7 +166,7 @@ test.describe('Logout Endpoint Tests @go_auth', () => {
 
   test('should successfully logout with valid token', async () => {
     const logoutUrl = `${config.services.goAuth.baseUrl}/auth/logout`;
-    
+
     // Login to get a valid token
     const authenticatedUser = await loginAsUser(apiClient);
     apiClient.setAuthToken(authenticatedUser.token);
@@ -180,9 +180,9 @@ test.describe('Logout Endpoint Tests @go_auth', () => {
 
   test('should fail logout with invalid token', async () => {
     // Feature: playwright-api-testing, Property 9: Authenticated Request Authorization
-    
+
     const logoutUrl = `${config.services.goAuth.baseUrl}/auth/logout`;
-    
+
     // Try to logout with invalid refresh token in body
     const response = await apiClient.post(logoutUrl, {
       refresh_token: 'invalid_token_12345'
@@ -195,9 +195,9 @@ test.describe('Logout Endpoint Tests @go_auth', () => {
 
   test('should fail logout without token', async () => {
     // Feature: playwright-api-testing, Property 9: Authenticated Request Authorization
-    
+
     const logoutUrl = `${config.services.goAuth.baseUrl}/auth/logout`;
-    
+
     // Don't set any token
     apiClient.clearTokens();
 
@@ -214,11 +214,11 @@ test.describe('Logout Endpoint Tests @go_auth', () => {
     // not our API behavior. The logout endpoint works correctly.
     const logoutUrl = `${config.services.goAuth.baseUrl}/auth/logout`;
     const refreshUrl = `${config.services.goAuth.baseUrl}/auth/refresh`;
-    
+
     // Login to get tokens
     const authenticatedUser = await loginAsUser(apiClient);
     apiClient.setAuthToken(authenticatedUser.token);
-    
+
     const refreshToken = authenticatedUser.refreshToken;
     expect(refreshToken).toBeTruthy();
 
@@ -240,7 +240,7 @@ test.describe('Logout Endpoint Tests @go_auth', () => {
   test('should not allow accessing protected resources after logout', async () => {
     const logoutUrl = `${config.services.goAuth.baseUrl}/auth/logout`;
     const userInfoUrl = `${config.services.goAuth.baseUrl}/auth/user`;
-    
+
     // Login to get a valid token
     const authenticatedUser = await loginAsUser(apiClient);
     apiClient.setAuthToken(authenticatedUser.token);
@@ -255,7 +255,7 @@ test.describe('Logout Endpoint Tests @go_auth', () => {
 
     // Try to access user info after logout (should fail)
     const afterLogoutResponse = await apiClient.get(userInfoUrl);
-    
+
     // Note: This might still return 200 if the access token hasn't expired yet
     // The important part is that the refresh token is invalidated
     // For a complete test, we would need to wait for token expiration or
@@ -264,7 +264,7 @@ test.describe('Logout Endpoint Tests @go_auth', () => {
 
   test('should handle logout with malformed token', async () => {
     const logoutUrl = `${config.services.goAuth.baseUrl}/auth/logout`;
-    
+
     // Try to logout with malformed refresh token
     const response = await apiClient.post(logoutUrl, {
       refresh_token: 'not.a.valid.jwt'

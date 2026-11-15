@@ -209,7 +209,7 @@ logger.Info("user authenticated", slog.Any("user", user))
    ```go
    // Good
    logger.Info("user created", slog.String("user_id", userID))
-   
+
    // Bad
    logger.Info(fmt.Sprintf("user created: %s", userID))
    ```
@@ -291,12 +291,12 @@ func LoggingMiddleware(logger *slog.Logger) func(http.Handler) http.Handler {
             traceID := GetTraceID(r.Context())
             contextLogger := logging.WithTraceID(logger, traceID)
             contextLogger = logging.WithRequestInfo(contextLogger, r.Method, r.URL.Path)
-            
+
             ctx := logging.WithLogger(r.Context(), contextLogger)
-            
+
             start := time.Now()
             next.ServeHTTP(w, r.WithContext(ctx))
-            
+
             contextLogger.Info("request completed",
                 slog.Duration("duration", time.Since(start)),
             )
@@ -310,12 +310,12 @@ func LoggingMiddleware(logger *slog.Logger) func(http.Handler) http.Handler {
 ```go
 func (s *WorkItemService) CreateWorkItem(ctx context.Context, req CreateWorkItemRequest) (*WorkItem, error) {
     logger := logging.FromContext(ctx)
-    
+
     logger.Info("creating work item",
         slog.String("type", req.Type),
         slog.String("title", req.Title),
     )
-    
+
     workItem, err := s.repo.Create(ctx, req)
     if err != nil {
         logger.Error("failed to create work item",
@@ -323,11 +323,11 @@ func (s *WorkItemService) CreateWorkItem(ctx context.Context, req CreateWorkItem
         )
         return nil, err
     }
-    
+
     logger.Info("work item created successfully",
         slog.Any("work_item", workItem),
     )
-    
+
     return workItem, nil
 }
 ```

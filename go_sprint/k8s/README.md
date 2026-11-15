@@ -134,10 +134,10 @@ kubectl apply -f ingress.yaml
 ### Sprint Service
 
 - **Replicas**: 3 (auto-scales 3-20 based on CPU/memory)
-- **Resources**: 
+- **Resources**:
   - Requests: 512Mi memory, 500m CPU
   - Limits: 1Gi memory, 2000m CPU
-- **Health Checks**: 
+- **Health Checks**:
   - Liveness: `/health/live`
   - Readiness: `/health/ready`
 - **Ports**: 8080 (HTTP)
@@ -145,10 +145,10 @@ kubectl apply -f ingress.yaml
 ### Auth Service
 
 - **Replicas**: 2 (auto-scales 2-10 based on CPU/memory)
-- **Resources**: 
+- **Resources**:
   - Requests: 256Mi memory, 250m CPU
   - Limits: 512Mi memory, 1000m CPU
-- **Health Checks**: 
+- **Health Checks**:
   - Liveness: `/health/live`
   - Readiness: `/health/ready`
 - **Ports**: 8080 (HTTP)
@@ -157,7 +157,7 @@ kubectl apply -f ingress.yaml
 
 - **Replicas**: 1 (StatefulSet recommended for production)
 - **Storage**: 10Gi PersistentVolume
-- **Resources**: 
+- **Resources**:
   - Requests: 512Mi memory, 500m CPU
   - Limits: 2Gi memory, 2000m CPU
 - **Health Checks**: `pg_isready`
@@ -167,7 +167,7 @@ kubectl apply -f ingress.yaml
 
 - **Replicas**: 1 (cluster mode recommended for production)
 - **Storage**: 5Gi PersistentVolume (for JetStream)
-- **Resources**: 
+- **Resources**:
   - Requests: 256Mi memory, 250m CPU
   - Limits: 512Mi memory, 1000m CPU
 - **Health Checks**: `/healthz`
@@ -176,10 +176,10 @@ kubectl apply -f ingress.yaml
 ### Keycloak
 
 - **Replicas**: 1 (2+ recommended for production)
-- **Resources**: 
+- **Resources**:
   - Requests: 512Mi memory, 500m CPU
   - Limits: 2Gi memory, 2000m CPU
-- **Health Checks**: 
+- **Health Checks**:
   - Liveness: `/health/live`
   - Readiness: `/health/ready`
 - **Ports**: 8080 (HTTP)

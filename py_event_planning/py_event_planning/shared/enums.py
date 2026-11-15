@@ -1,9 +1,9 @@
 """Shared enums."""
 
-from enum import Enum
+from enum import StrEnum
 
 
-class DbSchemaEnum(str, Enum):
+class DbSchemaEnum(StrEnum):
     """Database Schema Options."""
 
     EVENT_PLANNING = "event_planning"

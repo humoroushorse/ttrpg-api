@@ -21,7 +21,7 @@ CREATE TABLE sprint_management.sprints (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW() AT TIME ZONE 'UTC'),
     deleted_at TIMESTAMPTZ,
     deleted_by UUID,
-    
+
     CONSTRAINT valid_date_range CHECK (end_date > start_date),
     CONSTRAINT valid_capacity CHECK (capacity_points IS NULL OR capacity_points >= 0),
     CONSTRAINT valid_committed_points CHECK (committed_points >= 0),
@@ -51,7 +51,7 @@ CREATE TABLE sprint_management.work_items (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW() AT TIME ZONE 'UTC'),
     deleted_at TIMESTAMPTZ,
     deleted_by UUID,
-    
+
     CONSTRAINT valid_story_points CHECK (story_points IS NULL OR story_points > 0),
     CONSTRAINT no_self_parent CHECK (parent_id IS NULL OR parent_id != id)
 );
@@ -74,7 +74,7 @@ CREATE TABLE sprint_management.work_item_dependencies (
     dependency_type sprint_management.dependency_type NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW() AT TIME ZONE 'UTC'),
     created_by UUID NOT NULL,
-    
+
     CONSTRAINT no_self_dependency CHECK (source_id != target_id),
     CONSTRAINT unique_dependency UNIQUE(source_id, target_id, dependency_type)
 );

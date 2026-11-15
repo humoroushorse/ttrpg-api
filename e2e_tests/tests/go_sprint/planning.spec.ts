@@ -16,7 +16,7 @@ test.describe('Sprint Planning Endpoints @go_sprint @planning', () => {
 
   test('POST /api/v1/sprints/planning/capacity - should calculate sprint capacity', async () => {
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/planning/capacity`;
-    
+
     const response = await apiClient.post(url, {
       lookback_sprints: 3,
     }, {
@@ -37,7 +37,7 @@ test.describe('Sprint Planning Endpoints @go_sprint @planning', () => {
       expect(response.data).toHaveProperty('average_velocity');
       expect(response.data).toHaveProperty('confidence_level');
       expect(['low', 'medium', 'high']).toContain(response.data.confidence_level);
-      
+
       // Validate types
       expect(typeof response.data.recommended_capacity).toBe('number');
       expect(typeof response.data.average_velocity).toBe('number');
@@ -46,7 +46,7 @@ test.describe('Sprint Planning Endpoints @go_sprint @planning', () => {
 
   test('POST /api/v1/sprints/planning/forecast - should forecast sprint completion', async () => {
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/planning/forecast`;
-    
+
     const response = await apiClient.post(url, {
       remaining_points: 50,
       lookback_sprints: 3,
@@ -68,7 +68,7 @@ test.describe('Sprint Planning Endpoints @go_sprint @planning', () => {
       expect(response.data).toHaveProperty('average_velocity');
       expect(response.data).toHaveProperty('confidence_level');
       expect(['low', 'medium', 'high']).toContain(response.data.confidence_level);
-      
+
       // Validate types
       expect(typeof response.data.estimated_sprints).toBe('number');
       expect(typeof response.data.average_velocity).toBe('number');
@@ -77,7 +77,7 @@ test.describe('Sprint Planning Endpoints @go_sprint @planning', () => {
 
   test('POST /api/v1/sprints/planning/forecast - should reject negative remaining points', async () => {
     const url = `${config.services.goSprint.baseUrl}/api/v1/sprints/planning/forecast`;
-    
+
     const response = await apiClient.post(url, {
       remaining_points: -10,
       lookback_sprints: 3,

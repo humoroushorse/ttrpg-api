@@ -294,7 +294,7 @@ func TestProperty10_SprintClosureWorkflow(t *testing.T) {
 				// Create a done work item
 				doneDesc := "Done item"
 				_, err = pool.Exec(ctx, `
-					INSERT INTO sprint_management.work_items 
+					INSERT INTO sprint_management.work_items
 					(type, title, description, status, priority, reporter_id, sprint_id)
 					VALUES ('story', $1, $2, 'done', 'medium', $3, $4)
 				`, fmt.Sprintf("Done Item %d", seed), &doneDesc, reporterID, sprint.ID)
@@ -307,7 +307,7 @@ func TestProperty10_SprintClosureWorkflow(t *testing.T) {
 				incompleteDesc := "Incomplete item"
 				var incompleteID pgtype.UUID
 				err = pool.QueryRow(ctx, `
-					INSERT INTO sprint_management.work_items 
+					INSERT INTO sprint_management.work_items
 					(type, title, description, status, priority, reporter_id, sprint_id)
 					VALUES ('story', $1, $2, 'in_progress', 'medium', $3, $4)
 					RETURNING id
@@ -342,7 +342,7 @@ func TestProperty10_SprintClosureWorkflow(t *testing.T) {
 				// Verify done items remain in the sprint
 				var doneCount int64
 				err = pool.QueryRow(ctx, `
-					SELECT COUNT(*) FROM sprint_management.work_items 
+					SELECT COUNT(*) FROM sprint_management.work_items
 					WHERE sprint_id = $1 AND status = 'done'
 				`, sprint.ID).Scan(&doneCount)
 				if err != nil {

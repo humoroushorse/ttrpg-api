@@ -29,7 +29,7 @@ CREATE TABLE sprint_management.comments (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW() AT TIME ZONE 'UTC'),
     deleted_at TIMESTAMPTZ,
     deleted_by UUID,
-    
+
     CONSTRAINT valid_content CHECK (LENGTH(TRIM(content)) > 0)
 );
 
@@ -49,7 +49,7 @@ CREATE TABLE sprint_management.activity_logs (
     changes JSONB,
     trace_id UUID,
     created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW() AT TIME ZONE 'UTC'),
-    
+
     CONSTRAINT valid_entity_type CHECK (entity_type IN ('work_item', 'sprint', 'comment', 'dependency')),
     CONSTRAINT valid_action CHECK (action IN ('created', 'updated', 'deleted', 'status_changed', 'assigned', 'unassigned', 'commented', 'restored'))
 );

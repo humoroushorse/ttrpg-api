@@ -1,3 +1,3 @@
 """Shared module."""
 
-from . import enums  # noqa: W0611
+from . import enums  # noqa: F401

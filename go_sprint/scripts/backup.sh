@@ -87,7 +87,7 @@ if pg_dump "${PG_DUMP_ARGS[@]}" 2>&1 | grep -v "^$"; then
         log_info "Backup completed successfully"
         log_info "File: $BACKUP_FILE"
         log_info "Size: $BACKUP_SIZE"
-        
+
         # Create checksum
         CHECKSUM_FILE="${BACKUP_FILE}.sha256"
         sha256sum "$BACKUP_FILE" > "$CHECKSUM_FILE"

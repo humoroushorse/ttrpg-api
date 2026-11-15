@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS sprint_management.projects (
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
     updated_by VARCHAR(255) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
-    
+
     -- Constraints
     CONSTRAINT projects_key_uppercase CHECK (key = UPPER(key)),
     CONSTRAINT projects_key_length CHECK (LENGTH(key) >= 3 AND LENGTH(key) <= 10),
@@ -23,12 +23,12 @@ CREATE TABLE IF NOT EXISTS sprint_management.projects (
 CREATE INDEX IF NOT EXISTS idx_projects_key ON sprint_management.projects(key);
 
 -- Add project_id to work_items table
-ALTER TABLE sprint_management.work_items 
+ALTER TABLE sprint_management.work_items
 ADD COLUMN IF NOT EXISTS project_id UUID REFERENCES sprint_management.projects(id) ON DELETE SET NULL,
 ADD COLUMN IF NOT EXISTS ticket_number INTEGER;
 
 -- Create unique constraint on project_id + ticket_number
-CREATE UNIQUE INDEX IF NOT EXISTS idx_work_items_project_ticket ON sprint_management.work_items(project_id, ticket_number) 
+CREATE UNIQUE INDEX IF NOT EXISTS idx_work_items_project_ticket ON sprint_management.work_items(project_id, ticket_number)
 WHERE project_id IS NOT NULL AND ticket_number IS NOT NULL;
 
 -- Create index for faster queries
@@ -40,12 +40,12 @@ RETURNS INTEGER AS $$
 DECLARE
     next_number INTEGER;
 BEGIN
-    UPDATE sprint_management.projects 
+    UPDATE sprint_management.projects
     SET current_counter = current_counter + 1,
         updated_at = NOW()
     WHERE id = p_project_id
     RETURNING current_counter INTO next_number;
-    
+
     RETURN next_number;
 END;
 $$ LANGUAGE plpgsql;

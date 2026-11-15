@@ -166,7 +166,7 @@ This auth service is designed to be reusable. Other services can:
 2. **Use the auth client library**:
    ```go
    import "github.com/humoroushorse/go_auth/pkg/auth/client"
-   
+
    authClient := client.NewClient("http://localhost:8081")
    userInfo, err := authClient.ValidateToken(ctx, accessToken)
    ```
@@ -174,7 +174,7 @@ This auth service is designed to be reusable. Other services can:
 3. **Use JWT middleware**:
    ```go
    import "github.com/humoroushorse/go_auth/pkg/auth/middleware"
-   
+
    jwtMiddleware := middleware.NewJWTMiddleware(keycloakURL, realm)
    protectedHandler := jwtMiddleware.Authenticate(yourHandler)
    ```

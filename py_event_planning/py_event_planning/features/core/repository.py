@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 import uuid
+from collections.abc import AsyncIterator, Sequence
 from enum import Enum
-from typing import Any, AsyncIterator, Generic, Sequence, TypeVar
+from typing import Any
 
 import loguru
 from fastapi.encoders import jsonable_encoder
@@ -16,14 +17,14 @@ from sqlalchemy.orm.attributes import InstrumentedAttribute
 from py_event_planning.database.base_class import EventPlanningSchemaBase
 from py_event_planning.database.exceptions import handle_sqlalchemy_errors_decorator
 
-ModelType = TypeVar("ModelType", bound=EventPlanningSchemaBase)
-ModelSchemaType = TypeVar("ModelSchemaType", bound=BaseModel)
-ModelSchemaBaseType = TypeVar("ModelSchemaBaseType", bound=BaseModel)
-CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
-UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
-
-class RepositoryBase(Generic[ModelType, ModelSchemaType, ModelSchemaBaseType, CreateSchemaType, UpdateSchemaType]):
+class RepositoryBase[
+    ModelType: EventPlanningSchemaBase,
+    ModelSchemaType: BaseModel,
+    ModelSchemaBaseType: BaseModel,
+    CreateSchemaType: BaseModel,
+    UpdateSchemaType: BaseModel,
+]:
     """Base repositiroy.
 
     Args:
@@ -250,7 +251,7 @@ class RepositoryBase(Generic[ModelType, ModelSchemaType, ModelSchemaBaseType, Cr
             query = self.apply_param_filters_to_query(query=query, params=params, exact=exact)
         # get count before limit/offset are applied
         if limit != 0 or offset != 0:
-            query_count: Select = select(func.count()).select_from(query)
+            query_count: Select = select(func.count()).select_from(query.subquery())
             query_count_result: Result = await self.session.execute(query_count)
             total_count = int(query_count_result.scalar_one())
         # apply limit/offset/order_by

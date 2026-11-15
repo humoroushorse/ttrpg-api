@@ -342,8 +342,8 @@ psql -h localhost -U postgres -d test_restore -f "$LATEST_BACKUP"
 
 # Verify
 psql -h localhost -U postgres -d test_restore -c "
-  SELECT schemaname, tablename, n_live_tup 
-  FROM pg_stat_user_tables 
+  SELECT schemaname, tablename, n_live_tup
+  FROM pg_stat_user_tables
   WHERE schemaname IN ('sprint_management', 'auth');"
 
 # Cleanup
@@ -458,10 +458,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Install PostgreSQL client
         run: sudo apt-get install -y postgresql-client
-      
+
       - name: Create backup
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
@@ -470,14 +470,14 @@ jobs:
         run: |
           cd go_sprint
           ./scripts/backup-system.sh
-      
+
       - name: Upload to S3
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      
+
       - name: Sync to S3
         run: |
           aws s3 sync backups/ s3://my-backups/sprint-management/ \

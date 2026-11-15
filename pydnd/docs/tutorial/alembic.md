@@ -24,6 +24,7 @@ DROP TYPE IF EXISTS spellschoolenum;
 
 ```python
 """Alembic env file for connecting to and manipilating database schemas."""
+
 from logging.config import fileConfig
 
 from alembic import context
@@ -48,7 +49,7 @@ target_metadata.naming_convention = {
     "ix": "ix_%(column_0_label)s",
     "uq": "uq_%(table_name)s_%(column_0_name)s",
     "ck": "ck_%(table_name)s_%(constraint_name)s",
-    "fk": "fk_%(table_name)s_%(column_0_name)" "s_%(referred_table_name)s",
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
     "pk": "pk_%(table_name)s",
 }
 
@@ -106,9 +107,7 @@ def run_migrations_online() -> None:
     """
     configuration = config.get_section(config.config_ini_section)
     configuration["sqlalchemy.url"] = get_db_uri()
-    connectable = engine_from_config(
-        configuration, prefix="sqlalchemy.", poolclass=pool.NullPool
-    )
+    connectable = engine_from_config(configuration, prefix="sqlalchemy.", poolclass=pool.NullPool)
 
     with connectable.connect() as connection:
         schema_name = schemas.enums.DbSchemaEnum.DND.value

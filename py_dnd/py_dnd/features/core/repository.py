@@ -3,27 +3,30 @@
 from __future__ import annotations
 
 import uuid
+from collections.abc import AsyncIterator, Sequence
 from enum import Enum
-from typing import Any, AsyncIterator, Generic, Sequence, TypeVar
+from typing import Any
 
 import loguru
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
-from sqlalchemy import Result, Select, func, or_, select
+from sqlalchemy import ColumnElement, Result, Select, func, inspect, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import load_only
 from sqlalchemy.orm.attributes import InstrumentedAttribute
 
 from py_dnd.database.base_class import DndSchemaBase
 from py_dnd.database.exceptions import handle_sqlalchemy_errors_decorator
-
-ModelType = TypeVar("ModelType", bound=DndSchemaBase)
-ModelSchemaType = TypeVar("ModelSchemaType", bound=BaseModel)
-ModelSchemaBaseType = TypeVar("ModelSchemaBaseType", bound=BaseModel)
-CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
-UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
+from py_dnd.shared.fields import partial_model
 
 
-class RepositoryBase(Generic[ModelType, ModelSchemaType, ModelSchemaBaseType, CreateSchemaType, UpdateSchemaType]):
+class RepositoryBase[
+    ModelType: DndSchemaBase,
+    ModelSchemaType: BaseModel,
+    ModelSchemaBaseType: BaseModel,
+    CreateSchemaType: BaseModel,
+    UpdateSchemaType: BaseModel,
+]:
     """Base repositiroy.
 
     Args:
@@ -51,23 +54,48 @@ class RepositoryBase(Generic[ModelType, ModelSchemaType, ModelSchemaBaseType, Cr
         self.schema_base = schema_base
         self.logger = logger if logger else loguru.logger
 
+    def _live(self, stmt: Select) -> Select:
+        """Skip soft-deleted rows on tables that have them (MixinSoftDelete)."""
+        deleted_at = getattr(self.model, "deleted_at", None)
+        return stmt if deleted_at is None else stmt.where(deleted_at.is_(None))
+
+    def _select(self, fields: Sequence[str] | None) -> Select:
+        """The live rows, loading only ``fields``' columns when given (sparse fieldsets).
+
+        Relationships in ``fields`` load with their mapped strategy (``lazy="joined"``), not here.
+        """
+        stmt = self._live(select(self.model))
+        if fields:
+            columns = inspect(self.model).column_attrs.keys()
+            stmt = stmt.options(load_only(*(getattr(self.model, f) for f in fields if f in columns)))
+        return stmt
+
+    def _out(self, entity: ModelType, fields: Sequence[str] | None) -> BaseModel:
+        """The response object: the full schema, or the partial one with only ``fields`` set."""
+        if not fields:
+            return self.schema.model_validate(entity)
+        # only the loaded columns: touching a deferred one would lazy-load, which async can't
+        return partial_model(self.schema).model_validate({f: getattr(entity, f) for f in fields})
+
     @handle_sqlalchemy_errors_decorator
     async def read_by_id(
-        self, entity_id: int | str | uuid.UUID, as_model: bool = False
-    ) -> ModelSchemaType | ModelType | None:
+        self, entity_id: int | str | uuid.UUID, as_model: bool = False, fields: Sequence[str] | None = None
+    ) -> BaseModel | ModelType | None:
         """Get an entity by id.
 
         Args:
             entity_id (: int | str | uuid.UUID): _description_
+            as_model (bool): return the ORM entity (for updates) instead of a schema
+            fields (Sequence[str] | None): sparse fieldset (schema field names) for the schema
 
         Returns:
             ModelSchemaType | None: _description_
         """
-        stmt = select(self.model).where(self.model.id == entity_id)
-        model: ModelType = await self.session.scalar(stmt.order_by(self.model.id))
-        if as_model:
+        stmt = self._select(None if as_model else fields).where(self.model.id == entity_id)
+        model: ModelType | None = await self.session.scalar(stmt)
+        if as_model or model is None:
             return model
-        return self.schema.model_validate(model)
+        return self._out(model, fields)
 
     # async def get(self, db: AsyncSession, id: Any) -> Optional[ModelType]:
     #     stmt = select(self.model).where(self.model.id == id)
@@ -90,7 +118,7 @@ class RepositoryBase(Generic[ModelType, ModelSchemaType, ModelSchemaBaseType, Cr
         Yields:
             Iterator[AsyncIterator[ModelType]]: _description_
         """
-        stmt = select(self.model).where(self.model.id.in_(entity_ids))
+        stmt = self._live(select(self.model).where(self.model.id.in_(entity_ids)))
         stream = await self.session.stream_scalars(stmt.order_by(self.model.id))
         async for row in stream:
             yield row
@@ -101,13 +129,15 @@ class RepositoryBase(Generic[ModelType, ModelSchemaType, ModelSchemaBaseType, Cr
         *,
         offset: int = 0,
         limit: int = 100,
-    ) -> list[ModelSchemaType]:
+        fields: Sequence[str] | None = None,
+    ) -> list[BaseModel]:
         # ) -> AsyncIterator[ModelType]:
         """Get multiple entities (pagination optional).
 
         Args:
             offset (int, optional): _description_. Defaults to 0.
             limit (int, optional): _description_. Defaults to 100.
+            fields (Sequence[str] | None): sparse fieldset (schema field names)
 
         Returns:
             AsyncIterator[ModelType]: _description_
@@ -116,12 +146,12 @@ class RepositoryBase(Generic[ModelType, ModelSchemaType, ModelSchemaBaseType, Cr
             Iterator[AsyncIterator[ModelType]]: _description_
         """
         self.logger.debug("RepositoryBase::read_multi() called with offset={}, limit={}", offset, limit)
-        stmt = select(self.model).offset(offset).limit(limit)
+        stmt = self._select(fields).offset(offset).limit(limit)
         # stream = await self.session.stream_scalars(stmt.order_by(self.model.id))
         # async for row in stream:
         #     yield row
         res = await self.session.scalars(stmt.order_by(self.model.id))
-        return [self.schema.model_validate(e) for e in res]
+        return [self._out(e, fields) for e in res]
 
     # async def get_multi(self, db: AsyncSession, *, offset: int = 0, limit: int = 100) -> list[ModelType]:
     #     stmt = select(self.model).offset(offset).limit(limit)
@@ -153,6 +183,29 @@ class RepositoryBase(Generic[ModelType, ModelSchemaType, ModelSchemaBaseType, Cr
             #   TODO: look into a better solution?
             return self.schema_base.model_validate(entity)
         return None
+
+    def apply_changes(self, entity: ModelType, values: dict[str, Any]) -> None:
+        """Set columns on a loaded entity; written on the next flush."""
+        for key, value in values.items():
+            setattr(entity, key, value)
+
+    @handle_sqlalchemy_errors_decorator
+    async def create_and_reload(self, *, model_in: CreateSchemaType) -> ModelSchemaType:
+        """Create an entity and return it as stored, with database defaults and generated columns."""
+        entity = self.model(**model_in.model_dump())
+        self.session.add(entity)
+        return await self.flush_and_reload(entity)
+
+    @handle_sqlalchemy_errors_decorator
+    async def flush_and_reload(self, entity: ModelType) -> ModelSchemaType:
+        """Write pending changes, then re-read the row.
+
+        Generated columns and SQL defaults expire on write, and an expired attribute can't lazy-load
+        in an async session, so read them back before building the response.
+        """
+        await self.session.flush()
+        await self.session.refresh(entity)
+        return self.schema.model_validate(entity)
 
     # async def create(self, db: AsyncSession, *, obj_in: CreateSchemaType) -> ModelType:
     #     obj_in_data = jsonable_encoder(obj_in)
@@ -218,6 +271,26 @@ class RepositoryBase(Generic[ModelType, ModelSchemaType, ModelSchemaBaseType, Cr
         # await self.session.flush()
         return entity_id
 
+    @handle_sqlalchemy_errors_decorator
+    async def soft_delete(
+        self,
+        entity_id: int | str | uuid.UUID,
+        deleted_by: uuid.UUID | None,
+    ) -> int | str | uuid.UUID | None:
+        """Mark an entity deleted (MixinSoftDelete tables); reads skip it from then on.
+
+        Returns the id, or None when there's no live entity with it.
+        """
+        model: ModelType | None = await self.session.scalar(
+            self._live(select(self.model).where(self.model.id == entity_id))
+        )
+        if not model:
+            return None
+        model.deleted_at = func.now()
+        model.deleted_by = deleted_by
+        self.session.add(model)
+        return entity_id
+
     # async def delete(self, db: AsyncSession, *, id: int) -> ModelType:
     #     obj = await self.get(db, id)
     #     db.delete(obj)
@@ -233,7 +306,9 @@ class RepositoryBase(Generic[ModelType, ModelSchemaType, ModelSchemaBaseType, Cr
         limit: int | None = 100,
         offset: int | None = 0,
         exact: bool = False,
-    ) -> tuple[Sequence[ModelType], int]:
+        fields: Sequence[str] | None = None,
+        where: Sequence[ColumnElement[bool]] = (),
+    ) -> tuple[Sequence[Any], int]:
         """Query a list of Type[ModelType] with filters.
 
         Args:
@@ -242,29 +317,34 @@ class RepositoryBase(Generic[ModelType, ModelSchemaType, ModelSchemaBaseType, Cr
             order_by (Any, None, optional): SQL 'ORDER BY' input. Defaults to None.
             limit (int | None, optional): SQL 'LIMIT'. Defaults to 100.
             offset (int | None, optional): SQL 'OFFSET'. Defaults to 0.
+            fields (Sequence[str] | None): sparse fieldset (schema field names)
+            where (Sequence[ColumnElement[bool]]): more conditions, for filters that aren't a column
 
         Returns:
             tuple[Sequence[ModelType], int]: A tuple of the entities and the total_count.
         """
         total_count: int | None = None
-        query: Select = select(self.model)
+        query: Select = self._select(fields).where(*where)
         if params:
             query = self.apply_param_filters_to_query(query=query, params=params, exact=exact)
         # get count before limit/offset are applied
         if limit != 0 or offset != 0:
-            query_count: Select = select(func.count()).select_from(query)
+            query_count: Select = select(func.count()).select_from(query.subquery())
             query_count_result: Result = await self.session.execute(query_count)
             total_count = int(query_count_result.scalar_one())
-        # apply limit/offset/order_by
-        if order_by is not None:
-            query = query.order_by(order_by)
+        # apply limit/offset/order_by (default to id so pages are stable)
+        if order_by is None:
+            order_by = (self.model.id,)
+        elif not isinstance(order_by, (list, tuple)):
+            order_by = (order_by,)
+        query = query.order_by(*order_by)
         if offset:
             query = query.offset(offset)
         if limit:
             query = query.limit(limit)
         result: Result = await self.session.execute(query)
         # if no limit/offset assume count is lenght of result
-        entities = [self.schema.model_validate(e) for e in result.scalars().all()]
+        entities = [self._out(e, fields) for e in result.scalars().all()]
         if total_count is None:
             self.logger.debug("No limit/offset set, assuming total_count = len(result)")
             total_count = len(entities)
@@ -322,8 +402,8 @@ class RepositoryBase(Generic[ModelType, ModelSchemaType, ModelSchemaBaseType, Cr
             elif isinstance(value, uuid.UUID):
                 filters.append(model_field == value)
             else:
-                if exact:
-                    filters.append(model_field.like(f"{value}"))
+                if exact:  # equality: LIKE would treat "_" in slugs (phb_2024) as a wildcard
+                    filters.append(model_field == value)
                 else:
                     filters.append(model_field.ilike(f"%{value}%"))
         return filters

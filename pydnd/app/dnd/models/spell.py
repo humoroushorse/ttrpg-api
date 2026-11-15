@@ -2,11 +2,12 @@
 
 import datetime
 
-from dnd.database.base_class import DbBase
-from dnd.schemas.enums import DbSchemaEnum, SpellSchoolEnum
 from sqlalchemy import ARRAY, Column, ForeignKey, String, UniqueConstraint, func
 from sqlalchemy.ext.mutable import MutableList
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from dnd.database.base_class import DbBase
+from dnd.schemas.enums import DbSchemaEnum, SpellSchoolEnum
 
 
 class Spell(DbBase):

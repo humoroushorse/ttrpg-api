@@ -17,7 +17,7 @@ INSERT INTO sprint_management.work_items (
 ) RETURNING *;
 
 -- name: GetWorkItemByID :one
-SELECT 
+SELECT
     wi.*,
     p.key as project_key
 FROM sprint_management.work_items wi
@@ -62,7 +62,7 @@ DELETE FROM sprint_management.work_items
 WHERE id = $1;
 
 -- name: ListWorkItems :many
-SELECT 
+SELECT
     wi.*,
     p.key as project_key
 FROM sprint_management.work_items wi
@@ -88,7 +88,7 @@ ORDER BY created_at DESC, id
 LIMIT $2 OFFSET $3;
 
 -- name: ListWorkItemsBySprint :many
-SELECT 
+SELECT
     wi.*,
     p.key as project_key
 FROM sprint_management.work_items wi

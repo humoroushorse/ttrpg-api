@@ -1,7 +1,7 @@
 """py_event_planning app declaration."""
 
 import contextlib
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
 
 import fastapi
 

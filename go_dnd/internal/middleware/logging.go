@@ -14,7 +14,7 @@ func LoggingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		traceID := r.Header.Get("X-Trace-ID")
 		if traceID == "" {
-			traceID = uuid.New().String()
+			traceID = uuid.Must(uuid.NewV7()).String()
 		}
 
 		logger := slog.Default().With(

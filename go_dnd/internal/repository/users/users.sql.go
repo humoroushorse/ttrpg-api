@@ -12,14 +12,25 @@ import (
 )
 
 const getUserByID = `-- name: GetUserByID :one
-SELECT id, username, profile_picture_url FROM dnd.user
+SELECT id, keycloak_id, username, profile_picture_url, created_at, created_by, updated_at, updated_by, deleted_at, deleted_by FROM dnd.user
 WHERE id = $1
 `
 
 func (q *Queries) GetUserByID(ctx context.Context, id pgtype.UUID) (DndUser, error) {
 	row := q.db.QueryRow(ctx, getUserByID, id)
 	var i DndUser
-	err := row.Scan(&i.ID, &i.Username, &i.ProfilePictureUrl)
+	err := row.Scan(
+		&i.ID,
+		&i.KeycloakID,
+		&i.Username,
+		&i.ProfilePictureUrl,
+		&i.CreatedAt,
+		&i.CreatedBy,
+		&i.UpdatedAt,
+		&i.UpdatedBy,
+		&i.DeletedAt,
+		&i.DeletedBy,
+	)
 	return i, err
 }
 
@@ -30,7 +41,7 @@ ON CONFLICT (id) DO UPDATE
 SET
     username = EXCLUDED.username,
     profile_picture_url = EXCLUDED.profile_picture_url
-RETURNING id, username, profile_picture_url
+RETURNING id, keycloak_id, username, profile_picture_url, created_at, created_by, updated_at, updated_by, deleted_at, deleted_by
 `
 
 type UpdateUserParams struct {
@@ -42,6 +53,17 @@ type UpdateUserParams struct {
 func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (DndUser, error) {
 	row := q.db.QueryRow(ctx, updateUser, arg.ID, arg.Username, arg.ProfilePictureUrl)
 	var i DndUser
-	err := row.Scan(&i.ID, &i.Username, &i.ProfilePictureUrl)
+	err := row.Scan(
+		&i.ID,
+		&i.KeycloakID,
+		&i.Username,
+		&i.ProfilePictureUrl,
+		&i.CreatedAt,
+		&i.CreatedBy,
+		&i.UpdatedAt,
+		&i.UpdatedBy,
+		&i.DeletedAt,
+		&i.DeletedBy,
+	)
 	return i, err
 }

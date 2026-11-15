@@ -47,7 +47,7 @@ check_kubectl() {
     ((TOTAL_CHECKS++))
     if command -v kubectl &> /dev/null; then
         print_success "kubectl is installed"
-        
+
         # Check if cluster is accessible (don't exit on failure)
         if kubectl cluster-info &> /dev/null 2>&1; then
             CLUSTER_AVAILABLE=true
@@ -68,7 +68,7 @@ check_kubectl() {
 validate_yaml_syntax() {
     local file=$1
     ((TOTAL_CHECKS++))
-    
+
     # If cluster is available, use kubectl validation
     if [ "$CLUSTER_AVAILABLE" = true ]; then
         if kubectl apply --dry-run=client -f "$file" &> /dev/null; then
@@ -107,7 +107,7 @@ check_health_probes() {
     local file=$1
     local deployment_name=$2
     ((TOTAL_CHECKS++))
-    
+
     if grep -q "livenessProbe" "$file" && grep -q "readinessProbe" "$file"; then
         print_success "Health probes configured: $deployment_name"
         return 0
@@ -122,7 +122,7 @@ check_resource_limits() {
     local file=$1
     local deployment_name=$2
     ((TOTAL_CHECKS++))
-    
+
     if grep -q "resources:" "$file" && grep -q "limits:" "$file" && grep -q "requests:" "$file"; then
         print_success "Resource limits configured: $deployment_name"
         return 0
@@ -137,7 +137,7 @@ check_security_context() {
     local file=$1
     local deployment_name=$2
     ((TOTAL_CHECKS++))
-    
+
     if grep -q "securityContext:" "$file"; then
         if grep -q "runAsNonRoot: true" "$file" || grep -q "runAsUser:" "$file"; then
             print_success "Security context configured: $deployment_name"
@@ -155,7 +155,7 @@ check_security_context() {
 # Function to check for secrets placeholders
 check_secrets_placeholders() {
     ((TOTAL_CHECKS++))
-    
+
     if grep -q "CHANGE_ME_IN_PRODUCTION" secrets.yaml; then
         print_warn "Placeholder values found in secrets.yaml - update before deploying to production"
         return 0
@@ -179,7 +179,7 @@ check_required_files() {
         "ingress.yaml"
         "network-policy.yaml"
     )
-    
+
     for file in "${required_files[@]}"; do
         ((TOTAL_CHECKS++))
         if [ -f "$file" ]; then
@@ -194,17 +194,17 @@ check_required_files() {
 main() {
     print_info "Starting Kubernetes manifests validation..."
     echo ""
-    
+
     # Check kubectl
     print_info "Checking prerequisites..."
     check_kubectl
     echo ""
-    
+
     # Check required files
     print_info "Checking required files..."
     check_required_files
     echo ""
-    
+
     # Validate YAML syntax
     print_info "Validating YAML syntax..."
     for file in *.yaml; do
@@ -213,49 +213,49 @@ main() {
         fi
     done
     echo ""
-    
+
     # Check deployment configurations
     print_info "Checking deployment configurations..."
-    
+
     # Sprint Service
     if [ -f "sprint-service-deployment.yaml" ]; then
         check_health_probes "sprint-service-deployment.yaml" "sprint-service"
         check_resource_limits "sprint-service-deployment.yaml" "sprint-service"
         check_security_context "sprint-service-deployment.yaml" "sprint-service"
     fi
-    
+
     # Auth Service
     if [ -f "auth-service-deployment.yaml" ]; then
         check_health_probes "auth-service-deployment.yaml" "auth-service"
         check_resource_limits "auth-service-deployment.yaml" "auth-service"
         check_security_context "auth-service-deployment.yaml" "auth-service"
     fi
-    
+
     # PostgreSQL
     if [ -f "postgres-deployment.yaml" ]; then
         check_health_probes "postgres-deployment.yaml" "postgres"
         check_resource_limits "postgres-deployment.yaml" "postgres"
     fi
-    
+
     # NATS
     if [ -f "nats-deployment.yaml" ]; then
         check_health_probes "nats-deployment.yaml" "nats"
         check_resource_limits "nats-deployment.yaml" "nats"
     fi
-    
+
     # Keycloak
     if [ -f "keycloak-deployment.yaml" ]; then
         check_health_probes "keycloak-deployment.yaml" "keycloak"
         check_resource_limits "keycloak-deployment.yaml" "keycloak"
     fi
-    
+
     echo ""
-    
+
     # Check secrets
     print_info "Checking secrets configuration..."
     check_secrets_placeholders
     echo ""
-    
+
     # Summary
     echo "================================"
     echo "Validation Summary"
@@ -265,7 +265,7 @@ main() {
     echo -e "${YELLOW}Warnings: $WARNING_CHECKS${NC}"
     echo -e "${RED}Failed: $FAILED_CHECKS${NC}"
     echo "================================"
-    
+
     if [ $FAILED_CHECKS -eq 0 ]; then
         echo -e "${GREEN}All critical checks passed!${NC}"
         if [ $WARNING_CHECKS -gt 0 ]; then

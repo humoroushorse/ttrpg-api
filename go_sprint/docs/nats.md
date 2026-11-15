@@ -330,7 +330,7 @@ The Sprint Service provides a NATS client wrapper (`pkg/nats`) that simplifies N
 import (
     "log/slog"
     "time"
-    
+
     natsclient "github.com/humoroushorse/go_sprint/pkg/nats"
 )
 
@@ -388,21 +388,21 @@ package main
 import (
     "context"
     "log"
-    
+
     natsclient "github.com/humoroushorse/go_sprint/pkg/nats"
 )
 
 func PublishWorkItemCreated(client *natsclient.Client, ctx context.Context, workItem WorkItem) error {
     traceID := natsclient.GetTraceID(ctx)
     subject := natsclient.NotificationWorkItemCreated(traceID)
-    
+
     data := map[string]interface{}{
         "work_item_id": workItem.ID,
         "type":         workItem.Type,
         "title":        workItem.Title,
         "created_by":   workItem.ReporterID,
     }
-    
+
     return client.Publish(ctx, subject, data)
 }
 ```
@@ -413,26 +413,26 @@ func PublishWorkItemCreated(client *natsclient.Client, ctx context.Context, work
 func ValidateToken(client *natsclient.Client, ctx context.Context, token string) (*User, error) {
     traceID := natsclient.GetTraceID(ctx)
     subject := natsclient.AuthValidateRequest(traceID)
-    
+
     requestData := map[string]interface{}{
         "token": token,
     }
-    
+
     // Send request and wait for response
     response, err := client.Request(ctx, subject, requestData, 5*time.Second)
     if err != nil {
         return nil, fmt.Errorf("token validation failed: %w", err)
     }
-    
+
     // Check for errors in response
     if errData, ok := response.Data["error"]; ok {
         return nil, fmt.Errorf("validation error: %v", errData)
     }
-    
+
     // Parse user data from response
     userData := response.Data["user"]
     // ... parse user data ...
-    
+
     return user, nil
 }
 ```
@@ -443,32 +443,32 @@ func ValidateToken(client *natsclient.Client, ctx context.Context, token string)
 func SubscribeToWorkItemNotifications(client *natsclient.Client) error {
     // Subscribe to all work item notifications
     pattern := natsclient.AllWorkItemMessages()
-    
+
     _, err := client.Subscribe(pattern, func(ctx context.Context, msg *natsclient.Message) error {
         traceID := msg.TraceID
-        
+
         log.Printf("Received work item notification (trace: %s)", traceID)
-        
+
         // Extract work item data
         workItemID, ok := msg.Data["work_item_id"].(string)
         if !ok {
             return fmt.Errorf("invalid work item ID")
         }
-        
+
         eventType, ok := msg.Data["event_type"].(string)
         if !ok {
             return fmt.Errorf("invalid event type")
         }
-        
+
         // Process notification
         log.Printf("Work item %s: %s", workItemID, eventType)
-        
+
         // Broadcast to WebSocket clients
         broadcastToWebSocket(msg.Data)
-        
+
         return nil
     })
-    
+
     return err
 }
 ```
@@ -479,31 +479,31 @@ func SubscribeToWorkItemNotifications(client *natsclient.Client) error {
 func SubscribeToWorkItemProcessing(client *natsclient.Client) error {
     subject := natsclient.WorkItemCreateRequest("*")
     queueGroup := "work-item-processors"
-    
+
     _, err := client.QueueSubscribe(subject, queueGroup, func(ctx context.Context, msg *natsclient.Message) error {
         // Multiple instances will share the load
         log.Printf("Processing work item creation (trace: %s)", msg.TraceID)
-        
+
         // Extract request data
         workItemData := msg.Data["work_item"]
-        
+
         // Process work item creation
         workItem, err := createWorkItem(ctx, workItemData)
         if err != nil {
             log.Printf("Failed to create work item: %v", err)
             return err
         }
-        
+
         // Publish response
         responseSubject := natsclient.WorkItemCreateResponse(msg.TraceID)
         responseData := map[string]interface{}{
             "work_item": workItem,
             "success":   true,
         }
-        
+
         return client.Publish(ctx, responseSubject, responseData)
     })
-    
+
     return err
 }
 ```
@@ -517,16 +517,16 @@ func HandleHTTPRequest(w http.ResponseWriter, r *http.Request, client *natsclien
     if traceID == "" {
         traceID = uuid.New().String()
     }
-    
+
     // Add trace ID to context
     ctx := natsclient.WithTraceID(r.Context(), traceID)
-    
+
     // All NATS operations will use this trace ID
     workItem := WorkItem{
         Type:  "story",
         Title: "New feature",
     }
-    
+
     // Publish with automatic trace ID correlation
     subject := natsclient.NotificationWorkItemCreated(traceID)
     err := client.Publish(ctx, subject, workItem)
@@ -534,7 +534,7 @@ func HandleHTTPRequest(w http.ResponseWriter, r *http.Request, client *natsclien
         http.Error(w, "Failed to publish notification", http.StatusInternalServerError)
         return
     }
-    
+
     // Trace ID is automatically included in all messages
     w.Header().Set("X-Trace-ID", traceID)
     w.WriteHeader(http.StatusOK)
@@ -552,7 +552,7 @@ func BuildCustomSubject(traceID string) string {
         WithAction("custom-action").
         WithStatus("request").
         Build()
-    
+
     // Returns: "sprint.{trace_id}.custom-resource.custom-action.request"
     return subject
 }

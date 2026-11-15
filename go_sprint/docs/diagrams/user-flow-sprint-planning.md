@@ -7,101 +7,101 @@ This diagram shows the complete workflow for planning and executing a sprint.
 ```mermaid
 flowchart TD
     Start([Sprint Planning Begins]) --> Login[User Logs In]
-    
+
     Login --> Auth{Authentication<br/>Successful?}
     Auth -->|No| Login
     Auth -->|Yes| Dashboard[View Dashboard]
-    
+
     Dashboard --> CreateSprint[Create New Sprint]
-    
+
     CreateSprint --> SprintDetails[Enter Sprint Details]
     SprintDetails --> SprintName[Sprint Name]
     SprintDetails --> SprintDates[Start/End Dates]
     SprintDetails --> SprintCapacity[Team Capacity<br/>Story Points]
-    
+
     SprintName --> ValidateSprint{Validate<br/>Sprint Data}
     SprintDates --> ValidateSprint
     SprintCapacity --> ValidateSprint
-    
+
     ValidateSprint -->|Invalid| SprintDetails
     ValidateSprint -->|Valid| SaveSprint[Save Sprint]
-    
+
     SaveSprint --> ViewBacklog[View Product Backlog]
-    
+
     ViewBacklog --> FilterBacklog{Filter/Search<br/>Work Items?}
     FilterBacklog -->|Yes| ApplyFilters[Apply Filters]
     ApplyFilters --> ViewBacklog
     FilterBacklog -->|No| SelectItems[Select Work Items<br/>for Sprint]
-    
+
     SelectItems --> CheckCapacity{Within Sprint<br/>Capacity?}
     CheckCapacity -->|No| CapacityWarning[Show Capacity Warning]
     CapacityWarning --> AdjustSelection{Adjust<br/>Selection?}
     AdjustSelection -->|Yes| SelectItems
     AdjustSelection -->|No| OverrideCapacity[Override Capacity]
     OverrideCapacity --> AddToSprint
-    
+
     CheckCapacity -->|Yes| AddToSprint[Add Items to Sprint]
-    
+
     AddToSprint --> SetPriorities[Set Item Priorities]
     SetPriorities --> AssignWork[Assign Work Items<br/>to Team Members]
-    
+
     AssignWork --> ReviewSprint[Review Sprint Plan]
-    
+
     ReviewSprint --> SprintReady{Sprint Plan<br/>Complete?}
     SprintReady -->|No| AdjustPlan{What to Adjust?}
     AdjustPlan -->|Items| SelectItems
     AdjustPlan -->|Assignments| AssignWork
     AdjustPlan -->|Priorities| SetPriorities
-    
+
     SprintReady -->|Yes| ActivateSprint[Activate Sprint]
-    
+
     ActivateSprint --> NotifyTeam[Notify Team Members]
     NotifyTeam --> SprintActive[Sprint Active]
-    
+
     SprintActive --> DailyWork[Daily Development Work]
-    
+
     DailyWork --> UpdateStatus[Update Work Item Status]
     UpdateStatus --> LogTime[Log Time Spent]
     LogTime --> AddComments[Add Comments/Notes]
-    
+
     AddComments --> CheckProgress{Check Sprint<br/>Progress}
     CheckProgress --> ViewBurndown[View Burndown Chart]
     ViewBurndown --> OnTrack{Sprint<br/>On Track?}
-    
+
     OnTrack -->|Yes| ContinueWork[Continue Work]
     ContinueWork --> DailyWork
-    
+
     OnTrack -->|No| Blockers{Identify<br/>Blockers}
     Blockers --> ResolveBlockers[Resolve Blockers]
     ResolveBlockers --> AdjustScope{Adjust Sprint<br/>Scope?}
     AdjustScope -->|Yes| MoveItems[Move Items to Backlog]
     MoveItems --> DailyWork
     AdjustScope -->|No| DailyWork
-    
+
     DailyWork --> SprintEnd{Sprint<br/>End Date?}
     SprintEnd -->|Not Yet| DailyWork
     SprintEnd -->|Reached| SprintReview[Sprint Review Meeting]
-    
+
     SprintReview --> DemoWork[Demo Completed Work]
     DemoWork --> GatherFeedback[Gather Stakeholder Feedback]
-    
+
     GatherFeedback --> SprintRetro[Sprint Retrospective]
     SprintRetro --> DiscussWentWell[Discuss What Went Well]
     SprintRetro --> DiscussImprove[Discuss What to Improve]
     SprintRetro --> ActionItems[Create Action Items]
-    
+
     ActionItems --> CloseSprint[Close Sprint]
-    
+
     CloseSprint --> MoveIncomplete[Move Incomplete Items<br/>to Backlog]
     MoveIncomplete --> CalculateVelocity[Calculate Team Velocity]
     CalculateVelocity --> GenerateReport[Generate Sprint Report]
-    
+
     GenerateReport --> ArchiveSprint[Archive Sprint]
-    
+
     ArchiveSprint --> NextSprint{Plan Next<br/>Sprint?}
     NextSprint -->|Yes| CreateSprint
     NextSprint -->|No| End([Sprint Planning Complete])
-    
+
     style Start fill:#90EE90
     style End fill:#FF6B6B
     style Auth fill:#FFD700

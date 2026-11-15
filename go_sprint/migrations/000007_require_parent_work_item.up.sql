@@ -18,5 +18,5 @@ ADD CONSTRAINT work_item_parent_rules CHECK (
 CREATE INDEX IF NOT EXISTS idx_work_items_parent_id ON sprint_management.work_items(parent_id);
 
 -- Add comment explaining the hierarchy
-COMMENT ON CONSTRAINT work_item_parent_rules ON sprint_management.work_items IS 
+COMMENT ON CONSTRAINT work_item_parent_rules ON sprint_management.work_items IS
 'Enforces work item hierarchy: Epic (no parent) -> Story/Defect (parent=Epic)';

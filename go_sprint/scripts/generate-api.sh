@@ -38,11 +38,11 @@ echo "✓ Generated Go server code: $GENERATED_DIR/api.gen.go"
 # Generate TypeScript interfaces if openapi-typescript is available
 if command -v openapi-typescript &> /dev/null; then
     echo "==> Generating TypeScript interfaces..."
-    
+
     # Generate from main spec
     openapi-typescript "$OPENAPI_DIR/main.yaml" \
         --output "$FRONTEND_DIR/api-types.ts"
-    
+
     echo "✓ Generated TypeScript interfaces: $FRONTEND_DIR/api-types.ts"
 else
     echo "⚠ openapi-typescript not found, skipping TypeScript generation"
@@ -52,11 +52,11 @@ fi
 # Generate API documentation using redoc-cli if available
 if command -v redoc-cli &> /dev/null; then
     echo "==> Generating API documentation..."
-    
+
     redoc-cli bundle "$OPENAPI_DIR/main.yaml" \
         --output "$DOCS_DIR/api-documentation.html" \
         --title "Sprint Management API Documentation"
-    
+
     echo "✓ Generated API documentation: $DOCS_DIR/api-documentation.html"
 else
     echo "⚠ redoc-cli not found, skipping HTML documentation generation"
@@ -66,10 +66,10 @@ fi
 # Generate markdown documentation using swagger-markdown if available
 if command -v swagger-markdown &> /dev/null; then
     echo "==> Generating Markdown documentation..."
-    
+
     swagger-markdown -i "$OPENAPI_DIR/main.yaml" \
         -o "$DOCS_DIR/api-reference.md"
-    
+
     echo "✓ Generated Markdown documentation: $DOCS_DIR/api-reference.md"
 else
     echo "⚠ swagger-markdown not found, skipping Markdown documentation"

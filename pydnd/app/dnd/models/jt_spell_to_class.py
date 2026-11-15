@@ -1,9 +1,10 @@
 """SQLAlchemy Table: jt_spell_to_class definition."""
 
-from dnd.database.base_class import DbBase
-from dnd.schemas.enums import DbSchemaEnum
 from sqlalchemy import ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from dnd.database.base_class import DbBase
+from dnd.schemas.enums import DbSchemaEnum
 
 
 class JtSpellToClass(DbBase):

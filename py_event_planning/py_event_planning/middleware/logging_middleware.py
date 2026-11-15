@@ -2,7 +2,7 @@
 
 import time
 import uuid
-from typing import Awaitable, Callable
+from collections.abc import Awaitable, Callable
 
 from loguru import logger
 from starlette.middleware.base import BaseHTTPMiddleware

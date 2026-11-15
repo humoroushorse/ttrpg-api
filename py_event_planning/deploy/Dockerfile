@@ -1,7 +1,7 @@
 # Dockerfile
 # Uses multi-stage builds requiring Docker 17.05 or higher
 # See https://docs.docker.com/develop/develop-images/multistage-build/
-ARG PYTHON_DOCKER_IMAGE=python:3.13.0-alpine
+ARG PYTHON_DOCKER_IMAGE=python:3.15-alpine
 
 ################################################################################
 # python-base
@@ -9,29 +9,32 @@ ARG PYTHON_DOCKER_IMAGE=python:3.13.0-alpine
 ################################################################################
 FROM $PYTHON_DOCKER_IMAGE AS python-base
 
+ARG POETRY_VERSION=2.5.1
+
 WORKDIR /tmp
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=off \
-    PIP_DISABLE_PIP_VERSION_CHECK=on
-    # PIP_DEFAULT_TIMEOUT=100 \
-    # POETRY_HOME="/opt/poetry" \
-    # POETRY_VIRTUALENVS_IN_PROJECT=true \
-    # POETRY_NO_INTERACTION=1 \
-    # PYSETUP_PATH="/opt/pysetup" \
-    # VENV_PATH="/opt/pysetup/.venv"
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    POETRY_NO_INTERACTION=1
 
 # Poetry
-RUN pip install poetry
+RUN pip install "poetry==${POETRY_VERSION}"
 COPY . .
-# RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 ################################################################################
 # builder-base
-#    'builder-base' stage is used to build dependencies
+#    Installs the exact versions from poetry.lock into /opt/venv, then adds the
+#    app wheel on top. pyproject.toml only sets minimum versions, so letting pip
+#    resolve the wheel's dependencies would pull whatever is newest at build time.
 ################################################################################
 FROM python-base AS builder-base
+
+# Poetry installs into an already-active virtualenv instead of creating its own.
+# The venv is built at the same path it is copied to, so script shebangs stay valid.
+ENV VIRTUAL_ENV=/opt/venv \
+    PATH="/opt/venv/bin:$PATH"
 
 # RUN buildDeps="build-essential" \
 #     && apt-get update \
@@ -43,7 +46,10 @@ FROM python-base AS builder-base
 
 WORKDIR /tmp
 
-RUN poetry build --format wheel
+RUN python -m venv "$VIRTUAL_ENV" \
+    && poetry sync --only main --no-root \
+    && poetry build --format wheel \
+    && pip install --no-deps dist/*.whl
 
 ################################################################################
 # development
@@ -53,16 +59,13 @@ RUN poetry build --format wheel
 # FROM python-base as development
 FROM $PYTHON_DOCKER_IMAGE AS development
 
-ENV FASTAPI_ENV=production
-ENV FASTAPI_port=8002
+ENV FASTAPI_ENV=production \
+    FASTAPI_port=8002 \
+    PATH="/opt/venv/bin:$PATH"
 
 WORKDIR /code
 
-# COPY --from=builder-base /tmp/requirements.txt ./requirements.txt
-# RUN pip install --no-cache-dir --upgrade -r ./requirements.txt
-COPY --from=builder-base /tmp/dist/ /dist/
-RUN pip install --no-cache-dir /dist/*.whl
-# COPY . .
+COPY --from=builder-base /opt/venv /opt/venv
 
 # poetry run uvicorn --reload --host=0.0.0.0 --port=8002 --app-dir=py_event_planning main:app
 # CMD ["uvicorn", "--reload", "--host=0.0.0.0", "--port=8002", "py_event_planning.main:app"]

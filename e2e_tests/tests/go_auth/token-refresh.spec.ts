@@ -1,7 +1,7 @@
 /**
  * Token refresh endpoint tests for go_auth service
  * Tests token refresh functionality with valid/invalid/expired tokens
- * 
+ *
  * @tags @go_auth
  * Requirements: 16.3, 16.7
  */
@@ -25,9 +25,9 @@ test.describe('Token Refresh Endpoint Tests @go_auth', () => {
 
   test('should successfully refresh token with valid refresh token', async () => {
     // Feature: playwright-api-testing, Property 1: Authentication Token Validity
-    
+
     const refreshUrl = `${config.services.goAuth.baseUrl}/auth/refresh`;
-    
+
     // First, login to get a refresh token
     const loginResponse = await apiClient.login(
       credentials.testUserUsername,
@@ -73,9 +73,9 @@ test.describe('Token Refresh Endpoint Tests @go_auth', () => {
 
   test('should fail refresh with invalid refresh token', async () => {
     // Feature: playwright-api-testing, Property 9: Authenticated Request Authorization
-    
+
     const refreshUrl = `${config.services.goAuth.baseUrl}/auth/refresh`;
-    
+
     const response = await apiClient.post(refreshUrl, {
       refresh_token: 'invalid_refresh_token_12345',
     });
@@ -90,7 +90,7 @@ test.describe('Token Refresh Endpoint Tests @go_auth', () => {
 
   test('should fail refresh with malformed refresh token', async () => {
     const refreshUrl = `${config.services.goAuth.baseUrl}/auth/refresh`;
-    
+
     const response = await apiClient.post(refreshUrl, {
       refresh_token: 'not.a.valid.jwt.token',
     });
@@ -105,7 +105,7 @@ test.describe('Token Refresh Endpoint Tests @go_auth', () => {
 
   test('should fail refresh with missing refresh token', async () => {
     const refreshUrl = `${config.services.goAuth.baseUrl}/auth/refresh`;
-    
+
     const response = await apiClient.post(refreshUrl, {
       // refresh_token is missing
     });
@@ -120,7 +120,7 @@ test.describe('Token Refresh Endpoint Tests @go_auth', () => {
 
   test('should fail refresh with empty refresh token', async () => {
     const refreshUrl = `${config.services.goAuth.baseUrl}/auth/refresh`;
-    
+
     const response = await apiClient.post(refreshUrl, {
       refresh_token: '',
     });
@@ -135,7 +135,7 @@ test.describe('Token Refresh Endpoint Tests @go_auth', () => {
 
   test('should return new refresh token in response', async () => {
     const refreshUrl = `${config.services.goAuth.baseUrl}/auth/refresh`;
-    
+
     // First, login to get a refresh token
     const loginResponse = await apiClient.login(
       credentials.testUserUsername,
@@ -159,9 +159,9 @@ test.describe('Token Refresh Endpoint Tests @go_auth', () => {
 
   test('should maintain user identity after token refresh', async () => {
     // Feature: playwright-api-testing, Property 1: Authentication Token Validity
-    
+
     const refreshUrl = `${config.services.goAuth.baseUrl}/auth/refresh`;
-    
+
     // Login to get tokens
     const loginResponse = await apiClient.login(
       credentials.testUserUsername,
@@ -188,7 +188,7 @@ test.describe('Token Refresh Endpoint Tests @go_auth', () => {
 
   test('should fail refresh with access token instead of refresh token', async () => {
     const refreshUrl = `${config.services.goAuth.baseUrl}/auth/refresh`;
-    
+
     // Login to get tokens
     const loginResponse = await apiClient.login(
       credentials.testUserUsername,
@@ -210,7 +210,7 @@ test.describe('Token Refresh Endpoint Tests @go_auth', () => {
 
   test('should have valid expiration time in refreshed token', async () => {
     const refreshUrl = `${config.services.goAuth.baseUrl}/auth/refresh`;
-    
+
     // Login and refresh
     const loginResponse = await apiClient.login(
       credentials.testUserUsername,
@@ -229,10 +229,10 @@ test.describe('Token Refresh Endpoint Tests @go_auth', () => {
     // Decode token and verify expiration
     const tokenPayload = decodeToken(refreshResponse.data.access_token);
     const currentTime = Math.floor(Date.now() / 1000);
-    
+
     // Token should expire in the future
     expect(tokenPayload.exp).toBeGreaterThan(currentTime);
-    
+
     // Token expiration should be reasonable (not too far in the future)
     const maxExpiration = currentTime + (24 * 60 * 60); // 24 hours
     expect(tokenPayload.exp).toBeLessThan(maxExpiration);

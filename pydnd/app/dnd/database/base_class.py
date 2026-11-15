@@ -3,9 +3,10 @@
 import re
 from typing import Any
 
-from dnd import schemas
 from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy.orm import DeclarativeBase
+
+from dnd.schemas.enums import DbSchemaEnum
 
 
 class DbBase(DeclarativeBase):
@@ -23,7 +24,7 @@ class DbBase(DeclarativeBase):
     __name__: str
 
     __table_args__ = {
-        "schema": schemas.enums.DbSchemaEnum.DND.value,
+        "schema": DbSchemaEnum.DND.value,
     }
 
     # Generate __tablename__ automatically

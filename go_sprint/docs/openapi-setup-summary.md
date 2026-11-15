@@ -228,10 +228,10 @@ type APIHandler struct {
 func (h *APIHandler) CreateWorkItem(w http.ResponseWriter, r *http.Request) {
     var req generated.CreateWorkItemRequest
     json.NewDecoder(r.Body).Decode(&req)
-    
+
     // Business logic here
     workItem, err := h.workItemService.Create(r.Context(), req)
-    
+
     json.NewEncoder(w).Encode(workItem)
 }
 ```

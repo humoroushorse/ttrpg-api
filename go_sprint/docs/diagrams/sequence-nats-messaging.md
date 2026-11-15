@@ -15,41 +15,41 @@ sequenceDiagram
     Note over Client,KC: User Authentication and Token Validation
 
     Client->>API: POST /api/v1/workitems<br/>{Authorization: Bearer JWT}
-    
+
     Note over API: Extract trace ID from<br/>request or generate new UUID
-    
+
     API->>API: Extract JWT from<br/>Authorization header
-    
+
     API->>NATS: Publish: auth.{trace_id}.validate.request<br/>{token: "JWT", trace_id: "..."}
-    
+
     Note over NATS: Route message to<br/>auth service subscribers
-    
+
     NATS->>Auth: Deliver: auth.{trace_id}.validate.request
-    
+
     Auth->>Auth: Parse JWT token
-    
+
     Auth->>KC: GET /realms/sprint-management/protocol/openid-connect/certs
     KC-->>Auth: Public keys for validation
-    
+
     Auth->>Auth: Validate JWT signature<br/>and expiration
-    
+
     alt Token Valid
         Auth->>Auth: Extract user claims<br/>(user_id, roles, etc.)
-        
+
         Auth->>NATS: Publish: auth.{trace_id}.validate.response<br/>{valid: true, user: {...}}
-        
+
         NATS->>API: Deliver: auth.{trace_id}.validate.response
-        
+
         API->>API: Store user context<br/>in request context
-        
+
         API->>API: Process business logic
-        
+
         API-->>Client: 201 Created<br/>{work_item: {...}}
     else Token Invalid
         Auth->>NATS: Publish: auth.{trace_id}.validate.response<br/>{valid: false, error: "..."}
-        
+
         NATS->>API: Deliver: auth.{trace_id}.validate.response
-        
+
         API-->>Client: 401 Unauthorized<br/>{error: "Invalid token"}
     end
 ```
@@ -68,32 +68,32 @@ sequenceDiagram
     Note over Client,WSClient: Work Item Creation with Real-time Notification
 
     Client->>API: POST /api/v1/workitems<br/>{title, description, type}
-    
+
     API->>API: Generate trace ID
-    
+
     API->>API: Validate JWT<br/>(via NATS, see above)
-    
+
     API->>API: Validate business rules<br/>(required fields, type, etc.)
-    
+
     API->>DB: INSERT INTO work_items<br/>VALUES (...)
     DB-->>API: Work item created<br/>{id, created_at, ...}
-    
+
     Note over API: Publish notification<br/>for real-time updates
-    
+
     API->>NATS: Publish: sprint.{trace_id}.notification.workitem.created<br/>{work_item: {...}, sprint_id: "..."}
-    
+
     Note over NATS: Broadcast to all<br/>notification subscribers
-    
+
     NATS->>WS: Deliver: sprint.{trace_id}.notification.workitem.created
-    
+
     WS->>WS: Identify clients in<br/>sprint room
-    
+
     loop For each client in room
         WS->>WSClient: WebSocket Message<br/>{type: "workitem.created", data: {...}}
     end
-    
+
     API-->>Client: 201 Created<br/>{work_item: {...}}
-    
+
     Note over WSClient: UI updates automatically<br/>without page refresh
 ```
 
@@ -110,39 +110,39 @@ sequenceDiagram
     Note over Client,WS: Sprint Closure with Work Item Migration
 
     Client->>API: POST /api/v1/sprints/{id}/close
-    
+
     API->>API: Generate trace ID
-    
+
     API->>API: Validate JWT
-    
+
     API->>DB: BEGIN TRANSACTION
-    
+
     API->>DB: SELECT * FROM sprints<br/>WHERE id = {id}
     DB-->>API: Sprint data
-    
+
     API->>API: Validate sprint can be closed<br/>(status = 'active')
-    
+
     API->>DB: SELECT * FROM work_items<br/>WHERE sprint_id = {id}<br/>AND status != 'done'
     DB-->>API: Incomplete work items
-    
+
     loop For each incomplete work item
         API->>DB: UPDATE work_items<br/>SET sprint_id = NULL<br/>WHERE id = {item_id}
-        
+
         API->>NATS: Publish: sprint.{trace_id}.notification.workitem.updated<br/>{work_item: {...}, change: "moved_to_backlog"}
     end
-    
+
     API->>DB: UPDATE sprints<br/>SET status = 'completed',<br/>completed_points = ...<br/>WHERE id = {id}
-    
+
     API->>DB: INSERT INTO activity_logs<br/>VALUES (...)
-    
+
     API->>DB: COMMIT TRANSACTION
-    
+
     API->>NATS: Publish: sprint.{trace_id}.notification.sprint.status_changed<br/>{sprint: {...}, status: "completed"}
-    
+
     NATS->>WS: Deliver notifications
-    
+
     WS->>WS: Broadcast to sprint room
-    
+
     API-->>Client: 200 OK<br/>{sprint: {...}, moved_items: [...]}
 ```
 
@@ -160,30 +160,30 @@ sequenceDiagram
     Note over Admin,DB: Periodic User Synchronization
 
     Admin->>Sprint: POST /api/v1/admin/sync-users
-    
+
     Sprint->>Sprint: Generate trace ID
-    
+
     Sprint->>NATS: Publish: auth.{trace_id}.user.sync.request<br/>{full_sync: true}
-    
+
     NATS->>Auth: Deliver: auth.{trace_id}.user.sync.request
-    
+
     Auth->>KC: GET /admin/realms/sprint-management/users
     KC-->>Auth: List of all users
-    
+
     loop For each Keycloak user
         Auth->>DB: SELECT * FROM auth.users<br/>WHERE keycloak_id = {kc_id}
-        
+
         alt User exists
             Auth->>DB: UPDATE auth.users<br/>SET email = ..., roles = ...<br/>WHERE keycloak_id = {kc_id}
         else User doesn't exist
             Auth->>DB: INSERT INTO auth.users<br/>VALUES (...)
         end
     end
-    
+
     Auth->>NATS: Publish: auth.{trace_id}.user.sync.response<br/>{synced: 42, created: 5, updated: 37}
-    
+
     NATS->>Sprint: Deliver: auth.{trace_id}.user.sync.response
-    
+
     Sprint-->>Admin: 200 OK<br/>{result: {...}}
 ```
 
@@ -200,41 +200,41 @@ sequenceDiagram
     Note over Client,Log: Trace ID Propagation for Debugging
 
     Client->>Sprint: GET /api/v1/workitems/{id}<br/>{X-Trace-ID: "abc-123"}
-    
+
     Note over Sprint: Use provided trace ID<br/>or generate new one
-    
+
     Sprint->>Sprint: Log: "Received request"<br/>{trace_id: "abc-123", method: "GET"}
     Sprint->>Log: Ship log entry
-    
+
     Sprint->>NATS: Publish: auth.abc-123.validate.request<br/>{trace_id: "abc-123", token: "..."}
-    
+
     Sprint->>Sprint: Log: "Sent auth request"<br/>{trace_id: "abc-123"}
     Sprint->>Log: Ship log entry
-    
+
     NATS->>Auth: Deliver: auth.abc-123.validate.request
-    
+
     Auth->>Auth: Log: "Received auth request"<br/>{trace_id: "abc-123"}
     Auth->>Log: Ship log entry
-    
+
     Auth->>Auth: Validate token
-    
+
     Auth->>Auth: Log: "Token validated"<br/>{trace_id: "abc-123", valid: true}
     Auth->>Log: Ship log entry
-    
+
     Auth->>NATS: Publish: auth.abc-123.validate.response<br/>{trace_id: "abc-123", valid: true}
-    
+
     NATS->>Sprint: Deliver: auth.abc-123.validate.response
-    
+
     Sprint->>Sprint: Log: "Received auth response"<br/>{trace_id: "abc-123", valid: true}
     Sprint->>Log: Ship log entry
-    
+
     Sprint->>Sprint: Process request
-    
+
     Sprint->>Sprint: Log: "Request completed"<br/>{trace_id: "abc-123", duration: "45ms"}
     Sprint->>Log: Ship log entry
-    
+
     Sprint-->>Client: 200 OK<br/>{work_item: {...}}
-    
+
     Note over Log: All logs correlated by<br/>trace_id: "abc-123"<br/>for easy debugging
 ```
 

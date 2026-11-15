@@ -20,6 +20,7 @@ from py_dnd.features.auth.schemas import (
 )
 from py_dnd.features.core.unit_of_work import sqlalchemy_uow
 from py_dnd.features.user.schemas import UserCreate, UserSchema
+from py_dnd.features.user.service import ensure_user_id
 
 router = APIRouter()
 
@@ -194,7 +195,7 @@ async def register_user(
         kc_user_id = await AuthService.create_keycloak_user(user)  # Register the user in Keycloak
         logger.info("Keycloak user created with id={}", kc_user_id)
         async with sqlalchemy_uow(db, None) as uow:
-            create_input = UserCreate(id=str(kc_user_id).strip(), username=user.username)
+            create_input = UserCreate(keycloak_id=str(kc_user_id), username=user.username)
             pg_user = await uow.user_repo.create(model_in=create_input, return_model=True)
             await uow.commit()
         return pg_user
@@ -210,14 +211,17 @@ async def delete_user_endpoint(
     current_user: AuthService.UserAuth,
     db: AsyncMasterSessionDependency,
 ) -> Any:
-    """Delete an existing user."""
+    """Delete an existing user.
+
+    The Keycloak user goes now, so they can't sign in. The dnd.user row is soft-deleted and purged
+    14 days later (backups are kept 14 days, so nothing about them survives past day 28).
+    """
     try:
         logger.debug("Deleting user", extra=current_user)
+        user_id = await ensure_user_id(db, current_user)
         await AuthService.delete_user(current_user.preferred_username)
         async with sqlalchemy_uow(db, None) as uow:
-            delete_res = await uow.user_repo.delete(entity_id=current_user.sub)
-            if not delete_res:
-                logger.warning("User not found!", extra={"entity_id": current_user.sub})
+            await uow.user_repo.soft_delete(entity_id=user_id, deleted_by=user_id)
             await uow.commit()
         return current_user.sub
     except HTTPException as e:

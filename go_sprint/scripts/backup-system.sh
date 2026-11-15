@@ -47,14 +47,14 @@ create_backup_structure() {
 # Backup database
 backup_database() {
     log_section "Backing up database"
-    
+
     if ! command -v pg_dump &> /dev/null; then
         log_error "pg_dump not found. Skipping database backup."
         return 1
     fi
-    
+
     DB_BACKUP_FILE="$BACKUP_DIR/database/sprint_management_${TIMESTAMP}.sql"
-    
+
     log_info "Creating database backup..."
     if pg_dump \
         --host="$DB_HOST" \
@@ -64,10 +64,10 @@ backup_database() {
         --schema=sprint_management \
         --schema=auth \
         --file="$DB_BACKUP_FILE" 2>&1 | grep -v "^$"; then
-        
+
         # Create checksum
         sha256sum "$DB_BACKUP_FILE" > "${DB_BACKUP_FILE}.sha256"
-        
+
         DB_SIZE=$(du -h "$DB_BACKUP_FILE" | cut -f1)
         log_info "Database backup completed: $DB_SIZE"
     else
@@ -79,25 +79,25 @@ backup_database() {
 # Backup configuration files
 backup_config() {
     log_section "Backing up configuration files"
-    
+
     # Backup docker-compose
     if [ -f "docker-compose.yml" ]; then
         cp docker-compose.yml "$BACKUP_DIR/config/"
         log_info "Backed up: docker-compose.yml"
     fi
-    
+
     # Backup Makefile
     if [ -f "Makefile" ]; then
         cp Makefile "$BACKUP_DIR/config/"
         log_info "Backed up: Makefile"
     fi
-    
+
     # Backup sqlc config
     if [ -f "sqlc.yaml" ]; then
         cp sqlc.yaml "$BACKUP_DIR/config/"
         log_info "Backed up: sqlc.yaml"
     fi
-    
+
     # Backup go.mod and go.sum
     if [ -f "go.mod" ]; then
         cp go.mod "$BACKUP_DIR/config/"
@@ -107,7 +107,7 @@ backup_config() {
         cp go.sum "$BACKUP_DIR/config/"
         log_info "Backed up: go.sum"
     fi
-    
+
     # Backup Dockerfile
     if [ -f "Dockerfile" ]; then
         cp Dockerfile "$BACKUP_DIR/config/"
@@ -118,7 +118,7 @@ backup_config() {
 # Backup migrations
 backup_migrations() {
     log_section "Backing up database migrations"
-    
+
     if [ -d "migrations" ]; then
         cp -r migrations/* "$BACKUP_DIR/migrations/" 2>/dev/null || true
         MIGRATION_COUNT=$(find "$BACKUP_DIR/migrations" -type f | wc -l)
@@ -131,7 +131,7 @@ backup_migrations() {
 # Backup OpenAPI specifications
 backup_api_specs() {
     log_section "Backing up OpenAPI specifications"
-    
+
     if [ -d "api" ]; then
         cp -r api/* "$BACKUP_DIR/api/" 2>/dev/null || true
         SPEC_COUNT=$(find "$BACKUP_DIR/api" -name "*.yaml" -o -name "*.yml" | wc -l)
@@ -144,7 +144,7 @@ backup_api_specs() {
 # Backup documentation
 backup_docs() {
     log_section "Backing up documentation"
-    
+
     if [ -d "docs" ]; then
         cp -r docs/* "$BACKUP_DIR/docs/" 2>/dev/null || true
         DOC_COUNT=$(find "$BACKUP_DIR/docs" -type f | wc -l)
@@ -152,7 +152,7 @@ backup_docs() {
     else
         log_warn "No docs directory found"
     fi
-    
+
     # Backup README
     if [ -f "README.md" ]; then
         cp README.md "$BACKUP_DIR/"
@@ -163,19 +163,19 @@ backup_docs() {
 # Backup NATS configuration
 backup_nats_config() {
     log_section "Backing up NATS configuration"
-    
+
     # Backup NATS documentation
     if [ -f "docs/nats.md" ]; then
         cp docs/nats.md "$BACKUP_DIR/nats/"
         log_info "Backed up: NATS documentation"
     fi
-    
+
     # Backup NATS deployment configs from root
     if [ -d "../deploy/nats" ]; then
         cp -r ../deploy/nats/* "$BACKUP_DIR/nats/" 2>/dev/null || true
         log_info "Backed up: NATS deployment configuration"
     fi
-    
+
     # Create NATS subject documentation
     cat > "$BACKUP_DIR/nats/subjects.txt" << EOF
 # NATS Subject Patterns - Sprint Management Service
@@ -205,7 +205,7 @@ EOF
 # Create backup manifest
 create_manifest() {
     log_section "Creating backup manifest"
-    
+
     cat > "$BACKUP_DIR/MANIFEST.txt" << EOF
 Sprint Management System - Backup Manifest
 ==========================================
@@ -249,21 +249,21 @@ Notes:
 - Ensure all dependencies are installed
 - Review configuration files for environment-specific settings
 EOF
-    
+
     log_info "Manifest created: $BACKUP_DIR/MANIFEST.txt"
 }
 
 # Create compressed archive
 create_archive() {
     log_section "Creating compressed archive"
-    
+
     ARCHIVE_FILE="$BACKUP_ROOT/system_backup_${TIMESTAMP}.tar.gz"
-    
+
     tar -czf "$ARCHIVE_FILE" -C "$BACKUP_ROOT" "system_backup_$TIMESTAMP"
-    
+
     ARCHIVE_SIZE=$(du -h "$ARCHIVE_FILE" | cut -f1)
     log_info "Archive created: $ARCHIVE_FILE ($ARCHIVE_SIZE)"
-    
+
     # Create checksum for archive
     sha256sum "$ARCHIVE_FILE" > "${ARCHIVE_FILE}.sha256"
     log_info "Archive checksum created"
@@ -273,7 +273,7 @@ create_archive() {
 main() {
     log_section "Starting Comprehensive System Backup"
     log_info "Timestamp: $TIMESTAMP"
-    
+
     create_backup_structure
     backup_database
     backup_config
@@ -283,7 +283,7 @@ main() {
     backup_nats_config
     create_manifest
     create_archive
-    
+
     log_section "Backup Completed Successfully"
     log_info "Backup location: $BACKUP_DIR"
     log_info "Archive: $BACKUP_ROOT/system_backup_${TIMESTAMP}.tar.gz"
